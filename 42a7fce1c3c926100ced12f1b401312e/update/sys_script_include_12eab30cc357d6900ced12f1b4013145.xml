@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.GetStaleSWInstallations</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Get the Software models without having any relationships.</description>
+        <mobile_callable>false</mobile_callable>
+        <name>GetStaleSWInstallations</name>
+        <sandbox_callable>true</sandbox_callable>
+        <script><![CDATA[var GetStaleSWInstallations = Class.create();
+GetStaleSWInstallations.prototype = {
+    initialize: function() {},
+
+    checkSoftwareModels: function() {
+        var results = {}; // Object to store the final output
+
+        var sm = new GlideRecord('cmdb_software_product_model');
+        sm.addQuery('life_cycle_stage=Operational');
+        sm.query();
+
+        while (sm.next()) {
+            var sysId = sm.getValue('sys_id');
+
+            // Check for entitlement existence
+            var ent = new GlideRecord('alm_license');
+            ent.addEncodedQuery('model.sys_id=' + sysId);
+            ent.setLimit(1);
+            ent.query();
+            var entitlementExists = ent.hasNext();
+
+            // Check for suite existence
+            var child = new GlideRecord('cmdb_m2m_suite_model');
+            child.addEncodedQuery('suite_child.sys_id=' + sysId + '^ORsuite_parent.sys_id=' + sysId);
+            child.setLimit(1);
+            child.query();
+            var suiteExists = child.hasNext();
+
+            // Check for SaaS existence
+            var saas = new GlideRecord('samp_sw_subscription');
+            saas.addQuery('software_model.sys_id=' + sysId);
+            saas.setLimit(1);
+            saas.query();
+            var saasExists = saas.hasNext();
+
+            // Check for downgrade existence
+            var dg = new GlideRecord('samp_sw_downgrade_model');
+            dg.addEncodedQuery('model.sys_id=' + sysId + '^ORparent_model.sys_id=' + sysId);
+            dg.setLimit(1);
+            dg.query();
+            var downgradeExists = dg.hasNext();
+
+            // Store results for this sys_id
+            results[sysId] = {
+                entitlementExists: entitlementExists,
+                suiteExists: suiteExists,
+                saasExists: saasExists,
+                downgradeExists: downgradeExists
+            };
+        }
+
+        return results; // Return the structured results
+    },
+
+    type: 'GetStaleSWInstallations' // Name of the Script Include
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-01-20 08:23:19</sys_created_on>
+        <sys_id>12eab30cc357d6900ced12f1b4013145</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>GetStaleSWInstallations</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_12eab30cc357d6900ced12f1b4013145</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:38:44</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>12eab30cc357d6900ced12f1b4013145</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-01-20 08:23:19</sys_created_on>
+        <sys_id>9fdb3308c397d6900ced12f1b40131d2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-01-20 08:23:19</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

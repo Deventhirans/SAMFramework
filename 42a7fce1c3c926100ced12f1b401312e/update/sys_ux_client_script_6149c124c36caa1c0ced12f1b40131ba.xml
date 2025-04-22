@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="nsr-automation">6e45f4e2c308aa500ced12f1b40131fc</macroponent>
+        <name>rich_text_7/html</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+ * @param {Object} params
+ * @param {Object} params.api
+ * @param {Object} params.helpers
+ * @returns {string} Rendered HTML
+ */
+function evaluateProperty(params) {
+    return `
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Non-Software Request Management Workflow</title>
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e6f0fa 0%, #ffffff 100%);
+            color: #34495e;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 10px auto;
+            padding: 10px;
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 25px;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #16a085;
+            font-size: 17px;
+            margin: 10px 0 10px;
+            position: relative;
+            padding-left: 20px;
+            border-left: 4px solid #adbdf0;
+        }
+        .flow-section {
+            background: rgba(230, 240, 250, 0.5);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            position: relative;
+            animation: fadeIn 0.6s ease-out;
+        }
+        .flow-section::after {
+            content: '↓';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            color: #16a085;
+            opacity: 0.7;
+        }
+        .flow-section:last-child::after {
+            content: '';
+        }
+        .highlight {
+            color: #080561;
+        }
+        p {
+            margin: 10px  Asc;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        ul li {
+            margin: 3px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        ul li::before {
+            content: '➔';
+            color: #0a0a0a;
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+        .question {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enhanced Non-Software Request Management Workflow</h1>
+
+        <div class="flow-section">
+            <h2>Multi-Tiered Approval Process</h2>
+            <ul>
+                <li><span class="highlight">Initial Request Submission</span>
+                    <p>Request entered into the system</p>
+                    <p>Automatically routed to requester's direct manager</p>
+                </li>
+                <li><span class="highlight">Hierarchical Approval Workflow Approval Stages</span>
+                    <ul>
+                        <li><span class="highlight">Stage 1: Manager Approval</span>
+                            <p>Validates request's business necessity</p>
+                            <p>Reviews request details</p>
+                            <p>Ensures alignment with departmental objectives</p>
+                        </li>
+                        <li><span class="highlight">Stage 2: Security Team Review</span>
+                            <p>Conducted after manager's approval</p>
+                            <p>Comprehensive security risk assessment</p>
+                            <p>Evaluate potential compliance implications</p>
+                            <p>Verify request against organizational security policies</p>
+                        </li>
+                        <li><span class="highlight">Stage 3: Software Asset Management (SAM) Team Evaluation</span>
+                            <p>Performed following security team clearance</p>
+                            <p>Detailed analysis of request feasibility</p>
+                            <p>Resource allocation assessment</p>
+                            <p>Strategic alignment verification</p>
+                        </li>
+                    </ul>
+                </li>
+                <li><span class="highlight">Final Decision Pathways Potential Outcomes</span>
+                    <p>Approved: Proceed with request implementation</p>
+                    <p>Rejected: Request terminated at respective approval stage</p>
+                    <p>Requires Modification: Returned to previous stage for refinement</p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>Key Process Characteristics</h2>
+            <ul>
+                <li>Structured multi-stage approval mechanism</li>
+                <li>Cross-functional validation</li>
+                <li>Comprehensive risk mitigation</li>
+                <li>Transparent decision-making process</li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>Workflow Benefits</h2>
+            <ul>
+                <li>Enhanced governance</li>
+                <li>Reduced unauthorized requests</li>
+                <li>Systematic compliance enforcement</li>
+                <li>Holistic request evaluation</li>
+                <li>Clear accountability</li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>Technical Considerations</h2>
+            <ul>
+                <li>Automated notification system</li>
+                <li>Real-time status tracking</li>
+                <li>Integrated approval management</li>
+                <li>Comprehensive audit logging</li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>Recommended Implementation</h2>
+            <ul>
+                <li>Digital workflow management platform</li>
+                <li>Configurable approval rules</li>
+                <li>Seamless inter-departmental communication</li>
+                <li>Automated escalation mechanisms</li>
+            </ul>
+        </div>
+
+   
+    </div>
+</body>
+</html>
+    `;
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-24 12:22:00</sys_created_on>
+        <sys_id>6149c124c36caa1c0ced12f1b40131ba</sys_id>
+        <sys_mod_count>34</sys_mod_count>
+        <sys_name>rich_text_7/html</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_6149c124c36caa1c0ced12f1b40131ba</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

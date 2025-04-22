@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="UserData">6a363588c31c6a140ced12f1b40131c3</macroponent>
+        <name>list___simple_1/fixedQuery</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+* @param {Object} params
+* @param {Object} params.api
+* @param {Object} params.helpers
+* @returns {string} A comma-separated list of short descriptions containing the keyword.
+*/
+function evaluateProperty({ api, helpers }) {
+    const kpi = api.data.sam_foundation_current_kpis_1.output.users_kpi;
+    
+    const output = kpi.map(record => {
+    // Split the usecase string into words and take the first three
+    return record.usecase.split(/\s+/).slice(0, 3).join(' ');
+});
+    
+    console.log(output);
+    if (output.length > 0) {
+    // Map the array to create the query string
+    const query = output.map(value => `descriptionSTARTSWITH${value}`).join('^OR');
+    
+    // Log the resulting query
+    console.log(query); // Output: "descriptionSTARTSWITHhii a b^ORdescriptionSTARTSWITHhiig fgh gh"
+    return query;
+}
+ 
+   
+    return "descriptionSTARTSWITHUser with missing^ORdescriptionSTARTSWITHTracking financial";
+ 
+ 
+ 
+   
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-10 17:37:49</sys_created_on>
+        <sys_id>e03f0e08c318aa140ced12f1b4013182</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>list___simple_1/fixedQuery</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_e03f0e08c318aa140ced12f1b4013182</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

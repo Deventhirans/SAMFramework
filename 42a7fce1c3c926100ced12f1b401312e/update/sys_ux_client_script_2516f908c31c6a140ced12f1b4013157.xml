@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Integration">9516b908c31c6a140ced12f1b401315e</macroponent>
+        <name>pagination_control_1/total</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+ * @param {params} params
+ * @param {api} params.api
+ * @param {TransformApiHelpers} params.helpers
+ */
+
+function evaluateProperty({ api, helpers }) {
+
+    // Data to evaluate
+    var data = api.data.dynamic_sys_reader_3.output;
+
+    // Get the search term from the state
+    var searchTerm = api.state.searchInput || ''; // Default to an empty string if no search term
+
+    console.log("searchTerm", searchTerm);
+
+    // Get pagination details from the state
+    var currentPage = api.state.currentPage || 1; // Default to page 1
+    var recordsPerPage = api.state.recordsPerPage || 10; // Default to 10 records per page
+
+    // Filter the data based on the search term
+    var filteredData = data; // Start with all data
+
+    if (searchTerm && searchTerm.trim()) {
+        filteredData = filteredData.filter(item => {
+            return Object.values(item).some(value => 
+                String(value).toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        });
+    }
+
+    // Apply pagination
+    var startIndex = (currentPage - 1) * recordsPerPage;
+    var endIndex = startIndex + recordsPerPage;
+    var paginatedData = filteredData.slice(startIndex, endIndex);
+
+    // Return state object with pagination and filtered data
+    return {
+        currentPage: currentPage,
+        recordsPerPage: recordsPerPage,
+        totalRecords: filteredData.length,
+        totalPages: Math.ceil(filteredData.length / recordsPerPage),
+        data: paginatedData
+    };
+}
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-03-10 15:41:36</sys_created_on>
+        <sys_id>2516f908c31c6a140ced12f1b4013157</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>pagination_control_1/total</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_2516f908c31c6a140ced12f1b4013157</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

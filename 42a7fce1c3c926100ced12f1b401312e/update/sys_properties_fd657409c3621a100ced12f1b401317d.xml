@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.current.discoverymodel.kpi</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Deva_123</sys_created_by>
+        <sys_created_on>2024-12-16 14:13:42</sys_created_on>
+        <sys_id>fd657409c3621a100ced12f1b401317d</sys_id>
+        <sys_mod_count>13</sys_mod_count>
+        <sys_name>sam.current.discoverymodel.kpi</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_fd657409c3621a100ced12f1b401317d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:05:36</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+  {&#13;
+    "kpi": "Software discovery model with empty product",&#13;
+    "description": " Ensuring that every discovery model is linked to a product helps maintain accurate software inventory, track entitlements, and ensure compliance across the organization.",&#13;
+    "table": "cmdb_sam_sw_discovery_model",&#13;
+    "field": "norm_productISEMPTY",&#13;
+    "recommendation": "Define specific products in discovery models for better license compliance."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Number of unnormalized discovery model",&#13;
+    "description": "Normalizing discovery models helps standardize software asset data, ensuring consistency, accuracy, and streamlined license management.",&#13;
+    "table": "cmdb_sam_sw_discovery_model",&#13;
+    "field": "normalization_rule=NULL^ORnormalization_rule=FALSE",&#13;
+    "recommendation": "Apply normalization rules to standardize product data across the system."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software discovery model with empty install count",&#13;
+    "description": "Tracking the installation count in discovery models ensures accurate software usage tracking, supporting proper license allocation and compliance management.",&#13;
+    "table": "cmdb_sam_sw_discovery_model",&#13;
+    "field": "install_countISEMPTY",&#13;
+    "recommendation": "Update install counts regularly for improved usage and deployment tracking."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software discovery model without mapped software model",&#13;
+    "description": " Mapping discovery models to software models ensures accurate tracking, better license management, and helps maintain compliance by associating installed software with its respective model.",&#13;
+    "table": "cmdb_sam_sw_discovery_model",&#13;
+    "field": "modelISEMPTY",&#13;
+    "recommendation": "Ensure all discovery models are linked to software models for accuracy."&#13;
+  }&#13;
+]</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=fd657409c3621a100ced12f1b401317d"/>
+</record_update>

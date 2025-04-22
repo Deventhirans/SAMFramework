@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="onboard and offboard automation">358e6955c37716100ced12f1b401317f</macroponent>
+        <name>rich_text_8/html</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+  * @param {params} params
+  * @param {api} params.api
+  * @param {TransformApiHelpers} params.helpers
+  */
+function evaluateProperty({api, helpers}) {
+	return `
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Asset Management Flow</title>
+    <style>
+        body {
+            font-family: 'verdana';
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e6f0fa 0%, #ffffff 100%);
+            color: #34495e;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 10px auto;
+            padding: 10px;
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size:25px;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #16a085;
+            font-size: 17px;
+            margin: 10px 0 10px;
+            position: relative;
+            padding-left: 20px;
+            border-left: 4px solid #adbdf0;
+        }
+        .flow-section {
+            background: rgba(230, 240, 250, 0.5);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            position: relative;
+            animation: fadeIn 0.6s ease-out;
+        }
+        .flow-section::after {
+            content: '↓';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            color: #16a085;
+            opacity: 0.7;
+        }
+        .flow-section:last-child::after {
+            content: '';
+        }
+        .highlight {
+            color: #080561;
+<!--             font-weight: bold; -->
+        }
+        p {
+            margin: 10px 0;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        ul li {
+            margin: 3px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        ul li::before {
+            content: '➔';
+            color: #0a0a0a;
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+        .question {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Software Asset Management Flow</h1>
+
+        <div class="flow-section">
+            <h2>Core Workflow</h2>
+            <p>The system handles three primary request types - <span class="highlight">Onboarding</span>, <span class="highlight">Offboarding</span>, and <span class="highlight">Transfer</span> - each following a structured approval and execution process.</p>
+        </div>
+
+        <div class="flow-section">
+            <h2>Offboarding Request</h2>
+            <p>Request submitted for employee software removal</p>
+            <p>Automatic approval workflow initiated to employee's direct manager</p>
+            <p><span class="highlight">Manager Review Process:</span></p>
+            <ul>
+                <li>Approved: IT Security team creates catalog task to remove specified software from user's device</li>
+                <li>Rejected: Request automatically closed</li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>Onboarding Request</h2>
+            <p>Request submitted for new employee software provisioning</p>
+            <p>Automatic approval workflow initiated to employee's direct manager</p>
+            <p><span class="highlight">Manager Review Process:</span></p>
+            <ul>
+                <li>Approved: IT Security team creates catalog task to install required software on user's device</li>
+                <li>Rejected: Request automatically closed</li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>Transfer Request</h2>
+            <p>Request submitted for employee software reconfiguration during team transition</p>
+            <p>Automatic approval workflow initiated to employee's direct manager</p>
+            <p><span class="highlight">Manager Review Process:</span></p>
+            <ul>
+                <li>Approved: IT Security team creates comprehensive catalog task to:</li>
+                <ul>
+                    <li>Audit and identify software to be removed</li>
+                    <li>Determine software to be retained</li>
+                    <li>Install new software required for the new team/role</li>
+                </ul>
+                <li>Rejected: Request automatically closed</li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>Key Process Characteristics</h2>
+            <ul>
+                <li>Centralized approval mechanism</li>
+                <li>Manager-driven decision making</li>
+                <li>Standardized IT security task creation</li>
+                <li>Automated workflow management</li>
+                <li>Flexible handling of different employment transition scenarios</li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>Workflow Benefits</h2>
+            <ul>
+                <li>Ensures proper software asset management</li>
+                <li>Maintains security and compliance</li>
+                <li>Streamlines software provisioning and deprovisioning</li>
+                <li>Provides clear audit trail</li>
+                <li>Reduces manual intervention</li>
+            </ul>
+        </div>
+
+      
+    </div>
+</body>
+</html>
+  `;
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-25 09:12:27</sys_created_on>
+        <sys_id>755cad34c360e25c0ced12f1b401316a</sys_id>
+        <sys_mod_count>10</sys_mod_count>
+        <sys_name>rich_text_8/html</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_755cad34c360e25c0ced12f1b401316a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

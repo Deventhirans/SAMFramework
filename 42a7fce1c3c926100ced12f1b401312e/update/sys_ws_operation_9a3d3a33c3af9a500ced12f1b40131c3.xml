@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>GET</http_method>
+        <name>Get KPI Data</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+    var result = {};
+
+    var gr = new GlideRecord('cmn_location'); // Replace with your actual table name
+    
+    // Filter locations where location, city, or country is empty
+    gr.addQuery('location', ''); // Locations without a location
+    gr.addQuery('city', '');     // Locations without a city
+    gr.addQuery('country', '');  // Locations without a country
+    gr.query();
+
+    while (gr.next()) {
+        var location = gr.getValue('location') || 'No Location';  // If location is empty, show 'No Location'
+        var city = gr.getValue('city') || 'No City';              // If city is empty, show 'No City'
+        var country = gr.getValue('country') || 'No Country';     // If country is empty, show 'No Country'
+
+        // Combine location, city, and country to create a unique key for grouping
+        var key = location + ' | ' + city + ' | ' + country;
+
+        // Initialize the result entry if it does not already exist
+        if (!result[key]) {
+            result[key] = {
+                location: location,
+                city: city,
+                country: country,
+                count: 0
+            };
+        }
+
+        // Increment the count for each unique group
+        result[key].count++;
+    }
+
+    // Return the result as a JSON response
+    response.setBody(Object.values(result)); // Convert the result object to an array for JSON response
+})(request, response);
+]]></operation_script>
+        <operation_uri>/api/985627/kpi_data/get_kpi</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/get_kpi</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-13 05:44:03</sys_created_on>
+        <sys_id>9a3d3a33c3af9a500ced12f1b40131c3</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Get KPI Data</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ws_operation_9a3d3a33c3af9a500ced12f1b40131c3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:31:49</sys_updated_on>
+        <web_service_definition display_value="KPI Data API">14eb3effc32f9a500ced12f1b4013155</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>9a3d3a33c3af9a500ced12f1b40131c3</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-13 05:44:02</sys_created_on>
+        <sys_id>9c9dfeffc36f9a500ced12f1b4013158</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-02-13 05:44:02</sys_updated_on>
+        <table>sys_ws_operation</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.foundation.current.department.kpi</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-07 17:36:34</sys_created_on>
+        <sys_id>12dcb208c30b9e500ced12f1b40131f5</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>sam.foundation.current.department.kpi</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_12dcb208c30b9e500ced12f1b40131f5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:16:02</sys_updated_on>
+        <type>string</type>
+        <value>[   &#13;
+    {&#13;
+        "kpi": "Departments with Duplicate Records",&#13;
+        "description": "Prevent misallocation of software licenses and ensures accurate compliance reporting.",&#13;
+        "recommendation": "Identify and merge duplicate department records to ensure data consistency.",&#13;
+        "table": "cmn_department",&#13;
+        "field": "name"&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Departments Without Business Unit",&#13;
+        "description": "Associating departments with business units helps streamline software license tracking and ensures proper entitlement distribution.",&#13;
+        "recommendation": "Ensure all departments are associated with a valid BU during record creation and validation.",&#13;
+        "table": "cmn_department",&#13;
+        "field": "business_unitISEMPTY"&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Departments Without Cost Center",&#13;
+        "description": " Associating departments with cost centers helps enable accurate license allocation and financial reporting.",&#13;
+        "recommendation": "Ensure cost centers are correctly linked to departments and validate periodically.",&#13;
+        "table": "cmn_department",&#13;
+        "field": "cost_centerISEMPTY"&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Departments Without Department Head",&#13;
+        "description":" Assigning a department head helps ensure accountability for software license management and compliance within the department.",&#13;
+        "recommendation": "Assign a department head to every department and regularly review records for completeness.",&#13;
+        "table": "cmn_department",&#13;
+        "field": "dept_headISEMPTY"&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Departments Without Company",&#13;
+        "description": "Helps to  maintain accurate software asset management and ensures compliance across different business entities.",&#13;
+        "recommendation": "Assign a valid company to each department to maintain proper organizational mapping.",&#13;
+        "table": "cmn_department",&#13;
+        "field": "companyISEMPTY"&#13;
+    }&#13;
+]&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=12dcb208c30b9e500ced12f1b40131f5"/>
+</record_update>

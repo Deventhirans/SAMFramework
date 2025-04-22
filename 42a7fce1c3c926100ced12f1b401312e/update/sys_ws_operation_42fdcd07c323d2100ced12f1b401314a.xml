@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes/>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>procurement form data</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+    try {
+        var body = request.body.data; // Get data sent by the client
+        
+        // Log the incoming body to verify if data is coming correctly
+        gs.info('Received request body: ' + JSON.stringify(body));
+
+        var gr = new GlideRecord('u_procurement_form_data'); // Make sure to check the table name
+
+        // Check if a record with the same user_id already exists
+        gr.addQuery('u_created_by', body.user_id); // Check for existing user_id
+        gr.query();
+
+        if (gr.next()) {
+            // Existing record found - Perform update
+            gs.info('Record found, updating...');
+            gr.setValue('u_procurement_system', body.procurement_system);
+            gr.setValue('u_cloud_discovery', body.cloud_discovery);
+            gr.setValue('u_third_party_software', body.third_party_software);
+            gr.setValue('u_third_party_software_name', body.third_party_software_name);
+            gr.setValue('u_client_software', body.client_software);
+            gr.setValue('u_integration_type', body.integration_type);
+
+            var updated = gr.update(); // Update the record
+
+            if (updated) {
+                gs.info('Record updated successfully with sys_id: ' + gr.sys_id);
+                response.setStatus(200);
+                response.setBody({ 
+                    message: "✅ Data updated successfully!", 
+                    sys_id: gr.sys_id 
+                });
+            } else {
+                throw new Error("Update operation failed.");
+            }
+        } else {
+            // No record found - Perform insert
+            gs.info('No existing record found, inserting...');
+            gr.initialize();
+            gr.setValue('u_created_by', body.user_id);
+            gr.setValue('u_procurement_system', body.procurement_system);
+            gr.setValue('u_cloud_discovery', body.cloud_discovery);
+            gr.setValue('u_third_party_software', body.third_party_software);
+            gr.setValue('u_third_party_software_name', body.third_party_software_name);
+            gr.setValue('u_client_software', body.client_software);
+            gr.setValue('u_integration_type', body.integration_type);
+            
+            var recordID = gr.insert(); // Insert a new record
+            
+            if (recordID) {
+                gs.info('Record inserted with sys_id: ' + recordID);
+                response.setStatus(201);
+                response.setBody({ 
+                    message: "✅ Data submitted successfully!", 
+                    sys_id: recordID 
+                });
+            } else {
+                throw new Error("Insert operation failed.");
+            }
+        }
+    } catch (err) {
+        gs.error('Error: ' + err.message); // Log any error that occurs
+        response.setStatus(500);
+        response.setBody({ error: "❌ Server error: " + err.message });
+    }
+})(request, response);
+]]></operation_script>
+        <operation_uri/>
+        <produces/>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>harish_123</sys_created_by>
+        <sys_created_on>2025-02-10 14:01:24</sys_created_on>
+        <sys_id>42fdcd07c323d2100ced12f1b401314a</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>procurement form data</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ws_operation_42fdcd07c323d2100ced12f1b401314a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:31:49</sys_updated_on>
+        <web_service_definition/>
+        <web_service_version/>
+    </sys_ws_operation>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>42fdcd07c323d2100ced12f1b401314a</id>
+        <sys_created_by>harish_123</sys_created_by>
+        <sys_created_on>2025-02-10 14:01:23</sys_created_on>
+        <sys_id>28a25907c3e3d2100ced12f1b4013132</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>harish_123</sys_updated_by>
+        <sys_updated_on>2025-02-10 14:01:23</sys_updated_on>
+        <table>sys_ws_operation</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.CustomScriptInclude</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>CustomScriptInclude</name>
+        <sandbox_callable>true</sandbox_callable>
+        <script><![CDATA[var CustomScriptInclude = Class.create();
+CustomScriptInclude.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    updatePropertyValue: function() {
+        var property = this.getParameter('sysparm_property');
+        var suggestedValue = this.getParameter('sysparm_suggested_value');
+
+        try {
+            // Perform the server-side update of the property here
+            var gr = new GlideRecord('sys_properties'); // Or the appropriate table
+            gr.get('name', property); // Or use sys_id if you are passing that
+            if (gr.isValid()) {
+                gr.setValue('value', suggestedValue);
+                gr.update();
+                return 'success'; // Return 'success' on successful update
+            } else {
+                gs.error("Property not found: " + property);
+                return 'error';
+            }
+        } catch (ex) {
+            gs.error("Error updating property: " + ex);
+            return 'error';
+        }
+    },
+
+    type: 'CustomScriptInclude'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2024-12-26 16:19:09</sys_created_on>
+        <sys_id>17c8bc9cc376da100ced12f1b4013169</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>CustomScriptInclude</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_17c8bc9cc376da100ced12f1b4013169</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:38:44</sys_updated_on>
+    </sys_script_include>
+</record_update>

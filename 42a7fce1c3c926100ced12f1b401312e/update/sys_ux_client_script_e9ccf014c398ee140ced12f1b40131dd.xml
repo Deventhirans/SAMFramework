@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Contract &amp; Entitlement">ef163148c31c6a140ced12f1b4013192</macroponent>
+        <name>rich_text_5/html</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+ * @param {params} params
+ * @param {api} params.api
+ * @param {TransformApiHelpers} params.helpers
+ */
+function evaluateProperty({ api, helpers }) {
+  var instanceURL = api.data.get_instance_url_1.output.fullUrl
+  let html = `
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+      .contract-card {
+        border-radius: 15px;
+        margin: 20px auto;
+        padding: 25px;
+        // max-width: 520px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        font-family: 'Poppins', sans-serif;
+        //transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: white;
+        text-align: center;
+      }
+      .contract-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+      .icon {
+        color: #27ae60;
+        font-size: 20px;
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+      .main-text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #2c3e50;
+        line-height: 1.7;
+        margin: 0 0 15px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .load-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 5px 15px; /* Smaller button */
+        background-color: #0052cc; /* Matching color */
+        color: white;
+        border: none;
+        border-radius: 3px; /* Slightly rounded corners */
+        font-family: 'Poppins', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        text-decoration: none;
+        text-align: center;
+        transition: background-color 0.3s ease;
+      }
+      .load-button:hover {
+        background-color: #003f99;
+      }
+      .upload-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 18px; /* Size of the circle */
+        height: 18px;
+        background-color: #0052cc; /* Blue background to match the button */
+        border-radius: 50%; /* Circular shape */
+        color: white; /* White arrow */
+        font-size: 12px; /* Adjust arrow size */
+        margin-right: 5px; /* Space between icon and text */
+        vertical-align: middle;
+      }
+      @media (max-width: 768px) {
+        .contract-card {
+          margin: 15px;
+          padding: 20px;
+          max-width: 90%;
+        }
+        .main-text {
+          font-size: 15px;
+        }
+        .load-button {
+          padding: 4px 12px;
+          font-size: 12px;
+        }
+        .upload-icon {
+          width: 16px;
+          height: 16px;
+          font-size: 10px;
+        }
+      }
+    </style>
+    <div class="contract-card">
+      <div class="card-content">
+        <p class="main-text">
+          <span class="icon">✅</span> Create entitlements to enter your license details and allocate purchased software rights to users or devices.
+        </p>
+        <a href="${instanceURL}/now/softwareasset/home" target="_blank" class="load-button">
+          <span class="upload-icon">⇧</span> Load Entitlement 
+        </a>
+      </div>
+    </div>
+  `;
+
+  return html;
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-11 06:25:07</sys_created_on>
+        <sys_id>e9ccf014c398ee140ced12f1b40131dd</sys_id>
+        <sys_mod_count>48</sys_mod_count>
+        <sys_name>rich_text_5/html</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_e9ccf014c398ee140ced12f1b40131dd</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

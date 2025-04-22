@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Properties">5f263d48c31c6a140ced12f1b401311b</macroponent>
+        <name>updateProperty</name>
+        <preset/>
+        <required_translations>[
+    {
+        "message": "Property updated successfully"
+    },
+    {
+        "message": "Failed to updated Property"
+    }
+]</required_translations>
+        <script><![CDATA[async function handler({ api, event, helpers, imports }) { 
+    // Validate and log the helpers.snHttp object
+    console.log("snHttp object:", helpers.snHttp);
+
+    if (!helpers.snHttp || typeof helpers.snHttp !== "function") {
+        console.error("Error: helpers.snHttp is not properly initialized or is not callable.");
+        return;
+    }
+    var selectedProperty = api.state.selectedProperty
+
+    var properties = api.data.sam_properties_1.output.properties; // Retrieve the properties
+
+    console.log("Properties selected ", selectedProperty);
+    console.log("Properties to update:", properties);
+    properties = properties.filter((item) => selectedProperty.property.includes(item.property));
+    console.log("properties final",properties);
+
+    for (const property of properties) {
+        const requestData = {
+            sysparm_property: property.property, // Property name
+            sysparm_suggested_value: property.suggested_value // Suggested value
+        };
+
+        console.log("Request payload being sent:", JSON.stringify(requestData, null, 2));
+
+        try {
+            // Use snHttp to send the API request
+            const response = await helpers.snHttp(
+                "/api/985627/property_update", // API endpoint
+                {
+                    method: "POST", // HTTP method
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(requestData) // Pass the request payload
+                }
+            );
+
+            // Log the response for verification
+            console.log("Response status:", response.status);
+            console.log("Response body:", response);
+
+            // Process the API response
+            if (response.status === 200 || response.response.result.status == "success") {
+                console.log(`Property ${property.property} updated successfully in the table.`);
+                
+                api.emit('NOW_UXF_PAGE#ADD_NOTIFICATIONS', {
+                    items: [
+                        {
+                            id: 'alert2',
+                            status: 'positive',
+                            icon: 'info-circle-outline',
+                            content: await helpers.translate('Property updated successfully'),
+                            action: { type: 'dismiss' }
+                        }
+                    ]
+                });
+            } else {
+                console.error(`Failed to updated Property`, response);
+                
+                api.emit('NOW_UXF_PAGE#ADD_NOTIFICATIONS', {
+                    items: [
+                        {
+                            id: 'alert2',
+                            status: 'critical',
+                            icon: 'info-circle-outline',
+                            content: await helpers.translate('Failed to updated Property'),
+                            action: { type: 'dismiss' }
+                        }
+                    ]
+                });
+            }
+        } catch (error) {
+            // Handle any errors in the API call
+            console.error(`Error updating property ${property.property}:`, error);
+            if (error.response) {
+                console.error("Error response:", error.response);
+            } else if (error.data) {
+                console.error("Error data:", error.data);
+            }
+        }
+    }
+}
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-03-10 15:42:00</sys_created_on>
+        <sys_id>6f263d48c31c6a140ced12f1b401311e</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>updateProperty</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_6f263d48c31c6a140ced12f1b401311e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+</record_update>

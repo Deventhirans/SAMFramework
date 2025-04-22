@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.Samimplementwalkkpis</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>Samimplementwalkkpis</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var kpiProperties = [
+        'customwalk.properties'
+    ];
+    
+    function fetchKPIs(propertyName) {
+        var propertyValue = gs.getProperty(propertyName);
+        
+        if (!propertyValue) {
+            gs.error("Property '" + propertyName + "' is empty or not set.");
+            return null;
+        }
+        
+        try {
+            var categories = JSON.parse(propertyValue);
+            var categoryArray = []; // Array to store category-based tasks
+            
+            categories.forEach(function(category) {
+                // Create a category object
+                var categoryObj = {
+                    name: category.category,
+                    actions: []
+                };
+                
+                if (category.actions && Array.isArray(category.actions)) {
+                    category.actions.forEach(function(action) {
+                        if (action.description && action.short_description) {
+                            var actionObj = {
+                                type: action.type || "",
+                                description: action.description.trim(),
+                                short_description: action.short_description.trim(),
+                                instruction: action.instruction || "",
+                                value_builder_tasks: [] // Will hold related tasks
+                            };
+                            
+                            // Add any additional fields from the action
+                            if (action.plugins) {
+                                actionObj.plugins = action.plugins;
+                            }
+                            
+                            if (action.properties) {
+                                actionObj.properties = action.properties;
+                            }
+                            
+                            categoryObj.actions.push(actionObj);
+                        } else {
+                            gs.error("Missing required fields in action: " + JSON.stringify(action));
+                        }
+                    });
+                } else {
+                    gs.error("No valid actions found in category: " + JSON.stringify(category));
+                }
+                
+                // Only add categories with actions
+                if (categoryObj.actions.length > 0) {
+                    categoryArray.push(categoryObj);
+                }
+            });
+            
+            return categoryArray;
+        } catch (e) {
+            gs.error("Error parsing property '" + propertyName + "': " + e.message);
+            return null;
+        }
+    }
+    
+    function fetchTasksFromValueBuilder(action) {
+        var tasks = [];
+        if (!action.description || !action.short_description) {
+            gs.error("Missing description or short_description for action: " + JSON.stringify(action));
+            return tasks;
+        }
+        
+        var taskGR = new GlideRecord('samp_sp_vb_task');
+        taskGR.addQuery('description', action.description);
+        taskGR.addQuery('short_description', action.short_description);
+        taskGR.addEncodedQuery('stateNOT IN2,-5,3,7'); // Exclude closed/canceled states
+        taskGR.query();
+        
+        while (taskGR.next()) {
+            tasks.push({
+                sys_id: taskGR.getValue('sys_id'),
+                number: taskGR.getValue('number'),
+                description: taskGR.getValue('description'),
+                short_description: taskGR.getValue('short_description'),
+                state: taskGR.getValue('state')
+            });
+        }
+        
+        return tasks;
+    }
+    
+    var result = {
+        categories: []
+    };
+    
+    for (var i = 0; i < kpiProperties.length; i++) {
+        var categoryArray = fetchKPIs(kpiProperties[i]);
+        
+        if (categoryArray && categoryArray.length > 0) {
+            // For each category, fetch the related tasks for each action
+            categoryArray.forEach(function(category) {
+                category.actions.forEach(function(action) {
+                    action.value_builder_tasks = fetchTasksFromValueBuilder(action);
+                });
+                
+                result.categories.push(category);
+            });
+        }
+    }
+    
+    gs.info("Final CustomWalk Data: " + JSON.stringify(result));
+    
+    return result;
+}]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>loga_123</sys_created_by>
+        <sys_created_on>2025-02-28 09:25:43</sys_created_on>
+        <sys_id>ddbffcb0c304e6940ced12f1b40131d9</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Samimplementwalkkpis</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_ddbffcb0c304e6940ced12f1b40131d9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=ddbffcb0c304e6940ced12f1b40131d9"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>ddbffcb0c304e6940ced12f1b40131d9</id>
+        <sys_created_by>loga_123</sys_created_by>
+        <sys_created_on>2025-02-28 09:25:42</sys_created_on>
+        <sys_id>e92089f0c304e6940ced12f1b4013157</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>loga_123</sys_updated_by>
+        <sys_updated_on>2025-02-28 09:25:42</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="ELP for Complex Publishers">d7dfaf92c3d352100ced12f1b401319d</macroponent>
+        <name>repeater_1/repeatWith</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+
+ * @param {params} params
+
+ * @param {api} params.api
+
+ * @param {TransformApiHelpers} params.helpers
+
+ */
+
+function evaluateProperty({ api, helpers }) {
+
+    var data = api.data.top_product_from_top_publisher_1.output.top_products;
+    
+    var selectedPublishers = api.data.get_filter_publisher_1.output;
+
+    var searchTerm = api.state.searchInput; // Example search term
+
+    console.log("searchTerm", searchTerm);
+
+    console.log("selectedPublisers", selectedPublishers);
+
+    var selectedPublisherIds = selectedPublishers.flat().map(publisher => publisher.id);
+
+    var selectedPublisherLabels = selectedPublishers.flat().map(publisher => publisher.label);
+
+
+
+    // Get pagination details from the state
+
+    var currentPage = api.state.currentPage || 1; // Default to page 1
+
+    var recordsPerPage = api.state.recordsPerPage || 10; // Default to 8 records per page
+
+
+
+    // Filter the data based on the search term
+
+    var filteredData =data;
+     filteredData = filteredData.filter(item => {
+
+        // Assuming each item has a 'publisher' field which could be an 'id' or 'label'
+
+        return selectedPublisherIds.includes(item.publisher) || selectedPublisherLabels.includes(item.publisher);
+
+    });
+
+    if (searchTerm && searchTerm.trim()) {
+
+        filteredData = filteredData.filter(item => {
+
+            return Object.values(item).some(value =>
+
+                String(value).toLowerCase().includes(searchTerm.toLowerCase())
+
+            );
+
+        });
+
+    }
+
+
+
+    // Apply pagination
+
+    var startIndex = (currentPage - 1) * recordsPerPage;
+
+    var endIndex = startIndex + recordsPerPage;
+
+    var paginatedData = filteredData.slice(startIndex, endIndex);
+
+
+
+    // Return the paginated and filtered data
+
+    return data;
+
+    return {
+
+        currentPage: currentPage,
+
+        recordsPerPage: recordsPerPage,
+
+        totalRecords: filteredData.length,
+
+        totalPages: Math.ceil(filteredData.length / recordsPerPage),
+
+        data: paginatedData
+
+    };
+
+}
+
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Harish_123</sys_created_by>
+        <sys_created_on>2025-01-27 08:39:31</sys_created_on>
+        <sys_id>54ef6792c3d352100ced12f1b4013151</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>repeater_1/repeatWith</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_54ef6792c3d352100ced12f1b4013151</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

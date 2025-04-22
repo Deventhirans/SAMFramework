@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.CreateOnPremIntegrationTasks</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>CreateOnPremIntegrationTasks</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var CreateOnPremIntegrationTasks = Class.create();
+CreateOnPremIntegrationTasks.prototype = {
+    initialize: function() {},
+
+    createTasks: function() {
+        var createdTasks = [];
+        var processedProperties = []; // Track processed properties
+
+        var propertyName = "onprem.integration.kpi";
+        var integrationData = gs.getProperty(propertyName);
+
+        if (!integrationData) {
+            gs.error('❌ Sys Property "' + propertyName + '" is missing or empty.');
+            return { error: "No integration data available" };
+        }
+
+        try {
+            var integrations = JSON.parse(integrationData);
+
+            for (var integration in integrations) {
+                processedProperties.push(integration); // Track processed integrations
+                gs.info(']]>🔄<![CDATA[ Processing Integration: ' + integration);
+
+                var kpi = integrations[integration];
+
+                if (!kpi.description || !kpi.recommendation) {
+                    gs.error('⚠️ Missing required fields for integration: ' + JSON.stringify(kpi));
+                    continue;
+                }
+
+                var existingTask = new GlideRecord('samp_sp_vb_task');
+                existingTask.addQuery('short_description', kpi.description);
+                existingTask.addEncodedQuery('stateNOT IN2,-5,3,7');
+                existingTask.query();
+                if (existingTask.next()) {
+                    gs.info('✅ Task already exists for Integration: ' + kpi.description);
+                    continue;
+                }
+
+                var taskGr = new GlideRecord('samp_sp_vb_task');
+                taskGr.initialize();
+                taskGr.setValue('name', integration);
+                taskGr.setValue('short_description', kpi.description);
+                taskGr.setValue('description', kpi.description);
+                taskGr.setValue('instructions', kpi.recommendation);
+
+                var taskId = taskGr.insert();
+                if (taskId) {
+                    gs.info(']]>🚀<![CDATA[ Created Task for: ' + integration + ' (Task ID: ' + taskId + ')');
+                    createdTasks.push(integration);
+                    gs.eventQueue('onprem.integration.task.created', taskGr, taskGr.sys_id);
+                }
+            }
+        } catch (e) {
+            gs.error('❌ Error processing sys_property "' + propertyName + '": ' + e.message);
+        }
+
+        return {
+            createdTasks: createdTasks,
+            processedProperties: processedProperties
+        };
+    },
+
+    type: "CreateOnPremIntegrationTasks"
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-15 13:07:01</sys_created_on>
+        <sys_id>9416bea8c3b3de900ced12f1b40131bf</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>CreateOnPremIntegrationTasks</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_9416bea8c3b3de900ced12f1b40131bf</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:39:00</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>9416bea8c3b3de900ced12f1b40131bf</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-15 13:07:01</sys_created_on>
+        <sys_id>7426bea8c3b3de900ced12f1b40131c3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-02-15 13:07:01</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

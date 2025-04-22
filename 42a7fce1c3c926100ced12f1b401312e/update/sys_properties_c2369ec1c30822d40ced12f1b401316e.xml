@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>procurement.form</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-01 10:21:10</sys_created_on>
+        <sys_id>c2369ec1c30822d40ced12f1b401316e</sys_id>
+        <sys_mod_count>19</sys_mod_count>
+        <sys_name>procurement.form</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_c2369ec1c30822d40ced12f1b401316e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 09:46:32</sys_updated_on>
+        <type>string</type>
+        <value>{"u_created_by":"55cbd374c36e56100ced12f1b40131de","u_procurement_system":"Enabled","u_name_of_the_procurement_system":"SAM Implementation Framework","u_cloud_discovery":"Disabled","u_third_party_software":"No","u_third_party_software_name":"","u_client_software":"Not Available","u_integration_type":"","u_instance_url":"https://dev272448.service-now.com/"}</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=c2369ec1c30822d40ced12f1b401316e"/>
+</record_update>

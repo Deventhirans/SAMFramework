@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>Add group </name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+    // Function to link a group with roles
+    function linkGroupWith(grpSysId, roles) {
+        if (grpSysId && Array.isArray(roles) && roles.length > 0) {
+            for (var i = 0; i < roles.length; i++) {
+                var grRole = new GlideRecord('sys_group_has_role');
+                grRole.initialize();
+                grRole.group = grpSysId;
+                grRole.role = roles[i];
+                grRole.insert();
+            }
+            gs.info("Roles assigned to the group: " + roles.join(", "));
+            return true;
+        } else {
+            gs.info("scrip123 Roles is not an array or group ID is missing");
+            return false;
+        }
+    }
+
+    // Function to get role names from role sys_ids
+    function getRoleNames(roleIds) {
+        var roleNames = [];
+        if (Array.isArray(roleIds) && roleIds.length > 0) {
+            for (var i = 0; i < roleIds.length; i++) {
+                var grRole = new GlideRecord('sys_user_role');
+                if (grRole.get(roleIds[i])) {
+                    roleNames.push(grRole.name.toString());
+                }
+            }
+        }
+        return roleNames.join(",");
+    }
+
+    // Implement resource here
+    var requestBody = request.body.data;
+    var groupName = requestBody.groupName;
+    var roles = requestBody.roles;
+
+    if (!groupName) {
+        response.setStatus(400);
+        response.setBody({
+            error: "Missing required parameter: groupName",
+            success: false,
+            status: "Error"
+        });
+        return;
+    }
+
+    // Check if group already exists
+    var gr = new GlideRecord('sys_user_group');
+    gr.addQuery('name', groupName);
+    gr.query();
+
+    var grpSysId;
+    var isNewGroup = false;
+
+    if (gr.next()) {
+        // Group already exists
+        grpSysId = gr.getUniqueValue();
+        linkGroupWith(grpSysId, roles);
+    } else {
+        // Create new group
+        isNewGroup = true;
+        gr.initialize();
+        gr.name = groupName;
+        gr.description = "This Group is created From SAM Implementation Framework";
+        gr.insert();
+        grpSysId = gr.getUniqueValue();
+        linkGroupWith(grpSysId, roles);
+    }
+
+    // Get the role names for display
+    var roleNames = getRoleNames(roles);
+
+    // Now update the system properties to include the new group
+    var grProperty = new GlideRecord('sys_properties');
+    grProperty.addQuery('name', 'sam.implementation.user.groups');
+    grProperty.query();
+
+    if (grProperty.next()) {
+        // Property exists, append new group to existing array
+        try {
+            var currentValue = JSON.parse(grProperty.getValue('value'));
+            
+            // Create the new group object
+            var newGroupObj = {
+                "Group": groupName,
+                "Description": "This Group is created From SAM Implementation Framework",
+                "Contains_roles": roleNames,
+                "key": groupName.split(' ').pop(),
+                "url": "sys_user_group_list.do?sysparm_query=name%3D" + encodeURIComponent(groupName) + "&sysparm_first_row=1"
+            };
+            
+            // Check if group already exists in the property
+            var groupExists = false;
+            for (var i = 0; i < currentValue.length; i++) {
+                if (currentValue[i].Group === groupName) {
+                    currentValue[i] = newGroupObj; // Update existing entry
+                    groupExists = true;
+                    break;
+                }
+            }
+            
+            // Add new group if it doesn't exist
+            if (!groupExists) {
+                currentValue.push(newGroupObj);
+            }
+            
+            // Update property with new array
+            grProperty.setValue('value', JSON.stringify(currentValue));
+            grProperty.update();
+        } catch (e) {
+            gs.error("Error updating system property: " + e);
+            response.setStatus(500);
+            response.setBody({
+                error: "Error updating system property: " + e,
+                success: false,
+                status: "Error"
+            });
+            return;
+        }
+    } else {
+        // Property doesn't exist, create it with initial array
+        grProperty.initialize();
+        grProperty.name = 'sam.implementation.user.groups';
+        
+        var initialValue = [{
+            "Group": groupName,
+            "Description": "This Group is created From SAM Implementation Framework",
+            "Contains_roles": roleNames,
+            "key": groupName.split(' ').pop(),
+            "url": "sys_user_group_list.do?sysparm_query=name%3D" + encodeURIComponent(groupName) + "&sysparm_first_row=1"
+        }];
+        
+        grProperty.value = JSON.stringify(initialValue);
+        grProperty.insert();
+    }
+
+    // Set response
+    if (isNewGroup) {
+        response.setBody({
+            message: "Group created successfully and system properties updated!",
+            success: true,
+            status: "success",
+            sysId: grpSysId
+        });
+    } else {
+        response.setBody({
+            message: "Group already exists. Roles and system properties updated!",
+            success: true,
+            status: "success",
+            sysId: grpSysId
+        });
+    }
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/985627/custom_add_group</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-07 17:19:55</sys_created_on>
+        <sys_id>388de20fc3882e900ced12f1b40131c0</sys_id>
+        <sys_mod_count>14</sys_mod_count>
+        <sys_name>Add group </sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ws_operation_388de20fc3882e900ced12f1b40131c0</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:31:49</sys_updated_on>
+        <web_service_definition display_value="Custom Add Group">7e1d2a87c3882e900ced12f1b40131b3</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>388de20fc3882e900ced12f1b40131c0</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-07 17:19:54</sys_created_on>
+        <sys_id>1cdf22c3c3c82e900ced12f1b4013169</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-03-07 17:19:54</sys_updated_on>
+        <table>sys_ws_operation</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

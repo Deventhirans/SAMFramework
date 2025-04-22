@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.discoveryHealthKPI</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Discovery Health and Trend Analysis</description>
+        <mobile_callable>false</mobile_callable>
+        <name>discoveryHealthKPI</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var discoveryHealthKPI = Class.create();
+discoveryHealthKPI.prototype = {
+    initialize: function() {
+        this.healthIndicators = {
+            schedule_adherence: 0.25,
+            error_rates: 0.25,
+            completion_rates: 0.25,
+            data_quality: 0.25
+        };
+        
+        // Sample historical data
+        this.historicalData = {
+            lastMonth: {
+                schedule_adherence: 0.92,
+                error_rates: 0.05,
+                completion_rates: 0.88,
+                data_quality: 0.95
+            },
+            thisMonth: {
+                schedule_adherence: 0.94,
+                error_rates: 0.03,
+                completion_rates: 0.90,
+                data_quality: 0.96
+            }
+        };
+    },
+
+    calculate: function() {
+        return {
+            overall_health: this._calculateOverallHealth(),
+            trend_analysis: this._analyzeTrends(),
+            bottleneck_analysis: this._analyzeBottlenecks(),
+            recommendation_engine: this._generateRecommendations()
+        };
+    },
+
+    _calculateOverallHealth: function() {
+        var health = {};
+        // Calculate schedule adherence
+        health.schedule_adherence = this._calculateScheduleAdherence();
+        // Calculate error rates
+        health.error_rates = this._calculateErrorRates();
+        // Calculate completion rates
+        health.completion_rates = this._calculateCompletionRates();
+        // Calculate data quality
+        health.data_quality = this._calculateDataQuality();
+        return this._weightedScore(health);
+    },
+
+    _calculateScheduleAdherence: function() {
+        return this.historicalData.thisMonth.schedule_adherence;
+    },
+
+    _calculateErrorRates: function() {
+        return 1 - this.historicalData.thisMonth.error_rates; // Convert to success rate
+    },
+
+    _calculateCompletionRates: function() {
+        return this.historicalData.thisMonth.completion_rates;
+    },
+
+    _calculateDataQuality: function() {
+        return this.historicalData.thisMonth.data_quality;
+    },
+
+    _weightedScore: function(health) {
+        return {
+            score: (
+                health.schedule_adherence * this.healthIndicators.schedule_adherence +
+                health.error_rates * this.healthIndicators.error_rates +
+                health.completion_rates * this.healthIndicators.completion_rates +
+                health.data_quality * this.healthIndicators.data_quality
+            ),
+            components: health
+        };
+    },
+
+    _analyzeTrends: function() {
+        return {
+            schedule_adherence: {
+                trend: this.historicalData.thisMonth.schedule_adherence - this.historicalData.lastMonth.schedule_adherence,
+                status: "improving"
+            },
+            error_rates: {
+                trend: this.historicalData.lastMonth.error_rates - this.historicalData.thisMonth.error_rates,
+                status: "improving"
+            },
+            completion_rates: {
+                trend: this.historicalData.thisMonth.completion_rates - this.historicalData.lastMonth.completion_rates,
+                status: "improving"
+            },
+            data_quality: {
+                trend: this.historicalData.thisMonth.data_quality - this.historicalData.lastMonth.data_quality,
+                status: "improving"
+            }
+        };
+    },
+
+    _analyzeBottlenecks: function() {
+        var bottlenecks = [];
+        // Analyze network bottlenecks
+        bottlenecks = bottlenecks.concat(this._analyzeNetworkBottlenecks());
+        // Analyze credential bottlenecks
+        bottlenecks = bottlenecks.concat(this._analyzeCredentialBottlenecks());
+        // Analyze resource bottlenecks
+        bottlenecks = bottlenecks.concat(this._analyzeResourceBottlenecks());
+        return bottlenecks;
+    },
+
+    _analyzeNetworkBottlenecks: function() {
+        return [{
+            type: "network",
+            severity: "low",
+            description: "Minor latency issues detected",
+            impact: "Minimal impact on schedule adherence"
+        }];
+    },
+
+    _analyzeCredentialBottlenecks: function() {
+        return [{
+            type: "credentials",
+            severity: "medium",
+            description: "Expired credentials detected for 2 systems",
+            impact: "Moderate impact on completion rates"
+        }];
+    },
+
+    _analyzeResourceBottlenecks: function() {
+        return [{
+            type: "resource",
+            severity: "high",
+            description: "CPU utilization above 90%",
+            impact: "Significant impact on processing speed"
+        }];
+    },
+
+    _generateRecommendations: function() {
+        return [
+            {
+                priority: "high",
+                area: "resources",
+                recommendation: "Increase CPU allocation",
+                expected_impact: "25% improvement in processing speed"
+            },
+            {
+                priority: "medium",
+                area: "credentials",
+                recommendation: "Implement automated credential renewal",
+                expected_impact: "50% reduction in credential-related delays"
+            },
+            {
+                priority: "low",
+                area: "network",
+                recommendation: "Optimize network routes",
+                expected_impact: "10% reduction in latency"
+            }
+        ];
+    }
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-22 19:50:36</sys_created_on>
+        <sys_id>a965d443c33356d00ced12f1b40131ba</sys_id>
+        <sys_mod_count>14</sys_mod_count>
+        <sys_name>discoveryHealthKPI</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_a965d443c33356d00ced12f1b40131ba</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:39:01</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>a965d443c33356d00ced12f1b40131ba</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-22 19:50:36</sys_created_on>
+        <sys_id>fca55c43c33356d00ced12f1b40131d0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-02-22 19:50:36</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

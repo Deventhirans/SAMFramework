@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Automate Standard Software Request">ba5cd07ac3939a100ced12f1b40131cd</macroponent>
+        <name>publish to catalog</name>
+        <preset/>
+        <required_translations>[
+    {
+        "message": "Catalog published successfully"
+    },
+    {
+        "message": "Failed to Publish catalog"
+    },
+    {
+        "message": "Failed to Publish catalog"
+    }
+]</required_translations>
+        <script><![CDATA[/**
+ * @param {params} params
+ * @param {api} params.api
+ * @param {any} params.event
+ * @param {any} params.imports
+ * @param {ApiHelpers} params.helpers
+ */
+async function handler({ api, event, helpers, imports }) {
+    console.log("Product in API:", api.state.clickedProduct);
+    console.log("Category in API:", api.state.selectedCategory);
+ 
+    // Retrieve the current state of clicked product and selected category
+    var productSysId = api.state.clickedProduct.sys_id;
+    var selectedCategory = api.state.selectedCategory;
+ 
+    // Validate helpers.snHttp
+    if (!helpers.snHttp || typeof helpers.snHttp !== "function") {
+        console.error("Error: helpers.snHttp is not properly initialized or callable.");
+        return;
+    }
+ 
+    // Prepare the API request payload
+    const requestData = {
+        sys_id: productSysId,
+        category: selectedCategory,
+        flowName : "Automate Standard software Request"
+    };
+ 
+    try {
+        // Make the HTTP POST request to update the table
+        const response = await helpers.snHttp("/api/985627/publishtocatalogcustom", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestData)
+        });
+ 
+        console.log("Response:", response);
+ 
+        if (response.status === 200 || response.response?.result?.status === "success") {
+            console.log("Updated successfully in the table.");
+ 
+            api.emit('NOW_UXF_PAGE#ADD_NOTIFICATIONS', {
+                items: [
+                    {
+                        id: 'alert2',
+                        status: 'positive',
+                        icon: 'info-circle-outline',
+                        content: await helpers.translate('Catalog published successfully'),
+                        action: { type: 'dismiss' }
+                    }
+                ]
+            });
+            api.data.top_pro_from_top_pub_1.refresh();
+        } else {
+            console.error("Failed to save publisher", response);
+ 
+            api.emit('NOW_UXF_PAGE#ADD_NOTIFICATIONS', {
+                items: [
+                    {
+                        id: 'alert2',
+                        status: 'critical',
+                        icon: 'info-circle-outline',
+                        content: await helpers.translate('Failed to Publish catalog'),
+                        action: { type: 'dismiss' }
+                    }
+                ]
+            });
+        }
+    } catch (httpError) {
+        console.error("Error updating button in the table:", httpError);api.emit('NOW_UXF_PAGE#ADD_NOTIFICATIONS', {
+                items: [
+                    {
+                        id: 'alert2',
+                        status: 'critical',
+                        icon: 'info-circle-outline',
+                        content: await helpers.translate('Failed to Publish catalog'),
+                        action: { type: 'dismiss' }
+                    }
+                ]
+            });
+    }
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-29 18:50:45</sys_created_on>
+        <sys_id>fbaa8813c3dbda500ced12f1b40131f3</sys_id>
+        <sys_mod_count>32</sys_mod_count>
+        <sys_name>publish to catalog</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_fbaa8813c3dbda500ced12f1b40131f3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:07</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+</record_update>

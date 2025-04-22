@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.implementation.top.publisher</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-03 06:43:28</sys_created_on>
+        <sys_id>cdc100f2c3b65e140ced12f1b4013109</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>sam.implementation.top.publisher</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_cdc100f2c3b65e140ced12f1b4013109</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:16:08</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+  {&#13;
+    "kpi": "DMAP",&#13;
+    "description": "Ensure all the software models have DMAPs verified and discrepancies addressed.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "query": "discovery_mapISEMPTY"&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Parent Child Validation",&#13;
+    "description": "Validate that all parent and child relationships are properly configured and accurate.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "query": ""&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Inference Percentage",&#13;
+    "description": "Review and ensure acceptable inference percentages for all software models.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "query": "inference_percentage&lt;50"&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Downgrade Rights",&#13;
+    "description": "Verify and certify all applicable downgrade rights for software models.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "query": "downgrade_rightsISEMPTY"&#13;
+  },&#13;
+  {&#13;
+    "kpi": "LUC (License Usage Compliance)",&#13;
+    "description": "Ensure all software models are compliant with license usage terms and conditions.",&#13;
+    "table": "license_compliance",&#13;
+    "query": "compliance_status!=compliant"&#13;
+  }&#13;
+]&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=cdc100f2c3b65e140ced12f1b4013109"/>
+</record_update>

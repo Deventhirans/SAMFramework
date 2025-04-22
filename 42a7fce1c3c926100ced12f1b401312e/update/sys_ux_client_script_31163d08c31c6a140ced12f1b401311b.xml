@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Persona">bd163d08c31c6a140ced12f1b4013117</macroponent>
+        <name>GroupCreation</name>
+        <preset/>
+        <required_translations>[
+    {
+        "message": "Group created successfully"
+    },
+    {
+        "message": "Failed to create Group"
+    },
+    {
+        "message": "Error Creating Group"
+    }
+]</required_translations>
+        <script><![CDATA[/**
+* @param {params} params
+* @param {api} params.api
+* @param {any} params.event
+* @param {any} params.imports
+* @param {ApiHelpers} params.helpers
+*/
+async function handler({ api, event, helpers, imports }) {
+    console.log("GroupName:", api.state.GrpName);
+
+    var requestData = {
+        "groupName":  api.state.GrpName ,
+        "roles": api.state.role
+    };
+
+    console.log("RequestBody before" , requestData)
+    try {
+        // Use snHttp to send the API request
+        const response = await helpers.snHttp(
+            "/api/985627/custom_add_group",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestData)
+            }
+        );
+
+        // Log the response for verification
+        console.log("Response status 1:", response.response.result.success);
+        console.log("Response status 2:", response.result);
+        console.log("Response body:", response);
+
+        // Process the API response correctly
+        if (response.response.result.success) {
+            console.log(`Group created successfully`);
+
+            api.emit('NOW_UXF_PAGE#ADD_NOTIFICATIONS', {
+                items: [
+                    {
+                        id: 'alert2',
+                        status: 'positive',
+                        icon: 'info-circle-outline',
+                        content: await helpers.translate('Group created successfully'),
+                        action: { type: 'dismiss' }
+                    }
+                ]
+            });
+        } else {
+            console.error(`Failed to update Property`, response);
+
+            api.emit('NOW_UXF_PAGE#ADD_NOTIFICATIONS', {
+                items: [
+                    {
+                        id: 'alert2',
+                        status: 'critical',
+                        icon: 'info-circle-outline',
+                        content: await helpers.translate('Failed to create Group'),
+                        action: { type: 'dismiss' }
+                    }
+                ]
+            });
+        }
+    } catch (error) {
+        // Handle any errors in the API call
+        console.error(`Error updating Group:`, error.message || error);
+        
+        api.emit('NOW_UXF_PAGE#ADD_NOTIFICATIONS', {
+            items: [
+                {
+                    id: 'alert2',
+                    status: 'critical',
+                    icon: 'info-circle-outline',
+                    content: await helpers.translate('Error Creating Group'),
+                    action: { type: 'dismiss' }
+                }
+            ]
+        });
+    }
+}
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-03-10 15:41:37</sys_created_on>
+        <sys_id>31163d08c31c6a140ced12f1b401311b</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>GroupCreation</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_31163d08c31c6a140ced12f1b401311b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+</record_update>

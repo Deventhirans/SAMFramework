@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.serviceDiscoveryKPI</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>serviceDiscoveryKPI</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var serviceDiscoveryKPI = Class.create();
+serviceDiscoveryKPI.prototype = {
+    initialize: function() {
+        // Weights for the different discovery metrics
+        this.discoveryMetrics = {
+            success_rate: 0.3,
+            coverage: 0.3,
+            freshness: 0.2,
+            consistency: 0.2
+        };
+    },
+    calculate: function() {
+        var discoveredGR = new GlideRecord('cmdb_ci_service_discovered');
+        discoveredGR.query();
+        var metrics = {
+            overall_effectiveness: 0,
+            services: [],
+            patterns: this._analyzePatternEffectiveness(),
+            recommendations: []
+        };
+        var count = 0;
+        while (discoveredGR.next()) {
+            var serviceMetrics = this._analyzeDiscoveredService(discoveredGR);
+            metrics.services.push(serviceMetrics);
+            metrics.overall_effectiveness += serviceMetrics.effectiveness_score;
+            count++;
+        }
+        metrics.overall_effectiveness = (count > 0) ? (metrics.overall_effectiveness / count) : 0;
+        metrics.recommendations = this._generateRecommendations(metrics);
+        return metrics;
+    },
+    _analyzeDiscoveredService: function(discoveredService) {
+        return {
+            name: discoveredService.getValue('name'),
+            effectiveness_score: this._calculateEffectivenessScore(discoveredService),
+            last_discovery: discoveredService.getValue('last_discovered'),
+            status: discoveredService.getValue('status'),
+            coverage: this._calculateCoverage(discoveredService),
+            consistency: this._checkConsistency(discoveredService)
+        };
+    },
+    _calculateEffectivenessScore: function(discoveredService) {
+        // Determine success score: 100 if successful, else 0
+        var status = discoveredService.getValue('last_discovery_status');
+        var successScore = (status == "Success") ? 100 : 0;
+        
+        var coverageScore = this._calculateCoverage(discoveredService);
+        var freshnessScore = this._calculateFreshness(discoveredService);
+        var consistencyScore = this._checkConsistency(discoveredService);
+        
+        // Combine scores using the defined weights
+        var overall = (successScore * this.discoveryMetrics.success_rate) +
+                      (coverageScore * this.discoveryMetrics.coverage) +
+                      (freshnessScore * this.discoveryMetrics.freshness) +
+                      (consistencyScore * this.discoveryMetrics.consistency);
+        return overall;
+    },
+    _calculateCoverage: function(discoveredService) {
+        // If a coverage value exists, use it; otherwise, assume full coverage (100)
+        var coverage = discoveredService.getValue('discovery_coverage');
+        if (!coverage) {
+            return 100;
+        }
+        return parseFloat(coverage);
+    },
+    _calculateFreshness: function(discoveredService) {
+        // Calculate freshness based on the time since the last discovery.
+        // More recent discovery yields a higher score.
+        var lastDiscovered = discoveredService.getValue('last_discovered');
+        if (!lastDiscovered) {
+            return 0;
+        }
+        var lastDiscoveryDate = new GlideDateTime(lastDiscovered);
+        var now = new GlideDateTime();
+        // Compute the duration between now and the last discovered time.
+        var duration = GlideDateTime.subtract(now, lastDiscoveryDate);
+        var diffSeconds = duration.getNumericValue(); // Duration in seconds
+        var diffHours = diffSeconds / 3600;
+        
+        // Define a simple scoring scheme:
+        // Within 24 hours: 100, within 48 hours: 80, within 72 hours: 60, else: 40
+        if (diffHours <= 24) {
+            return 100;
+        } else if (diffHours <= 48) {
+            return 80;
+        } else if (diffHours <= 72) {
+            return 60;
+        } else {
+            return 40;
+        }
+    },
+    _checkConsistency: function(discoveredService) {
+        // For consistency, if the last discovery status is "Success", assume high consistency.
+        // Otherwise, assume lower consistency.
+        var status = discoveredService.getValue('last_discovery_status');
+        if (status == "Success") {
+            return 100;
+        } else {
+            return 90;
+        }
+    },
+    _analyzePatternEffectiveness: function() {
+        // Analyze overall discovery patterns across services.
+        // This example computes the overall success and failure percentages.
+        var gr = new GlideRecord('cmdb_ci_service_discovered');
+        gr.query();
+        var total = 0;
+        var successes = 0;
+        while (gr.next()) {
+            total++;
+            if (gr.getValue('last_discovery_status') == "Success") {
+                successes++;
+            }
+        }
+        var successRate = (total > 0) ? (successes / total) * 100 : 0;
+        return {
+            total_services: total,
+            success_rate_percentage: successRate,
+            failure_rate_percentage: 100 - successRate
+        };
+    },
+    _generateRecommendations: function(metrics) {
+        var recommendations = [];
+        // Simple recommendation logic:
+        // If overall effectiveness is below 70, suggest improvements; otherwise, note good performance.
+        if (metrics.overall_effectiveness < 70) {
+            recommendations.push("Improve discovery success rate and freshness.");
+        } else {
+            recommendations.push("Discovery process is performing well.");
+        }
+        return recommendations;
+    }
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-22 21:29:27</sys_created_on>
+        <sys_id>f30ce487c37b56d00ced12f1b40131bc</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>serviceDiscoveryKPI</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_f30ce487c37b56d00ced12f1b40131bc</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:39:03</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>f30ce487c37b56d00ced12f1b40131bc</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-22 21:29:26</sys_created_on>
+        <sys_id>f44ca8c7c37b56d00ced12f1b401312d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-02-22 21:29:26</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

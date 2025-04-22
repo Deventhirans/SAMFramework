@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="cert_schedule">
+    <cert_schedule action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <assign_to>assigned_to</assign_to>
+        <assign_to_empty>Create Unassigned Task</assign_to_empty>
+        <assign_to_group/>
+        <assignment_type>User Field</assignment_type>
+        <business_calendar/>
+        <condition/>
+        <conditional>false</conditional>
+        <days_to_complete>1</days_to_complete>
+        <display_fields>os,discovery_source</display_fields>
+        <entered_time/>
+        <fields>name,cpu_count</fields>
+        <filter display_value="Demo Filtering - 1">29b0f0b1c3c122100ced12f1b401314e</filter>
+        <group/>
+        <instructions><![CDATA[<p>operational status is not empty</p>]]></instructions>
+        <last_run_date>2025-04-22 04:01:15</last_run_date>
+        <max_drift/>
+        <migration_exception/>
+        <migration_status>ready</migration_status>
+        <name>Demo schedule filtering</name>
+        <next_scheduled_run/>
+        <offset/>
+        <offset_type>0</offset_type>
+        <run_as display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2025-04-22 03:57:49</run_start>
+        <run_time>1970-01-01 08:00:00</run_time>
+        <run_type>on_demand</run_type>
+        <script><![CDATA[new global.CertificationTaskCreate().runCerts();]]></script>
+        <sys_class_name>cert_schedule</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-22 04:00:42</sys_created_on>
+        <sys_id>1b51b0b5c3c122100ced12f1b4013112</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Demo schedule filtering</sys_name>
+        <sys_package display_value="SAMFramework" source="x_985627_samfram_0">42a7fce1c3c926100ced12f1b401312e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>cert_schedule_1b51b0b5c3c122100ced12f1b4013112</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 05:11:39</sys_updated_on>
+        <table>cmdb_ci_win_server</table>
+        <task_description>Demo</task_description>
+        <time_zone/>
+        <upgrade_safe>false</upgrade_safe>
+        <user/>
+    </cert_schedule>
+</record_update>

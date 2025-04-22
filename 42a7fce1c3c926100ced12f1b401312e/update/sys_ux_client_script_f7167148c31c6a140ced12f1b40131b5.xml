@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Validate Software Model">f3167148c31c6a140ced12f1b40131b2</macroponent>
+        <name>rich_text_6/html</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+  * @param {params} params
+  * @param {api} params.api
+  * @param {TransformApiHelpers} params.helpers
+  */
+function evaluateProperty({ api, helpers }) {
+  try {
+    // Fetching content dynamically from "Dynamic Sys Reader"
+    const contentTree =  api.data.dynamic_sys_reader_1.output;
+
+    if (!contentTree || !Array.isArray(contentTree)) {
+      throw new Error("Invalid or missing contentTree data.");
+    }
+
+    // Build the HTML with professional bullet and header color
+    let html = `
+      <style>
+        .card {
+          background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f0 100%);
+          border-radius: 12px;
+          padding: 10px,20px,20px,20px;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+          font-family: 'Roboto', 'Arial', sans-serif;
+        }
+        .card-header {
+          padding: 20px;
+          font-size: 28px;
+          font-weight: 700;
+          color: #8875c7;
+          text-align: center;
+          border-bottom: 2px solid #c5cae9;
+        }
+        .card-body {
+          padding: 25px;
+        }
+        .parent-cards-container {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+        }
+        .parent-card {
+          border: 1px solid #e0e0e0;
+          border-radius: 10px;
+          background: #ffffff;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .parent-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        .parent-header {
+          background: #98c1d9;
+          padding-top: 15px;
+          font-size: 15px;
+          font-weight: 500;
+          color: #ffffff;
+          text-align: center;
+          border-bottom: 1px solid #4fc3f7;
+          height: 50px;
+          line-height: 20px;
+          box-sizing: border-box;
+        }
+        .children-container {
+          padding: 20px;
+          background: linear-gradient(to bottom, #f0f4f7 0%, #ffffff 100%);
+          border-top: 1px solid #e0e0e0;
+        }
+        .child-item {
+          font-size: 16px;
+          font-weight: 500;
+          margin-bottom: 15px;
+          color: #37474f;
+          line-height: 1.6;
+          padding-left: 15px;
+          border-left: 4px solid #26a69a;
+          background: #f7fafc;
+          border-radius: 4px;
+          display: flex;
+          align-items: center;
+          text-align: left;
+        }
+        // .child-item::before {
+        //   content: "•";
+        //   color: #0288d1;
+        //   font-weight: bold;
+        //   margin-right: 12px;
+        //   font-size: 16px;
+        // }
+        .child-item:last-child {
+          margin-bottom: 0;
+        }
+      </style>
+      <div class="card">
+        <div class="card-header">Certifying Software Models</div>
+        <div class="card-body">
+          <div class="parent-cards-container">
+    `;
+
+    contentTree.forEach(parent => {
+      html += `
+        <div class="parent-card">
+          <div class="parent-header">${parent.label}</div>
+          <div class="children-container">
+      `;
+
+      parent.children.forEach(child => {
+        html += `<div class="child-item">${child.label}</div>`;
+      });
+
+      html += `</div></div>`;
+    });
+
+    html += `</div></div></div>`;
+
+    return html;
+  } catch (error) {
+    return `<div style="color: red; font-weight: bold;">Error: ${error.message}</div>`;
+  }
+}
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-03-10 15:41:45</sys_created_on>
+        <sys_id>f7167148c31c6a140ced12f1b40131b5</sys_id>
+        <sys_mod_count>12</sys_mod_count>
+        <sys_name>rich_text_6/html</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_f7167148c31c6a140ced12f1b40131b5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

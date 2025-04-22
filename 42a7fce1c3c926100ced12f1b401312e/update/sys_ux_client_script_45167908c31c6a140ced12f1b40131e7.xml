@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="plugin">34167908c31c6a140ced12f1b401319d</macroponent>
+        <name>rich_text_5/html</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+ * @param {params} params
+ * @param {api} params.api
+ * @param {TransformApiHelpers} params.helpers
+ */
+function evaluateProperty({api, helpers}) {
+  // Check if there are any tasks available
+  const hasNoTasks = true; // Replace this with your actual check for empty tasks
+  
+  if (hasNoTasks) {
+    // Return HTML for an attractively styled empty state with reduced height and 100% width
+    return `<div style="text-align: center; padding: 20px; background: linear-gradient(to bottom, #f9fbfd, #edf2f7); border-radius: 12px; box-shadow: 0 8px 24px rgba(149, 157, 165, 0.1); width: 100%;">
+<div style="margin-bottom: 16px; animation: float 3s ease-in-out infinite;">
+<svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="24" height="24" rx="12" fill="#E8F5FF" />
+<path d="M7 8h10M7 12h10M7 16h6" stroke="#0070F3" stroke-width="2" stroke-linecap="round" />
+<circle cx="18.5" cy="18.5" r="4.5" fill="#0070F3" opacity="0.2" />
+<path d="M18.5 16v2.5H21" stroke="#0070F3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
+</div>
+<h2 style="color: #2c3e50; font-size: 22px; font-weight: 600; margin-bottom: 12px; text-shadow: 0 1px 2px rgba(0,0,0,0.05);">No Value Builder Tasks</h2>
+<p style="color: #5a6d7e; font-size: 16px; line-height: 1.4; margin-bottom: 0; max-width: 100%;">Create tasks to improve your software model health and track your progress</p>
+<style>
+        @keyframes float {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-8px); }
+          100% { transform: translateY(0px); }
+        }
+</style>
+</div>`;
+  } else {
+    // Return empty string (or your normal content) when tasks exist
+    return '';
+  }
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-03-10 15:41:34</sys_created_on>
+        <sys_id>45167908c31c6a140ced12f1b40131e7</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>rich_text_5/html</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_45167908c31c6a140ced12f1b40131e7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

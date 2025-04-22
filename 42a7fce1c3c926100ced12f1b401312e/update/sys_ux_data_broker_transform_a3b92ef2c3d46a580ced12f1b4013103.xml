@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.sam walk value builder</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>sam walk value builder</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    // Corrected property name (addtional -> additional)
+    var additionalKpiProperty = 'customwalk.properties';
+    
+    // Also try with the original spelling as fallback
+    var fallbackPropertyName = 'customwalk.properties';
+    
+    // Initialize the result object with categories as separate arrays
+    var result = {
+        software_procurement: [],
+        system_integrations: [],
+        saas_integrations: [],
+        premises_integrations: [],
+        publisher_management: [],
+        effective_licenseposition: [],
+		software_requests: [],
+        // Add any other categories you might need
+        implementation_kpis: [] // Keep this empty as requested
+    };
+    
+    function fetchKPIs(propertyName) {
+        var kpis = [];
+        
+        // Add debugging
+        gs.log("Attempting to fetch property: " + propertyName);
+        
+        var propertyValue = gs.getProperty(propertyName);
+        
+        if (propertyValue) {
+            gs.log("Successfully retrieved property value");
+            try {
+                // gs.log("Raw property value: " + propertyValue);
+                kpis = JSON.parse(propertyValue);
+                gs.log("Successfully parsed JSON data");
+            } catch (e) {
+                gs.log("Error parsing " + propertyName + ": " + e.message);
+            }
+        } else {
+            gs.log("Property not found or empty: " + propertyName);
+        }
+        
+        return kpis;
+    }
+    
+    function processImplementationKPIs(data) {
+        // gs.log("Processing implementation KPIs, data is array: " + Array.isArray(data));
+        
+        if (Array.isArray(data)) {
+            // gs.log("Data array length: " + data.length);
+            
+            data.forEach(function(categoryItem) {
+                var category = categoryItem.category;
+                // gs.log("Processing category: " + category);
+                
+                if (categoryItem.actions && Array.isArray(categoryItem.actions)) {
+                    categoryItem.actions.forEach(function(action) {
+                        // Create the KPI object
+                        var kpiObject = {
+                            'category': category,
+                            'kpi': action.type,
+                            'description': action.description,
+                            'short_description': action.short_description,
+                            'instruction': action.instruction,
+                            'plugins': action.plugins || [],
+                            'properties': action.properties || []
+                        };
+                        
+                        // Push to the appropriate category array based on the category name
+                        var categoryKey = category.toLowerCase().replace(/ /g, '_');
+                        if (result[categoryKey]) {
+                            result[categoryKey].push(kpiObject);
+                        } else {
+                            // If the category doesn't exist yet, create it
+                            result[categoryKey] = [kpiObject];
+                        }
+                    });
+                    // gs.log("Added " + categoryItem.actions.length + " actions from category " + category);
+                }
+            });
+        }
+        
+        // gs.log("Total implementation KPIs processed across all categories");
+    }
+    
+    // Try with corrected spelling first
+    var implementationData = fetchKPIs(additionalKpiProperty);
+    
+    // If empty, try the original spelling as fallback
+    if (!implementationData || implementationData.length === 0) {
+        // gs.log("First property attempt failed, trying fallback property name");
+        implementationData = fetchKPIs(fallbackPropertyName);
+    }
+    
+    
+    processImplementationKPIs(implementationData);
+    // gs.log('data result returned'+JSON.stringify(result,null,2));
+    return result;
+}]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-19 08:35:58</sys_created_on>
+        <sys_id>a3b92ef2c3d46a580ced12f1b4013103</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>sam walk value builder</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_a3b92ef2c3d46a580ced12f1b4013103</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=a3b92ef2c3d46a580ced12f1b4013103"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>a3b92ef2c3d46a580ced12f1b4013103</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-19 08:35:58</sys_created_on>
+        <sys_id>96faaebec3d46a580ced12f1b401313d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-03-19 08:35:58</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

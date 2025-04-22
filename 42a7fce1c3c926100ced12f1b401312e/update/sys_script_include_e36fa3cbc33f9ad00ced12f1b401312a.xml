@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.discoveryAccuracyKPI</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Discovery Accuracy and Validation Index</description>
+        <mobile_callable>false</mobile_callable>
+        <name>discoveryAccuracyKPI</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var discoveryAccuracyKPI = Class.create();
+discoveryAccuracyKPI.prototype = {
+    initialize: function() {
+        this.validationCriteria = {
+            data_completeness: true,
+            relationship_accuracy: true,
+            attribute_consistency: true,
+            temporal_validity: true
+        };
+
+        // Sample validation thresholds
+        this.thresholds = {
+            completeness: 0.95,
+            relationship: 0.90,
+            consistency: 0.93,
+            temporal: 0.85
+        };
+
+        // Sample current data metrics
+        this.currentMetrics = {
+            completeness: 0.96,
+            relationship: 0.92,
+            consistency: 0.94,
+            temporal: 0.88,
+            duplicates: 42,
+            incomplete_relations: 15,
+            outdated_records: 28
+        };
+    },
+
+    calculate: function() {
+        return {
+            accuracy_score: this._calculateAccuracyScore(),
+            validation_results: this._performValidation(),
+            discrepancy_analysis: this._analyzeDiscrepancies(),
+            improvement_suggestions: this._generateSuggestions()
+        };
+    },
+
+    _calculateAccuracyScore: function() {
+        var score = {
+            data_completeness: this._assessDataCompleteness(),
+            relationship_accuracy: this._assessRelationshipAccuracy(),
+            attribute_consistency: this._assessAttributeConsistency(),
+            temporal_validity: this._assessTemporalValidity()
+        };
+        return this._computeWeightedScore(score);
+    },
+
+    _assessDataCompleteness: function() {
+        return {
+            score: this.currentMetrics.completeness,
+            meets_threshold: this.currentMetrics.completeness >= this.thresholds.completeness,
+            details: {
+                total_fields: 1000,
+                complete_fields: Math.floor(1000 * this.currentMetrics.completeness)
+            }
+        };
+    },
+
+    _assessRelationshipAccuracy: function() {
+        return {
+            score: this.currentMetrics.relationship,
+            meets_threshold: this.currentMetrics.relationship >= this.thresholds.relationship,
+            details: {
+                total_relationships: 500,
+                accurate_relationships: Math.floor(500 * this.currentMetrics.relationship)
+            }
+        };
+    },
+
+    _assessAttributeConsistency: function() {
+        return {
+            score: this.currentMetrics.consistency,
+            meets_threshold: this.currentMetrics.consistency >= this.thresholds.consistency,
+            details: {
+                total_attributes: 800,
+                consistent_attributes: Math.floor(800 * this.currentMetrics.consistency)
+            }
+        };
+    },
+
+    _assessTemporalValidity: function() {
+        return {
+            score: this.currentMetrics.temporal,
+            meets_threshold: this.currentMetrics.temporal >= this.thresholds.temporal,
+            details: {
+                total_records: 1200,
+                valid_records: Math.floor(1200 * this.currentMetrics.temporal)
+            }
+        };
+    },
+
+    _computeWeightedScore: function(score) {
+        return {
+            overall_score: (
+                score.data_completeness.score * 0.3 +
+                score.relationship_accuracy.score * 0.3 +
+                score.attribute_consistency.score * 0.2 +
+                score.temporal_validity.score * 0.2
+            ),
+            component_scores: score
+        };
+    },
+
+    _performValidation: function() {
+        return {
+            validation_timestamp: new Date().toISOString(),
+            criteria_results: {
+                data_completeness: this._validateCompleteness(),
+                relationship_accuracy: this._validateRelationships(),
+                attribute_consistency: this._validateAttributes(),
+                temporal_validity: this._validateTemporal()
+            }
+        };
+    },
+
+    _validateCompleteness: function() {
+        return {
+            passed: this.currentMetrics.completeness >= this.thresholds.completeness,
+            score: this.currentMetrics.completeness,
+            threshold: this.thresholds.completeness
+        };
+    },
+
+    _validateRelationships: function() {
+        return {
+            passed: this.currentMetrics.relationship >= this.thresholds.relationship,
+            score: this.currentMetrics.relationship,
+            threshold: this.thresholds.relationship
+        };
+    },
+
+    _validateAttributes: function() {
+        return {
+            passed: this.currentMetrics.consistency >= this.thresholds.consistency,
+            score: this.currentMetrics.consistency,
+            threshold: this.thresholds.consistency
+        };
+    },
+
+    _validateTemporal: function() {
+        return {
+            passed: this.currentMetrics.temporal >= this.thresholds.temporal,
+            score: this.currentMetrics.temporal,
+            threshold: this.thresholds.temporal
+        };
+    },
+
+    _analyzeDiscrepancies: function() {
+        var discrepancies = [];
+        // Check for duplicate CIs
+        discrepancies = discrepancies.concat(this._analyzeDuplicates());
+        // Check for incomplete relationships
+        discrepancies = discrepancies.concat(this._analyzeIncompleteRelationships());
+        // Check for outdated data
+        discrepancies = discrepancies.concat(this._analyzeOutdatedData());
+        return discrepancies;
+    },
+
+    _analyzeDuplicates: function() {
+        return [{
+            type: "duplicates",
+            count: this.currentMetrics.duplicates,
+            severity: this.currentMetrics.duplicates > 50 ? "high" : "medium",
+            impact: "Data redundancy and potential inconsistencies",
+            affected_areas: ["CI Database", "Relationship Mapping"]
+        }];
+    },
+
+    _analyzeIncompleteRelationships: function() {
+        return [{
+            type: "incomplete_relationships",
+            count: this.currentMetrics.incomplete_relations,
+            severity: this.currentMetrics.incomplete_relations > 20 ? "high" : "medium",
+            impact: "Incomplete service mapping and dependencies",
+            affected_areas: ["Service Mapping", "Impact Analysis"]
+        }];
+    },
+
+    _analyzeOutdatedData: function() {
+        return [{
+            type: "outdated_records",
+            count: this.currentMetrics.outdated_records,
+            severity: this.currentMetrics.outdated_records > 30 ? "high" : "medium",
+            impact: "Inaccurate current state representation",
+            affected_areas: ["Configuration Items", "Change Management"]
+        }];
+    },
+
+    _generateSuggestions: function() {
+        return {
+            discovery_patterns: this._suggestPatternImprovements(),
+            credentials: this._suggestCredentialUpdates(),
+            scheduling: this._suggestSchedulingOptimizations(),
+            configuration: this._suggestConfigurationImprovements()
+        };
+    },
+
+    _suggestPatternImprovements: function() {
+        return [{
+            area: "Discovery Patterns",
+            priority: "high",
+            suggestion: "Implement advanced duplicate detection patterns",
+            expected_impact: "30% reduction in duplicate CIs"
+        }];
+    },
+
+    _suggestCredentialUpdates: function() {
+        return [{
+            area: "Credentials",
+            priority: "medium",
+            suggestion: "Update credential rotation schedule",
+            expected_impact: "15% improvement in successful discoveries"
+        }];
+    },
+
+    _suggestSchedulingOptimizations: function() {
+        return [{
+            area: "Scheduling",
+            priority: "medium",
+            suggestion: "Adjust discovery frequency based on CI change rate",
+            expected_impact: "20% improvement in temporal validity"
+        }];
+    },
+
+    _suggestConfigurationImprovements: function() {
+        return [{
+            area: "Configuration",
+            priority: "high",
+            suggestion: "Enhance relationship mapping rules",
+            expected_impact: "25% reduction in incomplete relationships"
+        }];
+    }
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-23 11:44:22</sys_created_on>
+        <sys_id>e36fa3cbc33f9ad00ced12f1b401312a</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>discoveryAccuracyKPI</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_e36fa3cbc33f9ad00ced12f1b401312a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:39:03</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>e36fa3cbc33f9ad00ced12f1b401312a</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-23 11:44:21</sys_created_on>
+        <sys_id>a3ef2b03c37f9ad00ced12f1b401310e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-02-23 11:44:21</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

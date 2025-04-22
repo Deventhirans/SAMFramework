@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="automated software uninstallation">d57865d5c3b316100ced12f1b4013132</macroponent>
+        <name>rich_text_4/html</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+  * @param {params} params
+  * @param {api} params.api
+  * @param {TransformApiHelpers} params.helpers
+  */
+function evaluateProperty({api, helpers}) {
+	return `
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatic Software Uninstallation Flow (Offboarding)</title>
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e6f0fa 0%, #ffffff 100%);
+            color: #34495e;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 10px auto;
+            padding: 10px;
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 25px;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #16a085;
+            font-size: 17px;
+            margin: 10px 0 10px;
+            position: relative;
+            padding-left: 20px;
+            border-left: 4px solid #adbdf0;
+        }
+        .flow-section {
+            background: rgba(230, 240, 250, 0.5);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            position: relative;
+            animation: fadeIn 0.6s ease-out;
+        }
+        .flow-section::after {
+            content: '↓';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            color: #16a085;
+            opacity: 0.7;
+        }
+        .flow-section:last-child::after {
+            content: '';
+        }
+        .highlight {
+            color: #080561;
+        }
+        p {
+            margin: 10px 0;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        ul li {
+            margin: 3px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        ul li::before {
+            content: '➔';
+            color: #0a0a0a;
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+        .question {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Automatic Software Uninstallation Flow (Offboarding)</h1>
+
+        <div class="flow-section">
+            <h2>Summary</h2>
+            <p>This flow triggers during user offboarding and creates a task to initiate software removal.</p>
+        </div>
+
+        <div class="flow-section">
+            <h2>Trigger - Offboarding Initiation</h2>
+            <ul>
+                <li>Begins when a user’s <span class="highlight">offboarding process</span> is started (e.g., termination or role change logged in ServiceNow).</li>
+                <li>Indicates that software assigned to the user is no longer needed and should be removed.</li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>Action - Flow Activation</h2>
+            <ul>
+                <li>The system launches the <span class="highlight">uninstallation flow</span>, pre-configured in ServiceNow for offboarding events.</li>
+                <li>Validates conditions (e.g., user status, software licenses) to confirm uninstallation is necessary.</li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>Task Creation - Core Step</h2>
+            <ul>
+                <li>Generates a task in ServiceNow as the main action.</li>
+                <li><span class="highlight">Task Details:</span></li>
+                <ul>
+                    <li>Assigned to: IT team or administrator.</li>
+                    <li>Description: Includes user details (e.g., name, ID) and instructions to uninstall software, revoke licenses, or update records.</li>
+                    <li>Purpose: Ensures software removal is tracked and completed as part of offboarding.</li>
+                </ul>
+                <li>Task appears in the ServiceNow workspace for visibility and action.</li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>End - Flow Completion</h2>
+            <ul>
+                <li>Flow stops after task creation.</li>
+                <li>No additional automation (e.g., automatic software removal or license revocation) is included yet; it relies on manual follow-up.</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>
+  `;
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-28 15:44:16</sys_created_on>
+        <sys_id>a7b12af5c360e2100ced12f1b40131da</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>rich_text_4/html</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_a7b12af5c360e2100ced12f1b40131da</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

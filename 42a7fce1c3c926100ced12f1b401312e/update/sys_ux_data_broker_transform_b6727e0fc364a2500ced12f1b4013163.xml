@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.Publisher Pack SAM Plugins</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description>Publisher Pack SAM Plugins</description>
+        <mutates_server_data>false</mutates_server_data>
+        <name>Publisher Pack SAM Plugins</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    // Retrieve the system property value
+    var pluginString = gs.getProperty('publisher.pack.sam.plugins'); // Replace with your actual property name
+
+    // Parse the JSON string into an array of objects
+    var pluginArray = JSON.parse(pluginString);
+
+    // Iterate over the parsed data and create the desired output
+    var pluginInfoArray = pluginArray.map(function (plugin) {
+        var pluginInfo = {
+            id: plugin.id,
+            description: plugin.description,
+            active: GlidePluginManager.isActive(plugin.id) // Check if the plugin is active
+        };
+
+        // If the plugin name starts with sn_, query the sys_store_app table for the update_available field
+        if (plugin.id.startsWith('sn_')) {
+            var sysStoreApp = new GlideRecord('sys_store_app');
+            sysStoreApp.addQuery('scope', plugin.id);
+            sysStoreApp.query();
+
+            if (sysStoreApp.next()) {
+                pluginInfo.update_available = sysStoreApp.getValue('update_available') == "1" ? "true" : "false";
+				pluginInfo.current_version = sysStoreApp.getValue("version");
+
+                // If update_available is true, look up the sys_app_version table
+                if (pluginInfo.update_available === "true") {
+                    var sysAppVersion = new GlideRecord('sys_app_version');
+                    sysAppVersion.addQuery('scope', plugin.id); // Match the name of the plugin
+                    sysAppVersion.query();
+
+                    if (sysAppVersion.next()) {
+                        pluginInfo.available_version = sysAppVersion.getValue('version'); // Retrieve the version field
+                    } else {
+                        pluginInfo.available_version = null; // Default to null if no record is found
+                    }
+                }
+            } else {
+                pluginInfo.update_available = "false"; // Default to false if no record is found
+                pluginInfo.available_version = null;
+            }
+        }
+
+        // If the plugin name starts with com., query the v_plugin table for version and available_version
+        if (plugin.id.startsWith('com.')) {
+            var vPlugin = new GlideRecord('v_plugin');
+            vPlugin.addQuery('id', plugin.id);
+            vPlugin.query();
+
+            if (vPlugin.next()) {
+                pluginInfo.current_version = vPlugin.getValue('version');
+                pluginInfo.available_version = vPlugin.getValue('available_version');
+            } else {
+                pluginInfo.current_version = null; // Default to null if no record is found
+                pluginInfo.available_version = null;
+            }
+        }
+
+        return pluginInfo;
+    });
+
+    // Pass the data to the Data Broker
+    var outputs = pluginInfoArray;
+
+    // Return the output so it can be used in UI Builder or other processes
+    return outputs;
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-04-01 14:04:19</sys_created_on>
+        <sys_id>b6727e0fc364a2500ced12f1b4013163</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Publisher Pack SAM Plugins</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_b6727e0fc364a2500ced12f1b4013163</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 09:00:25</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=b6727e0fc364a2500ced12f1b4013163"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>b6727e0fc364a2500ced12f1b4013163</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-04-01 14:04:18</sys_created_on>
+        <sys_id>aec27ecfc364a2500ced12f1b4013113</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-04-01 14:04:18</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

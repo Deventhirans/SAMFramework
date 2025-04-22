@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.integration</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>integration</name>
+        <sandbox_callable>true</sandbox_callable>
+        <script><![CDATA[var Integration = Class.create();
+Integration.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    getProperties: function() {
+        var propertyName = 'Questionnariepart'; // Replace with actual system property name
+        var gr = new GlideRecord('sys_properties');
+        gr.addQuery('name', propertyName);
+        gr.query();
+
+        if (gr.next()) {
+            var propertyValue = gr.getValue('value'); // Get JSON stored in sys_property
+            gs.info("System Property Retrieved: " + propertyValue); // Logging for confirmation
+            return propertyValue;
+        }
+        
+        gs.error("System Property not found: " + propertyName);
+        return '{}'; // Return empty JSON if not found
+    },
+
+    type: 'Integration'
+});
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-17 14:47:45</sys_created_on>
+        <sys_id>30dfd151c37fd2100ced12f1b40131aa</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>integration</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_30dfd151c37fd2100ced12f1b40131aa</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:38:48</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>30dfd151c37fd2100ced12f1b40131aa</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-17 14:47:45</sys_created_on>
+        <sys_id>bf506559c37fd2100ced12f1b40131cb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-02-17 14:47:45</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

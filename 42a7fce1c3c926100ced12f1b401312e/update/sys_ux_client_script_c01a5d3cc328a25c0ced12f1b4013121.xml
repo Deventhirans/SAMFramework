@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Automate Standard Software Request">ba5cd07ac3939a100ced12f1b40131cd</macroponent>
+        <name>rich_text_4/html</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+ * @param {Object} params
+ * @param {Object} params.api
+ * @param {Object} params.helpers
+ * @returns {string} Rendered HTML
+ */
+function evaluateProperty({ api, helpers }) {
+    return `
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Request Management Workflow</title>
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e6f0fa 0%, #ffffff 100%);
+            color: #34495e;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 10px auto;
+            padding: 10px;
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 25px;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #16a085;
+            font-size: 17px;
+            margin: 10px 0 10px;
+            position: relative;
+            padding-left: 20px;
+            border-left: 4px solid #adbdf0;
+        }
+        .flow-section {
+            background: rgba(230, 240, 250, 0.5);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            position: relative;
+            animation: fadeIn 0.6s ease-out;
+        }
+        .flow-section::after {
+            content: '↓';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            color: #16a085;
+            opacity: 0.7;
+        }
+      .flow-section:last-child::after {
+            content: '';
+        }
+        .highlight {
+            color: #080561;
+        }
+        p {
+            margin: 10px 0;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        ul li {
+            margin: 3px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        ul li::before {
+            content: '➔';
+            color: #0a0a0a;
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+        .question {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Software Request Management Workflow</h1>
+
+        <div class="flow-section">
+            <h2>Core Process</h2>
+            <ul>
+                <li><span class="highlight">Request Submission</span>
+                    <p>User initiates a software request in the system</p>
+                    <p>Request automatically routed to the requester's direct manager</p>
+                </li>
+                <li><span class="highlight">Manager Approval Stage</span>
+                    <p>Manager reviews the software request</p>
+                    <p>Validates the necessity and appropriateness of the software</p>
+                </li>
+                <li><span class="highlight">Software Availability Check</span>
+                    <p>System conducts comprehensive software inventory check</p>
+                    <p>Two potential paths based on availability:</p>
+                    <ul>
+                        <li>Procurement task automatically generated</li>
+                        <li>Purchasing team initiates software acquisition process</li>
+                        <li>Procurement team tracks and updates request status</li>
+                        <li>Once software is acquired, allocation process continues</li>
+                        <li>Immediate software allocation initiated</li>
+                        <li>IT asset management team prepares software for deployment</li>
+                        <li>Software provisioning process commences</li>
+                    </ul>
+                </li>
+                <li><span class="highlight">Software Allocation</span>
+                    <p>Software assigned to the requester</p>
+                    <p>Installation or access credentials provided</p>
+                    <p>System updates software inventory records</p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>Key Process Attributes</h2>
+            <ul>
+                <li>Centralized request management</li>
+                <li>Manager-driven approval</li>
+                <li>Automated availability verification</li>
+                <li>Seamless procurement integration</li>
+                <li>Real-time inventory tracking</li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>Benefits</h2>
+            <ul>
+                <li>Streamlined software request process</li>
+                <li>Controlled software procurement</li>
+                <li>Enhanced visibility into software assets</li>
+                <li>Reduced manual administrative overhead</li>
+                <li>Consistent request handling</li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>Workflow Advantages</h2>
+            <ul>
+                <li>Eliminates ad-hoc software requests</li>
+                <li>Ensures proper governance</li>
+                <li>Maintains comprehensive software inventory</li>
+                <li>Accelerates software provisioning</li>
+                <li>Provides clear audit trail</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
+    `;
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-25 07:53:23</sys_created_on>
+        <sys_id>c01a5d3cc328a25c0ced12f1b4013121</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>rich_text_4/html</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_c01a5d3cc328a25c0ced12f1b4013121</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

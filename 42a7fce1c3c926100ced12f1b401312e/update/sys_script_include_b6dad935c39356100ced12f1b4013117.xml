@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.FixScript</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FixScript</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var FixScript = Class.create();
+FixScript.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+    initialize: function() {},
+
+
+    //  to identify the orphan records in the instalation cmdb_sam_sw_install table
+    cleanOrphanInstallation: function() {
+        var orphanRecords = [];
+        var encodedQuery = 'installed_onISEMPTY';
+        //  encodedQuery = 'display_nameSTARTSWITHfilenet';
+
+        try {
+            var gr = new GlideRecord('cmdb_sam_sw_install');
+            gr.addEncodedQuery(encodedQuery);
+            gr.query();
+
+            while (gr.next()) {
+                // Collect the desired fields for each orphan record
+                orphanRecords.push({
+                    sys_id: gr.getUniqueValue(),
+                    software_name: gr.getValue('display_name') // Assuming 'display_name' is the correct field
+                });
+            }
+        } catch (error) {
+            gs.error('Error occurred while cleaning orphan installations: ' + error.message);
+            return (error.message);
+        }
+
+        return orphanRecords;
+    },
+
+
+    cleanOrphanSoftwareModel: function() {
+        var results = {
+            installCountZero: [],
+            licenseCountZero: []
+        };
+
+        try {
+            // Case 1: Query cmdb_software_product_model with install_count = 0
+            var installGR = new GlideRecord('cmdb_software_product_model');
+            installGR.addEncodedQuery('install_count=0'); // Encoded query for install_count = 0
+            installGR.query();
+
+            while (installGR.next()) {
+                results.installCountZero.push({
+                    sys_id: installGR.getUniqueValue(),
+                    name: installGR.getValue('name')
+                });
+            }
+        } catch (error) {
+            gs.error('Error occurred while cleaning orphan installations: ' + error.message);
+
+        }
+
+        
+
+
+        try {
+
+            // Query licensable software models
+            var softwareModelGR = new GlideRecord('cmdb_software_product_model');
+            softwareModelGR.addEncodedQuery('sw_product_type=licensable');
+            softwareModelGR.query();
+
+            while (softwareModelGR.next()) {
+                var softwareName = softwareModelGR.getValue('display_name');
+                var softwareSysId = softwareModelGR.getUniqueValue();
+
+                // Query the alm_license table for the current software model
+                var installationGR = new GlideAggregate('alm_license');
+                installationGR.addEncodedQuery('model.sys_id=' + softwareSysId); // Match by software_model sys_id
+                installationGR.addAggregate('COUNT');
+                installationGR.query();
+
+                if (installationGR.next()) {
+                    var licenseCount = parseInt(installationGR.getAggregate('COUNT'), 10);
+
+                    // Log the details
+                    
+
+                    // Add to results if the license count is zero
+                    if (licenseCount === 0) {
+                        results.licenseCountZero.push({
+                            sys_id: softwareSysId,
+                            name: softwareName
+                        });
+                    }
+                }
+
+                // Increment total processed
+            }
+
+            // Output the results
+        
+        } catch (error) {
+            gs.error('Error occurred while processing software models: ' + error.message);
+        }
+
+
+
+
+
+
+
+
+
+
+        return results;
+    },
+
+
+
+
+    type: 'FixScript'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-25 07:51:35</sys_created_on>
+        <sys_id>b6dad935c39356100ced12f1b4013117</sys_id>
+        <sys_mod_count>26</sys_mod_count>
+        <sys_name>FixScript</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_b6dad935c39356100ced12f1b4013117</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:39:01</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>b6dad935c39356100ced12f1b4013117</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-25 07:51:34</sys_created_on>
+        <sys_id>8f8461f1c3d756100ced12f1b4013191</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-01-25 07:51:34</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

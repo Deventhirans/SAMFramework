@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>value_builder_task2</name>
+        <operation_script><![CDATA[(function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+    try {
+        var taskBuilder = new Properties();
+        var result = taskBuilder.createTasks(); // Get task names and properties
+
+        // Log processed properties to console
+        gs.info('Processed Properties: ' + JSON.stringify(result.processedProperties));
+
+        response.setStatus(200);
+        response.setBody({
+            status: "success",
+            message: "Tasks created successfully.",
+            processed_properties: result.processedProperties.length ? result.processedProperties : ["No properties processed."]
+        });
+
+    } catch (error) {
+        gs.error("Error executing Pro: " + error.message);
+        response.setStatus(500);
+        response.setBody({
+            status: "error",
+            message: "An error occurred while creating tasks: " + error.message
+        });
+    }
+})(request, response);
+]]></operation_script>
+        <operation_uri>/api/985627/value_builder_task2</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-17 08:49:54</sys_created_on>
+        <sys_id>32cdc0d9c37752100ced12f1b401315d</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>value_builder_task2</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ws_operation_32cdc0d9c37752100ced12f1b401315d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:31:49</sys_updated_on>
+        <web_service_definition display_value="value_builder_task2">ea4dc01dc37752100ced12f1b401318c</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>32cdc0d9c37752100ced12f1b401315d</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-17 08:49:53</sys_created_on>
+        <sys_id>e17e4415c3b752100ced12f1b401313e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-02-17 08:49:53</sys_updated_on>
+        <table>sys_ws_operation</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>PUT</http_method>
+        <name>procument_put_api</name>
+        <operation_script><![CDATA[(function process(request, response) {
+    var requestBody = request.body.data;
+    gs.info("]]>🔵<![CDATA[ Incoming API Request for update: " + JSON.stringify(requestBody));
+
+    if (!requestBody || !requestBody.u_created_by || !requestBody.u_instance_url) {
+        gs.error("❌ Missing required data: u_created_by or instance_url");
+        response.setStatus(400);
+        response.setBody({ error: "Missing required data: u_created_by or instance_url" });
+        return;
+    }
+
+    // ]]>🔹<![CDATA[ Step 1: Find System Property to Update (procurement.form)
+    var sysPropGr = new GlideRecord("sys_properties");
+    sysPropGr.addQuery("name", "procurement.form"); // Target system property
+    sysPropGr.query();
+
+    if (sysPropGr.next()) {
+        gs.info("✅ System Property Found: Updating procurement.form");
+
+        var newValue = JSON.stringify(requestBody); // Storing the request body as the new value
+        gs.info("]]>📝<![CDATA[ New Value for System Property: " + newValue);
+        
+        sysPropGr.value = newValue;
+        var updateResult = sysPropGr.update();
+
+        if (updateResult) {
+            gs.info("✅ System Property Successfully Updated!");
+            response.setStatus(200);
+            response.setBody({ message: "✅ System Property updated successfully!", property_name: "procurement.form" });
+        } else {
+            gs.error("❌ Update Failed for System Property: procurement.form");
+            response.setStatus(500);
+            response.setBody({ error: "Update failed for system property: procurement.form" });
+        }
+    } else {
+        gs.warn("❌ System Property 'procurement.form' not found");
+        response.setStatus(404);
+        response.setBody({ error: "System Property 'procurement.form' not found" });
+    }
+})(request, response);
+
+
+
+
+// (function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+//     var requestBody = request.body.data;
+//     gs.info("]]>🔵<![CDATA[ Incoming API Request for system property update: " + JSON.stringify(requestBody));
+
+//     if (!requestBody || !requestBody.u_instance_url) {
+//         gs.error("❌ Missing required data: value");
+//         response.setStatus(400);
+//         response.setBody({ error: "Missing required data: value" });
+//         return;
+//     }
+
+//     try {
+//         // Get the system property
+//         var propertyGr = new GlideRecord('sys_properties');
+//         propertyGr.addQuery('name', 'procurement.form');
+//         propertyGr.query();
+
+//         if (propertyGr.next()) {
+//             // Property exists, update it
+//             gs.info("✅ Property Found: Updating 'procurement.form' with value → " + requestBody.value);
+//             propertyGr.setValue('value', requestBody.value);
+            
+//             var updateResult = propertyGr.update();
+//             if (updateResult) {
+//                 gs.info("✅ System Property Successfully Updated");
+//                 response.setStatus(200);
+//                 response.setBody({
+//                     message: "✅ System property 'procurement.form' updated successfully!",
+//                     property_name: 'procurement.form',
+//                     new_value: requestBody.value
+//                 });
+//             } else {
+//                 gs.error("❌ System Property Update Failed");
+//                 response.setStatus(500);
+//                 response.setBody({ error: "Failed to update system property" });
+//             }
+//         } else {
+//             // Property doesn't exist, create it
+//             gs.info("⚠️ Property Not Found: Creating new 'procurement.form' property");
+//             propertyGr = new GlideRecord('sys_properties');
+//             propertyGr.initialize();
+//             propertyGr.setValue('name', 'procurement.form');
+//             propertyGr.setValue('value', requestBody.value);
+//             propertyGr.setValue('description', 'Procurement form configuration');
+            
+//             var insertResult = propertyGr.insert();
+//             if (insertResult) {
+//                 gs.info("✅ System Property Successfully Created");
+//                 response.setStatus(201);
+//                 response.setBody({
+//                     message: "✅ System property 'procurement.form' created successfully!",
+//                     property_name: 'procurement.form',
+//                     value: requestBody.value
+//                 });
+//             } else {
+//                 gs.error("❌ System Property Creation Failed");
+//                 response.setStatus(500);
+//                 response.setBody({ error: "Failed to create system property" });
+//             }
+//         }
+//     } catch (e) {
+//         gs.error("❌ Exception: " + e.message);
+//         response.setStatus(500);
+//         response.setBody({ error: "Exception occurred: " + e.message });
+//     }
+// })(request, response);
+
+
+
+
+
+
+
+
+
+
+// (function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+//     var requestBody = request.body.data;
+//     gs.info("]]>🔵<![CDATA[ Incoming API Request for update: " + JSON.stringify(requestBody));
+
+//     if (!requestBody || !requestBody.u_created_by || !requestBody.u_instance_url) {
+//         gs.error("❌ Missing required data: u_created_by or instance_url");
+//         response.setStatus(400);
+//         response.setBody({ error: "Missing required data: u_created_by or instance_url" });
+//         return;
+//     }
+
+//     // ]]>🔹<![CDATA[ Step 1: Fetch Column Names Dynamically
+//     var columnMapping = {};
+//     var columnGr = new GlideRecord("sys_dictionary");
+//     columnGr.addQuery("name", "u_custom_form_data"); // Target Table Name
+//     columnGr.addQuery("active", true);
+//     columnGr.query();
+
+//     while (columnGr.next()) {
+//         var columnName = columnGr.element.toString();
+//         var columnLabel = columnGr.column_label.toString().replace(/\s+/g, ''); // Remove spaces
+//         columnMapping[columnLabel] = columnName;
+//     }
+
+//     gs.info("]]>📌<![CDATA[ Dynamic Column Mapping: " + JSON.stringify(columnMapping));
+
+//     // ]]>🔹<![CDATA[ Step 2: Find Record to Update (Based on `instance_url`)
+//     var gr = new GlideRecord("u_custom_form_data");
+//     gr.addQuery("u_instance_url", requestBody.u_instance_url);
+//     gr.query();
+
+//     gs.info("]]>🔍<![CDATA[ Executed Query: Searching for instance_url updateeeeeee = " + requestBody.u_instance_url);
+
+//     if (gr.next()) {
+//         gs.info("✅ Record Found: Updating record with sys_id → " + gr.sys_id);
+
+//         for (var field in requestBody) {
+//             var tableField = columnMapping[field] || field; // Dynamically map field
+// 			gs.log('table fields mapping---->',tableField);
+//             if (gr.isValidField(tableField)) {
+//                 gs.info("]]>📝<![CDATA[ Updating Fieldssssssss: " + tableField + " → " + requestBody[field]);
+//                 gr.setValue(tableField, requestBody[field]);
+//             } else {
+//                 gs.warn("⚠️ Skipping Invalid Field: " + tableField);
+//             }
+//         }
+
+//         var updateResult = gr.update();
+//         if (updateResult) {
+//             gs.info("✅ Record Successfully Updated: " + gr.sys_id);
+//         } else {
+//             gs.error("❌ Update Failed for sys_id: " + gr.sys_id);
+//         }
+
+//         response.setStatus(200);
+//         response.setBody({ message: "✅ Data updated successfullyyyyy!", record_sys_id: gr.sys_id });
+//         return;
+//     } else {
+//         gs.warn("❌ No record found for instance_url = " + requestBody.instance_url);
+//     }
+
+// })(request, response);
+]]></operation_script>
+        <operation_uri>/api/985627/procurement_form_api</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-15 11:41:00</sys_created_on>
+        <sys_id>ab02aa60c3bb9e900ced12f1b40131ca</sys_id>
+        <sys_mod_count>36</sys_mod_count>
+        <sys_name>procument_put_api</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ws_operation_ab02aa60c3bb9e900ced12f1b40131ca</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:31:49</sys_updated_on>
+        <web_service_definition display_value="procurement form API">bcfc95cfc3a7d2100ced12f1b40131ab</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>ab02aa60c3bb9e900ced12f1b40131ca</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-15 11:41:00</sys_created_on>
+        <sys_id>b47262a0c3bb9e900ced12f1b4013192</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-02-15 11:41:00</sys_updated_on>
+        <table>sys_ws_operation</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

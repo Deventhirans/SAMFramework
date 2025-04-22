@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.SAM KPI Foundation</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>SAM KPI Foundation</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    // List of properties to be fetched from the system properties
+    var kpiProperties = [
+        'sam.foundation.users.kpi',
+        'sam.foundation.company.kpi',
+        'sam.foundation.location.kpi',
+        'sam.foundation.costcenter.kpi',
+        'sam.foundation.businessunit.kpi',
+		'sam.foundation.department.kpi'
+    ];
+
+    // Object to hold the KPI values for each type
+    var kpiValues = {
+        'users_kpi': [],
+        'company_kpi': [],
+        'location_kpi': [],
+        'costcenter_kpi': [],
+        'businessunit_kpi': [],
+		'department_kpi':[]
+    };
+
+    // Function to fetch and parse the KPIs
+    function fetchKPIs(propertyName) {
+        var kpis = [];
+        try {
+            kpis = JSON.parse(gs.getProperty(propertyName)); // Parsing the JSON property
+        } catch (e) {
+            gs.log("Error parsing " + propertyName + ": " + e.message);
+        }
+        return kpis;
+    }
+
+    // Function to process each KPI and get the corresponding field value
+    function processKPI(kpis, kpiType) {
+        if (Array.isArray(kpis)) {
+            kpis.forEach(function(kpi) {
+                gs.log(kpiType + " Table: " + kpi.table + " Field: " + kpi.field + "Recommendation:" + kpi.recommendation); // Debug log
+                if (kpi.kpi && kpi.table && kpi.field) {
+                    var field_value = queryTableForField(kpi.table, kpi.field);
+					var recommendation = (field_value > 0) ? kpi.recommendation : "No Action Need";
+                    kpiValues[kpiType].push({
+                        'kpi': kpi.kpi,
+                        'table': kpi.table,
+                        'field': kpi.field,
+						'recommendation': recommendation,
+                        'field_value': field_value,
+						'description':kpi.description
+                    });
+                }
+            });
+        } else {
+            gs.log("The " + kpiType + " property is not in the expected format.");
+        }
+    }
+
+    // Loop through the KPI properties and process each one
+    kpiProperties.forEach(function(property, index) {
+        var kpiType = Object.keys(kpiValues)[index];
+        var kpis = fetchKPIs(property);
+        processKPI(kpis, kpiType);
+    });
+
+    // Function to query the table and get the field value dynamically
+    function queryTableForField(tableName, fieldName) {
+        try {
+            var gr = new GlideRecord(tableName);
+            gr.orderByDesc('sys_created_on'); // Sorting based on creation date (most recent first)
+            gr.query();
+            if (gr.next()) {
+                return gr.getValue(fieldName);
+            }
+            return null;
+        } catch (error) {
+            gs.print("Error querying table: " + error.message);
+            return null; // Return null in case of an error
+        }
+    }
+
+    // Return the final KPI values object
+    return kpiValues;
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-04 08:44:21</sys_created_on>
+        <sys_id>04dd3d81c31252d00ced12f1b4013178</sys_id>
+        <sys_mod_count>36</sys_mod_count>
+        <sys_name>SAM KPI Foundation</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_04dd3d81c31252d00ced12f1b4013178</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=04dd3d81c31252d00ced12f1b4013178"/>
+</record_update>

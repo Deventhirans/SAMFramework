@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="automated software uninstallation">d57865d5c3b316100ced12f1b4013132</macroponent>
+        <name>btn</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+ * @param {params} params
+ * @param {api} params.api
+ * @param {any} params.event
+ * @param {any} params.imports
+ * @param {ApiHelpers} params.helpers
+ */
+async function handler({ api, event, helpers, imports }) {
+    console.log('do it quick')
+    try {
+        console.log('ok processing')
+        // Retrieve the current state of buttonTracker or initialize it
+        // console.log("Button Data",api.data.mark_walk_btn_2.output.buttonData)
+        let currentState = api.state["buttonTracker"] || {};
+
+        // Toggle the state of the button
+        currentState[event.elementId] = currentState[event.elementId] === 1 ? 0 : 1;
+
+        // Update the state
+        api.setState("buttonTracker", currentState);
+
+        // Log the updated state
+        console.log("Updated buttonTracker state:", currentState);
+
+        // Retrieve the button label associated with the event
+        const buttonLabel = event.elementId; // Assuming `elementId` corresponds to `u_button_label`
+
+        // Prepare the updated value for `u_read_flag`
+        const updatedReadFlag = currentState[event.elementId] === 1 ? true : false;
+
+        console.log(`Updating u_read_flag for button '${buttonLabel}' to ${updatedReadFlag}`);
+
+        // Validate helpers.snHttp
+        if (!helpers.snHttp || typeof helpers.snHttp !== "function") {
+            console.error("Error: helpers.snHttp is not properly initialized or callable.");
+            return;
+        }
+
+        // Prepare the API request payload
+        const requestData = {
+            u_button_label: buttonLabel,
+            u_read_flag: updatedReadFlag
+        };
+
+        try {
+            // Make the HTTP POST request to update the table
+            const response = await helpers.snHttp("/api/985627/buttonrun", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestData)
+            });
+
+            // Handle the response
+            if (response.status === 200) {
+                console.log(`Button '${buttonLabel}' updated successfully in the table.`, response.result);
+            } else {
+                console.error(`Failed to update button '${buttonLabel}' in the table:`, response);
+            }
+        } catch (httpError) {
+            console.error(`Error updating button '${buttonLabel}' in the table:`, httpError);
+        }
+    } catch (error) {
+        console.error("Unexpected error in handler:", error);
+    }
+    
+     
+    
+    api.setState('refresh',{timestamp: Date.now()})
+            api.data.mark_run_btn_2.refresh().then(() => {
+        console.log('Custom data source refreshed successfully.');
+    }).catch((error) => {
+        console.error('Error refreshing custom data source:', error);
+    });
+
+}
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>loga_123</sys_created_by>
+        <sys_created_on>2025-03-29 12:04:24</sys_created_on>
+        <sys_id>cde97682c3e0a2100ced12f1b4013145</sys_id>
+        <sys_mod_count>10</sys_mod_count>
+        <sys_name>btn</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_cde97682c3e0a2100ced12f1b4013145</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+</record_update>

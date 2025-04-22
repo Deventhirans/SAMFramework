@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.userscore</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>userscore</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    
+    function fetchKPIs() {
+        var kpis = [];
+        var propertyValue = gs.getProperty('sam.foundation.current.users.kpi');
+
+        if (propertyValue) {
+            try {
+                kpis = JSON.parse(propertyValue);
+                gs.info("Fetched KPI Data: " + JSON.stringify(kpis));
+            } catch (e) {
+                gs.info("Error parsing KPI property: " + e.message);
+            }
+        }
+        return kpis;
+    }
+
+    function getQueryCount(tableName, query) {
+        try {
+            var gr = new GlideAggregate(tableName);
+            if (query && query !== "none") {
+                gr.addEncodedQuery(query);
+            }
+            gr.addAggregate('COUNT');
+            gr.query();
+
+            return gr.next() ? parseInt(gr.getAggregate('COUNT'), 10) : 0;
+        } catch (error) {
+            gs.info("Error querying table " + tableName + ": " + error.message);
+            return 0;
+        }
+    }
+
+    function getTotalUsers() {
+        var gr = new GlideAggregate('sys_user');
+        gr.addEncodedQuery('active=true');
+        gr.addAggregate('COUNT');
+        gr.query();
+
+        return gr.next() ? parseInt(gr.getAggregate('COUNT'), 10) : 0;
+    }
+
+    function calculateAverageScore() {
+        gs.info("Start: Calculating Average KPI Score...");
+
+        var kpis = fetchKPIs();
+        var totalUsers = getTotalUsers();
+
+        if (!totalUsers || !kpis.length) {
+            gs.info("No valid users or KPIs found. Returning 0.");
+            return 0;
+        }
+
+        var totalPercentage = 0;
+
+        kpis.forEach(function(kpi) {
+            if (kpi.table && kpi.field) {
+                var count = getQueryCount(kpi.table, kpi.field);
+                var percentage = (count / totalUsers) * 100;
+                totalPercentage += percentage;
+            }
+        });
+
+        var averagePercentage = (totalPercentage / kpis.length).toFixed(2);
+        gs.info("Final Average KPI Score: " + averagePercentage);
+        return parseFloat(averagePercentage); // Ensure it's a number
+    }
+
+    return calculateAverageScore(); // Returns only a number, no JSON object
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-21 06:49:38</sys_created_on>
+        <sys_id>a72998aac33f96900ced12f1b4013189</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>userscore</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_a72998aac33f96900ced12f1b4013189</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=a72998aac33f96900ced12f1b4013189"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>a72998aac33f96900ced12f1b4013189</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-21 06:49:37</sys_created_on>
+        <sys_id>4b491c6ac33f96900ced12f1b40131d0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-02-21 06:49:37</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

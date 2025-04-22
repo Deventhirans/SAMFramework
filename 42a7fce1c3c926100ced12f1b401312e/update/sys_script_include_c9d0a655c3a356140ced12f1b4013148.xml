@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.CreateSamPropertyMismatchTask</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>CreateSamPropertyMismatchTask</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var CreateSamPropertyMismatchTask = Class.create();
+CreateSamPropertyMismatchTask.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    initialize: function () {},
+
+    processCreateTasks: function () {
+        var propertyName = 'sam.properties'; 
+        var propertyData = gs.getProperty(propertyName); 
+        var results = [];
+
+        if (!propertyData) {
+            gs.error('System property "' + propertyName + '" is empty or not set.');
+            return 'No tasks created. System property is missing.';
+        }
+
+        try {
+            var properties = JSON.parse(propertyData);
+            gs.info('Processing property: ' + propertyName + ', Parsed data: ' + JSON.stringify(properties));
+
+            for (var i = 0; i < properties.length; i++) {
+                var prop = properties[i];
+
+                if (!this.validateProperty(prop)) {
+                    gs.error('Invalid property structure: ' + JSON.stringify(prop));
+                    continue;
+                }
+
+                // Get the actual value from sys_properties
+                var actualValue = this.getSysPropertyValue(prop.property);
+
+                if (actualValue === null) {
+                    gs.error('Property not found in sys_properties: ' + prop.property);
+                    continue;
+                }
+
+                gs.info('Current value for property ' + prop.property + ': ' + actualValue);
+
+                // Check if the values differ (suggested vs actual)
+                if (actualValue !== prop.suggested_value) {
+                    if (this.taskExists(prop.property, actualValue, prop.suggested_value)) {
+                        gs.info('Task already exists for property: ' + prop.property);
+                        continue;
+                    }
+
+                    var taskId = this.createTask(prop, actualValue);
+                    if (taskId) {
+                        results.push('Task created for: ' + prop.property + ' (ID: ' + taskId + ')');
+                    }
+                }
+            }
+        } catch (e) {
+            gs.error('Error processing JSON in "' + propertyName + '": ' + e.message);
+        }
+
+        return results.length > 0 ? results.join('\n') : 'No tasks were created.';
+    },
+
+    getSysPropertyValue: function (propertyName) {
+        var gr = new GlideRecord('sys_properties');
+        gr.addQuery('name', propertyName);
+        gr.query();
+
+        if (gr.next()) {
+            return gr.getValue('value');
+        }
+        return null; // Property not found
+    },
+
+    validateProperty: function (prop) {
+        if (!prop.name || !prop.property || !prop.suggested_value) {
+            gs.error('Missing fields in property object: ' + JSON.stringify(prop));
+            return false;
+        }
+        return true;
+    },
+
+    taskExists: function (property, currentValue, suggestedValue) {
+        var gr = new GlideRecord('samp_sp_vb_task');
+        gr.addQuery('description', property);
+        gr.addQuery('current_value', currentValue);
+        gr.addQuery('suggested_value', suggestedValue);
+        gr.addEncodedQuery('stateNOT IN2,-5,3,7'); 
+        gr.query();
+        return gr.hasNext();
+    },
+
+    createTask: function (prop, currentValue) {
+        var taskGr = new GlideRecord('samp_sp_vb_task');
+        taskGr.initialize();
+        taskGr.setValue('description', 'Mismatch in system property: ' + prop.name);
+        taskGr.setValue('usecase', prop.property);
+        taskGr.setValue('instructions', 'Current Value: ' + currentValue + ', Suggested Value: ' + prop.suggested_value);
+        taskGr.setValue('current_value', currentValue);
+        taskGr.setValue('suggested_value', prop.suggested_value);
+
+        return taskGr.insert();
+    },
+
+    type: 'CreateSamPropertyMismatchTask'
+});
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-05 09:14:24</sys_created_on>
+        <sys_id>c9d0a655c3a356140ced12f1b4013148</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>CreateSamPropertyMismatchTask</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_c9d0a655c3a356140ced12f1b4013148</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:39:02</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>c9d0a655c3a356140ced12f1b4013148</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-05 09:14:24</sys_created_on>
+        <sys_id>aff06255c3a356140ced12f1b40131df</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-02-05 09:14:24</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

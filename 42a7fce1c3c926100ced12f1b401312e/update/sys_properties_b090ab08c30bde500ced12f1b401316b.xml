@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.implementation.installation</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-07 20:09:29</sys_created_on>
+        <sys_id>b090ab08c30bde500ced12f1b401316b</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>sam.implementation.installation</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_b090ab08c30bde500ced12f1b401316b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:16:07</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+{&#13;
+    "kpi": "Installations Without Software Models",&#13;
+    "description": "Software installations missing associated software models can cause challenges in license tracking and compliance management.",&#13;
+    "table": "cmdb_sam_sw_install",&#13;
+    "query": "active=true^assigned_toISNOTEMPTY^discovery_model.modelISEMPTY"&#13;
+},&#13;
+{&#13;
+    "kpi": "Installations Without Associated Discovery Models",&#13;
+    "description": "software installations in the system that are not linked to a discovery model, potentially causing inconsistencies in asset management and licensing compliance.",&#13;
+    "table": "cmdb_sam_sw_install",&#13;
+    "query": "assigned_toISNOTEMPTY^active=true^discovery_modelISEMPTY"&#13;
+},&#13;
+{&#13;
+    "kpi": "Installations Missing Ownership Information",&#13;
+    "description": "Software installations without ownership information may result in accountability issues and delayed resolution of software-related incidents.",&#13;
+    "table": "cmdb_sam_sw_install",&#13;
+    "query": "active=true^assigned_toISEMPTY"&#13;
+},&#13;
+{&#13;
+    "kpi": "Number of Installation With unused user records",&#13;
+    "description": "Tracks the last time the software was used. This helps identify unused or underutilized software for potential reclamation or license reallocation.",&#13;
+    "table": "cmdb_sam_sw_install",&#13;
+    "query": "assigned_toISNOTEMPTY^active=true^last_used&lt;javascript:gs.beginningOfLast3Months()"&#13;
+},&#13;
+{&#13;
+    "kpi": "Number of Installations Without Product Name",&#13;
+    "description": "Installations where the product name is missing. This helps ensure that all software installations are properly tracked and associated with their corresponding product for accurate license management and reporting.",&#13;
+    "table": "cmdb_sam_sw_install",&#13;
+    "query": "active=true^norm_productISEMPTY"&#13;
+},&#13;
+{&#13;
+    "kpi": "Number of Installations Without Publisher",&#13;
+    "description": "Installations where the publisher information is missing. Without the publisher, it becomes challenging to manage software licenses, ensure compliance with licensing agreements.",&#13;
+    "table": "cmdb_sam_sw_install",&#13;
+    "query": "active=true^norm_publisherISEMPTY"&#13;
+}&#13;
+ ]</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=b090ab08c30bde500ced12f1b401316b"/>
+</record_update>

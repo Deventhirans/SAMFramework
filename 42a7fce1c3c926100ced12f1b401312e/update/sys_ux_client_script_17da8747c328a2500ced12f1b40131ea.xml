@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="plugin">34167908c31c6a140ced12f1b401319d</macroponent>
+        <name>rich_text_6/html</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[function evaluateProperty({ api, helpers }) {
+    const plugins = api.data.sam_plugins_1.output;
+    
+    // Font for Plugin ID and Description columns (matching the image)
+    const columnFontFamily = "'Arial', sans-serif";
+
+    let tableHtml = `
+        <div style="max-width: 100%; overflow-x: auto;">
+            <table style="
+                width: 100%;
+                border-collapse: collapse;
+                font-variant: normal;
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            ">
+                <thead>
+                    <tr style="
+                        background-color: #B0C4DE;
+                        color: #222;
+                        font-size: 12px;
+                        font-weight: bold;
+                        text-align: left;
+                        border-bottom: 3px solid #A0B8D9;
+                    ">
+                        <th style="padding: 14px; border-right: 1px solid #A0B8D9;">Plugin ID</th>
+                        <th style="padding: 14px; border-right: 1px solid #A0B8D9;">Description</th>
+                        <th style="padding: 14px; text-align: center;">Installed State</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    tableHtml += plugins.map((plugin, index) => {
+        const rowColor = index % 2 === 0 ? "#EAF3FF" : "#F6FAFF"; // Brighter Alternating Colors
+
+        let pluginStateButton;
+        if (!plugin.active) {
+            pluginStateButton = `
+                <a href="now/app-manager/home/plugin/id/${plugin.id}" target="_blank" style="text-decoration: none;">
+                    <button style="
+                        padding: 10px 14px;
+                        width: 120px;
+                        background-color: #577BC1;
+                        color: #fff;
+                        border: none;
+                        border-radius: 20px;
+                        cursor: pointer;
+                        font-size: 12px;
+                        transition: background-color 0.3s ease-in-out;
+                        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+                    " onmouseover="this.style.backgroundColor='#4669A5'"
+                    onmouseout="this.style.backgroundColor='#577BC1'">
+                        Activate
+                    </button>
+                </a>
+            `;
+        } else if (plugin.update_available === "true") {
+            pluginStateButton = `
+                <a href="now/app-manager/home/tab/updates/search/${plugin.id}" target="_blank" style="text-decoration: none;">
+                    <button style="
+                        padding: 10px 14px;
+                        width: 120px;
+                        background-color: #48A6A7;
+                        color: #fff;
+                        border: none;
+                        border-radius: 20px;
+                        cursor: pointer;
+                        font-size: 12px;
+                        transition: background-color 0.3s ease-in-out;
+                        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+                    " onmouseover="this.style.backgroundColor='#3C8C8D'"
+                    onmouseout="this.style.backgroundColor='#48A6A7'">
+                        Upgrade
+                    </button>
+                </a>
+            `;
+        } else {
+            pluginStateButton = `
+                <button style="
+                    padding: 10px 14px;
+                    width: 120px;
+                    background-color: #CCCCCC;
+                    color: #333;
+                    border: none;
+                    border-radius: 20px;
+                    font-size: 12px;
+                    cursor: not-allowed;
+                    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.05);
+                ">
+                    Up To Date
+                </button>
+            `;
+        }
+
+        return `
+            <tr style="
+                background-color: ${rowColor};
+                border-bottom: 1px solid #D8E3F8;
+            ">
+                <td style="padding: 14px; border-right: 1px solid #A0B8D9; color: #333;
+                    font-family: ${columnFontFamily};
+                ">${plugin.id}</td>
+                <td style="padding: 14px; border-right: 1px solid #A0B8D9; color: #333;
+                    font-family: ${columnFontFamily};
+                ">${plugin.description}</td>
+                <td style="padding: 14px; text-align: center;">${pluginStateButton}</td>
+            </tr>
+        `;
+    }).join("");
+
+    tableHtml += `
+                </tbody>
+            </table>
+        </div>
+    `;
+
+    return tableHtml;
+}
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-04-01 15:53:07</sys_created_on>
+        <sys_id>17da8747c328a2500ced12f1b40131ea</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>rich_text_6/html</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_17da8747c328a2500ced12f1b40131ea</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

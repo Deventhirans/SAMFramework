@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.businessServiceHealthKPI</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>businessServiceHealthKPI</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var businessServiceHealthKPI = Class.create();
+businessServiceHealthKPI.prototype = {
+    initialize: function() {
+        this.weights = {
+            availability: 0.3,
+            performance: 0.3,
+            discovery_health: 0.2,
+            relationship_health: 0.2
+        };
+    },
+    calculate: function() {
+        var bsGr = new GlideRecord('cmdb_ci_service');
+        bsGr.addQuery('operational_status', 1);
+        bsGr.query();
+        var results = {
+            services: [],
+			sysIds : [],
+            overall_health: 0,
+            critical_services_count: 0
+        };
+        
+        while (bsGr.next()) {
+            var serviceHealth = this._calculateServiceHealth(bsGr);
+			results.sysIds.push(bsGr.getUniqueValue())
+            results.services.push(serviceHealth);
+            results.overall_health += serviceHealth.health_score;
+            if (serviceHealth.criticality === 'high') {
+                results.critical_services_count++;
+            }
+        }
+        results.overall_health /= results.services.length || 1;
+        return results;
+    },
+    _calculateServiceHealth: function(service) {
+        var availability = this._getAvailabilityScore(service);
+        var performance = 90;
+        var discoveryHealth = this._getDiscoveryHealth(service);
+        var relationshipHealth = this._getRelationshipHealth(service);
+        return {
+            name: service.getDisplayValue(),
+            sys_id: service.sys_id.toString(),
+            criticality: service.business_criticality,
+            health_score: this._calculateWeightedScore({
+                availability: availability,
+                performance: performance,
+                discovery_health: discoveryHealth,
+                relationship_health: relationshipHealth
+            }),
+            metrics: {
+                availability: availability,
+                performance: performance,
+                discovery_health: discoveryHealth,
+                relationship_health: relationshipHealth
+            },
+            incidents: this._getRecentIncidents(service),
+            changes: this._getRecentChanges(service)
+        };
+    },
+    _getAvailabilityScore: function(service) {
+        var score = 100;
+        var incGr = new GlideRecord('incident');
+        incGr.addQuery('cmdb_ci', service.sys_id);
+        // incGr.addQuery('state', '!=', 'Closed');
+		incGr.addEncodedQuery('state!=7')
+        incGr.query();
+        while (incGr.next()) {
+            score -= 10;
+        }
+        return Math.max(0, score);
+    },
+   _getPerformanceScore: function(service) {
+    var score = 100;
+    var indicatorGr = new GlideRecord('pa_indicators'); // Using the PA indicator table
+    indicatorGr.addQuery('cmdb_ci', service.sys_id);
+    indicatorGr.query();
+    while (indicatorGr.next()) {
+        score -= 5; // Deduct 5 points per indicator record found
+    }
+    return Math.max(0, score);
+},
+
+    _getRelationshipHealth: function(service) {
+        var score = 100;
+        var relGr = new GlideRecord('cmdb_rel_ci');
+        relGr.addQuery('parent', service.sys_id);
+        relGr.query();
+        while (relGr.next()) {
+            score -= 5;
+        }
+        return Math.max(0, score);
+    },
+    _calculateWeightedScore: function(scores) {
+        return (scores.availability * this.weights.availability +
+                scores.performance * this.weights.performance +
+                scores.discovery_health * this.weights.discovery_health +
+                scores.relationship_health * this.weights.relationship_health);
+    },
+    _getRecentIncidents: function(service) {
+        var incidents = [];
+        var incGr = new GlideRecord('incident');
+        incGr.addQuery('cmdb_ci', service.sys_id);
+        // incGr.addQuery('state', '!=', 'Closed');
+		incGr.addEncodedQuery('state!=7')
+        incGr.query();
+        while (incGr.next()) {
+            incidents.push({
+                number: incGr.number.toString(),
+                state: incGr.state.toString(),
+                short_description: incGr.short_description.toString()
+            });
+        }
+        return incidents;
+    },
+    _getRecentChanges: function(service) {
+        var changes = [];
+        var chgGr = new GlideRecord('change_request');
+        chgGr.addQuery('cmdb_ci', service.sys_id);
+        // chgGr.addQuery('state', '!=', 'Closed');
+		chgGr.addEncodedQuery('state!=7')
+        chgGr.query();
+        while (chgGr.next()) {
+            changes.push({
+                number: chgGr.number.toString(),
+                state: chgGr.state.toString(),
+                short_description: chgGr.short_description.toString()
+            });
+        }
+        return changes;
+    },
+    _calculateDiscoveryDeductions: function(discoveredGr) {
+        return 10; 
+    },
+
+	_getDiscoveryHealth: function(service) {
+    var score = 100;
+    // Query the cmdb_ci_service_discovered table where the discovered record's name
+    // matches the business service's name. Adjust this if you have another matching field.
+    var discoveredGr = new GlideRecord('cmdb_ci_service_discovered');
+    discoveredGr.addQuery('name', service.getValue('name'));
+    discoveredGr.query();
+    while (discoveredGr.next()) {
+        // Deduct points based on the discovered record issue
+        score -= this._calculateDiscoveryDeductions(discoveredGr);
+    }
+    return Math.max(0, score);
+},
+
+
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-22 18:26:54</sys_created_on>
+        <sys_id>a33204cfc33b16d00ced12f1b4013102</sys_id>
+        <sys_mod_count>25</sys_mod_count>
+        <sys_name>businessServiceHealthKPI</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_a33204cfc33b16d00ced12f1b4013102</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:39:01</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>a33204cfc33b16d00ced12f1b4013102</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-22 18:26:53</sys_created_on>
+        <sys_id>ae72448fc33b16d00ced12f1b40131b0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-02-22 18:26:53</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

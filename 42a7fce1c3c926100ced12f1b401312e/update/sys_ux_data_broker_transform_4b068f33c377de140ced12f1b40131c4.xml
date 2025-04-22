@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.businessunit</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>businessunit</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var sysPropertyName = "sam.foundation.current.businessunit.kpi"; 
+    var totalKpiCount = 0;
+    var totalRecords = 0;
+    var duplicateCount = 0; 
+
+    // Get system property value
+    var sysPropertyValue = gs.getProperty(sysPropertyName);
+
+    if (!sysPropertyValue) {
+        gs.log("No system property value found for: " + sysPropertyName);
+    } else {
+        try {
+            var config = JSON.parse(sysPropertyValue);
+            var kpisArray = Array.isArray(config) ? config : config.kpis;
+
+            // Get total record count (either from config or default "cmn_location")
+            var totalRecordsTable = config.totalRecordsTable || "cmn_location";
+            gs.log("Fetching total records from table: " + totalRecordsTable);
+
+            var recordCount = new GlideAggregate(totalRecordsTable);
+            recordCount.addAggregate('COUNT');
+            recordCount.query();
+
+            if (recordCount.next()) {
+                totalRecords = parseInt(recordCount.getAggregate('COUNT'), 10);
+                gs.log("Total records found: " + totalRecords);
+            } else {
+                gs.log("No records found in table: " + totalRecordsTable);
+            }
+
+            // Process KPI queries
+            if (Array.isArray(kpisArray)) {
+                gs.log("Processing KPI queries...");
+
+                kpisArray.forEach(function (kpi, index) {
+                    gs.log("Processing KPI #" + index + " - KPI Name: " + kpi.kpi);
+
+                    if (!kpi.table) {
+                        gs.log("Skipping KPI #" + index + " - Missing table name.");
+                        return;
+                    }
+
+                    var kpiQuery = new GlideAggregate(kpi.table);
+                    kpiQuery.addAggregate('COUNT');
+
+                    // Apply filtering condition
+                    if (kpi.field !== 'name') {
+                        gs.log("Applying condition: " + kpi.field);
+                        kpiQuery.addEncodedQuery(kpi.field);
+                    } else if (kpi.field === 'name') {
+                        gs.log('Checking for duplicate business units...');
+                        kpiQuery.addAggregate('COUNT', 'name');
+                        kpiQuery.groupBy("name");
+                        kpiQuery.addHaving("COUNT", ">", 1);
+                    }
+
+                    kpiQuery.query();
+
+                    while (kpiQuery.next()) {
+                        if (kpi.field !== 'name') {
+                            var kpiCount = parseInt(kpiQuery.getAggregate('COUNT'), 10);
+                            totalKpiCount += kpiCount;
+                            gs.log("KPI #" + index + " - Count: " + kpiCount);
+                        } else if (kpi.field === 'name') {
+                            var duplicateValue = kpiQuery.getValue('name');
+                            var count = parseInt(kpiQuery.getAggregate('COUNT', 'name'), 10);
+
+                            gs.info('Duplicate Record Found: ' + duplicateValue + ' - Count: ' + count);
+                            duplicateCount++;
+                        }
+                    }
+                });
+
+                totalKpiCount += duplicateCount; 
+                gs.log("Total KPI matching records (excluding duplicates): " + (totalKpiCount - duplicateCount));
+                gs.log("Total Duplicate Count: " + duplicateCount);
+                gs.log("Total KPI matching records (including duplicates): " + totalKpiCount);
+            } else {
+                gs.log("No valid KPI configurations found.");
+            }
+
+            gs.log("Total record count: " + totalRecords);
+
+            // Calculate percentage
+            var percentage = (totalRecords > 0) ? (totalKpiCount / totalRecords) * 100 : 0;
+            gs.log("Final KPI Percentage: " + percentage.toFixed(2) + "%");
+            return { output: percentage.toFixed(2) + "%" };
+
+        } catch (e) {
+            gs.error("Error in KPI calculation: " + e.message);
+        }
+    }
+}
+
+transform("!");
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-25 16:37:11</sys_created_on>
+        <sys_id>4b068f33c377de140ced12f1b40131c4</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>businessunit</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_4b068f33c377de140ced12f1b40131c4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=4b068f33c377de140ced12f1b40131c4"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>4b068f33c377de140ced12f1b40131c4</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-25 16:37:11</sys_created_on>
+        <sys_id>3026cbbfc337de140ced12f1b4013121</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-02-25 16:37:11</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

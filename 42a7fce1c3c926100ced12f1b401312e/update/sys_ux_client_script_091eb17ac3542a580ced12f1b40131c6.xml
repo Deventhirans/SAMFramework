@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="nsr-automation">6e45f4e2c308aa500ced12f1b40131fc</macroponent>
+        <name>markbtn_7/label</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+  * @param {params} params
+  * @param {api} params.api
+  * @param {TransformApiHelpers} params.helpers
+  */
+function evaluateProperty({api, helpers}) {
+    var buttonId = "markbtn_7";
+     var buttonData = api.data.mark_walk_btn_2.output.buttonData;
+    const button = buttonData.find(btn => btn.buttonId === buttonId);
+
+    // Return the buttonState if found, otherwise return null or a default value
+    var buttonState =  button ? button.buttonState : false;
+
+    
+	return buttonState ? "Mark as Incomplete" : "Mark as Complete";
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>loga_123</sys_created_by>
+        <sys_created_on>2025-03-19 06:58:51</sys_created_on>
+        <sys_id>091eb17ac3542a580ced12f1b40131c6</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>markbtn_7/label</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_091eb17ac3542a580ced12f1b40131c6</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

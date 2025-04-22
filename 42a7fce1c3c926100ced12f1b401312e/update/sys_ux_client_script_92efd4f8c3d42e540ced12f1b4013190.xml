@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="CMDB for SAM">b5263948c31c6a140ced12f1b4013107</macroponent>
+        <name>list_4/fixedQuery</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+* @param {Object} params
+* @param {Object} params.api
+* @param {Object} params.helpers
+* @returns {string} A formatted query string containing KPI short descriptions.
+*/
+function evaluateProperty({ api, helpers }) {
+    const kpi = api.data.sam_euc__1.output.subscription_kpi;
+
+    // Extract first three words from each KPI usecase
+    const output = kpi.map(record => 
+        record.kpi.split(/\s+/).join(' ')
+    );
+
+    console.log("kkkkk",output); // Debugging: Prints extracted short descriptions
+
+    if (output.length > 0) {
+        // Join the short descriptions with commas
+        const query = `short_descriptionIN${output.join(',')}`;
+
+        console.log("qqqqqqq",query); // Debugging: Logs final query format
+        return query;
+    }
+
+    // Default return value if no data exists
+    return "short_descriptionINUsers Without Email ID,Users Without Department";
+}
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-12 17:39:13</sys_created_on>
+        <sys_id>92efd4f8c3d42e540ced12f1b4013190</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>list_4/fixedQuery</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_92efd4f8c3d42e540ced12f1b4013190</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

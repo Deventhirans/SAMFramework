@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.current.entitlement.kpi</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-12 08:41:15</sys_created_on>
+        <sys_id>61190367c39e96500ced12f1b401318b</sys_id>
+        <sys_mod_count>18</sys_mod_count>
+        <sys_name>sam.current.entitlement.kpi</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_61190367c39e96500ced12f1b401318b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:03:34</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+  {&#13;
+    "kpi": "Active Entitlement without Publisher Part Number (PPN)",&#13;
+    "description": "PPN ensures accurate compliance tracking, license optimization, and automatic software model creation.",&#13;
+    "table": "alm_license",&#13;
+    "field": "publisher_part_numberISEMPTY",&#13;
+    "recommendation": "Update entitlements with missing PPN for accurate compliance tracking and license optimization."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Unit Cost greater than 0.01",&#13;
+    "description": "Helps to calculate total license spend, optimize budgeting, and support cost analysis.",&#13;
+    "table": "alm_license",&#13;
+    "field": "unit_cost&gt;javascript:global.getCurrencyFilter('alm_license','unit_cost', 'USD;0.01')",&#13;
+    "recommendation": "Ensure unit costs are recorded and reviewed for cost analysis and budgeting."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "License Metric",&#13;
+    "table": "alm_license",&#13;
+    "description": "Define the terms of software usage, ensuring accurate tracking, compliance, and efficient allocation of software licenses across the organization.",&#13;
+    "field": "license_metricISNOTEMPTY",&#13;
+    "recommendation": "Define and validate license metrics to ensure accurate usage tracking and compliance."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Has Software Model",&#13;
+    "description": "Enables precise tracking and management of software assets, ensuring compliance and optimizing license usage throughout the organization.",&#13;
+    "table": "alm_license",&#13;
+    "field": "modelISEMPTY",&#13;
+    "recommendation": "Link licenses to software models to enhance asset tracking and compliance."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Active custom PPN with CDMAP/DMAP and content service not excluded",&#13;
+    "description": "For auto-selection of the software model, license metric, etc., and when the software PPN is not loaded from the ServiceNow Content Library initially.",&#13;
+    "table": "alm_license",&#13;
+    "field": "license_metricISNOTEMPTY",&#13;
+    "recommendation": "Include valid CDMAP/DMAP mappings for custom PPNs for auto-selection."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Entitlement Import Errors (Needs Review)",&#13;
+    "description": "For auto-selection of the software model, license metric, etc., and when the software PPN is not loaded from the ServiceNow Content Library initially.",&#13;
+    "table": "alm_license",&#13;
+    "field": "license_metricISNOTEMPTY",&#13;
+    "recommendation": "Resolve entitlement import errors to ensure data accuracy and license management."&#13;
+  }&#13;
+]&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=61190367c39e96500ced12f1b401318b"/>
+</record_update>

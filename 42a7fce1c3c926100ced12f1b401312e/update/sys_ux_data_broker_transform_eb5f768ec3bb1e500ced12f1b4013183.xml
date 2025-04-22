@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.contractbarchart</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>contractbarchart</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    
+   value = 30.0; 
+
+   var kpiValues= [
+		[
+    {
+        "data": [
+            {
+                "value": value,
+                "change": "0",
+                "changePercent": "0"
+            }
+        ],
+        "metadata": {
+            "eventData": {
+                "indicatorSysid": "fb007202d7130100b96d45a3ce6103b4"
+            },
+            "previousScoreDate": "1642809600000",
+            "dataSourceLabel": "Number of open incidents",
+            "changeArrow": "steady",
+            "scoreDate": "1642896000000",
+            "filterQuery": "opened_atONToday@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()^ORopened_at<javascript:gs.beginningOfToday()^resolved_atISEMPTY^ORresolved_at>javascript:gs.endOfToday()^state!=8",
+            "aggregate": {
+                "fieldType": "decimal"
+            },
+            "format": {
+                "unitFormat": "{0}",
+                "frequency": "daily",
+                "precision": 0
+            }
+        },
+        "sparkline": {
+            "data": [
+                {
+                    "timestamp": "1637798400000",
+                    "value": "54"
+                },
+                {
+                    "timestamp": "1642896000000",
+                    "value": "40"
+                }
+            ],
+            "metadata": {
+                "eventData": {
+                    "indicatorSysid": "fb007202d7130100b96d45a3ce6103b4"
+                },
+                "dataSourceLabel": "Number of open incidents",
+                "series": [
+                    {
+                        "label": "Number of open incidents",
+                        "id": "value",
+                        "type": "value"
+                    }
+                ],
+                "aggregate": {
+                    "fieldType": "decimal"
+                },
+                "format": {
+                    "unitFormat": "{0}.%",
+                    "frequency": "daily",
+                    "precision": 0
+                }
+            }
+        }
+    }
+]
+	];
+    return kpiValues;
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-20 05:43:30</sys_created_on>
+        <sys_id>eb5f768ec3bb1e500ced12f1b4013183</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>contractbarchart</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_eb5f768ec3bb1e500ced12f1b4013183</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=eb5f768ec3bb1e500ced12f1b4013183"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>eb5f768ec3bb1e500ced12f1b4013183</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-20 05:43:30</sys_created_on>
+        <sys_id>ec90874ec3fb1e500ced12f1b4013114</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-02-20 05:43:30</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

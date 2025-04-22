@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.CreateSaaSIntegrationTasks</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>CreateSaaSIntegrationTasks</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var CreateSaaSIntegrationTasks = Class.create();
+CreateSaaSIntegrationTasks.prototype = {
+    initialize: function () {},
+
+    createSaaSTasks: function () {
+        var sysPropValue = gs.getProperty("custom_walk_saas_integration");
+
+        if (!sysPropValue) {
+            gs.info("❌ System Property 'custom_walk_saas_integration' not found.");
+            return "System Property not found.";
+        }
+
+        var taskInfo;
+        try {
+            taskInfo = JSON.parse(sysPropValue);
+        } catch (e) {
+            gs.error("❌ Error parsing JSON from sys_property: " + e);
+            return "Error parsing system property.";
+        }
+
+        var task = new GlideRecord('samp_sp_vb_task'); // ✅ Ensure this is the correct task table
+        var found = false;
+
+        for (var i = 0; i < taskInfo.length; i++) {
+            var saasKey = Object.keys(taskInfo[i])[0];
+
+            task.initialize();
+            task.short_description = taskInfo[i][saasKey].short_description.trim();
+            task.description = taskInfo[i][saasKey].description;
+            task.work_notes = taskInfo[i][saasKey].instruction;
+            task.state = "1"; // Open
+            task.insert();
+
+            gs.info("✅ Task created in samp_sp_vb_task for SaaS Integration: " + saasKey);
+            found = true;
+        }
+
+        return found ? "✅ SaaS Integration Tasks created successfully." : "❌ No SaaS integrations found.";
+    },
+
+    type: 'CreateSaaSIntegrationTasks'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-19 07:41:14</sys_created_on>
+        <sys_id>ced15675c3bfd2500ced12f1b40131e5</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>CreateSaaSIntegrationTasks</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_ced15675c3bfd2500ced12f1b40131e5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:39:02</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>ced15675c3bfd2500ced12f1b40131e5</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-19 07:41:13</sys_created_on>
+        <sys_id>97e1d6f1c3bfd2500ced12f1b401316c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-02-19 07:41:13</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

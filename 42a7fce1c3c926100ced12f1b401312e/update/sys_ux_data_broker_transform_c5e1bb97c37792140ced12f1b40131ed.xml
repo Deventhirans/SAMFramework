@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.discoverpattern</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>discoverpattern</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[// function transform(input) {
+//     var discoveryMetrics = {
+//         "data": [
+//             {
+//                 "pattern": "Linux Discovery Pattern",
+//                 "trend_analysis": [
+//                     {
+//                         "date": "2025-02-01 12:30:00",
+//                         "execution_time": 15.2,
+//                         "status": "Success"
+//                     },
+//                     {
+//                         "date": "2025-02-05 14:00:00",
+//                         "execution_time": 8.1,
+//                         "status": "Error"
+//                     },
+//                     {
+//                         "date": "2025-02-10 09:45:00",
+//                         "execution_time": 20.3,
+//                         "status": "Success"
+//                     },
+//                     {
+//                         "date": "2025-02-15 18:20:00",
+//                         "execution_time": 6.4,
+//                         "status": "Success"
+//                     }
+//                 ]
+//             },
+//             {
+//                 "pattern": "Windows Discovery Pattern",
+//                 "trend_analysis": [
+//                     {
+//                         "date": "2025-02-02 10:20:00",
+//                         "execution_time": 22.5,
+//                         "status": "Success"
+//                     },
+//                     {
+//                         "date": "2025-02-07 13:50:00",
+//                         "execution_time": 15.3,
+//                         "status": "Error"
+//                     },
+//                     {
+//                         "date": "2025-02-12 16:10:00",
+//                         "execution_time": 18.3,
+//                         "status": "Success"
+//                     }
+//                 ]
+//             }
+//         ],
+//         "metadata": {
+//             "dataSourceLabel": "Discovery Patterns",
+//             "chartType": "TimeSeries",
+//             "eventData": {
+//                 "table": "discovery_pattern_metrics"
+//             },
+//             "groupBy": [
+//                 {
+//                     "series": [
+//                         {
+//                             "id": "execution_time",
+//                             "type": "value",
+//                             "label": "Execution Time"
+//                         }
+//                     ],
+//                     "elements": [
+//                         {
+//                             "id": "trend_analysis",
+//                             "label": "Execution Trend"
+//                         }
+//                     ],
+//                     "id": "pattern",
+//                     "fieldType": "reference",
+//                     "label": "Pattern Name"
+//                 }
+//             ],
+//             "format": {
+//                 "unitFormat": "{0} sec"
+//             }
+//         }
+//     };
+
+//     return discoveryMetrics;
+// }
+function transform(input) {
+    var result = {
+        data: [],
+        metadata: {
+            eventData: {
+                indicatorSysid: gs.getProperty('discovery.pattern.indicator.sysid', '')
+            },
+            dataSourceLabel: "Discovery Effectiveness",
+            series: [
+                { label: "Success Rate", id: "value", type: "value" },
+                { label: "Forecast", id: "forecast", type: "forecast" },
+                { label: "Forecast Range", lower: "forecastRangeLower", upper: "forecastRangeUpper", id: "forecastRange", type: "band" },
+                { label: "Trend", id: "trend", type: "trend" },
+                { label: "Confidence Band", lower: "confidenceBandRangeLower", upper: "confidenceBandRangeUpper", id: "confidenceBand", type: "band" },
+                { label: "Prediction Band", lower: "predictionBandRangeLower", upper: "predictionBandRangeUpper", id: "predictionBand", type: "band" }
+            ],
+            aggregate: { fieldType: "decimal" },
+            format: {
+                unitFormat: "{0}%",
+                frequency: "daily",
+                precision: 2
+            }
+        },
+        thresholds: [
+            { label: "Target Success Rate", value: 80, type: "global" }
+        ],
+        comments: []
+    };
+
+    var patterns = getDiscoveryData();
+    var analytics = calculateAnalytics(patterns);
+    
+    result.data = analytics.map(function(item) {
+        return {
+            timestamp: item.timestamp.toString(),
+            value: item.actual_rate ? item.actual_rate.toFixed(2) : "",
+            forecast: item.forecast ? item.forecast.toFixed(2) : "",
+            forecastRangeLower: item.forecast_lower ? item.forecast_lower.toFixed(2) : "",
+            forecastRangeUpper: item.forecast_upper ? item.forecast_upper.toFixed(2) : "",
+            trend: item.trend ? item.trend.toFixed(2) : "",
+            confidenceBandRangeLower: item.confidence_lower ? item.confidence_lower.toFixed(2) : "",
+            confidenceBandRangeUpper: item.confidence_upper ? item.confidence_upper.toFixed(2) : "",
+            predictionBandRangeLower: item.prediction_lower ? item.prediction_lower.toFixed(2) : "",
+            predictionBandRangeUpper: item.prediction_upper ? item.prediction_upper.toFixed(2) : ""
+        };
+    });
+
+    return [result];
+}
+
+function getDiscoveryData() {
+    var patterns = [];
+    
+    // Query discovery status
+    var gr = new GlideRecord('discovery_status');
+    gr.addQuery('sys_created_on', '>=', gs.daysAgoStart(90));
+    gr.addNotNullQuery('state');  // Ensure state is populated
+    gr.orderBy('sys_created_on');
+    gr.query();
+    
+    while (gr.next()) {
+        var success = 0;
+        // Check for successful discovery based on state
+        if (gr.state == 'Complete' || gr.state == 'Successful') {
+            success = 1;
+        }
+        
+        patterns.push({
+            timestamp: gr.sys_created_on.getGlideObject().getNumericValue(),
+            success: success,
+            total: 1
+        });
+    }
+    
+    // Optionally include discovery log results
+    var logGr = new GlideRecord('discovery_log');
+    logGr.addQuery('sys_created_on', '>=', gs.daysAgoStart(90));
+    logGr.addNotNullQuery('status');
+    logGr.orderBy('sys_created_on');
+    logGr.query();
+    
+    while (logGr.next()) {
+        patterns.push({
+            timestamp: logGr.sys_created_on.getGlideObject().getNumericValue(),
+            success: (logGr.status == 'successful') ? 1 : 0,
+            total: 1
+        });
+    }
+    
+    return patterns;
+}
+
+function calculateAnalytics(patterns) {
+    var analytics = [];
+    var dailyStats = {};
+    
+    // Group by day
+    patterns.forEach(function(pattern) {
+        var dayKey = new GlideDateTime(pattern.timestamp).getDate();
+        if (!dailyStats[dayKey]) {
+            dailyStats[dayKey] = { success: 0, total: 0, timestamp: pattern.timestamp };
+        }
+        dailyStats[dayKey].success += pattern.success;
+        dailyStats[dayKey].total += pattern.total;
+    });
+    
+    // Calculate rates
+    Object.values(dailyStats).forEach(function(stat) {
+        var rate = (stat.success / stat.total) * 100;
+        analytics.push({
+            timestamp: stat.timestamp,
+            actual_rate: rate,
+            trend: calculateTrend(rate),
+            forecast: null,
+            forecast_lower: null,
+            forecast_upper: null,
+            confidence_lower: rate * 0.95,
+            confidence_upper: rate * 1.05,
+            prediction_lower: rate * 0.90,
+            prediction_upper: rate * 1.10
+        });
+    });
+    
+    // Add forecast
+    if (analytics.length > 0) {
+        var lastRate = analytics[analytics.length - 1].actual_rate;
+        
+        for (var i = 1; i <= 7; i++) {
+            var lastTimestamp = analytics[analytics.length - 1].timestamp;
+            var nextDay = new GlideDateTime(lastTimestamp);
+            nextDay.addDaysUTC(1);
+            
+            analytics.push({
+                timestamp: nextDay.getNumericValue(),
+                actual_rate: null,
+                trend: null,
+                forecast: lastRate,
+                forecast_lower: lastRate * 0.85,
+                forecast_upper: lastRate * 1.15,
+                confidence_lower: null,
+                confidence_upper: null,
+                prediction_lower: null,
+                prediction_upper: null
+            });
+        }
+    }
+    
+    return analytics;
+}
+
+function calculateTrend(currentRate) {
+    return currentRate + (Math.random() * 2 - 1);
+}]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-24 06:34:28</sys_created_on>
+        <sys_id>c5e1bb97c37792140ced12f1b40131ed</sys_id>
+        <sys_mod_count>12</sys_mod_count>
+        <sys_name>discoverpattern</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_c5e1bb97c37792140ced12f1b40131ed</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=c5e1bb97c37792140ced12f1b40131ed"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>c5e1bb97c37792140ced12f1b40131ed</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-24 06:34:27</sys_created_on>
+        <sys_id>4692375fc37792140ced12f1b4013150</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-24 06:34:27</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

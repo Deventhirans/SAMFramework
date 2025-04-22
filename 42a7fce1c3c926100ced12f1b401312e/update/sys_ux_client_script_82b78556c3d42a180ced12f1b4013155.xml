@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="ELP for Complex Publishers">d7dfaf92c3d352100ced12f1b401319d</macroponent>
+        <name>text_link_11/href</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+  * @param {params} params
+  * @param {api} params.api
+  * @param {TransformApiHelpers} params.helpers
+  */
+function evaluateProperty({api, helpers}) {
+  const instanceUrl = api.data.top_product_from_top_publisher_1.output.baseUrl;
+  const publisherName = encodeURIComponent(api.item.value.publisher); 
+  const url = `${instanceUrl}core_company_list.do?sysparm_query=name%3D${publisherName}`;
+  return url;
+}
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-17 14:54:23</sys_created_on>
+        <sys_id>82b78556c3d42a180ced12f1b4013155</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>text_link_11/href</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_82b78556c3d42a180ced12f1b4013155</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

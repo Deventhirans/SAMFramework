@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.mark_walk_btn</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>mark_walk_btn</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var kpiValues = {
+        'buttonData': []
+    };
+
+    try {
+        // Initialize counters
+        var totalCount = 0;
+        var totalCompletedCount = 0;
+        
+        // Process system property "Mark as complete button property"
+        var sysPropertyValue = gs.getProperty('Mark as complete button property walk');
+        if (sysPropertyValue) {
+            try {
+                var propData = JSON.parse(sysPropertyValue);
+                
+                // Add property data to our results
+                for (var btnId in propData) {
+                    if (propData.hasOwnProperty(btnId)) {
+                        // Convert property value to boolean
+                        var btnState = propData[btnId] === true || propData[btnId] === 'true';
+                        
+                        totalCount += 1;
+                        if (btnState) {
+                            totalCompletedCount += 1;
+                        }
+                        
+                        kpiValues.buttonData.push({
+                            "buttonId": btnId,
+                            "buttonState": btnState
+                        });
+                    }
+                }
+            } catch (parseErr) {
+                gs.error("Error parsing system property 'Mark as complete button property': " + parseErr.toString());
+            }
+        } else {
+            gs.info("System property 'Mark as complete button property' not found or empty.");
+        }
+
+        // Add summary statistics
+        // kpiValues['summary'] = {
+        //     "total": totalCount,
+        //     "completed": totalCompletedCount,
+        //     "incompleted": totalCount - totalCompletedCount
+        // };
+        
+        // Add dial chart data
+        var completionPercentage = totalCount > 0 ? (totalCompletedCount/totalCount)*100 : 0;
+        kpiValues['dialChart'] = [
+            {
+                "data": [
+                    {
+                        "value": completionPercentage,
+                        "change": 20,
+                        "changePercent": 10
+                    }
+                ],
+                "metadata": {
+                    "eventData": {
+                        "indicatorSysid": "fb007202d7130100b96d45a3ce6103b4"
+                    },
+                    "dataSourceLabel": "Number of open incidents",
+                    "filterQuery": "opened_atONToday@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()^ORopened_at<javascript:gs.beginningOfToday()^resolved_atISEMPTY^ORresolved_at>javascript:gs.endOfToday()^state!=8",
+                    "aggregate": {
+                        "fieldType": "percentage"
+                    },
+                    "format": {
+                        "unitFormat": "{0}%",
+                        "frequency": "daily",
+                        "precision": "0"
+                    }
+                }
+            }
+        ];
+
+        // Log the transformed data for verification
+        // gs.info("Transformed Data: " + JSON.stringify(kpiValues, null, 2));
+
+    } catch (e) {
+        // Handle and log errors
+        gs.error("Error in transform script: " + e.toString());
+        return {
+            'error': e.toString()
+        };
+    }
+
+    // Return the transformed data
+    return kpiValues;
+}
+
+
+
+
+
+
+// function transform(input) {
+//     var kpiValues = {
+//         'buttonData': []
+//     };
+
+//     try {
+//         // Query the table to get button_label and read_flag fields
+//         var gr = new GlideRecord('u_marks_us_complete_walk'); // Ensure this is the correct table name
+//         gr.query();
+
+//         // Check if no records were returned
+//         if (!gr.hasNext()) {
+//             gs.info("No records found in the table.");
+//             return kpiValues; // Return empty result if no records
+//         }
+// 		var totalCount = 0 ;
+// 		var totalCompletedCount = 0 ;
+//         // Loop through the records
+//         while (gr.next()) {
+
+//             // Fetch button_label and read_flag values
+//             var buttonLabel = gr.getValue('u_button_label'); // Fetch button_label
+//             var readFlag = gr.getValue('u_read_flag'); // Fetch read_flag
+
+//             // Log raw values for debugging purposes
+//             // gs.info("Raw button_label: " + buttonLabel + ", read_flag: " + readFlag);
+
+//             // Ensure proper handling of button_label
+//             if (!buttonLabel) {
+//                 gs.warn("button_label is null or empty for a record.");
+//                 buttonLabel = "Unknown"; // Default to "Unknown" if null
+//             }
+// 				totalCount +=1 ;
+
+//             // Normalize read_flag to boolean (ensure that it correctly handles 'true' as string or boolean)
+//             if (readFlag == 'true' || readFlag == true) {
+//                 readFlag = true; // Set to true if the flag is 'true' (string or boolean)
+// 				totalCompletedCount +=1;
+//             } else {
+//                 readFlag = false; // Set to false otherwise
+//             }
+
+//             // Add to the output array
+//             kpiValues.buttonData.push({
+//                 "buttonId": buttonLabel,
+//                 "buttonState": readFlag
+//             });
+//         }
+
+//         // Log the transformed data for verification
+//         gs.info("Transformed Data: " + JSON.stringify(kpiValues));
+
+//     } catch (e) {
+//         // Handle and log errors
+//         gs.error("Error in transform script: " + e.toString());
+//         return {
+//             'error': e.toString() // Return error details
+//         };
+//     }
+
+// 	kpiValues['summary']={
+// 		"total": totalCount,
+// 		"completed": totalCompletedCount,
+// 		"incompleted": totalCount - totalCompletedCount,
+// 	}
+
+// 	kpiValues['dialChart'] = 
+// 	[
+//     {
+//         "data": [
+//             {
+//                 "value": (totalCompletedCount/totalCount)*100,
+//                 "change": 20,
+//                 "changePercent": 10
+//             }
+//         ],
+//         "metadata": {
+//             "eventData": {
+//                 "indicatorSysid": "fb007202d7130100b96d45a3ce6103b4"
+//             },
+//             "dataSourceLabel": "Number of open incidents",
+//             "filterQuery": "opened_atONToday@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()^ORopened_at<javascript:gs.beginningOfToday()^resolved_atISEMPTY^ORresolved_at>javascript:gs.endOfToday()^state!=8",
+//             "aggregate": {
+//                 "fieldType": "percentage"
+//             },
+//             "format": {
+//                 "unitFormat": "{0}%",
+//                 "frequency": "daily",
+//                 "precision": "0"
+//             }
+//         }
+//     }
+// ]
+
+
+//     // Return the transformed data
+//     return kpiValues;
+// }
+	]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-01-27 10:44:28</sys_created_on>
+        <sys_id>c73fd0e6c39b92100ced12f1b40131bb</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>mark_walk_btn</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_c73fd0e6c39b92100ced12f1b40131bb</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=c73fd0e6c39b92100ced12f1b40131bb"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>c73fd0e6c39b92100ced12f1b40131bb</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-01-27 10:44:27</sys_created_on>
+        <sys_id>134f942ac39b92100ced12f1b4013152</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-01-27 10:44:27</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

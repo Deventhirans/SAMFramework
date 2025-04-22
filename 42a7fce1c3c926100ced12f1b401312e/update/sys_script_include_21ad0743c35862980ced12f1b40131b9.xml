@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.CreateWalkValueBuilder</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>CreateWalkValueBuilder</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var CreateWalkValueBuilder = Class.create();
+CreateWalkValueBuilder.prototype = {
+    initialize: function () {
+        gs.log('Initializing CreateWalkValueBuilder', 'CreateWalkValueBuilder');
+    },
+
+    createOrUpdateTasks: function (categoryFilter) {
+        gs.log('Starting createOrUpdateTasks method with category filter: ' + categoryFilter, 'CreateWalkValueBuilder');
+        var createdTasks = [];
+        var updatedTasks = [];
+        var processedProperties = [];
+        
+        gs.log('Fetching property: customwalk.properties', 'CreateWalkValueBuilder');
+        var propertyName = 'customwalk.properties'; // System property
+        var kpiData = gs.getProperty(propertyName);
+
+        if (!kpiData) {
+            gs.error('Property "' + propertyName + '" is empty or not set.', 'CreateWalkValueBuilder');
+            return { createdTasks, updatedTasks, processedProperties };
+        }
+
+        processedProperties.push(propertyName); // Record processed property
+        gs.info('Processing Property: ' + propertyName, 'CreateWalkValueBuilder');
+
+        try {
+            gs.log('Parsing KPI data from property', 'CreateWalkValueBuilder');
+            var kpiCategories = JSON.parse(kpiData);
+            
+            // Filter categories based on the categoryFilter parameter if provided
+            if (categoryFilter) {
+                gs.log('Filtering categories by: ' + categoryFilter, 'CreateWalkValueBuilder');
+                var filteredCategories = [];
+                
+                for (var i = 0; i < kpiCategories.length; i++) {
+                    if (kpiCategories[i].category && 
+                        kpiCategories[i].category.toLowerCase() === categoryFilter.toLowerCase()) {
+                        filteredCategories.push(kpiCategories[i]);
+                        gs.log('Category match found: ' + kpiCategories[i].category, 'CreateWalkValueBuilder');
+                    }
+                }
+                
+                if (filteredCategories.length === 0) {
+                    gs.warning('No categories matched the filter: ' + categoryFilter, 'CreateWalkValueBuilder');
+                }
+                
+                kpiCategories = filteredCategories;
+            }
+            
+            gs.log('Found ' + kpiCategories.length + ' categories to process', 'CreateWalkValueBuilder');
+            var pluginData = this.transform();
+            
+            for (var i = 0; i < kpiCategories.length; i++) {
+                var category = kpiCategories[i];
+                gs.log('Processing category [' + (i+1) + '/' + kpiCategories.length + ']: ' + category.category, 'CreateWalkValueBuilder');
+
+                if (!category.category || !category.actions) {
+                    gs.error('Invalid category format: ' + JSON.stringify(category), 'CreateWalkValueBuilder');
+                    continue;
+                }
+
+                gs.log('Category has ' + category.actions.length + ' actions to process', 'CreateWalkValueBuilder');
+                for (var j = 0; j < category.actions.length; j++) {
+                    var action = category.actions[j];
+                    gs.log('Processing action [' + (j+1) + '/' + category.actions.length + ']: ' + action.type, 'CreateWalkValueBuilder');
+
+                    if (!action.type || !action.description || !action.short_description || !action.instruction) {
+                        gs.error('Missing required fields for action: ' + JSON.stringify(action), 'CreateWalkValueBuilder');
+                        continue;
+                    }
+
+                    var finalInstruction = action.instruction;
+                    
+                    // If category type is "Software Procurement", handle plugin-specific actions
+                    if (category.category.toLowerCase() === 'software procurement') {
+                        gs.log('Software Procurement category detected, processing plugin action: ' + action.type, 'CreateWalkValueBuilder');
+                        
+                        // Check if this is specifically an activation task
+                        if (action.description.toLowerCase().indexOf('activate') !== -1 || 
+                            action.type.toLowerCase().indexOf('activate') !== -1) {
+                            gs.log('Plugin activation task detected', 'CreateWalkValueBuilder');
+                            var activationList = pluginData.pluginsToActivate.map(function (p, index) {
+                                return (index + 1) + '. ' + p.id + ' (' + p.description + ')';
+                            }).join('\n');
+                            finalInstruction += '\n\nPlugins to Activate:\n' + (activationList || 'None');
+                        } 
+                        // Check if this is specifically an upgrade task
+                        else if (action.description.toLowerCase().indexOf('upgrade') !== -1 || 
+                                 action.type.toLowerCase().indexOf('upgrade') !== -1) {
+                            gs.log('Plugin upgrade task detected', 'CreateWalkValueBuilder');
+                            var upgradeList = pluginData.pluginsToUpgrade.map(function (p, index) {
+                                return (index + 1) + '. ' + p.id + ' (' + p.description + ')';
+                            }).join('\n');
+                            finalInstruction += '\n\nPlugins to Upgrade:\n' + (upgradeList || 'None');
+                        } 
+                        // For general plugin management tasks, include both lists
+                        else {
+                            gs.log('General plugin management task detected', 'CreateWalkValueBuilder');
+                            var activationList = pluginData.pluginsToActivate.map(function (p, index) {
+                                return (index + 1) + '. ' + p.id + ' (' + p.description + ')';
+                            }).join('\n');
+                            var upgradeList = pluginData.pluginsToUpgrade.map(function (p, index) {
+                                return (index + 1) + '. ' + p.id + ' (' + p.description + ')';
+                            }).join('\n');
+                            finalInstruction += '\n\nPlugins to Activate:\n' + (activationList || 'None') + '\n\nPlugins to Upgrade:\n' + (upgradeList || 'None');
+                        }
+                        
+                        gs.log('Added plugin details to instruction, length: ' + finalInstruction.length, 'CreateWalkValueBuilder');
+                    }
+
+                    // Check if a task with the same description exists
+                    gs.log('Checking for existing task with description: ' + action.description, 'CreateWalkValueBuilder');
+                    var existingTask = new GlideRecord('samp_sp_vb_task');
+                    existingTask.addQuery('description', action.description);
+                    existingTask.addEncodedQuery('stateNOT IN2,-5,3,7'); // Active tasks
+                    existingTask.query();
+
+                    if (existingTask.next()) {
+                        gs.log('Found existing task, updating: ' + existingTask.sys_id, 'CreateWalkValueBuilder');
+                        // Update existing task
+                        existingTask.setValue('short_description', action.short_description);
+                        existingTask.setValue('instructions', finalInstruction);
+                        existingTask.update();
+                        gs.info('Updated task for action: ' + action.type, 'CreateWalkValueBuilder');
+                        updatedTasks.push(action.type);
+                    } else {
+                        gs.log('No existing task found, creating new task', 'CreateWalkValueBuilder');
+                        // Create new task
+                        var taskGr = new GlideRecord('samp_sp_vb_task');
+                        taskGr.initialize();
+                        taskGr.setValue('short_description', action.short_description);
+                        taskGr.setValue('description', action.description);
+                        taskGr.setValue('instructions', finalInstruction);
+
+                        gs.log('Inserting new task record', 'CreateWalkValueBuilder');
+                        var taskId = taskGr.insert();
+                        if (taskId) {
+                            gs.info('Created task for action: ' + action.type + ' (Task ID: ' + taskId + ')', 'CreateWalkValueBuilder');
+                            createdTasks.push(action.type);
+                            gs.log('Queueing event: sam.implementation.value.builder.task', 'CreateWalkValueBuilder');
+                            gs.eventQueue('sam.implementation.value.builder.task', taskGr, taskGr.sys_id);
+                        } else {
+                            gs.error('Failed to create task for action: ' + action.type, 'CreateWalkValueBuilder');
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+            gs.error('Error processing property "' + propertyName + '": ' + e.message, 'CreateWalkValueBuilder');
+            gs.log('Stack trace: ' + e.stack, 'CreateWalkValueBuilder');
+        }
+
+        gs.log('Completed createOrUpdateTasks method. Created: ' + createdTasks.length + 
+              ', Updated: ' + updatedTasks.length + ', Properties processed: ' + 
+              processedProperties.length, 'CreateWalkValueBuilder');
+
+        return {
+            createdTasks: createdTasks,
+            updatedTasks: updatedTasks,
+            processedProperties: processedProperties
+        };
+    },
+
+    transform: function () {
+        gs.log('Starting transform method to process plugins', 'CreateWalkValueBuilder');
+        var pluginString = gs.getProperty('sam.plugin');
+        if (!pluginString) {
+            gs.error("Property 'sam.plugin' is empty or not set.", 'CreateWalkValueBuilder');
+            return { allPlugins: [], pluginsToActivate: [], pluginsToUpgrade: [] };
+        }
+
+        try {
+            gs.log('Parsing plugin data from sam.plugin property', 'CreateWalkValueBuilder');
+            var pluginArray = JSON.parse(pluginString);
+            gs.log('Found ' + pluginArray.length + ' plugins to process', 'CreateWalkValueBuilder');
+            
+            var allPlugins = [];
+            var pluginsToActivate = [];
+            var pluginsToUpgrade = [];
+
+            for (var i = 0; i < pluginArray.length; i++) {
+                var plugin = pluginArray[i];
+                gs.log('Processing plugin [' + (i+1) + '/' + pluginArray.length + ']: ' + plugin.id, 'CreateWalkValueBuilder');
+                
+                var pluginInfo = {
+                    id: plugin.id,
+                    description: plugin.description,
+                    active: GlidePluginManager.isActive(plugin.id)
+                };
+                
+                gs.log('Plugin ' + plugin.id + ' active status: ' + pluginInfo.active, 'CreateWalkValueBuilder');
+
+                if (plugin.id.startsWith('sn_')) {
+                    gs.log('Processing ServiceNow plugin (sn_): ' + plugin.id, 'CreateWalkValueBuilder');
+                    var sysStoreApp = new GlideRecord('sys_store_app');
+                    sysStoreApp.addQuery('scope', plugin.id);
+                    sysStoreApp.query();
+
+                    if (sysStoreApp.next()) {
+                        pluginInfo.update_available = sysStoreApp.getValue('update_available') == "1";
+                        pluginInfo.current_version = sysStoreApp.getValue("version");
+                        gs.log('Found plugin in sys_store_app. Version: ' + pluginInfo.current_version + 
+                              ', Update available: ' + pluginInfo.update_available, 'CreateWalkValueBuilder');
+
+                        if (pluginInfo.update_available) {
+                            gs.log('Checking available version for plugin: ' + plugin.id, 'CreateWalkValueBuilder');
+                            var sysAppVersion = new GlideRecord('sys_app_version');
+                            sysAppVersion.addQuery('scope', plugin.id);
+                            sysAppVersion.query();
+
+                            if (sysAppVersion.next()) {
+                                pluginInfo.available_version = sysAppVersion.getValue('version');
+                                gs.log('Found available version: ' + pluginInfo.available_version, 'CreateWalkValueBuilder');
+                            } else {
+                                gs.log('No version info found in sys_app_version', 'CreateWalkValueBuilder');
+                            }
+                        }
+                    } else {
+                        gs.log('Plugin not found in sys_store_app: ' + plugin.id, 'CreateWalkValueBuilder');
+                    }
+                }
+                
+                if (plugin.id.startsWith('com.')) {
+                    gs.log('Processing community plugin (com.): ' + plugin.id, 'CreateWalkValueBuilder');
+                    var vPlugin = new GlideRecord('v_plugin');
+                    vPlugin.addQuery('id', plugin.id);
+                    vPlugin.query();
+
+                    if (vPlugin.next()) {
+                        pluginInfo.current_version = vPlugin.getValue('version');
+                        pluginInfo.available_version = vPlugin.getValue('available_version');
+                        pluginInfo.update_available = pluginInfo.available_version && 
+                            pluginInfo.available_version !== pluginInfo.current_version;
+                        
+                        gs.log('Found plugin in v_plugin. Current version: ' + pluginInfo.current_version + 
+                              ', Available version: ' + pluginInfo.available_version + 
+                              ', Update available: ' + pluginInfo.update_available, 'CreateWalkValueBuilder');
+                    } else {
+                        gs.log('Plugin not found in v_plugin: ' + plugin.id, 'CreateWalkValueBuilder');
+                    }
+                }
+
+                allPlugins.push(pluginInfo);
+                if (!pluginInfo.active) {
+                    gs.log('Adding plugin to activation list: ' + plugin.id, 'CreateWalkValueBuilder');
+                    pluginsToActivate.push(pluginInfo);
+                }
+                if (pluginInfo.active && pluginInfo.update_available) {
+                    gs.log('Adding plugin to upgrade list: ' + plugin.id, 'CreateWalkValueBuilder');
+                    pluginsToUpgrade.push(pluginInfo);
+                }
+            }
+
+            gs.log('Transform completed. Total plugins: ' + allPlugins.length + 
+                  ', Plugins to activate: ' + pluginsToActivate.length + 
+                  ', Plugins to upgrade: ' + pluginsToUpgrade.length, 'CreateWalkValueBuilder');
+
+            return { allPlugins, pluginsToActivate, pluginsToUpgrade };
+        } catch (e) {
+            gs.error("Error processing plugins: " + e.message, 'CreateWalkValueBuilder');
+            gs.log('Stack trace: ' + e.stack, 'CreateWalkValueBuilder');
+            return { allPlugins: [], pluginsToActivate: [], pluginsToUpgrade: [], error: e.message };
+        }
+    },
+
+    type: 'CreateWalkValueBuilder'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-20 06:11:52</sys_created_on>
+        <sys_id>21ad0743c35862980ced12f1b40131b9</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>CreateWalkValueBuilder</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_21ad0743c35862980ced12f1b40131b9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:38:46</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>21ad0743c35862980ced12f1b40131b9</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-20 06:11:51</sys_created_on>
+        <sys_id>4d93df83c31c62980ced12f1b401312f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-03-20 06:11:51</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

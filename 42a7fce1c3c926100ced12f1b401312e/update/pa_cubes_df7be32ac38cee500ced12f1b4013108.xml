@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="pa_cubes">
+    <pa_cubes action="INSERT_OR_UPDATE">
+        <benchmarking>false</benchmarking>
+        <calendar>standard</calendar>
+        <calendar_freq/>
+        <conditions table="cmdb_ci_computer">install_status!=1^ORassigned_toISEMPTY^install_status!=1^ORassigned_toISEMPTY^ORassigned_to.active=true^install_status!=1^ORcost_centerISEMPTY^ORdepartmentISEMPTY^install_status!=1^ORassigned_toISEMPTY^ORassigned_to.last_login_time&lt;javascript:gs.beginningOfLast3Months()^install_status!=1^ORcpu_countISEMPTY^install_status!=1^ORcpu_core_countISEMPTY<item display_value="Installed" endquery="false" field="install_status" goto="false" newquery="false" operator="!=" or="false" value="1"/>
+            <item endquery="false" field="assigned_to" goto="false" newquery="false" operator="ISEMPTY" or="true" value=""/>
+            <item display_value="Installed" endquery="false" field="install_status" goto="false" newquery="false" operator="!=" or="false" value="1"/>
+            <item endquery="false" field="assigned_to" goto="false" newquery="false" operator="ISEMPTY" or="true" value=""/>
+            <item endquery="false" field="assigned_to.active" goto="false" newquery="false" operator="=" or="true" value="true"/>
+            <item display_value="Installed" endquery="false" field="install_status" goto="false" newquery="false" operator="!=" or="false" value="1"/>
+            <item endquery="false" field="cost_center" goto="false" newquery="false" operator="ISEMPTY" or="true" value=""/>
+            <item endquery="false" field="department" goto="false" newquery="false" operator="ISEMPTY" or="true" value=""/>
+            <item display_value="Installed" endquery="false" field="install_status" goto="false" newquery="false" operator="!=" or="false" value="1"/>
+            <item endquery="false" field="assigned_to" goto="false" newquery="false" operator="ISEMPTY" or="true" value=""/>
+            <item endquery="false" field="assigned_to.last_login_time" goto="false" newquery="false" operator="&lt;" or="true" value="javascript:gs.beginningOfLast3Months()"/>
+            <item display_value="Installed" endquery="false" field="install_status" goto="false" newquery="false" operator="!=" or="false" value="1"/>
+            <item endquery="false" field="cpu_count" goto="false" newquery="false" operator="ISEMPTY" or="true" value=""/>
+            <item display_value="Installed" endquery="false" field="install_status" goto="false" newquery="false" operator="!=" or="false" value="1"/>
+            <item endquery="false" field="cpu_core_count" goto="false" newquery="false" operator="ISEMPTY" or="true" value=""/>
+        </conditions>
+        <description>SAM Implementation Framework</description>
+        <facts_table>cmdb_ci_computer</facts_table>
+        <facts_table_pk/>
+        <facts_table_pktable/>
+        <facts_table_pkview/>
+        <frequency>10</frequency>
+        <max_record_fetch_count>50000</max_record_fetch_count>
+        <name>EUC inaccurate </name>
+        <override_record_collection>false</override_record_collection>
+        <report_source/>
+        <report_source_updated_at/>
+        <sys_class_name>pa_cubes</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-06 08:32:41</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>df7be32ac38cee500ced12f1b4013108</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>EUC inaccurate </sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>pa_cubes_df7be32ac38cee500ced12f1b4013108</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:46:20</sys_updated_on>
+    </pa_cubes>
+    <sys_translated_text action="delete_multiple" query="documentkey=df7be32ac38cee500ced12f1b4013108"/>
+</record_update>

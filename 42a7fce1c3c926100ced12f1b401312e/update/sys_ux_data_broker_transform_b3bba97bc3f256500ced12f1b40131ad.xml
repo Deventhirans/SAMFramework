@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.getguidedsetupdata</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>getguidedsetupdata</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var idsToInfo = {
+        '00f27adb077421102723e7430ad3000f': {
+            'url': 'now/adoptionservices/tasks/00f27adb077421102723e7430ad3000f/params/hide-polaris-header/true/control-external-task/true',
+            'title': 'sql',
+            'productName': 'Microsoft SQL Server',
+            'taskId': '82114d270f4d3110ebd9579ac4767ef7',
+            'guidedSetupOpenedEvent': 'SQL Server Guided Setup Opened',
+        },
+        'c38e90430f50f910ebd9579ac4767ee4': {
+            'url': 'now/adoptionservices/tasks/c38e90430f50f910ebd9579ac4767ee4/params/hide-polaris-header/true/control-external-task/true',
+            'title': 'ws',
+            'productName': 'Microsoft Windows Server',
+            'taskId': 'fb744de70f4d3110ebd9579ac4767e77',
+            'guidedSetupOpenedEvent': 'Windows Server Guided Setup Opened',
+        }
+    };
+
+    var productSetupsData = [];
+    var guidanceGr = new GlideRecord('gsw_content');
+    guidanceGr.addEncodedQuery('titleSTARTSWITHjira');
+    guidanceGr.query();
+    while (guidanceGr.next()) {
+        var guidanceSysId = guidanceGr.getUniqueValue();
+        var guidanceDescription = guidanceGr.getValue('description');
+        var productSetupObj = {
+            productName: idsToInfo[guidanceSysId].productName,
+            productSetupDescription: guidanceDescription,
+            productSetupUrlFields: {
+                url: idsToInfo[guidanceSysId].url,
+            },
+            productSetupUrlParams: {
+                header: idsToInfo[guidanceSysId].title,
+                id: idsToInfo[guidanceSysId].title,
+            },
+            productSetupCategoriesInfo: [],
+            productSetupStartedDateStr: 'Not Started',
+            productSetupAsssignedToStr: 'Unassigned',
+            guidedSetupOpenedEvent: idsToInfo[guidanceSysId].guidedSetupOpenedEvent,
+        };
+
+        // Get started date from help_user_interaction_step
+        var userInteractionStepGa = new GlideAggregate('gsw_content_group');
+        userInteractionStepGa.orderBy('sys_created_on');
+        userInteractionStepGa.setLimit(1);
+        userInteractionStepGa.query();
+        if (userInteractionStepGa.next()) {
+            productSetupObj.productSetupStartedDateStr = 'Started on ' + new GlideDateTime(
+                userInteractionStepGa.getValue('sys_created_on')
+            ).getLocalDate().toString();
+        }
+
+        // Get assigned user from samp_sp_vb_task
+        var valueBuilderTaskGr = new GlideRecord('samp_sp_vb_task');
+        valueBuilderTaskGr.addNotNullQuery('assigned_to');
+        valueBuilderTaskGr.addQuery('sys_id', idsToInfo[guidanceSysId].taskId);
+        valueBuilderTaskGr.setLimit(1);
+        valueBuilderTaskGr.query();
+        if (valueBuilderTaskGr.next()) {
+            productSetupObj.productSetupAsssignedToStr = 'Assigned to ' + valueBuilderTaskGr.getDisplayValue('assigned_to');
+        }
+
+        // Add logic to fetch data from gsw_content_group, gsw_content, and gsw_content_information
+        var contentGroupGr = new GlideRecord('gsw_content_group');
+        contentGroupGr.addQuery('sys_id', '102e7fddc35e9ad00ced12f1b40131d1');
+        contentGroupGr.query();
+        while (contentGroupGr.next()) {
+            var contentGroupName = contentGroupGr.getValue('name');
+            var contentGroupDescription = contentGroupGr.getValue('description');
+
+            var contentGr = new GlideRecord('gsw_content');
+            contentGr.addQuery('content_group', contentGroupGr.getUniqueValue());
+            contentGr.query();
+            while (contentGr.next()) {
+                var contentTitle = contentGr.getValue('title');
+                var contentDescription = contentGr.getValue('description');
+
+                var contentInfoGr = new GlideRecord('gsw_content_information');
+                contentInfoGr.addQuery('content', contentGr.getUniqueValue());
+                contentInfoGr.query();
+                while (contentInfoGr.next()) {
+                    var infoName = contentInfoGr.getValue('name');
+                    var infoValue = contentInfoGr.getValue('value');
+
+                    // Add content and content info to productSetupObj
+                    if (!productSetupObj.contentGroups) {
+                        productSetupObj.contentGroups = [];
+                    }
+                    productSetupObj.contentGroups.push({
+                        contentGroupName: contentGroupName,
+                        contentGroupDescription: contentGroupDescription,
+                        contentTitle: contentTitle,
+                        contentDescription: contentDescription,
+                        info: {
+                            name: infoName,
+                            value: infoValue,
+                        }
+                    });
+                }
+            }
+        }
+
+        productSetupsData.push(productSetupObj);
+    }
+
+    return productSetupsData;
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-06 16:59:48</sys_created_on>
+        <sys_id>b3bba97bc3f256500ced12f1b40131ad</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>getguidedsetupdata</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_b3bba97bc3f256500ced12f1b40131ad</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=b3bba97bc3f256500ced12f1b40131ad"/>
+</record_update>

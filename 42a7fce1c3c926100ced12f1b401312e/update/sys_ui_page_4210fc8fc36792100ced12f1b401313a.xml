@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[document.addEventListener("DOMContentLoaded", function () {
+    getInstanceURL(function (instanceUrl) {
+        if (instanceUrl) {
+            checkExistingRecord(instanceUrl);
+        } else {
+            console.error("❌ Instance URL could not be retrieved.");
+            getSystemProperties(); // Load empty form
+        }
+    });
+});
+
+// ]]>🔹<![CDATA[ Fetch Instance URL
+function getInstanceURL(callback) {
+    var ga = new GlideAjax('GetInstanceURL');
+    ga.addParam('sysparm_name', 'getInstanceDetails');
+
+    ga.getXMLAnswer(function (response) {
+        if (!response || response.trim() === "") {
+            console.error("❌ Error: Instance URL is empty or undefined.");
+            callback(null);
+        } else {
+            let instanceUrl = response.trim();
+            console.log("]]>🌍<![CDATA[ Final Instance URL:", instanceUrl);
+            callback(instanceUrl);
+        }
+    });
+}
+
+
+function checkExistingRecord(instanceUrl) {
+    // console.log("]]>🚀<![CDATA[ Function checkExistingRecord() called");
+
+    if (!instanceUrl || instanceUrl.trim() === "") {
+        console.warn("❌ No valid instance_url provided. Rendering empty form.");
+        getSystemProperties({});
+        return;
+    }
+
+    // console.log("]]>🔍<![CDATA[ Step 1: Checking existing record for instance_url:", instanceUrl);
+
+    var encodedUrl = encodeURIComponent(instanceUrl);
+    // console.log("]]>🔹<![CDATA[ Step 2: Encoded instance_url:", encodedUrl);
+
+    var apiPath = `/api/985627/procurement_form_api?instance_url=` + encodedUrl;
+    // console.log("]]>🌐<![CDATA[ Step 3: API Path constructed:", apiPath);
+
+    // console.log("⏳ Step 4: Sending GET request to API...");
+
+    fetch(apiPath, { method: "GET" })
+        .then(response => {
+            // console.log("]]>📡<![CDATA[ Step 5: Received API response. Status:", response.status);
+            return response.json();
+        })
+        .then(data => {
+            // console.log("]]>📦<![CDATA[ Step 6: Raw API Response:", JSON.stringify(data));
+
+            if (!data || !data.result || !data.result.result || typeof data.result.result[0] !== "object") {
+                console.warn("⚠️ Step 7: Invalid API response format. Rendering empty form.");
+                getSystemProperties({});
+                return;
+            }
+
+            // console.log("✅ Step 8: Valid data structure received. Converting format...");
+
+            let transformedData = Object.entries(data.result.result[0]).map(([key, value]) => ({
+                name: key,
+                value: value
+            }));
+
+            // console.log("]]>🔄<![CDATA[ Step 9: Transformed Data:", JSON.stringify(transformedData));
+
+            // Convert array format back to key-value pair object for pre-filling
+            let existingData = {};
+            transformedData.forEach(item => {
+                existingData[item.name] = item.value;
+            });
+
+            // console.log("]]>📝<![CDATA[ Step 10: Final pre-filled data object:", JSON.stringify(existingData));
+
+            getSystemProperties(existingData);
+        })
+        .catch(error => {
+            console.error("❌ Step 11: Error fetching existing record:", error);
+            getSystemProperties({});
+        });
+
+    // console.log("]]>🏁<![CDATA[ Step 12: Function execution complete.");
+}
+
+
+
+function getSystemProperties(existingData = {}) {
+    var ga = new GlideAjax('GetSystemProperties');
+    ga.addParam('sysparm_name', 'getProperties');
+
+    ga.getXMLAnswer(function (response) {
+        try {
+            let sanitizedResponse = response.trim();
+            var systemProperties = JSON.parse(sanitizedResponse);
+            renderForm(systemProperties, existingData);
+        } catch (e) {
+            console.error("❌ Error parsing system property JSON:", e);
+        }
+    });
+}
+
+// ]]>🔹<![CDATA[ Render Form with Updated Radio Button Behavior & Textbox Styling
+function renderForm(properties, existingData = {}) {
+    const form = document.getElementById("dynamicForm");
+    form.innerHTML = '';
+
+    properties.forEach(item => {
+        let formGroup = document.createElement("div");
+        formGroup.style.cssText = "background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #4CAF50;";
+
+        let label = document.createElement("label");
+        label.textContent = item.label;
+        label.style.cssText = "font-size: 16px; font-weight: bold; display: block; margin-bottom: 8px;";
+        formGroup.appendChild(label);
+
+        if (item.type === "radio") {
+            let conditionalWrapper = null;
+            let conditionalInput = null;
+
+            if (item.conditional) {
+                conditionalWrapper = document.createElement("div");
+                conditionalWrapper.id = `${item.conditional.field}Field`;
+                conditionalWrapper.style.cssText = "margin-top: 10px; margin-left: 20px; display: none;";
+
+                let conditionalLabel = document.createElement("label");
+                conditionalLabel.textContent = item.conditional.label;
+                conditionalWrapper.appendChild(conditionalLabel);
+                conditionalWrapper.appendChild(document.createElement("br"));
+
+                conditionalInput = document.createElement("input");
+                conditionalInput.type = "text";
+                conditionalInput.style.cssText = "margin-top: 10px; padding: 6px; width: 100%; border: 1px solid #ccc; border-radius: 5px;";
+                conditionalInput.name = item.conditional.field;
+                conditionalInput.value = existingData[item.conditional.field] || "";
+                conditionalInput.required = false;
+
+                conditionalWrapper.appendChild(conditionalInput);
+            }
+
+            item.options.forEach(option => {
+                let radioWrapper = document.createElement("div");
+                radioWrapper.style.marginBottom = "5px";
+
+                let radioInput = document.createElement("input");
+                radioInput.type = "radio";
+                radioInput.name = item.name;
+                radioInput.value = option;
+                radioInput.required = true;
+                radioInput.checked = existingData[item.name] === option;
+
+                let radioLabel = document.createElement("label");
+                radioLabel.textContent = option;
+                radioLabel.style.marginLeft = "8px";
+
+                radioWrapper.appendChild(radioInput);
+                radioWrapper.appendChild(radioLabel);
+                formGroup.appendChild(radioWrapper);
+
+                radioInput.addEventListener("change", function () {
+                    if (item.conditional && conditionalWrapper && conditionalInput) {
+                        if (this.value === item.conditional.showOn) {
+                            conditionalWrapper.style.display = "block";
+                            conditionalInput.required = true;
+                        } else {
+                            conditionalWrapper.style.display = "none";
+                            conditionalInput.required = false;
+                            conditionalInput.value = ""; 
+                        }
+                    }
+                });
+
+                if (radioInput.checked && item.conditional &&
+                    option === item.conditional.showOn && conditionalWrapper) {
+                    conditionalWrapper.style.display = "block";
+                    conditionalInput.required = true;
+                }
+            });
+
+            if (conditionalWrapper) {
+                formGroup.appendChild(conditionalWrapper);
+            }
+        }
+
+        form.appendChild(formGroup);
+    });
+
+    // console.log("✅ Form Rendered Successfully.");
+}
+
+// ]]>🔹<![CDATA[ Submit Form
+
+// ]]>🔹<![CDATA[ Submit Form
+document.getElementById("submitBtn").addEventListener("click", function (e) {
+    e.preventDefault();
+    // console.log("]]>🚀<![CDATA[ Step 1: Submit button clicked");
+
+    let userId = g_user.userID;
+    // console.log("]]>👤<![CDATA[ Step 2: Retrieved User ID:", userId);
+    //  window.location.href = "https://dev272448.service-now.com/now/sam-Implementation/Implementation-approach";
+     window.location.href = `${instanceURL}/now/sam-Implementation/Implementation-approach`;
+
+    let formData = new FormData(document.getElementById("dynamicForm"));
+    let requestBody = { u_created_by: userId };
+
+    for (let pair of formData.entries()) {
+        requestBody[pair[0]] = pair[1];
+    }
+
+    // console.log("]]>📝<![CDATA[ Step 3: Form data converted to requestBody:", JSON.stringify(requestBody));
+
+    getInstanceURL(function (instanceUrl) {
+        if (!instanceUrl || instanceUrl.trim() === "") {
+            console.warn("⚠️ Step 4: No valid instance URL found. Skipping GET check and proceeding with POST.");
+            sendRequest("POST", "/api/985627/procurement_form_api", requestBody);
+            return;
+        }
+
+        requestBody["u_instance_url"] = instanceUrl;
+        // console.log("]]>🌍<![CDATA[ Step 5: Instance URL retrieved:", instanceUrl);
+
+        var encodedUrl = encodeURIComponent(instanceUrl);
+        var apiPath = `/api/985627/procurement_form_api?instance_url=` + encodedUrl;
+
+        // console.log("]]>📡<![CDATA[ Step 6: Checking if instance_url exists with GET request:", apiPath);
+
+        fetch(apiPath, { method: "GET" })
+            .then(response => {
+                // console.log("]]>📥<![CDATA[ Step 7: Received response. Status:", response.status);
+                return response.json();
+            })
+            .then(data => {
+                // console.log("]]>📦<![CDATA[ Step 8: Raw API Response:", JSON.stringify(data));
+
+                let method = "POST"; // Default method
+                if (data && data.result && data.result.result && typeof data.result.result[0] === "object") {
+                    // console.log("✅ Step 9: Valid data structure detected. Checking for existing instance_url...");
+
+                    // Convert response to transformed format
+                    let transformedData = Object.entries(data.result.result[0]).map(([key, value]) => ({
+                        name: key,
+                        value: value
+                    }));
+
+                    // console.log("]]>🔄<![CDATA[ Step 10: Transformed Data:", JSON.stringify(transformedData));
+
+                    let instanceUrlObj = transformedData.find(item => item.name === "u_instance_url");
+                    let existingInstanceUrl = instanceUrlObj ? instanceUrlObj.value.trim() : "";
+
+                    method = existingInstanceUrl ? "PUT" : "POST";
+                    // console.log(`]]>🔁<![CDATA[ Step 11: Determined HTTP method: ${method}`);
+                }
+
+                // console.log("]]>🚀<![CDATA[ Step 12: Sending request with method:", method);
+                sendRequest(method, "/api/985627/procurement_form_api", requestBody);
+            })
+            .catch(error => {
+                console.error("❌ Step 13: Error checking instance_url existence:", error);
+                // console.log("]]>🔄<![CDATA[ Step 14: Proceeding with POST request due to error.");
+                sendRequest("POST", "/api/985627/procurement_form_api", requestBody);
+            });
+    });
+
+    // console.log("]]>🏁<![CDATA[ Step 15: Form submission process complete.");
+});
+
+
+// ]]>🔹<![CDATA[ Function to Send Request (POST/PUT)
+function sendRequest(method, url, data) {
+    var xhr = new XMLHttpRequest();
+    xhr.open(method, url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Accept", "application/json");
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            try {
+                var response = JSON.parse(xhr.responseText);
+                if (xhr.status === 201) {
+                    alert(response.message || "✅ Data submitted successfully!");
+                } else if (xhr.status === 200) {
+                    alert(response.message || "✅ Data updated successfully!");
+                } else {
+                    alert("❌ Error: " + (response.error || "Unknown error occurred"));
+                }
+            } catch (error) {
+                alert("❌ Error processing server response.");
+                console.error("Response Parsing Error: ", error);
+            }
+        }
+    };
+
+    xhr.send(JSON.stringify(data));
+}]]></client_script>
+        <description/>
+        <direct>false</direct>
+        <endpoint>x_985627_samfram_0_Procurement_form.do</endpoint>
+        <html><![CDATA[<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Dynamic Procurement Form</title>
+</head>
+<body style=" color: black; font-family: 'Poppins', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;">
+
+    <div id="container" style=" width:800px; text-align: left;">
+        <h2 style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">Scoping Guide</h2>
+
+        <form id="dynamicForm"></form>
+
+        <button type="submit" id="submitBtn" style="background: linear-gradient(45deg, #0cdf74, #0cdf74); color: white; padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer; font-size: 16px; font-weight: bold; transition: transform 0.2s, box-shadow 0.2s;">
+            Submit
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
+]]></html>
+        <name>Procurement_form</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>harish_123</sys_created_by>
+        <sys_created_on>2025-02-10 11:40:32</sys_created_on>
+        <sys_id>4210fc8fc36792100ced12f1b401313a</sys_id>
+        <sys_mod_count>156</sys_mod_count>
+        <sys_name>Procurement_form</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ui_page_4210fc8fc36792100ced12f1b401313a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:55:17</sys_updated_on>
+    </sys_ui_page>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>4210fc8fc36792100ced12f1b401313a</id>
+        <sys_created_by>harish_123</sys_created_by>
+        <sys_created_on>2025-02-10 11:31:31</sys_created_on>
+        <sys_id>cd50fccbc36792100ced12f1b40131ec</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>harish_123</sys_updated_by>
+        <sys_updated_on>2025-02-10 11:31:31</sys_updated_on>
+        <table>sys_ui_page</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

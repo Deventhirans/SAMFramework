@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>false</ignore_cache>
+        <is_private>true</is_private>
+        <name>glide.buildtag.last</name>
+        <read_roles/>
+        <suffix>global</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-01-09 10:50:19</sys_created_on>
+        <sys_id>250433ecc34712100ced12f1b4013133</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>glide.buildtag.last</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_250433ecc34712100ced12f1b4013133</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:19:37</sys_updated_on>
+        <type>string</type>
+        <value>glide-xanadu-07-02-2024__patch4-11-22-2024</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=250433ecc34712100ced12f1b4013133"/>
+</record_update>

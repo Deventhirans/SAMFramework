@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Custom Scripts">8836bd48c31c6a140ced12f1b4013171</macroponent>
+        <name>rich_text_3/html</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[function evaluateProperty({ api, helpers }) {
+    const customScripts = api.data.samcustomscripts_1.output.custom_scripts;
+    console.log("selviaaa", customScripts);
+
+    // Enhanced table design with better borders
+    let tableHtml = `
+        <table style="width: 100%; border-collapse: separate; border-spacing: 0; 
+                      margin-top: 20px; font-family: 'Inter', system-ui, sans-serif; 
+                      border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+                      overflow: hidden;">
+            <thead>
+                <tr style="background-color: #f3f4f6; color: #111827; font-size: 14px; 
+                           font-weight: 600; text-align: left;">
+                    <th style="padding: 16px; border-bottom: 2px solid #e5e7eb;">Custom Script</th>
+                    <th style="padding: 16px; border-bottom: 2px solid #e5e7eb;">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    // Loop through the custom scripts array and generate table rows
+    customScripts.forEach((scriptData, index) => {
+        const rowColor = index % 2 === 0 ? '#ffffff' : '#f9fafb';
+        const scriptName = scriptData.script || "Unknown Script";
+        const description = scriptData.description || "No description provided";
+
+        tableHtml += `
+            <tr style="background-color: ${rowColor}; transition: background-color 0.2s ease;">
+                <td style="padding: 16px; border-bottom: 1px solid #e5e7eb; 
+                           color: #374151; font-size: 14px; border-right: 1px solid #e5e7eb;">
+                    ${scriptName}
+                </td>
+                <td style="padding: 16px; border-bottom: 1px solid #e5e7eb; 
+                           color: #4b5563; font-size: 14px;">
+                    ${description}
+                </td>
+            </tr>
+        `;
+    });
+
+    // Close the table body and table tag
+    tableHtml += `
+            </tbody>
+        </table>
+    `;
+
+    // Return the generated HTML table
+    return tableHtml;
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-03-10 15:42:04</sys_created_on>
+        <sys_id>d036bd48c31c6a140ced12f1b4013179</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>rich_text_3/html</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_d036bd48c31c6a140ced12f1b4013179</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="par_visualization">
+    <par_visualization action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <certified>false</certified>
+        <description/>
+        <macroponent display_value="Single score">d24d53f60350de7a652caf3188a46ed2</macroponent>
+        <name>% of Accurate Entitlements</name>
+        <properties>{"scoreSize":"md","headingPosition":"top","sparklineStyle":"area","scoreIcon":"","iconStyle":"background","showScoreDate":false,"useRelativeScoreTime":false,"showScoreUpdateTime":false,"showZero":false,"newReporting":false,"additionalGroupByConfig":[],"showHeader":true,"showTotalAggregate":false,"showSubAggregate":false,"showFirstGroupAggregate":false,"showSecondGroupAggregate":false,"hideMatrixAggregate":false,"wrapTitle":false,"showHeaderSeparator":false,"contextMenuActions":[],"headingLevel":2,"showBorder":true,"bareBorder":false,"telemetry":null,"showDataPassthrough":false,"refreshRequest":"","showAdditionalGroupBySelector":false,"dataPassthrough":null,"sortByOrder":"desc","showChange":null,"showChangePercentage":null,"showTarget":false,"showForecast":false,"showForecastRange":false,"showTrend":false,"showConfidenceBand":false,"showGapPercentage":null,"showSparkline":null,"showMetricLabel":null,"showThreshold":false,"showComment":false,"followFilters":true,"showFilterIcon":true,"enableRealTimeUpdate":false,"enableDrilldown":true,"enableClickAndStay":false,"showDataTable":false,"enableCustomEmptyState":false,"emptyStateIllustration":"no-data","emptyStateHeading":"No data available.","emptyStateContent":"There are no scores available for the selected criteria. Contact your admin for more info.","emptyStateAlignment":"vertical-centered","hideDevSettings":false,"configPropModifiers":{},"showMaximumRange":false,"allowChangeDateRange":false,"showDateRangeByDefault":false,"applyDateRange":false,"numberOfPeriods":3,"showAbsolutePeriod":false,"scoreType":null,"showChangeFrom":null,"period":"M","useDataCache":false,"cacheExpirationTime":0,"showCacheTime":true,"dateFormat":"default","showRefresh":true,"filterConfigurations":[],"dataSources":[{"allowRealTime":false,"allowTotalValue":false,"indicatorType":"2","isScriptedIndicator":false,"label":"% accurate entitlement","sourceType":"indicator","uuid":{"indicator":"5b9991a2c308ea500ced12f1b4013117","breakdowns":[]},"preferredVisualizations":["18ac962264404bcc0039359d184b15f3"],"id":"aW5kaWNhdG9yNWI5OTkxYTJjMzA4ZWE1MDBjZWQxMmYxYjQwMTMxMTcxNzQxMjExNjMzMDI2","dataCategories":["trend","group","simple"]}],"componentId":"h47tnoco","configVersion":"23.0.0-ci-SNAPSHOT","sortBy":"value","dataCategory":"group","colorConfig":{"type":"singleColor","values":[{"color":"1b62e7b70f0002104919700d7b767eda","metric":"YVc1a2FXTmhkRzl5TldJNU9Ua3hZVEpqTXpBNFpXRTFNREJqWldReE1tWXhZalF3TVRNeE1UY3hOelF4TWpFeE5qTXpNREkyMTc0MTIxMTY0NTAwMQ==","rules":[]}]},"metrics":[{"dataSource":"aW5kaWNhdG9yNWI5OTkxYTJjMzA4ZWE1MDBjZWQxMmYxYjQwMTMxMTcxNzQxMjExNjMzMDI2","id":"YVc1a2FXTmhkRzl5TldJNU9Ua3hZVEpqTXpBNFpXRTFNREJqWldReE1tWXhZalF3TVRNeE1UY3hOelF4TWpFeE5qTXpNREkyMTc0MTIxMTY0NTAwMQ==","aggregateIndicator":"","frequency":10,"numberFormat":{"customFormat":false},"axisId":"primary"}],"headerTitle":"Percentage of Accurate Entitlements"}</properties>
+        <requested_by/>
+        <scheduled_count>0</scheduled_count>
+        <sys_class_name>par_visualization</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-05 21:55:01</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>f69b91e6c308ea500ced12f1b401317c</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>% of Accurate Entitlements</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>par_visualization_f69b91e6c308ea500ced12f1b401317c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 05:22:08</sys_updated_on>
+        <type>Single score</type>
+    </par_visualization>
+</record_update>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.implementation.servers</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-06 14:14:42</sys_created_on>
+        <sys_id>3ae5013bc3b216500ced12f1b4013161</sys_id>
+        <sys_mod_count>20</sys_mod_count>
+        <sys_name>sam.implementation.servers</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_3ae5013bc3b216500ced12f1b4013161</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:16:03</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+{&#13;
+    "kpi": "Servers with Missing Cost Center or Department with Installed Status",&#13;
+    "description": "Associating servers with cost centers or departments enables precise cost tracking, supports budgeting, and ensures alignment with organizational financial policies.",&#13;
+    "recommendation": "Enforce the inclusion of cost center or department details during server onboarding and validate these fields during routine audits to ensure compliance with financial policies.",&#13;
+    "table": "cmdb_ci_server",&#13;
+    "field": "install_status=1^cost_centerISEMPTY^ORdepartmentISEMPTY"&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Underutilized Servers",&#13;
+    "description": "Identifying underutilized servers allows for resource reallocation, reduces operational costs, and improves server efficiency.",&#13;
+    "recommendation": "Regularly monitor server utilization metrics and establish thresholds to flag underutilized servers for reassignment, consolidation, or decommissioning.",&#13;
+    "table": "cmdb_ci_server",&#13;
+    "field": "install_status=1^cpu_count&lt;2^assigned_to.active=true"&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Orphaned Servers in CMDB",&#13;
+    "description": "Managing orphaned servers enhances CMDB accuracy, supports incident resolution, and prevents unmanaged resource risks.",&#13;
+    "recommendation": "Implement a review process to identify and address orphaned servers, ensuring they are either reassigned to appropriate owners or decommissioned if no longer needed.",&#13;
+    "table": "cmdb_ci_server",&#13;
+    "field": "managed_byISEMPTY^assigned_toISEMPTY^install_status=1"&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Servers with Expiring or Missing Warranty",&#13;
+    "description": "Tracking server warranties ensures timely renewals, minimizes downtime risks, and supports cost-effective maintenance planning.",&#13;
+    "recommendation": "Create automated alerts for warranty expiration dates and establish a maintenance plan to renew or replace servers proactively, reducing operational risks.",&#13;
+    "table": "cmdb_ci_server",&#13;
+    "field": "install_status=1^assigned_to.active=true^warranty_expirationISEMPTY^ORwarranty_expiration&gt;javascript:gs.beginningOfLast3Months()"&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Servers without CPU Count",&#13;
+    "description": "CPU count improves capacity planning, supports resource optimization, and ensures accurate server performance analysis.",&#13;
+    "recommendation": "Integrate discovery tools to automatically populate CPU count during server onboarding and implement data validation checks to maintain the accuracy of inventory records.",&#13;
+    "table": "cmdb_ci_server",&#13;
+    "field": "cpu_countISEMPTY^install_status=1"&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Servers without CPU Core Count",&#13;
+    "description": "Including CPU core count enhances workload distribution, supports virtualization strategies, and improves server efficiency.",&#13;
+    "recommendation": "Use discovery mechanisms or manual updates to capture CPU core counts, and mandate this field for servers entering the CMDB to support capacity planning and virtualization efforts.",&#13;
+    "table": "cmdb_ci_server",&#13;
+    "field": "cpu_core_countISEMPTY^install_status=1"&#13;
+  },&#13;
+  {&#13;
+      "kpi": "Duplicate Records in Servers",&#13;
+    "description": "Duplicate server records can lead to configuration conflicts, mismanagement of IT assets, and inefficiencies in resource allocation.",&#13;
+    "recommendation": "Implement data validation checks, enforce unique constraints on key identifiers, and conduct regular audits to merge or remove duplicate server records.",&#13;
+      "table": "cmdb_ci_server",&#13;
+    "field": ["model id", "serial number "]&#13;
+  }&#13;
+]&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=3ae5013bc3b216500ced12f1b4013161"/>
+</record_update>

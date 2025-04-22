@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Automate Standard Software Request">ba5cd07ac3939a100ced12f1b40131cd</macroponent>
+        <name>markbtn_4/variant</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+  * @param {params} params
+  * @param {api} params.api
+  * @param {TransformApiHelpers} params.helpers
+  */
+function evaluateProperty({api, helpers}) {
+    var buttonId = "markbtn_4";
+    var buttonData = api.data.mark_walk_btn_2.output.buttonData;
+    const button = buttonData.find(btn => btn.buttonId === buttonId);
+
+    // Return the buttonState if found, otherwise return null or a default value
+    var buttonState =  button ? button.buttonState : false;
+
+    
+	return buttonState ? "negative-primary" : "positive-primary";
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-01-31 10:25:14</sys_created_on>
+        <sys_id>6b7e707fc3dbda100ced12f1b40131f3</sys_id>
+        <sys_mod_count>11</sys_mod_count>
+        <sys_name>markbtn_4/variant</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_6b7e707fc3dbda100ced12f1b40131f3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

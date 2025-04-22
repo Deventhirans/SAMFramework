@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.SAM Health Check</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>SAM Health Check</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    // List of properties to be fetched from the system properties
+    var kpiProperties = [
+        'sam.implementation.healthcheck'
+ 
+    ];
+
+    // Object to hold the KPI values for each type
+    var kpiValues = {
+        'healthcheck_kpi': []
+    };
+
+    // Function to fetch and parse the KPIs
+    function fetchKPIs(propertyName) {
+        var kpis = [];
+        var propertyValue = gs.getProperty(propertyName);
+
+        if (propertyValue) {
+            try {
+                kpis = JSON.parse(propertyValue); // Parsing the JSON property
+            } catch (e) {
+                gs.log("Error parsing " + propertyName + ": " + e.message);
+            }
+        } else {
+            gs.log("Property " + propertyName + " is not set or is empty.");
+        }
+        return kpis;
+    }
+
+    // Function to process each KPI and get the corresponding field value
+    function processKPI(kpis, kpiType) {
+        if (Array.isArray(kpis)) {
+            kpis.forEach(function(kpi) {
+                // Ensure kpi.table and kpi.query are present
+                if (kpi.table && kpi.query) {
+                    var query = getqueryCount(kpi.table, kpi.query);
+                    kpiValues[kpiType].push({
+                        'kpi': kpi.kpi,
+                        'description': kpi.description,
+                        'table': kpi.table,
+                        'query': query
+                    });
+                } else {
+                    gs.log("KPI missing table or query: " + JSON.stringify(kpi));
+                }
+            });
+        } else {
+            gs.log("The " + kpiType + " property is not in the expected format.");
+        }
+    }
+
+    // Loop through the KPI properties and process each one
+    kpiProperties.forEach(function(property, index) {
+        var kpiType = Object.keys(kpiValues)[index];
+        var kpis = fetchKPIs(property);
+        processKPI(kpis, kpiType);
+    });
+
+    // Function to get query count based on table and query
+    function getqueryCount(tableName, query) {
+        try {
+            var gr = new GlideAggregate(tableName);
+            gr.addEncodedQuery(query);
+            gr.addAggregate('COUNT');
+            gr.query();
+
+            if (gr.next()) {
+                return gr.getAggregate('COUNT');
+            }
+            return 0;
+        } catch (error) {
+            gs.print("Error querying table: " + error.message);
+            return 0; // Return 0 in case of an error
+        }
+    }
+
+    // Return the final KPI values object
+    return kpiValues;
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-30 06:37:07</sys_created_on>
+        <sys_id>dcd95399c3ba9a900ced12f1b4013189</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>SAM Health Check</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_dcd95399c3ba9a900ced12f1b4013189</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=dcd95399c3ba9a900ced12f1b4013189"/>
+</record_update>

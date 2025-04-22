@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Pick Top Publisher">77267d48c31c6a140ced12f1b4013113</macroponent>
+        <name>list_selector_1/items</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+ * @param {params} params
+ * @param {api} params.api
+ * @param {TransformApiHelpers} params.helpers
+ */
+function evaluateProperty({
+    api,
+    helpers
+}) {
+console.log('teeeeeeee')
+    var jsobpub = "";
+    var publishersList = api.data.gettoppublisheronly_1.output.grouped_publishers;
+    for (var i = 0; i < publishersList.length; i++) {
+        if (jsobpub == "") {
+            console.log('oooooooooooooooooooo')
+            jsobpub = '"'+ publishersList[i] + '":{ "label":"' + publishersList[i] +'"}';
+        } else {
+            jsobpub = jsobpub + "," + '"'+ publishersList[i] + '":{ "label":"' + publishersList[i] +'"}';
+        }
+    };
+
+    var finalstr = '{"' +"publisher"+ '":{' + jsobpub + '}}';
+    var jsk = JSON.parse(finalstr);
+    console.log("OldData",jsk)
+    return jsk;
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-03-10 15:42:03</sys_created_on>
+        <sys_id>48367d48c31c6a140ced12f1b40131b0</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>list_selector_1/items</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_48367d48c31c6a140ced12f1b40131b0</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

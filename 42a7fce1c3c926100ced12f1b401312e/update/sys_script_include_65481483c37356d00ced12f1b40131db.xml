@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.serviceDependencyKPI</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>serviceDependencyKPI</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var serviceDependencyKPI = Class.create();
+serviceDependencyKPI.prototype = {
+    initialize: function() {
+        // Use a default weight for each dependency record since no additional relationship fields exist.
+        this.defaultWeight = 1;
+    },
+    calculate: function() {
+        var serviceGr = new GlideRecord('cmdb_ci_service');
+        serviceGr.addQuery('operational_status', 1);
+        serviceGr.query();
+        var analysis = [];
+        while (serviceGr.next()) {
+            analysis.push(this._analyzeDependencies(serviceGr));
+        }
+        return {
+            dependency_analysis: analysis,
+            summary: this._generateSummary(analysis)
+        };
+    },
+    _analyzeDependencies: function(service) {
+        // Query the association table using the "service_id" field.
+        var assocGr = new GlideRecord('svc_ci_assoc');
+        assocGr.addQuery('service_id', service.getUniqueValue());
+        assocGr.query();
+        var dependencies = {
+            service_name: service.getValue('name'),
+            total_components: 0,
+            dependency_chains: [],
+            risk_score: 0
+        };
+        while (assocGr.next()) {
+            dependencies.total_components++;
+            this._processDependencyChain(assocGr, dependencies);
+        }
+        dependencies.risk_score = this._calculateRiskScore(dependencies);
+        return dependencies;
+    },
+    _processDependencyChain: function(assoc, dependencies) {
+        // Retrieve the dependent component's name using the "ci_item_id" field.
+        var componentName = assoc.getUniqueValue();
+        // Build a simple dependency chain description.
+        var chain = "Depends on " + componentName;
+        dependencies.dependency_chains.push(chain);
+        // Accumulate risk using the default weight.
+        dependencies.risk_score += this.defaultWeight;
+    },
+    _calculateRiskScore: function(dependencies) {
+        // Calculate an average risk score per dependency if any exist.
+        if (dependencies.total_components > 0) {
+            return dependencies.risk_score / dependencies.total_components;
+        }
+        return 0;
+    },
+    _generateSummary: function(analysis) {
+        var summary = {
+            total_services: analysis.length,
+            total_components: 0,
+            average_risk_score: 0
+        };
+        var totalRisk = 0;
+        for (var i = 0; i < analysis.length; i++) {
+            summary.total_components += analysis[i].total_components;
+            totalRisk += analysis[i].risk_score;
+        }
+        summary.average_risk_score = (analysis.length > 0) ? totalRisk / analysis.length : 0;
+        return summary;
+    }
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-22 20:03:41</sys_created_on>
+        <sys_id>65481483c37356d00ced12f1b40131db</sys_id>
+        <sys_mod_count>21</sys_mod_count>
+        <sys_name>serviceDependencyKPI</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_65481483c37356d00ced12f1b40131db</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:38:57</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>65481483c37356d00ced12f1b40131db</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-22 20:03:41</sys_created_on>
+        <sys_id>98a810cfc37356d00ced12f1b4013110</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-02-22 20:03:41</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

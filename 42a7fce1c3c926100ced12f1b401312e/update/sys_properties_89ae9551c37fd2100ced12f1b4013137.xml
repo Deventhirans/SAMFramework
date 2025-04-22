@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>integration</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-17 14:45:10</sys_created_on>
+        <sys_id>89ae9551c37fd2100ced12f1b4013137</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>integration</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_89ae9551c37fd2100ced12f1b4013137</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:19:58</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+    {&#13;
+        "label": "Complex Integration",&#13;
+        "name": "u_complex_integration",&#13;
+        "type": "radio",&#13;
+        "options": ["Yes", "No"],&#13;
+        "conditional": {&#13;
+            "showOn": "Yes",&#13;
+            "field": "u_instance_name",&#13;
+            "label": "Enter the Instance Name",&#13;
+            "type": "text"&#13;
+        }&#13;
+    },&#13;
+    {&#13;
+        "label": "Continue in this phase",&#13;
+        "name": "u_continue_phase",&#13;
+        "type": "checkbox"&#13;
+    }&#13;
+]&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=89ae9551c37fd2100ced12f1b4013137"/>
+</record_update>

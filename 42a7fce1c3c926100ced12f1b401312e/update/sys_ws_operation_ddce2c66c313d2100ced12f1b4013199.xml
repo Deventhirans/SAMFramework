@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>editbtn</name>
+        <operation_script><![CDATA[(function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+    if (request.method == "GET") {
+        response.setStatus(405);
+        response.setBody({
+            status: "failure",
+            error: {
+                message: "Method not Supported",
+                detail: "GET method not supported for API"
+            }
+        });
+        return;
+    }
+
+    try {
+        var requestData = request.body.data;
+        var u_button_label = requestData.u_button_label; // e.g., markbtn_1, markbtn_2
+        var u_read_flag = requestData.u_read_flag; // true or false
+
+        // Define the system property name
+        var propertyName = 'Mark as complete button property walk';
+        
+        // Get the current value of the system property (stored as a JSON string)
+        var currentValue = gs.getProperty(propertyName);
+        
+        // Parse the current value into an object, or initialize an empty object if it doesn't exist
+        var buttonStates = currentValue ? JSON.parse(currentValue) : {};
+
+        // Update the state for the specific button
+        buttonStates[u_button_label] = u_read_flag;
+
+        // Convert the updated object back to a JSON string and save it
+        gs.setProperty(propertyName, JSON.stringify(buttonStates));
+
+        // Determine status for response
+        var status = u_read_flag ? "Complete" : "Incomplete";
+
+        response.setBody({
+            status: 'success',
+            message: `Button '${u_button_label}' updated to ${status} in system property '${propertyName}'.`
+        });
+    } catch (e) {
+        response.setStatus(500);
+        response.setBody({
+            status: 'error',
+            message: e.message
+        });
+    }
+})(request, response);]]></operation_script>
+        <operation_uri>/api/985627/buttonwalk</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-01-27 11:53:49</sys_created_on>
+        <sys_id>ddce2c66c313d2100ced12f1b4013199</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>editbtn</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ws_operation_ddce2c66c313d2100ced12f1b4013199</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:31:49</sys_updated_on>
+        <web_service_definition display_value="buttonwalk">7f5ee462c313d2100ced12f1b401318e</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>ddce2c66c313d2100ced12f1b4013199</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-01-27 11:53:48</sys_created_on>
+        <sys_id>032f28aac313d2100ced12f1b40131cf</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-01-27 11:53:48</sys_updated_on>
+        <table>sys_ws_operation</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

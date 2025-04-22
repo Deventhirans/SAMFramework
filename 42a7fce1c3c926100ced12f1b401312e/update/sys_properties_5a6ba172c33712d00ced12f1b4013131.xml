@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>false</ignore_cache>
+        <is_private>false</is_private>
+        <name>sa.mapping.legacy_mid_selection</name>
+        <read_roles>service_mapping_user</read_roles>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-22 07:26:52</sys_created_on>
+        <sys_id>5a6ba172c33712d00ced12f1b4013131</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>sa.mapping.legacy_mid_selection</sys_name>
+        <sys_package display_value="Service Mapping" source="com.snc.service-mapping">d07ae5fec3b312d00ced12f1b4013185</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_5a6ba172c33712d00ced12f1b4013131</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:19:48</sys_updated_on>
+        <type>boolean</type>
+        <value>false</value>
+        <write_roles>service_mapping_admin</write_roles>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=5a6ba172c33712d00ced12f1b4013131"/>
+</record_update>

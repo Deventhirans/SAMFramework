@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.implementation.user.groups</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-26 13:52:53</sys_created_on>
+        <sys_id>4a996bccc3f25a100ced12f1b40131b3</sys_id>
+        <sys_mod_count>21</sys_mod_count>
+        <sys_name>sam.implementation.user.groups</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_4a996bccc3f25a100ced12f1b40131b3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:05:31</sys_updated_on>
+        <type>string</type>
+        <value>[{"Group":"Software Asset Management  Administrator","Description":"This role provides full access to the Software Asset Management application. It is required for importing entitlements, managing reclamation rules, running reconciliation, creating custom products and pattern normalization rules, setting up Content Service, and other administrative tasks.","Contains_roles":"sam_user,sam_spend_import,asset_model_manager,contract_manager,it_demand_user","key":"Admin","url":"sys_user_group_list.do?sysparm_query=name%3DSoftware%20Asset%20Management%20administrator&amp;sysparm_first_row=1"},{"Group":"Software Asset Management  User","Description":"This role provides access to all Software Asset Management features, except for administrative tasks. If Software Spend Detection is installed, this role grants access to all Software Spend Detection features, except for financial transaction data import and Content Service setup.","Contains_roles":"pa_viewer,cmdb_read,report_user,sn_remote_dir_sync.reader","key":"User","url":"sys_user_group_list.do?sysparm_query=name%3DSoftware%20Asset%20Management%20user&amp;sysparm_first_row=1"},{"Group":"Software Asset Management  Developer","Description":"Developer role grants script-writing privileges on the platform, similar to those of a sys_admin. Users with this role must be trained in ServiceNow scripting to ensure proper usage and understanding.","Contains_roles":"sam_admin","key":"Developer","url":"sys_user_group_list.do?sysparm_query=name%3DSoftware%20Asset%20Management%20developer&amp;sysparm_first_row=1"},{"Group":"Sam-Test","Description":"This Group is created From SAM Implementation Framework","Contains_roles":"admin,itil","key":"Sam-Test","url":"sys_user_group_list.do?sysparm_query=name%3DSam-Test&amp;sysparm_first_row=1"},{"Group":"tre","Description":"This Group is created From SAM Implementation Framework","Contains_roles":"sla_admin,antivirus_viewer","key":"tre","url":"sys_user_group_list.do?sysparm_query=name%3Dtre&amp;sysparm_first_row=1"}]</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=4a996bccc3f25a100ced12f1b40131b3"/>
+</record_update>

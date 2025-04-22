@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>CustomScriptIncludeAPIREST</name>
+        <operation_script><![CDATA[var CustomScriptIncludeAPI = Class.create();
+CustomScriptIncludeAPI.prototype = Object.extendsObject(AbstractRestResource, {
+
+    // Handle POST requests
+    post: function() {
+        var property = this.requestBody.data.sysparm_property; // Access data passed in the request body
+        var suggestedValue = this.requestBody.data.sysparm_suggested_value; // Access suggested_value
+
+        try {
+            // Perform the server-side update of the property
+            var gr = new GlideRecord('sys_properties'); // Assuming sys_properties is the correct table
+            gr.get('name', property); // Replace with 'sys_id' if you're using sys_id
+            if (gr.isValid()) {
+                gr.setValue('value', suggestedValue);
+                gr.update();
+                return new sn_ws.Response().setStatus(200).setBody({ result: 'success' }); // Send success response
+            } else {
+                return new sn_ws.Response().setStatus(404).setBody({ result: 'error', message: 'Property not found' });
+            }
+        } catch (ex) {
+            return new sn_ws.Response().setStatus(500).setBody({ result: 'error', message: ex.message });
+        }
+    }
+});
+]]></operation_script>
+        <operation_uri>/api/985627/customscriptincludeapi</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2024-12-27 06:10:34</sys_created_on>
+        <sys_id>d7f63f58c3f212500ced12f1b40131fb</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>CustomScriptIncludeAPIREST</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ws_operation_d7f63f58c3f212500ced12f1b40131fb</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:31:49</sys_updated_on>
+        <web_service_definition display_value="CustomScriptIncludeAPI">54a6ff90c3f212500ced12f1b401316c</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

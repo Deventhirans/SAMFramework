@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.data vis</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>data vis</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[(function() {
+    // Input data (this will come from the data broker)
+    var input = data;  // In Data Broker, the input data is typically available as `data`
+
+    // Define the output object
+    var kpiValues = {
+        'grouped_publishers': []
+    };
+
+    // Add the buttons data to the kpiValues object
+    var buttonsData = [
+        { "id": "button1", "label": "8.33%", "value": 8.33 },
+        { "id": "button2", "label": "12.5%", "value": 12.5 },
+        { "id": "button3", "label": "16.67%", "value": 16.67 },
+        { "id": "button4", "label": "20%", "value": 20 },
+        { "id": "button5", "label": "25%", "value": 25 },
+        { "id": "button6", "label": "33.33%", "value": 33.33 }
+    ];
+
+    // Transform input data into the expected output format
+    kpiValues.grouped_publishers = buttonsData.map(function(button) {
+        return {
+            id: button.id,
+            label: button.label,
+            value: button.value
+        };
+    });
+
+    // Return the transformed data
+    return kpiValues;
+})();
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2024-12-27 10:49:36</sys_created_on>
+        <sys_id>86177ce8c37e52500ced12f1b4013129</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>data vis</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_86177ce8c37e52500ced12f1b4013129</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=86177ce8c37e52500ced12f1b4013129"/>
+</record_update>

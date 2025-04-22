@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.Software_product</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>Software_product</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var output = [];
+
+    try {
+        // Aggregate publisher counts
+        var gr = new GlideAggregate('cmdb_sam_sw_discovery_model');
+        gr.groupBy('publisher'); // Group by the publisher field
+        gr.addAggregate('COUNT'); // Count records for each publisher
+        gr.orderByAggregate('COUNT'); // Sort by publisher count in descending order
+        gr.query();
+
+        var orderIndex = 1; // Initialize order counter
+
+        // Check if no records were returned
+        if (!gr.hasNext()) {
+            gs.info("No records found in cmdb_sam_sw_discovery_model.");
+        }
+
+        // Loop through the records
+        while (gr.next()) {
+            var publisherID = gr.getDisplayValue('publisher'); // Get publisher display value
+            var publisherCount = gr.getAggregate('COUNT'); // Get count of records for this publisher
+
+            // Log publisher ID and count for debugging
+            gs.info("Publisher: " + publisherID + " | Count: " + publisherCount);
+
+            // Push each publisher as an item in the schema format
+            output.push({
+                checked: false,
+                order: orderIndex, // Increment order for each item
+                itemId: "checkbox_" + orderIndex,
+                label: publisherID + " (Count: " + publisherCount + ")", // Customize label
+                hasLink: true,
+              
+            });
+
+            orderIndex++; // Increment order index
+        }
+
+        // If no data was found for publishers, log the result
+        if (output.length === 0) {
+            gs.info("No publishers found after aggregation.");
+        }
+
+        // Log the transformed data for debugging
+        gs.info("Transformed Data: " + JSON.stringify(output));
+
+    } catch (e) {
+        // Error handling and logging the error to the ServiceNow logs
+        gs.error("Error in transform script: " + e.toString());
+        return {
+            error: e.toString() // Return error details for debugging
+        };
+    }
+
+    // Return the transformed data
+    return output;
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2024-12-23 13:12:08</sys_created_on>
+        <sys_id>9eaee013c32a92100ced12f1b40131bd</sys_id>
+        <sys_mod_count>30</sys_mod_count>
+        <sys_name>Software_product</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_9eaee013c32a92100ced12f1b40131bd</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=9eaee013c32a92100ced12f1b40131bd"/>
+</record_update>

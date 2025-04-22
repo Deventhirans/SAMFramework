@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.discoveryAccuracyKpi</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description>discoveryAccuracyKPI</description>
+        <mutates_server_data>false</mutates_server_data>
+        <name>discoveryAccuracyKpi</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input){
+
+var discoveryAccuracyKpi = new discoveryAccuracyKPI();
+var discoveryAccuracyKpiResult = discoveryAccuracyKpi.calculate();
+// gs.print("\n=== Discovery Effectiveness Metrics ===\n");
+// gs.print(JSON.stringify(discoveryMetrics, null, 4));
+
+return{
+	"discoveryAccuracyKpi":discoveryAccuracyKpiResult
+}
+}]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-23 11:47:49</sys_created_on>
+        <sys_id>9a2073c3c37f9ad00ced12f1b4013132</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>discoveryAccuracyKpi</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_9a2073c3c37f9ad00ced12f1b4013132</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=9a2073c3c37f9ad00ced12f1b4013132"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>9a2073c3c37f9ad00ced12f1b4013132</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-23 11:47:48</sys_created_on>
+        <sys_id>9eb077c3c37f9ad00ced12f1b40131e2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-02-23 11:47:48</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

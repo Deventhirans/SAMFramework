@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.kalaiselvi</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>kalaiselvi</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var kpiValues = {
+        'data': []
+    };
+ 
+    try {
+        // Aggregate publisher counts
+        var gr = new GlideRecord('core_company');
+       
+        gr.query();
+ 
+        // Check if no records were returned
+        if (!gr.hasNext()) {
+            gs.info("No records found in cmdb_sam_sw_discovery_model.");
+        }
+ 
+        // Loop through the records
+        while (gr.next()) {
+            var publisherID = gr.getDisplayValue('name'); // Get publisher sys_id
+ 
+            // Log publisher ID and count for debugging
+            // gs.info("Publisher ID: " + publisherID + " | Publisher Count: " + publisherCount);
+ 
+            kpiValues.data.push({"itemId":"checkbox_0","checked":false,"required":true,"order":0,"label": publisherID , "hasLink":true,"link":{"url":"javascript:void(0)","text":"sample link 0"}}
+			
+			);
+        }
+ 
+        // If no data was found for publishers, log the result
+        
+        gs.info("Transformed KPI Data: " + JSON.stringify(kpiValues));
+ 
+    } catch (e) {
+        // Error handling and logging the error to the ServiceNow logs
+        gs.error("Error in transform script: " + e.toString());
+        return {
+            'error': e.toString() // Return error details for debugging
+        };
+    }
+ 
+
+
+	var data = [{"itemId":"checkbox_0","checked":false,"required":true,"order":0,"label":"this is test1 0","hasLink":true,"link":{"url":"javascript:void(0)","text":"sample link 0"}},{"itemId":"checkbox_1","checked":false,"order":1,"label":"this is item 1","hasLink":true,"link":{"url":"javascript:void(0)","text":"sample link 1"}},{"itemId":"checkbox_2","checked":false,"order":2,"label":"this is item 2","hasLink":true,"link":{"url":"javascript:void(0)","text":"sample link 2"}},{"itemId":"checkbox_3","checked":false,"order":3,"label":"this is item 3","hasLink":true,"link":{"url":"javascript:void(0)","text":"sample link 3"}}]
+    // Return the transformed data
+    // return {data : data};
+    return kpiValues;
+}]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-02 10:16:54</sys_created_on>
+        <sys_id>6829ab16c37296140ced12f1b401317d</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>kalaiselvi</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_6829ab16c37296140ced12f1b401317d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=6829ab16c37296140ced12f1b401317d"/>
+</record_update>

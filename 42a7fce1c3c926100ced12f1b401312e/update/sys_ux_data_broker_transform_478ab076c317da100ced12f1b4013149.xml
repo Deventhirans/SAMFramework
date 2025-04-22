@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.get dynamic table data</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>get dynamic table data</name>
+        <output_schema/>
+        <private>false</private>
+        <props>[&#13;
+&#13;
+{&#13;
+"name" : "propertyName",&#13;
+"label":"Enter the Property Name",&#13;
+"description":""&#13;
+},&#13;
+{&#13;
+"name" : "recordsPerPage",&#13;
+"label":"Enter the Records Per Page",&#13;
+"description":""&#13;
+},&#13;
+{&#13;
+"name" : "pageNo",&#13;
+"label":"Enter the Page No",&#13;
+"description":""&#13;
+},&#13;
+{&#13;
+"name" : "searchTerm",&#13;
+"label":"Enter the Search Term",&#13;
+"description":""&#13;
+}&#13;
+&#13;
+]</props>
+        <required_translations>[ {
+  "message" : "Enter the Page No",
+  "comment" : ""
+}, {
+  "message" : "Enter the Property Name",
+  "comment" : ""
+}, {
+  "message" : "Enter the Records Per Page",
+  "comment" : ""
+}, {
+  "message" : "Enter the Search Term",
+  "comment" : ""
+} ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    function fetchKPIs(propertyName, data, pageNo, recordsPerPage, searchTerm) {
+        var page = parseInt(pageNo, 10) || 1;
+        var perPage = parseInt(recordsPerPage, 10) || 20;
+        var filteredData = data;
+        
+        if (searchTerm && searchTerm.trim() !== "") {
+            gs.print("Search filter applied for term: " + searchTerm);
+            filteredData = [];
+            for (var i = 0; i < data.length; i++) {
+                var record = data[i];
+                var values = Object.keys(record);
+                
+                for (var j = 0; j < values.length; j++) {
+                    var value = String(record[values[j]]).toLowerCase();
+                    if (value.indexOf(searchTerm.toLowerCase()) !== -1) {
+                        filteredData.push(record);
+                        break; // Avoid adding the same record multiple times
+                    }
+                }
+            }
+        }
+        
+        var kpis = [];
+        var propertyValue = gs.getProperty(propertyName);
+
+        if (propertyValue) {
+            try {
+                kpis = JSON.parse(propertyValue);
+            } catch (e) {
+                gs.log("Error parsing " + propertyName + ": " + e.message);
+            }
+        } else {
+            gs.log("Property " + propertyName + " is not set or is empty.");
+        }
+        return kpis;
+    }
+
+    try {
+        var propertyName = input.propertyName;
+        var pageNo = parseInt(input.pageNo, 10) || 1;
+        var recordsPerPage = parseInt(input.recordsPerPage, 10) || 20;
+        var searchTerm = input.searchTerm || '';
+
+        var property = fetchKPIs(propertyName);
+
+        // Validate property
+        if (!property || !property.tableName || !property.fields) {
+            gs.print("Invalid Property Format");
+            return "Invalid Property Format";
+        }
+
+        var tableName = property.tableName;
+        var gr = new GlideRecord(tableName);
+
+        // Apply query if specified in property
+        if (property.query) {
+            gr.addEncodedQuery(property.query);
+        }
+
+        gr.query();
+
+        // First, get all records and store them
+        var allRecords = [];
+        var propertyFields = property.fields;
+
+        while (gr.next()) {
+            var record = {};
+            for (var key in propertyFields) {
+                record[key] = gr.getDisplayValue(propertyFields[key]);
+            }
+            allRecords.push(record);
+        }
+
+        // Apply search filter if searchTerm exists
+        var filteredRecords = allRecords;
+        if (searchTerm && searchTerm.trim() !== "") {
+            filteredRecords = [];
+            for (var i = 0; i < allRecords.length; i++) {
+                var record = allRecords[i];
+                var values = Object.keys(record);
+                
+                for (var j = 0; j < values.length; j++) {
+                    var value = String(record[values[j]]).toLowerCase();
+                    if (value.indexOf(searchTerm.toLowerCase()) !== -1) {
+                        filteredRecords.push(record);
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Apply pagination to filtered results
+        var totalCount = filteredRecords.length;
+        var startIndex = (pageNo - 1) * recordsPerPage;
+        var endIndex = Math.min(startIndex + recordsPerPage, totalCount);
+        var paginatedRecords = filteredRecords.slice(startIndex, endIndex);
+
+        // Log the output (for debugging)
+        gs.print("Total Records: " + totalCount);
+        gs.print("Retrieved Records: " + JSON.stringify(paginatedRecords, null, 2));
+
+        // Return the paginated filtered records
+        return {
+            records: paginatedRecords,
+            totalCount: totalCount,
+            pageNo: pageNo,
+            recordsPerPage: recordsPerPage
+        };
+
+    } catch (e) {
+        gs.error("Error retrieving records from " + tableName + ": " + e.message);
+        return "Error retrieving records from " + tableName;	
+    }
+}]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Harish_123</sys_created_by>
+        <sys_created_on>2025-01-28 07:31:50</sys_created_on>
+        <sys_id>478ab076c317da100ced12f1b4013149</sys_id>
+        <sys_mod_count>32</sys_mod_count>
+        <sys_name>get dynamic table data</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_478ab076c317da100ced12f1b4013149</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=478ab076c317da100ced12f1b4013149"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>478ab076c317da100ced12f1b4013149</id>
+        <sys_created_by>Harish_123</sys_created_by>
+        <sys_created_on>2025-01-28 07:31:50</sys_created_on>
+        <sys_id>17ccfc36c397da100ced12f1b401317f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Harish_123</sys_updated_by>
+        <sys_updated_on>2025-01-28 07:31:50</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

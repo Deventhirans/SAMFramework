@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.SAM EUC </api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>SAM EUC </name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    // List of properties to be fetched from the system properties
+    var kpiProperties = [
+        'sam.implementation.euc',
+        'sam.implementation.servers',
+        'sam.current.installation.kpi',
+        'sam.current.subscription.kpi'
+    ];
+
+    // Object to hold the KPI values for each type
+    var kpiValues = {
+        'euc_kpi': [],
+        'server_kpi': [],
+        'installation_kpi': [],
+        'subscription_kpi': []
+    };
+
+    function calculateAveragePercentages(input) {
+        var output = {};
+
+        for (var key in input) {
+            if (input.hasOwnProperty(key)) {
+                var percentages = input[key].map(function(item) {
+                    return item.percentage;
+                });
+                var average = Math.floor(
+                    percentages.reduce(function(sum, value) {
+                        return sum + value;
+                    }, 0) / percentages.length
+                );
+
+                output[key] = input[key].map(function(item) {
+                    var newItem = Object.assign({}, item);
+                    newItem.average = average;
+                    return newItem;
+                });
+            }
+        }
+
+        return output;
+    }
+
+
+    // Function to fetch and parse the KPIs
+    function fetchKPIs(propertyName) {
+        var kpis = [];
+        var propertyValue = gs.getProperty(propertyName);
+
+        if (propertyValue) {
+            try {
+                kpis = JSON.parse(propertyValue); // Parsing the JSON property
+            } catch (e) {
+                gs.log("Error parsing " + propertyName + ": " + e.message);
+            }
+        } else {
+            gs.log("Property " + propertyName + " is not set or is empty.");
+        }
+        return kpis;
+    }
+
+    // Function to process each KPI and get the corresponding field value
+    function processKPI(kpis, kpiType) {
+        if (Array.isArray(kpis)) {
+            kpis.forEach(function(kpi) {
+                if (kpi.kpi && kpi.kpi.toLowerCase().indexOf('duplicate') !== -1) {
+                    return; // Skip this KPI
+                }
+                if (kpi.description && kpi.description.toLowerCase().indexOf('duplicate') !== -1) {
+                    return; // Skip this KPI
+                }
+                // Ensure kpi.table and kpi.query are present
+                if (kpi.table && kpi.field) {
+                    var queryCount = getQueryCount(kpi.table, kpi.field);
+                    var totalCount = getTableTotalCount(kpi.table);
+                    var percentage = parseInt((queryCount / totalCount) * 100);
+
+                    kpiValues[kpiType].push({
+                        'kpi': kpi.kpi,
+                        'description': kpi.description,
+                        'table': kpi.table,
+                        'query_count': queryCount,
+                        'total_count': totalCount,
+                        'percentage': percentage,
+                        'action': kpi.recommendation
+                    });
+                } else {
+                    gs.log("KPI missing table or query: " + JSON.stringify(kpi));
+                }
+            });
+        } else {
+            gs.log("The " + kpiType + " property is not in the expected format.");
+        }
+    }
+
+    // Loop through the KPI properties and process each one
+    kpiProperties.forEach(function(property, index) {
+        var kpiType = Object.keys(kpiValues)[index];
+        var kpis = fetchKPIs(property);
+        processKPI(kpis, kpiType);
+    });
+
+    // Function to get query count based on table and query
+    function getQueryCount(tableName, field) {
+        try {
+            var gr = new GlideAggregate(tableName);
+            gr.addEncodedQuery(field);
+            gr.addAggregate('COUNT');
+            gr.query();
+
+            if (gr.next()) {
+                return parseInt(gr.getAggregate('COUNT'), 10);
+            }
+            return 0;
+        } catch (error) {
+            gs.print("Error querying table: " + error.message);
+            return 0; // Return 0 in case of an error
+        }
+    }
+
+    // Function to get the total count of records in a table
+    function getTableTotalCount(tableName) {
+        try {
+            var gr = new GlideAggregate(tableName);
+            gr.addAggregate('COUNT');
+            gr.query();
+
+            if (gr.next()) {
+                return parseInt(gr.getAggregate('COUNT'), 10);
+            }
+            return 0;
+        } catch (error) {
+            gs.print("Error querying table total count: " + error.message);
+            return 0; // Return 0 in case of an error
+        }
+    }
+
+    // Return the final KPI values object
+    return calculateAveragePercentages(kpiValues);
+}]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-02 06:41:37</sys_created_on>
+        <sys_id>b2d7ba96c33e16140ced12f1b40131de</sys_id>
+        <sys_mod_count>14</sys_mod_count>
+        <sys_name>SAM EUC </sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_b2d7ba96c33e16140ced12f1b40131de</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=b2d7ba96c33e16140ced12f1b40131de"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>b2d7ba96c33e16140ced12f1b40131de</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-23 13:49:46</sys_created_on>
+        <sys_id>a6536c15c39bd2100ced12f1b40131b0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-01-23 13:49:46</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

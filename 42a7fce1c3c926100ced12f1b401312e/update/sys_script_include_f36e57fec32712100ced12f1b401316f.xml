@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.FormSubmission</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>FormSubmission</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var FormSubmission = Class.create();
+FormSubmission.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+    submitFormData: function() {
+        var sys_id = this.getParameter('sysparm_sys_id'); 
+        var text_field = this.getParameter('sysparm_text_field');
+        var dropdown_field = this.getParameter('sysparm_dropdown_field');
+        var checkbox_field = this.getParameter('sysparm_checkbox_field') === 'true'; // Convert to boolean
+        var radio_field = this.getParameter('sysparm_radio_field');
+
+        var gr = new GlideRecord('u_custom_form_data'); 
+
+        if (sys_id && gr.get(sys_id)) {
+            // Update existing record
+            gr.u_text_field = text_field;
+            gr.u_dropdown_field = dropdown_field;
+            gr.u_checkbox_field = checkbox_field;
+            gr.u_radio_field = radio_field;
+            gr.update();
+            return "Data updated successfully!";
+        } else {
+            // Create new record
+            gr.initialize();
+            gr.u_text_field = text_field;
+            gr.u_dropdown_field = dropdown_field;
+            gr.u_checkbox_field = checkbox_field;
+            gr.u_radio_field = radio_field;
+            gr.insert();
+            
+            return "New user registered successfully!";
+        }
+    },
+
+    getUserData: function() {
+        var sys_id = this.getParameter('sysparm_sys_id'); 
+        var gr = new GlideRecord('u_custom_form_data');
+
+        if (gr.get(sys_id)) {
+            var userData = {
+                text_field: gr.u_text_field,
+                dropdown_field: gr.u_dropdown_field,
+                checkbox_field: gr.u_checkbox_field.toString(), // Convert to string
+                radio_field: gr.u_radio_field
+            };
+            return JSON.stringify(userData);
+        }
+        return JSON.stringify(null);
+    }
+});
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Harish_123</sys_created_by>
+        <sys_created_on>2025-02-10 05:36:11</sys_created_on>
+        <sys_id>f36e57fec32712100ced12f1b401316f</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>FormSubmission</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_f36e57fec32712100ced12f1b401316f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:39:03</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>f36e57fec32712100ced12f1b401316f</id>
+        <sys_created_by>Harish_123</sys_created_by>
+        <sys_created_on>2025-02-10 05:36:10</sys_created_on>
+        <sys_id>37fe5f36c36712100ced12f1b40131b1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Harish_123</sys_updated_by>
+        <sys_updated_on>2025-02-10 05:36:10</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

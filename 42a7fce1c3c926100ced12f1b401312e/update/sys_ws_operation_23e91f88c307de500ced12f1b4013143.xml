@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>get top publisher</name>
+        <operation_script><![CDATA[(function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+    // implement resource here
+    try {
+
+        var requestData = request.body.data;
+        var a = requestData.publisher;
+		gs.log("A in Api" + JSON.stringify(a));
+		var name = requestData.filterName;
+        // var name = 'Top ten publishers for SAM workspace';
+        var filter = new GlideRecord('sys_filter');
+        filter.addQuery('title=' + name);
+        filter.query();
+
+        if (filter.next()) {
+            filter.filter = "norm_publisher.nameIN" + a + "^EQ";
+            filter.update();
+        } else {
+            filter.title = name;
+            filter.table = "cmdb_sam_sw_discovery_model";
+            filter.filter = "norm_publisher.nameIN" + a + "^EQ";
+            filter.insert();
+        }
+		response.setStatus(200);
+        response.setBody({
+            status: 'success',
+            data: "result"
+        });
+    } catch (e) {
+        response.setStatus(500);
+        response.setBody({
+            status: 'error',
+            message: e.message
+        });
+    }
+
+})(request, response);]]></operation_script>
+        <operation_uri>/api/985627/top_publisher</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-07 19:47:26</sys_created_on>
+        <sys_id>23e91f88c307de500ced12f1b4013143</sys_id>
+        <sys_mod_count>10</sys_mod_count>
+        <sys_name>get top publisher</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ws_operation_23e91f88c307de500ced12f1b4013143</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:31:49</sys_updated_on>
+        <web_service_definition display_value="top publisher">a5a91f08c307de500ced12f1b401317c</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>23e91f88c307de500ced12f1b4013143</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-27 19:24:58</sys_created_on>
+        <sys_id>f3669a2ac39796100ced12f1b40131c7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-01-27 19:24:58</sys_updated_on>
+        <table>sys_ws_operation</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>userinaccurate</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-20 20:56:46</sys_created_on>
+        <sys_id>23815e12c3fb92900ced12f1b4013179</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>userinaccurate</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_23815e12c3fb92900ced12f1b4013179</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:19:35</sys_updated_on>
+        <type>string</type>
+        <value>{&#13;
+    "output": [&#13;
+        {&#13;
+            "kpi": "Inactive Users",&#13;
+            "count": 2&#13;
+        },&#13;
+        {&#13;
+            "kpi": "Users Without Name",&#13;
+            "count": 2&#13;
+        },&#13;
+        {&#13;
+            "kpi": "Active Users Without User ID",&#13;
+            "count": 2&#13;
+        },&#13;
+        {&#13;
+            "kpi": "Users Without Email ID",&#13;
+            "count": 27&#13;
+        },&#13;
+        {&#13;
+            "kpi": "Users Without Department",&#13;
+            "count": 111&#13;
+        },&#13;
+        {&#13;
+            "kpi": "Users Without Manager",&#13;
+            "count": 658&#13;
+        },&#13;
+        {&#13;
+            "kpi": "Active Users Without Cost Center",&#13;
+            "count": 127&#13;
+        }&#13;
+    ]&#13;
+}&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=23815e12c3fb92900ced12f1b4013179"/>
+</record_update>

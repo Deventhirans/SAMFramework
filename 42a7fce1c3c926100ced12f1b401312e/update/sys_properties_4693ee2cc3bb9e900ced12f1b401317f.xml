@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>saas.integration</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-15 11:55:19</sys_created_on>
+        <sys_id>4693ee2cc3bb9e900ced12f1b401317f</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>saas.integration</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_4693ee2cc3bb9e900ced12f1b401317f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:19:43</sys_updated_on>
+        <type>string</type>
+        <value>{&#13;
+  "saas.integration.adobe_workfront": {&#13;
+    "description": "Prevents misallocation of software assets, reduces inaccuracies in reporting, and mitigates compliance issues by ensuring accurate vendor management and asset tracking.",&#13;
+    "recommendation": "Regularly audit vendor assignments and automate validations to ensure accurate asset tracking and compliance."&#13;
+  },&#13;
+  "saas.integration.aha": {&#13;
+    "description": "Enables accurate company identification, improves asset management, and supports vendor management and compliance reporting.",&#13;
+    "recommendation": "Ensure that all companies have a valid name."&#13;
+  },&#13;
+  "saas.integration.asana": {&#13;
+    "description": "Ensures consistency, enhances data integrity, and facilitates accurate license tracking, compliance, and reporting.",&#13;
+    "recommendation": "Please review and normalize the data for each company."&#13;
+  },&#13;
+  "saas.integration.box": {&#13;
+    "description": "Prevents misallocation of cloud storage, ensuring proper user access and data security.",&#13;
+    "recommendation": "Conduct periodic access reviews and revoke unused licenses."&#13;
+  },&#13;
+  "saas.integration.calendly": {&#13;
+    "description": "Improves scheduling efficiency and reduces appointment conflicts.",&#13;
+    "recommendation": "Encourage users to sync Calendly with their main calendars to avoid duplication."&#13;
+  },&#13;
+  "saas.integration.cisco_webex": {&#13;
+    "description": "Enhances virtual meeting effectiveness and reduces unauthorized usage.",&#13;
+    "recommendation": "Regularly review meeting attendance and remove inactive users."&#13;
+  },&#13;
+  "saas.integration.confluence_cloud": {&#13;
+    "description": "Ensures accurate documentation and knowledge sharing across teams.",&#13;
+    "recommendation": "Encourage regular content updates and remove outdated pages."&#13;
+  },&#13;
+  "saas.integration.crowdstrike": {&#13;
+    "description": "Improves cybersecurity monitoring and incident tracking.",&#13;
+    "recommendation": "Review security alerts and address unresolved threats."&#13;
+  },&#13;
+  "saas.integration.docusign": {&#13;
+    "description": "Enhances document workflow efficiency and ensures compliance with digital signing policies.",&#13;
+    "recommendation": "Monitor document signing rates and remove inactive users."&#13;
+  },&#13;
+  "saas.integration.google_workspace": {&#13;
+    "description": "Optimizes workspace collaboration, email usage, and file storage.",&#13;
+    "recommendation": "Monitor Gmail activity and enforce security policies on Drive access."&#13;
+  },&#13;
+  "saas.integration.github": {&#13;
+    "description": "Ensures proper code repository management and security compliance.",&#13;
+    "recommendation": "Review user permissions and remove inactive contributors."&#13;
+  },&#13;
+  "saas.integration.goto": {&#13;
+    "description": "Improves remote work collaboration through secure access to virtual meetings.",&#13;
+    "recommendation": "Enforce security settings and restrict unauthorized users."&#13;
+  },&#13;
+  "saas.integration.jira_software": {&#13;
+    "description": "Optimizes agile workflows, backlog management, and sprint planning.",&#13;
+    "recommendation": "Monitor inactive issues and archive outdated projects."&#13;
+  },&#13;
+  "saas.integration.looker": {&#13;
+    "description": "Enhances data visualization and business intelligence reporting.",&#13;
+    "recommendation": "Ensure dashboards are regularly updated and relevant."&#13;
+  },&#13;
+  "saas.integration.microsoft_dynamics_365": {&#13;
+    "description": "Optimizes CRM data integrity and ensures sales efficiency.",&#13;
+    "recommendation": "Conduct periodic data audits and clean up inactive records."&#13;
+  },&#13;
+  "saas.integration.miro": {&#13;
+    "description": "Improves remote brainstorming and visual collaboration.",&#13;
+    "recommendation": "Archive old boards and monitor user activity levels."&#13;
+  },&#13;
+  "saas.integration.monday": {&#13;
+    "description": "Enhances work management efficiency and team productivity.",&#13;
+    "recommendation": "Ensure all tasks are assigned and actively worked on."&#13;
+  },&#13;
+  "saas.integration.pagerduty": {&#13;
+    "description": "Improves incident response efficiency and on-call scheduling.",&#13;
+    "recommendation": "Review escalation policies and update on-call schedules."&#13;
+  },&#13;
+  "saas.integration.rally": {&#13;
+    "description": "Optimizes agile project tracking and sprint planning.",&#13;
+    "recommendation": "Monitor sprint progress and adjust task priorities accordingly."&#13;
+  },&#13;
+  "saas.integration.roadmunk": {&#13;
+    "description": "Improves roadmap planning and product strategy visualization.",&#13;
+    "recommendation": "Ensure alignment between roadmap goals and development tasks."&#13;
+  },&#13;
+  "saas.integration.salesforce_crm": {&#13;
+    "description": "Optimizes customer relationship management and lead tracking.",&#13;
+    "recommendation": "Review sales pipeline accuracy and remove duplicate leads."&#13;
+  },&#13;
+  "saas.integration.salesforce_marketing_cloud": {&#13;
+    "description": "Enhances marketing campaign management and customer engagement.",&#13;
+    "recommendation": "Monitor campaign performance and adjust targeting strategies."&#13;
+  },&#13;
+  "saas.integration.slack": {&#13;
+    "description": "Improves team communication and collaboration efficiency.",&#13;
+    "recommendation": "Encourage usage of channels instead of direct messages for better transparency."&#13;
+  },&#13;
+  "saas.integration.smartrecruiters": {&#13;
+    "description": "Enhances recruitment processes and hiring workflows.",&#13;
+    "recommendation": "Ensure job postings are up-to-date and remove filled positions."&#13;
+  },&#13;
+  "saas.integration.smartsheet": {&#13;
+    "description": "Improves project tracking and collaborative work management.",&#13;
+    "recommendation": "Clean up unused sheets and enforce proper access control."&#13;
+  },&#13;
+  "saas.integration.sap_successfactors": {&#13;
+    "description": "Optimizes HR processes, employee performance tracking, and training programs.",&#13;
+    "recommendation": "Regularly review employee data and archive outdated records."&#13;
+  },&#13;
+  "saas.integration.surveymonkey": {&#13;
+    "description": "Enhances survey data collection and feedback analysis.",&#13;
+    "recommendation": "Monitor survey completion rates and improve distribution methods."&#13;
+  },&#13;
+  "saas.integration.trello": {&#13;
+    "description": "Ensures proper task management and workflow organization.",&#13;
+    "recommendation": "Archive completed projects and remove redundant boards."&#13;
+  },&#13;
+  "saas.integration.workday": {&#13;
+    "description": "Optimizes HR management, payroll processing, and workforce analytics.",&#13;
+    "recommendation": "Ensure employee records are up-to-date and accurate."&#13;
+  },&#13;
+  "saas.integration.workplace_facebook": {&#13;
+    "description": "Enhances internal communication and team engagement.",&#13;
+    "recommendation": "Monitor engagement rates and encourage participation."&#13;
+  },&#13;
+  "saas.integration.zendesk": {&#13;
+    "description": "Improves customer support efficiency and ticket resolution times.",&#13;
+    "recommendation": "Analyze customer interactions and improve response quality."&#13;
+  },&#13;
+  "saas.integration.zoom": {&#13;
+    "description": "Optimizes virtual meetings and remote collaboration.",&#13;
+    "recommendation": "Monitor meeting frequency and remove inactive users."&#13;
+  }&#13;
+}&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=4693ee2cc3bb9e900ced12f1b401317f"/>
+</record_update>

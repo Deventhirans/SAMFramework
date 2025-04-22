@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.document 2</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>document 2</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var kpiProperties = ['document'];
+    var kpiValues = {
+        'document': []
+    };
+
+    function fetchKPIs(propertyName) {
+        var kpis = [];
+        var propertyValue = gs.getProperty(propertyName);
+
+        if (propertyValue) {
+            try {
+                gs.log("Raw property value: " + propertyValue);
+                kpis = JSON.parse(propertyValue);
+                gs.log("Parsed KPIs for " + propertyName + ": " + JSON.stringify(kpis));
+            } catch (e) {
+                gs.log("Error parsing " + propertyName + ": " + e.message);
+            }
+        } else {
+            gs.log("Property " + propertyName + " is not set or is empty.");
+        }
+        return kpis;
+    }
+
+    function processKPI(kpis, kpiType) {
+        if (Array.isArray(kpis)) {
+            gs.log("Processing KPIs for " + kpiType + ": " + JSON.stringify(kpis));
+            kpis.forEach(function (link) {
+                kpiValues[kpiType].push({
+                    'name':link.title || '',
+                    'url': link.url || '',
+                    'description':link.description || ''
+                });
+
+                gs.log("Processed KPI Link: " + JSON.stringify(kpiValues[kpiType][kpiValues[kpiType].length - 1]));
+            });
+        } else {
+            gs.log("Invalid KPI format for " + kpiType + ": " + JSON.stringify(kpis));
+        }
+    }
+
+    function getQueryCount(tableName, query) {
+        try {
+            var gr = new GlideAggregate(tableName);
+            gr.addEncodedQuery(query);
+            gr.addAggregate('COUNT');
+            gr.query();
+
+            if (gr.next()) {
+                return parseInt(gr.getAggregate('COUNT'), 10);
+            }
+            return 0;
+        } catch (error) {
+            gs.log("Error querying table " + tableName + ": " + error.message);
+            return 0;
+        }
+    }
+
+    function getTotalCount(tableName) {
+        try {
+            var gr = new GlideAggregate(tableName);
+            gr.addAggregate('COUNT');
+            gr.query();
+
+            if (gr.next()) {
+                return parseInt(gr.getAggregate('COUNT'), 10);
+            }
+            return 0;
+        } catch (error) {
+            gs.log("Error querying total count for table " + tableName + ": " + error.message);
+            return 0;
+        }
+    }
+
+    // Loop through KPI properties and process
+    kpiProperties.forEach(function (property) {
+        gs.log("Fetching KPIs for property: " + property);
+        var kpis = fetchKPIs(property);
+        processKPI(kpis, property);
+    });
+
+    return kpiValues;
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>loga_123</sys_created_by>
+        <sys_created_on>2025-03-24 13:52:31</sys_created_on>
+        <sys_id>5e3329a8c328ea1c0ced12f1b4013165</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>document 2</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_5e3329a8c328ea1c0ced12f1b4013165</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=5e3329a8c328ea1c0ced12f1b4013165"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>5e3329a8c328ea1c0ced12f1b4013165</id>
+        <sys_created_by>loga_123</sys_created_by>
+        <sys_created_on>2025-03-24 13:52:30</sys_created_on>
+        <sys_id>bf532d2cc328ea1c0ced12f1b4013124</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>loga_123</sys_updated_by>
+        <sys_updated_on>2025-03-24 13:52:30</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

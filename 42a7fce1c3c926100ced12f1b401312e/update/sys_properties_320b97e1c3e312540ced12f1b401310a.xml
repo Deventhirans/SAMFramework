@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>customwalk.properties</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-06 08:08:37</sys_created_on>
+        <sys_id>320b97e1c3e312540ced12f1b401310a</sys_id>
+        <sys_mod_count>11</sys_mod_count>
+        <sys_name>customwalk.properties</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_320b97e1c3e312540ced12f1b401310a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:19:39</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+  {&#13;
+    "category": "Software Procurement",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Automate Software Procurement",&#13;
+        "description": "Automate the procurement of software licenses.",&#13;
+        "short_description": "Automate Software Procurement",&#13;
+        "instruction": "Ensure the integration with the procurement catalog is active."&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "System Integrations",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Catalog Integration",&#13;
+        "description": "Integrate software catalog with the procurement system.",&#13;
+        "short_description": "Catalog Integration",&#13;
+        "instruction": "Make sure the catalog data is correctly synchronized."&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "SaaS Integrations",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "JIRA Integration",&#13;
+        "description": "Enable seamless integration with JIRA for issue tracking and project management.",&#13;
+        "short_description": "JIRA Integration",&#13;
+        "instruction": "Ensure JIRA API is configured correctly and authentication is set up."&#13;
+      },&#13;
+      {&#13;
+        "type": "Box Integration",&#13;
+        "description": "Integrate with Box cloud storage for secure document management.",&#13;
+        "short_description": "Box Integration",&#13;
+        "instruction": "Validate Box API keys and configure access permissions."&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "Premises Integrations",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Intune Integration",&#13;
+        "description": "Enable integration with Microsoft Intune for device management.",&#13;
+        "short_description": "Intune Integration",&#13;
+        "instruction": "Configure Intune API access and validate synchronization settings."&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "Publisher Management",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Additional Publisher",&#13;
+        "description": "Select the software publisher that needs to be onboarded.",&#13;
+        "short_description": "Additional Software Publisher",&#13;
+        "instruction": "Choose a software publisher for onboarding."&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "Effective LicensePosition",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Generate Additional Publisher ELP",&#13;
+        "description": "Generate and validate the Effective License Position for the newly onboarded publisher.",&#13;
+        "short_description": "Additional Publisher ELP",&#13;
+        "instruction": "Generate and review the ELP report for the newly added publisher to ensure license compliance."&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "Software Requests",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Non Standard Software Request",&#13;
+        "description": "Request approval for non-standard software installations.",&#13;
+        "short_description": "Non Standard Software Request",&#13;
+        "instruction": "Submit a justification for approval and ensure compliance with company policies."&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "Standard Software Requests",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Standard Software Request",&#13;
+        "description": "Request approval for standard software installations.",&#13;
+        "short_description": "Standard Software Request",&#13;
+        "instruction": "Submit a justification for approval and ensure compliance with company policies."&#13;
+      }&#13;
+    ]&#13;
+  }&#13;
+&#13;
+]</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=320b97e1c3e312540ced12f1b401310a"/>
+</record_update>

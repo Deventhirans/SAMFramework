@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.top product from top publisher</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>top product from top publisher</name>
+        <output_schema/>
+        <private>false</private>
+        <props>[&#13;
+{&#13;
+"name" : "pageNo",&#13;
+"label":"Enter the Page No",&#13;
+"description":""&#13;
+},&#13;
+{&#13;
+"name" : "searchTerm",&#13;
+"label":"Enter the Search Term",&#13;
+"description":""&#13;
+},&#13;
+{&#13;
+"name" : "recordsPerPage",&#13;
+"label":"Enter the Records Per Page",&#13;
+"description":""&#13;
+},&#13;
+{&#13;
+"name":"publisherFilter",&#13;
+"label":"Enter Publisher",&#13;
+"description":""&#13;
+}&#13;
+&#13;
+]</props>
+        <required_translations>[ {
+  "message" : "Enter Publisher",
+  "comment" : ""
+}, {
+  "message" : "Enter the Page No",
+  "comment" : ""
+}, {
+  "message" : "Enter the Records Per Page",
+  "comment" : ""
+}, {
+  "message" : "Enter the Search Term",
+  "comment" : ""
+} ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var kpiValues = {
+        grouped_publishers: [],
+        top_products: [],
+        models: [],
+        reference: {},
+        totalPages: 0,
+        baseUrl: gs.getProperty('glide.servlet.uri')
+    };
+
+    var kpiProperties = [
+        'sam.implementation.top.publisher.report',
+    ];
+    
+    function paginateRecords(data, pageNo, recordsPerPage, searchTerm, publisherFilter) {
+        // Convert inputs to numbers
+        var page = parseInt(pageNo, 10) || 1;
+        var perPage = parseInt(recordsPerPage, 10) || 20;
+
+        // Filter records based on search term (if provided)
+        var filteredData = data;
+        if (searchTerm && searchTerm.trim() !== "") {
+            filteredData = [];
+            for (var i = 0; i < data.length; i++) {
+                var record = data[i];
+                var values = Object.keys(record);
+
+                for (var j = 0; j < values.length; j++) {
+                    var value = String(record[values[j]]).toLowerCase();
+                    if (value.indexOf(searchTerm.toLowerCase()) !== -1) {
+                        filteredData.push(record);
+                        break; // Avoid adding the same record multiple times
+                    }
+                }
+            }
+        }
+        
+        // Calculate start and end index
+        var startIndex = (page - 1) * perPage;
+        var endIndex = startIndex + perPage;
+
+        // Slice the filtered data for pagination
+        var paginatedRecords = filteredData.slice(startIndex, endIndex);
+        return {
+            currentPage: page,
+            totalPages: Math.ceil(filteredData.length / perPage),
+            records: paginatedRecords
+        };
+    }
+
+    function fetchKPIs(propertyName) {
+        var kpis = [];
+        var propertyValue = gs.getProperty(propertyName);
+
+        if (propertyValue) {
+            try {
+                kpis = JSON.parse(propertyValue);
+            } catch (e) {
+                gs.log("Error parsing " + propertyName);
+            }
+        } else {
+            gs.log("Property " + propertyName + " is not set or is empty.");
+        }
+        return kpis;
+    }
+
+    function getQueryCount(tableNames, queries, field, staticValue, type) {
+        if (!tableNames || !queries || !staticValue) {
+            return "N/A";
+        }
+
+        try {
+            var tableList = tableNames.split(",");
+            var queryList = queries.split(",");
+            if (tableList.length !== queryList.length) {
+                gs.error("Mismatch between the number of tables and queries.");
+                return "N/A";
+            }
+
+            var resultSet = [staticValue]; // Start with the staticValue as the initial result set
+
+            for (var i = 0; i < tableList.length; i++) {
+                var tableName = tableList[i];
+                var query = queryList[i];
+                var tempResultSet = [staticValue];
+
+                for (var j = 0; j < resultSet.length; j++) {
+                    var replacedQuery = query.replace("--model--", resultSet[j]);
+
+                    var gr = new GlideRecord(tableName);
+                    gr.addEncodedQuery(replacedQuery);
+                    gr.query();
+
+                    while (gr.next()) {
+                        if (type == "field") {
+                            if (field == "none") {
+                                return null;
+                            }
+                            return gr.getDisplayValue(field);
+                        }
+
+                        if (field === "none") {
+                            tempResultSet.push(gr.getUniqueValue()); // Add sys_id by default
+                        } else {
+                            var fieldValue = gr.getDisplayValue(field);
+                            if (fieldValue) {
+                                tempResultSet.push(fieldValue);
+                            }
+                        }
+                    }
+                }
+
+                if (tempResultSet.length === 0) {
+                    break; // Exit the loop if no results are found
+                }
+
+                resultSet = tempResultSet; // Update the resultSet for the next query
+            }
+
+            var finalResult;
+
+            // Determine the result based on the type
+            if (type === "nested-count" || type === "count") {
+                finalResult = resultSet.length; // Return the count of the final result set
+            } else if (type === "nested-contain" || type === "contain") {
+                finalResult = resultSet.length > 0 ? "Yes" : "No"; // Return Yes/No based on the final result set
+            } else if (type === "nested-field") {
+                finalResult = resultSet.join(","); // Return concatenated field values
+            } else if (type === "field") {
+                finalResult = resultSet.length > 0 ? null : null; // Return concatenated field values
+            } else {
+                gs.error("Invalid type: " + type);
+                return "N/A";
+            }
+
+            return finalResult;
+        } catch (e) {
+            gs.error("Error executing nested query.");
+            return "N/A";
+        }
+    }
+
+    function checkSoftwareProductMatch() {
+        var productModelGR = new GlideRecord('cmdb_software_product_model');
+        productModelGR.query();
+
+        while (productModelGR.next()) {
+            var productSysId = productModelGR.getValue('product'); // Fetch sys_id of referenced product
+
+            if (productSysId) {
+                var customSwProductGR = new GlideRecord('samp_custom_sw_product');
+                customSwProductGR.addQuery('sys_id', productSysId); // Matching the extracted sys_id
+                customSwProductGR.query();
+
+                var found = false;
+                while (customSwProductGR.next()) {
+                    found = true;
+                    return 'Yes';
+                }
+
+                if (!found) {
+                    return 'No';
+                }
+            } else {
+                gs.info("⚠️ No samp_sw_product value found for record sys_id: " + productModelGR.sys_id);
+            }
+        }
+    }
+
+    function getCustomDMapStatus() {
+        var productModelGR = new GlideRecord('cmdb_software_product_model');
+        productModelGR.query();
+
+        var recordCount = 0;
+
+        while (productModelGR.next()) {
+            recordCount++;
+            var productSysId = productModelGR.getValue('discovery_map');
+            if (productSysId) {
+                var customSwProductGR = new GlideRecord('samp_custom_sw_entitlement_definition');
+                customSwProductGR.addQuery('sys_id', productSysId); // Matching the extracted sys_id
+                customSwProductGR.query();
+
+                var found = false;
+                while (customSwProductGR.next()) {
+                    found = true;
+                    return 'Yes';
+                }
+
+                if (!found) {
+                    return 'No';
+                }
+            } else {
+                gs.info("⚠️ No samp_sw_product value found for record sys_id: " + productModelGR.sys_id);
+            }
+        }
+    }
+
+    function checkLicensePpnMatch() {
+        var ppnModelGr = new GlideRecord('alm_license');
+        ppnModelGr.query();
+
+        var recordCount = 0;
+
+        while (ppnModelGr.next()) {
+            var productSysId = ppnModelGr.getValue('publisher_part_number');
+
+            if (productSysId || productSysId === null) {
+                var customSwProductGR = new GlideRecord('samp_custom_sw_product_definition');
+                customSwProductGR.addQuery('sys_id', productSysId);
+                customSwProductGR.query();
+
+                var found = false;
+                while (customSwProductGR.next()) {
+                    found = true;
+                    return 'Yes';
+                }
+
+                if (!found) {
+                    return 'No';
+                }
+            } else {
+                gs.info("⚠️ No samp_sw_product value found for record sys_id: " + ppnModelGr.sys_id);
+            }
+        }
+    }
+
+    function processKPI(kpis, productSysId) {
+        var results = {};
+        if (Array.isArray(kpis)) {
+            kpis.forEach(function(kpi) {
+                if (kpi.table && kpi.query && kpi.field) {
+                    var type = kpi.type || null;
+                    if (type === 'custom-product') {
+                        results[kpi.kpi] = checkSoftwareProductMatch(productSysId);
+                    } else if (type === 'custom-dmap') {
+                        results["Custom D-Map"] = getCustomDMapStatus(productSysId);
+                    } else if (type === 'custom-ppn') {
+                        results["Custom PPN"] = checkLicensePpnMatch(productSysId);
+                    } else {
+                        var queryResult = getQueryCount(kpi.table, kpi.query, kpi.field, productSysId, type);
+                        var defaultValue = kpi.defaultValue ? kpi.defaultValue : "N/A";
+                        results[kpi.kpi] = queryResult == null || queryResult == "N/A" ? defaultValue : queryResult;
+                    }
+                } else {
+                    gs.log("KPI missing table, query, or field: " + JSON.stringify(kpi));
+                }
+            });
+        } else {
+            gs.log("KPI data is not in the expected format.");
+        }
+
+        return results;
+    }
+
+    try {
+		// Get publishers from system property instead of custom table
+        var topPublishersProperty = gs.getProperty('Top publishers property');        
+        if (topPublishersProperty) {
+            try {
+                // Parse the property value as JSON (if it's stored as a JSON array)
+                var publishers = JSON.parse(topPublishersProperty);
+                
+                // If it's an array of objects with name/id properties
+                if (Array.isArray(publishers)) {
+                    for (var i = 0; i < publishers.length; i++) {
+                        var publisher = publishers[i];
+                        var publisherId;
+                        
+                        // Handle different possible formats of the property
+                        if (typeof publisher === 'object') {
+                            publisherId = publisher.name || publisher.id || publisher;
+                        } else {
+                            publisherId = publisher;
+                        }
+                        
+                        if (publisherId) {
+                            kpiValues.grouped_publishers.push(publisherId);
+                            kpiValues.reference[publisherId] = publisherId; // Using the name as the reference
+                            kpiValues.reference['Publisher'] = publisherId;
+                        }
+                    }
+                } 
+                // If it's not a valid JSON array, we'll catch and handle below
+            } catch (e) {
+                // If not valid JSON, assume it's a comma-separated list
+                var publisherNames = topPublishersProperty.split(',');
+                for (var j = 0; j < publisherNames.length; j++) {
+                    var publisherName = publisherNames[j].trim();
+                    if (publisherName) {
+                        kpiValues.grouped_publishers.push(publisherName);
+                        kpiValues.reference[publisherName] = publisherName; // Using the name as the reference
+                        kpiValues.reference['Publisher'] = publisherName;
+                    }
+                }
+            }
+        }
+        
+        gs.log('Publishers from property: ' + kpiValues.grouped_publishers.join(', '));
+
+        // Handle case where no publishers are found in the property
+        if (kpiValues.grouped_publishers.length === 0 && input && input.publisherFilter && input.publisherFilter.length > 0) {
+            for (var k = 0; k < input.publisherFilter.length; k++) {
+                if (input.publisherFilter[k] && input.publisherFilter[k].length > 0 && input.publisherFilter[k][0]) {
+                    var id = input.publisherFilter[k][0].id;
+                    kpiValues.grouped_publishers.push(id);
+                    kpiValues.reference[id] = id; // Use ID as reference if no record exists
+                    kpiValues.reference['Publisher'] = id;
+                }
+            }
+        }
+
+        var grProduct = new GlideRecord('cmdb_software_product_model');
+        grProduct.addQuery("^sw_product_type=licensable");
+        grProduct.query();
+
+        while (grProduct.next()) {
+            if (kpiValues.grouped_publishers.indexOf(grProduct.getDisplayValue('manufacturer')) !== -1) {
+                var product = {
+                    model: grProduct.getUniqueValue(),
+                    publisher: grProduct.getDisplayValue('manufacturer'),
+                    product_name: grProduct.getValue('display_name'),
+                };
+
+                var kpiResults = {
+                    model: product.model,
+                    publisher: product.publisher,
+                    product_name: product.product_name,
+                    publisher_sys_id: kpiValues.reference[product.publisher]
+                };
+
+                kpiProperties.forEach(function(property) {
+                    var kpis = fetchKPIs(property);
+                    var tempResults = processKPI(kpis, product.model);
+                    Object.assign(kpiResults, tempResults);
+                });
+
+                kpiValues.top_products.push(kpiResults);
+            }
+        }
+    } catch (error) {
+        // Simplified error handling to avoid security issue
+        gs.error("Error occurred in script execution");
+    }
+    
+    gs.log('Total products: ' + kpiValues.top_products.length);
+    
+    // Handle publisher filter
+    var publisherFilterData = [];
+    if (input && input.publisherFilter) {
+        gs.log('Publisher filter length: ' + input.publisherFilter.length);
+        for (var i = 0; i < input.publisherFilter.length; i++) {
+            if (input.publisherFilter[i] && input.publisherFilter[i].length > 0 && input.publisherFilter[i][0] && input.publisherFilter[i][0].id) {
+                publisherFilterData.push(input.publisherFilter[i][0].id);
+            }
+        }
+    }
+        
+    // Filter products by publisher
+    var newFilteredData = [];
+    if (publisherFilterData.length > 0) {
+        newFilteredData = kpiValues.top_products.filter(function(e) {
+            return publisherFilterData.indexOf(e.publisher) != -1;
+        });
+    } else {
+        newFilteredData = kpiValues.top_products;
+    }
+        
+    // Paginate the filtered data
+    var pageNo = input && input.pageNo ? input.pageNo : 1;
+    var recordsPerPage = input && input.recordsPerPage ? input.recordsPerPage : 10;
+    var searchTerm = input && input.searchTerm ? input.searchTerm : '';
+    
+    var newValues = paginateRecords(newFilteredData, pageNo, recordsPerPage, searchTerm);
+    
+    kpiValues.top_products = newValues.records;
+    kpiValues.totalPages = newValues.totalPages;
+    
+    // gs.print("Final data: " + JSON.stringify(kpiValues, null, 2));
+    
+    return kpiValues;
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-03 15:30:11</sys_created_on>
+        <sys_id>24787972c3b212540ced12f1b4013120</sys_id>
+        <sys_mod_count>236</sys_mod_count>
+        <sys_name>top product from top publisher</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_24787972c3b212540ced12f1b4013120</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 09:00:23</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=24787972c3b212540ced12f1b4013120"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>24787972c3b212540ced12f1b4013120</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-27 18:03:07</sys_created_on>
+        <sys_id>f0b3826ec3db56100ced12f1b40131b5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-01-27 18:03:07</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

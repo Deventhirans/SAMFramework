@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_app_route">
+    <sys_ux_app_route action="INSERT_OR_UPDATE">
+        <app_config display_value="SNOW Migration Framework">d49453a2837116109a4b66d0deaad326</app_config>
+        <description>SAM Implementation Framework Cost Center in foundation for SAM</description>
+        <extension_point/>
+        <fields/>
+        <icon/>
+        <name>Cost Center</name>
+        <optional_parameters/>
+        <order>4</order>
+        <parent_macroponent display_value="Foundation for SAM">70163908c31c6a140ced12f1b40131fc</parent_macroponent>
+        <parent_macroponent_composition_element_id>tabs_1_legacy</parent_macroponent_composition_element_id>
+        <route_type>cost-center</route_type>
+        <screen_type display_value="Cost Center">0236b188c31c6a140ced12f1b40131f7</screen_type>
+        <sys_class_name>sys_ux_app_route</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-03-10 15:42:11</sys_created_on>
+        <sys_id>0a36f188c31c6a140ced12f1b4013122</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>Cost Center</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_app_route_0a36f188c31c6a140ced12f1b4013122</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:29:30</sys_updated_on>
+    </sys_ux_app_route>
+    <sys_translated_text action="delete_multiple" query="documentkey=0a36f188c31c6a140ced12f1b4013122"/>
+</record_update>

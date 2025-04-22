@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.breadcrumb</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>breadcrumb</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var routes = [];
+    var gr = new GlideRecord('sys_ux_app_route');
+    gr.addEncodedQuery('app_config.name=SNOW Migration Framework^parent_macroponent.name=crawl');
+    gr.orderBy('order'); // Sort by order field
+    gr.query();
+
+    while (gr.next()) {
+        routes.push({
+            name: gr.getValue('name'),
+            order: gr.getValue('order'),
+           
+        });
+    }
+
+    // gs.info('Ordered Routes: ' + JSON.stringify(routes));
+    return routes;
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-05 06:29:25</sys_created_on>
+        <sys_id>9735ce5ac34466500ced12f1b4013157</sys_id>
+        <sys_mod_count>14</sys_mod_count>
+        <sys_name>breadcrumb</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_9735ce5ac34466500ced12f1b4013157</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=9735ce5ac34466500ced12f1b4013157"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>9735ce5ac34466500ced12f1b4013157</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-05 06:29:25</sys_created_on>
+        <sys_id>ccc70edec38466500ced12f1b40131c4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-05 06:29:25</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

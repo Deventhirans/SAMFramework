@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.CreateSamActiveUpgradeTasks</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>CreateSamActiveUpgradeTasks</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var CreateSamActiveUpgradeTasks = Class.create();
+CreateSamActiveUpgradeTasks.prototype = {
+    initialize: function() {},
+
+    createTasks: function() {
+        var createdTasks = [];
+        var processedKPIs = [];
+
+        var propertyName = 'sam.active.upgrade.kpi';
+        var kpiData = gs.getProperty(propertyName);
+
+        if (!kpiData) {
+            gs.error('System property "' + propertyName + '" is empty or not set.');
+            return {
+                createdTasks: createdTasks,
+                processedKPIs: processedKPIs
+            };
+        }
+
+        processedKPIs.push(propertyName);
+        gs.info('Processing System Property: ' + propertyName);
+
+        try {
+            var kpis = JSON.parse(kpiData);
+            for (var i = 0; i < kpis.length; i++) {
+                var kpi = kpis[i];
+
+                // Validate required fields
+                if (!kpi.id || !kpi.description || !kpi.recommendation) {
+                    gs.error('Missing required fields for KPI: ' + JSON.stringify(kpi));
+                    continue;
+                }
+
+                // Check if task already exists
+                var existingTask = new GlideRecord('samp_sp_vb_task');
+                existingTask.addQuery('name', kpi.id);
+                existingTask.addQuery('description', kpi.description);
+                existingTask.addEncodedQuery('stateNOT IN2,-5,3,7'); // Exclude closed or inactive states
+                existingTask.query();
+
+                if (existingTask.next()) {
+                    gs.info('Task already exists for KPI: ' + kpi.id);
+                    continue;
+                }
+
+                // Create a new task using recommendation as instructions
+                var taskGr = new GlideRecord('samp_sp_vb_task');
+                taskGr.initialize();
+                taskGr.setValue('name', kpi.id);
+                taskGr.setValue('short_description', 'Active or Upgrade Plugin Task');
+                taskGr.setValue('description', kpi.description);
+                taskGr.setValue('instructions', kpi.recommendation);
+                taskGr.setValue('state', 'open');
+
+                var taskId = taskGr.insert();
+                if (taskId) {
+                    gs.info('Created task for KPI: ' + kpi.id + ' (Task ID: ' + taskId + ')');
+                    createdTasks.push(kpi.id);
+                    gs.eventQueue('sam.implementation.value.builder.task', taskGr, taskGr.sys_id);
+                }
+            }
+        } catch (e) {
+            gs.error('Error processing system property "' + propertyName + '": ' + e.message);
+        }
+
+        return {
+            createdTasks: createdTasks,
+            processedKPIs: processedKPIs
+        };
+    },
+
+    type: 'CreateSamActiveUpgradeTasks'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-13 12:17:18</sys_created_on>
+        <sys_id>54771800c3375e500ced12f1b4013134</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>CreateSamActiveUpgradeTasks</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_54771800c3375e500ced12f1b4013134</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:38:54</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>54771800c3375e500ced12f1b4013134</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-13 12:17:17</sys_created_on>
+        <sys_id>389798c8c3375e500ced12f1b40131f5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-02-13 12:17:17</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.usage.installation.kpi</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Kavya_123</sys_created_by>
+        <sys_created_on>2024-12-16 07:39:30</sys_created_on>
+        <sys_id>4381e778c3ae56100ced12f1b40131d8</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>sam.usage.installation.kpi</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_4381e778c3ae56100ced12f1b40131d8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:05:30</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+    {&#13;
+        "kpi": "Stale record",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_installation_usage",&#13;
+"description": "Tracks the staus of stale record ."&#13;
+    },&#13;
+ {&#13;
+        "kpi": "Duplicate Records",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_installation_duplicate",&#13;
+        "recommendation": "Review and remove the installation details.",&#13;
+        "description": "Tracks duplicate installations."&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Record Without Publisher",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_publisher_name",&#13;
+        "recommendation": "Ensure that all  records are updated with proper publisher to enhance user identification and reporting accuracy.",&#13;
+        "description": "Tracks records who do not have a publisher."&#13;
+    },&#13;
+&#13;
+    {&#13;
+        "kpi": "Records Without Product",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_product_installation",&#13;
+        "recommendation": "Assign the product for each record.",&#13;
+        "description": "Identifies records without product"&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Records Without Edition",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_edition_installation",&#13;
+        "recommendation": "Ensure that every record has a valid edition.",&#13;
+        "description": "Highlights records without an edition."&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Records Without Assigned to",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_assigned_to_installation",&#13;
+        "recommendation": "Update  records with assigned to details.",&#13;
+        "description": "Monitors records missing assigned to details."&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Records Without Installed on",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_installed_on_installation",&#13;
+        "recommendation": "Assign the record installed on status.",&#13;
+        "description": "Tracks records without a installed on ."&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Records Without Uninstall string",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_uninstall_string_installation",&#13;
+        "recommendation": "Update records with uninstall string details.",&#13;
+        "description": "Identifies records missing uninstall string details."&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Records Without Discovery model",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_discovery_model_installation",&#13;
+        "recommendation": "Ensure records are correctly discovered.",&#13;
+        "description": "Monitors records discovery model."&#13;
+    }&#13;
+]&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=4381e778c3ae56100ced12f1b40131d8"/>
+</record_update>

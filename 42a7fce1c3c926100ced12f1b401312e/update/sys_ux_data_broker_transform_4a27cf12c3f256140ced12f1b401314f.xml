@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.SAM Model Certify</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>SAM Model Certify</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var kpiValues = {
+        'data': []
+    };
+
+    try {
+        // Define the property name containing the KPIs
+        var propertyName = 'sam.implementation.model.certify';
+        var propertyValue = gs.getProperty(propertyName);
+
+        if (propertyValue) {
+            var kpis = JSON.parse(propertyValue); // Parse the property JSON
+            var order = 0; // Initialize order counter
+
+            kpis.forEach(function (kpi) {
+                if (kpi.table && kpi.query) {
+                    // Construct URL for the query
+                    var instanceBaseURL = gs.getProperty('glide.servlet.uri');
+                    var encodedQuery = encodeURIComponent(kpi.query);
+                    var queryURL = instanceBaseURL + kpi.table + "_list.do?sysparm_query=" + encodedQuery;
+
+                    // Add the KPI data to the response
+                    kpiValues.data.push({
+                        "itemId": "checkbox_" + order,
+                        "checked": false,
+                        "required": false,
+                        "order": order,
+                        "label": kpi.kpi  ,
+						"description":kpi.description,
+                        "hasLink": true,
+                        "link": {
+                            "url": queryURL,
+							"title":'View the list of excluded models',
+                            "text": "View Records"
+                        }
+                    });
+
+                    order++; // Increment order for the next KPI
+                } else {
+                    gs.info("KPI missing table or query: " + JSON.stringify(kpi));
+                }
+            });
+        } else {
+            gs.info("Property " + propertyName + " is not set or is empty.");
+        }
+
+        // Log the transformed KPI data
+        gs.info("Transformed KPI Data: " + JSON.stringify(kpiValues));
+
+    } catch (e) {
+        // Handle errors
+        gs.error("Error in transform script: " + e.toString());
+        return {
+            'error': e.toString() // Return error details for debugging
+        };
+    }
+
+    // Return the transformed data
+    return kpiValues;
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-02 08:40:38</sys_created_on>
+        <sys_id>4a27cf12c3f256140ced12f1b401314f</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>SAM Model Certify</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_4a27cf12c3f256140ced12f1b401314f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=4a27cf12c3f256140ced12f1b401314f"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>4a27cf12c3f256140ced12f1b401314f</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-04 20:05:30</sys_created_on>
+        <sys_id>a36c670dc36b9ed00ced12f1b4013142</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-02-04 20:05:30</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

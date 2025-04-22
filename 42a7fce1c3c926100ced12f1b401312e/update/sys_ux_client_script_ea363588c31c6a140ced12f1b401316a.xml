@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Business unit">9e363588c31c6a140ced12f1b4013113</macroponent>
+        <name>cardrecord</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[function onCardClicked(evt, {api, dispatch, data}) {
+    // Get the card data from the event
+    console.log('Card clicked event:', evt);
+    console.log('Available data:', data);
+    
+    // Get the sys_id from the clicked card
+    // We need to access the data correctly based on the event structure
+    const clickedItem = evt.detail.item || evt.detail || evt;
+    console.log('Clicked item:', clickedItem);
+    
+    // Try to extract the sys_id
+    let sysId;
+    
+    // Check if we have data in the standard format
+    if (clickedItem.sys_id) {
+        sysId = clickedItem.sys_id;
+    } 
+    // Check if it's in your specific data structure
+    else if (clickedItem.additionalFields && clickedItem.additionalFields[0] && clickedItem.additionalFields[0].sys_id) {
+        sysId = clickedItem.additionalFields[0].sys_id;
+    }
+    // Try to get it from your specific data path
+    else if (data && data.getvaluebuildertasks_1 && data.getvaluebuildertasks_1.output) {
+        const outputData = data.getvaluebuildertasks_1.output;
+        // Find the appropriate item - this might need adjustment based on your data structure
+        const firstItem = Array.isArray(outputData) ? outputData[0] : outputData;
+        if (firstItem && firstItem.additionalFields && firstItem.additionalFields[0]) {
+            sysId = firstItem.additionalFields[0].sys_id;
+        }
+    }
+    
+    console.log('Found sys_id:', sysId);
+    
+    // Verify we have a sys_id before proceeding
+    if (!sysId) {
+        console.error('Could not find sys_id in the clicked item data');
+        return;
+    }
+    
+    const tableName = 'samp_sp_vb_task';
+    
+    // Open the record in a modal
+    api.updateModalConfig({
+        size: 'lg',
+        modalOpen: true,
+        component: {
+            name: 'now-record',
+            properties: {
+                recordId: sysId,
+                table: tableName,
+                viewable: true,
+                editable: true
+            }
+        }
+    });
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-03-10 15:42:13</sys_created_on>
+        <sys_id>ea363588c31c6a140ced12f1b401316a</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>cardrecord</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_ea363588c31c6a140ced12f1b401316a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+</record_update>

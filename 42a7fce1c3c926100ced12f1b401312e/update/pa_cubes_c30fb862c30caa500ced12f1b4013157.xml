@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="pa_cubes">
+    <pa_cubes action="INSERT_OR_UPDATE">
+        <benchmarking>false</benchmarking>
+        <calendar>standard</calendar>
+        <calendar_freq/>
+        <conditions table="ast_contract">vendorISNOTEMPTY^contract_administratorISNOTEMPTY^license_typeISNOTEMPTY^business_ownerISNOTEMPTY^po_numberISNOTEMPTY^payment_scheduleISNOTEMPTY^cost_centerISNOTEMPTY^renewal_dateISNOTEMPTY^renewal_end_dateISNOTEMPTY<item endquery="false" field="vendor" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="false" field="contract_administrator" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item display_value="-- None --" endquery="false" field="license_type" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="false" field="business_owner" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="false" field="po_number" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="false" field="payment_schedule" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="false" field="cost_center" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="false" field="renewal_date" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="false" field="renewal_end_date" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+        </conditions>
+        <description>SAM Implementation Framework.</description>
+        <facts_table>ast_contract</facts_table>
+        <facts_table_pk/>
+        <facts_table_pktable/>
+        <facts_table_pkview/>
+        <frequency>10</frequency>
+        <max_record_fetch_count>50000</max_record_fetch_count>
+        <name>accurate contract</name>
+        <override_record_collection>false</override_record_collection>
+        <report_source/>
+        <report_source_updated_at/>
+        <sys_class_name>pa_cubes</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-05 19:53:08</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>c30fb862c30caa500ced12f1b4013157</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>accurate contract</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>pa_cubes_c30fb862c30caa500ced12f1b4013157</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 05:30:25</sys_updated_on>
+    </pa_cubes>
+    <sys_translated_text action="delete_multiple" query="documentkey=c30fb862c30caa500ced12f1b4013157"/>
+</record_update>

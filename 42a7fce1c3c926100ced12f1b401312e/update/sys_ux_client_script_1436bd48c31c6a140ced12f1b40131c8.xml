@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Custom Scripts">8836bd48c31c6a140ced12f1b4013171</macroponent>
+        <name>Install custom script</name>
+        <preset/>
+        <required_translations>[
+    {
+        "message": "Please select Script to Install"
+    },
+    {
+        "message": "Custom Script Installed Succesfully"
+    },
+    {
+        "message": "Unable to Install Scripts"
+    },
+    {
+        "message": "Something went wrong"
+    }
+]</required_translations>
+        <script><![CDATA[async function handler({ api, event, helpers, imports }) { 
+    // Validate and log the helpers.snHttp object
+    console.log("snHttp object: clicked", helpers.snHttp);
+    // var ga = new GlideAjax('HelloWorld');
+    if (!helpers.snHttp || typeof helpers.snHttp !== "function") {
+        console.error("Error: helpers.snHttp is not properly initialized or is not callable.");
+        return;
+    }
+
+    var scripts = api.state?.selectedScript?.scripts
+
+    if(!scripts){
+         api.emit('NOW_UXF_PAGE#ADD_NOTIFICATIONS', {
+                items: [
+                    {
+                        id: 'alert2',
+                        status: 'warning',
+                        icon: 'info-circle-outline',
+                        content: await helpers.translate('Please select Script to Install'),
+                        action: { type: 'dismiss' }
+                    }
+                ]
+            });
+             return ;
+    }
+
+    var updatesets=[]
+     scripts.map((e)=>{
+updatesets.push("SAMImplementationCustomScript"+ e )
+    })
+
+    
+        console.log("Request payload being sent:", updatesets);
+
+        try {
+            // Use snHttp to send the API request
+            const response = await helpers.snHttp(
+                "/api/985627/commit_update_set", // API endpoint
+                {
+                    method: "POST", // HTTP method
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+        update_set_name: updatesets
+    }) // Pass the request payload
+                }
+            );
+
+            // Log the response for verification
+            console.log("Response status:", response?.response?.result?.success);
+            console.log("Response body:", response);
+
+            // Process the API response
+            if (response.status == 200 ||response.response.result.status == "success") {
+                console.log(
+                    `Success: Property  updated successfully.`,
+                    response.result
+                );
+
+                  api.emit('NOW_UXF_PAGE#ADD_NOTIFICATIONS', {
+                items: [
+                    {
+                        id: 'alert2',
+                        status: 'positive',
+                        icon: 'info-circle-outline',
+                        content: await helpers.translate('Custom Script Installed Succesfully'),
+                        action: { type: 'dismiss' }
+                    }
+                ]
+            });
+
+
+            } else {
+                console.error(
+                    `Error: Failed to update property `,
+                    response
+                );
+
+                var errResponse = response?.response?.result.filter((e)=>{
+                    return e.status == "error"
+                })
+                console.log("err res",errResponse.map(item => item.updateSetName).join(", "))
+                
+               api.emit('NOW_UXF_PAGE#ADD_NOTIFICATIONS', {
+                items: [
+                    {
+                        id: 'alert2',
+                        status: 'critical',
+                        icon: 'info-circle-outline',
+                        content: await helpers.translate('Unable to Install Scripts' + errResponse.map(item => item.updateSetName.replace("SAMImplementationCustomScript", "").trim()).join(", ") ),
+                        action: { type: 'dismiss' }
+                    }
+                ]
+            });
+
+            }
+        } catch (error) {
+            // Handle any errors in the API call
+            console.error(`Error updating property `, error?.error?.statusText);
+
+            api.emit('NOW_UXF_PAGE#ADD_NOTIFICATIONS', {
+                items: [
+                    {
+                        id: 'alert2',
+                        status: 'critical',
+                        icon: 'info-circle-outline',
+                        content: await helpers.translate('Something went wrong'),
+                        action: { type: 'dismiss' }
+                    }
+                ]
+            });
+
+            if (error.response) {
+                console.error("Error response:", error.response);
+            } else if (error.data) {
+                console.error("Error data:", error.data);
+            }
+        }
+    }
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-03-10 15:42:04</sys_created_on>
+        <sys_id>1436bd48c31c6a140ced12f1b40131c8</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Install custom script</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_1436bd48c31c6a140ced12f1b40131c8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+</record_update>

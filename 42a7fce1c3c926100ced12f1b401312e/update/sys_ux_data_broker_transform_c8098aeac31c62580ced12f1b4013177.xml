@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.sam implementation server pie chart</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>sam implementation server pie chart</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    // Define OS parent categories and their patterns for grouping
+
+
+	// Object to store raw OS counts
+var osTallies = {};
+
+// GlideAggregate to group by 'os' and count occurrences
+var serverAgg = new GlideAggregate('cmdb_ci_server');
+serverAgg.addAggregate('COUNT', 'os');
+serverAgg.addNotNullQuery('os');
+serverAgg.groupBy('os');
+serverAgg.query();
+
+// Collect raw OS counts
+while (serverAgg.next()) {
+    var osValue = serverAgg.getValue('os') + '';
+    var osCount = parseInt(serverAgg.getAggregate('COUNT', 'os'), 10) || 0;
+    osTallies[osValue] = osCount;
+}
+
+// Dynamic object to store grouped names and counts
+var groupedSystems = {};
+
+// Process OS names to group similar ones
+var osNames = Object.keys(osTallies);
+osNames.sort((a, b) => a.length - b.length); // Sort by length, shortest first
+
+for (var i = 0; i < osNames.length; i++) {
+    var currentOs = osNames[i].toLowerCase().trim();
+    var rootName = currentOs.split(/\s+/)[0]; // Take first word as potential base
+    var count = osTallies[osNames[i]];
+    
+    // Check if this OS belongs to an existing group
+    var foundGroup = false;
+    for (var group in groupedSystems) {
+        if (currentOs.includes(group.toLowerCase())) {
+            groupedSystems[group] += count;
+            foundGroup = true;
+            break;
+        }
+    }
+    
+    // If no group found, create a new one with the root name
+    if (!foundGroup) {
+        var capitalizedRoot = rootName.charAt(0).toUpperCase() + rootName.slice(1);
+        groupedSystems[capitalizedRoot] = count;
+    }
+}
+
+// Prepare the data array in the required format
+var chartData = [];
+var chartElements = [];
+
+for (var groupName in groupedSystems) {
+    if (groupedSystems.hasOwnProperty(groupName) && groupedSystems[groupName] > 0) {
+        // Add to data array
+        chartData.push({
+            "assignment_group": groupName,
+            "value": groupedSystems[groupName].toString()
+        });
+        
+        // Add to elements array (using groupName as both label and query base)
+        chartElements.push({
+            "eventData": {
+                "query": "os LIKE " + groupName
+            },
+            "label": groupName,
+            "id": groupName.toLowerCase().replace(/\s+/g, '_') // Simple ID based on name
+        });
+    }
+}
+
+// Construct the final output in the specified format
+var result = [{
+    "data": chartData,
+    "metadata": {
+        "eventData": {
+            "table": "cmdb_ci_server"
+        },
+        "dataSourceLabel": "Server OS Distribution",
+        "groupBy": [
+            {
+                "series": [
+                    {
+                        "label": "Count",
+                        "id": "value",
+                        "type": "value"
+                    }
+                ],
+                "elements": chartElements,
+                "label": "Operating System",
+                "id": "assignment_group",
+                "fieldType": "string" // Using string since these are OS names, not references
+            }
+        ],
+        "format": {
+            "unitFormat": "{0}"
+        },
+        "aggregateBy": 4,
+        "metricId": gs.generateGUID() // Generate a unique ID
+    }
+}];
+
+// Print the result for verification (optional)
+gs.info(JSON.stringify(result, null, 4));
+
+// Return the result (for use in a script include or other context)
+return result;
+     }
+
+
+
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-18 11:50:54</sys_created_on>
+        <sys_id>c8098aeac31c62580ced12f1b4013177</sys_id>
+        <sys_mod_count>12</sys_mod_count>
+        <sys_name>sam implementation server pie chart</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_c8098aeac31c62580ced12f1b4013177</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=c8098aeac31c62580ced12f1b4013177"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>c8098aeac31c62580ced12f1b4013177</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-18 11:50:53</sys_created_on>
+        <sys_id>73fd466ac39c62580ced12f1b4013195</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-03-18 11:50:53</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

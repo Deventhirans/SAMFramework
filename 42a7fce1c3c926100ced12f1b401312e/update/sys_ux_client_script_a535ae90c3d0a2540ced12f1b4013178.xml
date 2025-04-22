@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Persona">bd163d08c31c6a140ced12f1b4013117</macroponent>
+        <name>list_1/fixedQuery</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+* @param {Object} params
+* @param {Object} params.api
+* @param {Object} params.helpers
+* @returns {string} A formatted query string containing KPI short descriptions.
+*/
+function evaluateProperty({ api, helpers }) {
+    console.log('Function called properly');
+
+    // Check if data exists
+    if (!api.data.returnadditionalkpis_1.output.user_role_management) {
+        console.error("Error: KPI data is missing or undefined");
+        return "";  // Return empty string to prevent errors
+    }
+
+    const kpi = api.data.returnadditionalkpis_1.output.user_role_management;
+    console.log('KPI values returned:', kpi);
+
+    // Extract first three words from each KPI use case
+    const output = kpi
+        .map(record => record.short_description.split(/\s+/).slice(0, 3).join(' ')) // Ensure only first 3 words
+        .filter(value => value && value.trim().length > 0); // Remove empty values
+
+    console.log("Extracted KPI short descriptions:", output);
+
+    if (output.length > 0) {
+        // Join the short descriptions with commas
+        // Depending on your query format requirements, you might need to adjust this:
+        const query = `short_descriptionIN${output.join(',')}`;
+
+        console.log("Final query string:", query);
+        return query;
+    }
+    
+    // Return empty string if no KPIs found
+    return "";
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-11 13:47:59</sys_created_on>
+        <sys_id>a535ae90c3d0a2540ced12f1b4013178</sys_id>
+        <sys_mod_count>22</sys_mod_count>
+        <sys_name>list_1/fixedQuery</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_a535ae90c3d0a2540ced12f1b4013178</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

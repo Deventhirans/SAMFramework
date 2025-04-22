@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.implementation.crawl.walk.run.fly</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-07 07:39:41</sys_created_on>
+        <sys_id>fd2d6808c34f9a500ced12f1b401314f</sys_id>
+        <sys_mod_count>37</sys_mod_count>
+        <sys_name>sam.implementation.crawl.walk.run.fly</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_fd2d6808c34f9a500ced12f1b401314f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:16:09</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+    {&#13;
+        "stage": "Crawl",&#13;
+        "content": "&lt;h4&gt;Establish Governing Documentation&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;&lt;strong&gt;Policy:&lt;/strong&gt; Define and formalize guiding principles.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Standards:&lt;/strong&gt; Establish specific benchmarks and criteria.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Process:&lt;/strong&gt; Document workflows and procedures.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Roles and Responsibilities:&lt;/strong&gt; Clearly define team roles and accountabilities.&lt;/li&gt;&lt;/ol&gt;&lt;h4&gt;SAM Setup and Configuration&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;Install and update required plugins.&lt;/li&gt;&lt;li&gt;Ensure initial configurations are completed.&lt;/li&gt;&lt;li&gt;Set up user personas.&lt;/li&gt;&lt;li&gt;Analyze and maintain data integrity.&lt;/li&gt;&lt;li&gt;Conduct foundation data analysis and resolve inconsistencies.&lt;/li&gt;&lt;li&gt;Enhance CMDB accuracy and completeness.&lt;/li&gt;&lt;li&gt;Configure content service setup.&lt;/li&gt;&lt;/ol&gt;&lt;h4&gt;Identification of Top 10 Publishers&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;Import and organize contracts.&lt;/li&gt;&lt;li&gt;Create and manage entitlements.&lt;/li&gt;&lt;li&gt;Review entitlement and software models for consistency.&lt;/li&gt;&lt;li&gt;Normalize and resolve data discrepancies.&lt;/li&gt;&lt;/ol&gt;&lt;h4&gt;Achieving ELP for Top 3 Publishers&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;Address missing entitlements.&lt;/li&gt;&lt;li&gt;Resolve configuration misalignments in software models.&lt;/li&gt;&lt;li&gt;Identify and correct discrepancies in discovery, normalization, content, and CMDB data.&lt;/li&gt;&lt;/ol&gt;&lt;h4&gt;Set Up Key Performance Indicators (KPIs)&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;Define relevant and actionable KPIs.&lt;/li&gt;&lt;li&gt;Establish foundational KPIs for monitoring and tracking performance.&lt;/li&gt;&lt;/ol&gt;",&#13;
+        "output": "&lt;ul&gt;&lt;li&gt;Governing documentation defined.&lt;/li&gt;&lt;li&gt;SAM setup completed.&lt;/li&gt;&lt;li&gt;Ensured consistent foundation data.&lt;/li&gt;&lt;li&gt;Top 10 publishers onboarded.&lt;/li&gt;&lt;li&gt;ELP achieved for 3 publishers.&lt;/li&gt;&lt;li&gt;KPIs established.&lt;/li&gt;&lt;/ul&gt;",&#13;
+        "Stakeholders": "Discovery Team, SAM Team, Platform Team, Procurement Team",&#13;
+        "Timeperiod": "3-4 Months",&#13;
+        "url": "crawl",&#13;
+        "headIcon": "/crawling.png"&#13;
+    },&#13;
+    {&#13;
+        "stage": "Walk",&#13;
+        "content": "&lt;h4&gt;Integration with Procurement Systems&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;Enable seamless data exchange.&lt;/li&gt;&lt;li&gt;Improve visibility into procurement and SAM processes.&lt;/li&gt;&lt;/ol&gt;&lt;h4&gt;Create Software Catalog&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;Centralize software assets for tracking.&lt;/li&gt;&lt;li&gt;Facilitate easy access to software details.&lt;/li&gt;&lt;/ol&gt;&lt;h4&gt;Proactive Monitoring of License Renewals&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;Set up alerts for license renewals.&lt;/li&gt;&lt;li&gt;Ensure compliance with timely actions.&lt;/li&gt;&lt;/ol&gt;&lt;h4&gt;Onboard Complex Publishers&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;Import contracts and entitlements.&lt;/li&gt;&lt;li&gt;Address unique requirements for compliance.&lt;/li&gt;&lt;/ol&gt;&lt;h4&gt;Setup Persona-Based Dashboards and Reporting&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;&lt;strong&gt;Executive Leadership:&lt;/strong&gt; Provide high-level overviews of cost savings and compliance.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Directors:&lt;/strong&gt; Offer detailed insights into department-level performance and optimization.&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Fulfillers:&lt;/strong&gt; Deliver actionable reports for day-to-day operations and task management.&lt;/li&gt;&lt;li&gt;Automate performance and compliance reporting.&lt;/li&gt;&lt;/ol&gt;&lt;h4&gt;Create Success Goals&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;Define measurable goals for SAM health.&lt;/li&gt;&lt;li&gt;Align success metrics with business objectives.&lt;/li&gt;&lt;/ol&gt;",&#13;
+        "output": "&lt;ul&gt;&lt;li&gt;Procurement systems integrated.&lt;/li&gt;&lt;li&gt;Software catalog created.&lt;/li&gt;&lt;li&gt;Proactive renewal monitoring set up.&lt;/li&gt;&lt;li&gt;Complex publishers onboarded.&lt;/li&gt;&lt;li&gt;Dashboards configured.&lt;/li&gt;&lt;li&gt;Success goals aligned.&lt;/li&gt;&lt;/ul&gt;",&#13;
+        "Stakeholders": "SAM Team, Platform Team, Procurement Team",&#13;
+        "Timeperiod": "2-3 Months",&#13;
+      "url": "walk",&#13;
+        "headIcon": "/walking.png"&#13;
+    },&#13;
+    {&#13;
+        "stage": "Run",&#13;
+        "content": "&lt;h4&gt;Optimize Software Reclamation&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;Reclaimed unused software to maximize license efficiency.&lt;/li&gt;&lt;li&gt;Improved cost savings by optimizing software usage.&lt;/li&gt;&lt;/ol&gt;&lt;h4&gt;Capture and Analyze Lifecycle Milestones&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;Milestones captured for better forecasting of future investments.&lt;/li&gt;&lt;li&gt;Enhanced decision-making through lifecycle data analysis.&lt;/li&gt;&lt;/ol&gt;&lt;h4&gt;Utilize Success Portal for SAM Health&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;Achieved SAM health targets through the Success portal.&lt;/li&gt;&lt;li&gt;Improved performance tracking and optimization with Success portal.&lt;/li&gt;&lt;/ol&gt;&lt;h4&gt;Track and Optimize Software Spending&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;Analyzed and optimized software expenses using 'Software Spend Detection.'&lt;/li&gt;&lt;li&gt;Integrated financial data to gain better visibility into software spending.&lt;/li&gt;&lt;/ol&gt;&lt;h4&gt;Automate Software Request Process&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;Streamlined and automated the software request process.&lt;/li&gt;&lt;li&gt;Reduced manual work and improved efficiency in request handling.&lt;/li&gt;&lt;/ol&gt;&lt;h4&gt;Use Client Software Distribution&lt;/h4&gt;&lt;ol&gt;&lt;li&gt;Enabled automated software installation and uninstallation.&lt;/li&gt;&lt;li&gt;Simplified software distribution and management for users.&lt;/li&gt;&lt;/ol&gt;",&#13;
+        "output": "&lt;ul&gt;&lt;li&gt;Software reclamation optimized.&lt;/li&gt;&lt;li&gt;Lifecycle milestones captured.&lt;/li&gt;&lt;li&gt;Success portal utilized for SAM health.&lt;/li&gt;&lt;li&gt;Software spending tracked and optimized.&lt;/li&gt;&lt;li&gt;Software Lifecycle process automated.&lt;/li&gt;&lt;/ul&gt;",&#13;
+        "Stakeholders": "SAM Team, Platform Team",&#13;
+        "Timeperiod": "2-3 Months",&#13;
+"url":"run-",&#13;
+        "headIcon": "/running.png"&#13;
+    }&#13;
+&#13;
+]&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=fd2d6808c34f9a500ced12f1b401314f"/>
+</record_update>

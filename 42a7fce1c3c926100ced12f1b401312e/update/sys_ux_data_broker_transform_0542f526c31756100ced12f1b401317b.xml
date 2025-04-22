@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.complex publisher</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>complex publisher</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var kpiValues = {
+        grouped_publishers: [],
+        top_products: [],
+        models: [],
+		reference : {}
+    };
+
+    var kpiProperties = [
+        'sam.implementation.top.publisher.report',
+    ];
+
+	// var complexPublishers = ['SAP','Citrix Systems'] ;
+	var complexPublishers =fetchKPIs('sam.complex.publisher');
+    function fetchKPIs(propertyName) {
+        var kpis = [];
+        var propertyValue = gs.getProperty(propertyName);
+
+        if (propertyValue) {
+            try {
+                kpis = JSON.parse(propertyValue);
+            } catch (e) {
+                gs.log("Error parsing " + propertyName + ": " + e.message);
+            }
+        } else {
+            gs.log("Property " + propertyName + " is not set or is empty.");
+        }
+        return kpis;
+    }
+
+function getQueryCount(tableNames, queries, field, staticValue, type) {
+    if (!tableNames || !queries || !staticValue) {
+        gs.error("Invalid parameters. Tables: " + tableNames + ", Queries: " + queries);
+        return "N/A";
+    }
+	gs.log(tableNames +"  "+ queries +"  "+ field +"  "+ staticValue +"  "+ type);
+
+    try {
+        var tableList = tableNames.split(",");
+        var queryList = queries.split(",");
+        if (tableList.length !== queryList.length) {
+            gs.error("Mismatch between the number of tables and queries.");
+            return "N/A";
+        }
+
+
+        var resultSet = [staticValue]; // Start with the staticValue as the initial result set
+
+        for (var i = 0; i < tableList.length; i++) {
+            var tableName = tableList[i];
+            var query = queryList[i];
+            var tempResultSet = [staticValue];
+
+            for (var j = 0; j < resultSet.length; j++) {
+                var replacedQuery = query.replace("--model--", resultSet[j] );
+                gs.log("Executing query on table " + tableName + ": " + replacedQuery);
+
+                var gr = new GlideRecord(tableName);
+                gr.addEncodedQuery(replacedQuery);
+                gr.query();
+
+				
+				
+                while (gr.next()) {
+
+					if (type == "field"){
+						if(field == "none"){
+						return null;
+						}
+						return gr.getDisplayValue(field);
+					}
+
+					
+                    if (field === "none") {
+                        tempResultSet.push(gr.getUniqueValue()); // Add sys_id by default
+                    } else {
+                        // var fieldValue = gr.getValue(field);
+						
+						gs.log("-----> "+ tableName + " field  " + field);
+                        var fieldValue = gr.getDisplayValue(field);
+                        if (fieldValue) {
+							
+						gs.log("-----> " + field);
+                            tempResultSet.push(fieldValue);
+                        }
+                    }
+                }
+				
+            }
+
+            if (tempResultSet.length === 0) {
+                gs.log("No results found for table " + tableName + " with query: " + query);
+
+                break; // Exit the loop if no results are found
+            }
+			
+            resultSet = tempResultSet; // Update the resultSet for the next query
+        }
+
+        var finalResult;
+
+        // Determine the result based on the type
+        if (type === "nested-count" || type === "count") {
+            finalResult = resultSet.length; // Return the count of the final result set
+        } else if (type === "nested-contain" || type === "contain") {
+            finalResult = resultSet.length > 0 ? "Yes" : "No"; // Return Yes/No based on the final result set
+        } 
+		else if (type === "nested-field") {
+			finalResult = resultSet.join(",") ; // Return concatenated field values
+        } 
+		else if ( type === "field") {
+			finalResult = resultSet.length > 0 ?null : null ; // Return concatenated field values
+        } 
+		else {
+            gs.error("Invalid type: " + type);
+            return "N/A";
+        }
+
+        return finalResult;
+
+    } catch (e) {
+        gs.error("Error executing nested query. Error: " + e);
+        return "N/A";
+    }
+}
+
+
+
+    function processKPI(kpis, productSysId) {
+        var results = {};
+        if (Array.isArray(kpis)) {
+            kpis.forEach(function(kpi) {
+                if (kpi.table && kpi.query && kpi.field) {
+                    var type = kpi.type || null ;
+                    var queryResult = getQueryCount(kpi.table, kpi.query, kpi.field, productSysId, type);
+					var defaultValue = kpi.defaultValue ? kpi.defaultValue : "N/A";
+                    results[kpi.kpi] = queryResult == null || queryResult == "N/A" ? defaultValue : queryResult;
+                } else {
+                    gs.log("KPI missing table, query, or field: " + JSON.stringify(kpi));
+                }
+            });
+        } else {
+            gs.log("KPI data is not in the expected format.");
+        }
+        return results;
+    }
+
+    try {
+        var grPublisher = new GlideRecord('core_company');
+		// grProduct.addQuery('name=SAP',"^norm_product.product_type=licensable");
+
+        grPublisher.query();
+
+        while (grPublisher.next()) {
+            var publisherID = grPublisher.getValue('name');
+			if( complexPublishers.indexOf(publisherID) !== -1){
+
+            kpiValues.grouped_publishers.push(publisherID);
+			kpiValues.reference[publisherID] = grPublisher.getUniqueValue();
+			// kpiValues.reference['sys_id'] = grPublisher.getUniqueValue();
+			// kpiValues.reference['Publisher'] = publisherID;
+			}
+			
+        }
+
+        var grProduct = new GlideRecord('cmdb_software_product_model');
+        // grProduct.addQuery('manufacturer', 'IN', complexPublishers.join(','),"^sw_product_type=licensable");
+		
+        grProduct.query();
+
+        while (grProduct.next()) {
+			if(complexPublishers.indexOf(grProduct.getDisplayValue('manufacturer')) !== -1){
+
+            var product = {
+                 model: grProduct.getUniqueValue(),
+                publisher: grProduct.getDisplayValue('manufacturer'),
+                product_name: grProduct.getValue('display_name'),
+            };
+
+            var kpiResults = {
+                model: product.model,
+                publisher: product.publisher,
+                product_name: product.product_name,
+				publisher_sys_id : kpiValues.reference[product.publisher]
+            };
+
+            kpiProperties.forEach(function(property) {
+                var kpis = fetchKPIs(property);
+                var tempResults = processKPI(kpis, product.model);
+                Object.assign(kpiResults, tempResults);
+            });
+
+            kpiValues.top_products.push(kpiResults);
+            kpiValues.models.push(product.model);
+        }}
+    } catch (error) {
+        var errorMessage = error && error.message ? error.message : "Unknown error";
+        gs.error("Error: " + errorMessage);
+    }
+
+    return kpiValues;
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-27 16:47:23</sys_created_on>
+        <sys_id>0542f526c31756100ced12f1b401317b</sys_id>
+        <sys_mod_count>21</sys_mod_count>
+        <sys_name>complex publisher</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_0542f526c31756100ced12f1b401317b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=0542f526c31756100ced12f1b401317b"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>0542f526c31756100ced12f1b401317b</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-27 16:47:23</sys_created_on>
+        <sys_id>eb52f526c31756100ced12f1b4013171</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-01-27 16:47:23</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="CMDB for SAM">b5263948c31c6a140ced12f1b4013107</macroponent>
+        <name>rich_text_4/html</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+* @param {params} params
+* @param {api} params.api
+* @param {TransformApiHelpers} params.helpers
+*/
+function evaluateProperty({ api, helpers }) {
+    const kpi = api.data.sam_euc__1.output.subscription_kpi;
+ 
+    // Font for columns (matching the image)
+    const columnFontFamily = "'Arial', sans-serif";
+ 
+    // Initialize the HTML table string with styling similar to the reference
+    let tableHtml = `
+<div style="max-width: 100%; overflow-x: auto;">
+<table style="
+                width: 100%;
+                border-collapse: collapse;
+                font-variant: normal;
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            ">
+<thead>
+<tr style="
+                        background-color: #B0C4DE;
+                        color: #222;
+                        font-size: 12px;
+                        font-weight: bold;
+                        text-align: left;
+                        border-bottom: 3px solid #A0B8D9;
+                    ">
+<th style="padding: 14px; border-right: 1px solid #A0B8D9;">KPI</th>
+<th style="padding: 14px; border-right: 1px solid #A0B8D9;">Count</th>
+<th style="padding: 14px; border-right: 1px solid #A0B8D9;">Use Case</th>
+<th style="padding: 14px; border-right: 1px solid #A0B8D9;">Impact</th>
+<th style="padding: 14px; text-align: center;">Recommendation</th>
+</tr>
+</thead>
+<tbody>
+    `;
+ 
+    // Loop through the KPI array and generate table rows
+    kpi.forEach((kpis, index) => {
+        const rowColor = index % 2 === 0 ? "#EAF3FF" : "#F6FAFF"; // Brighter Alternating Colors
+ 
+        let kpiName = kpis.kpi || "Unknown KPI";
+        let Qcount = kpis.query_count || 0;
+        let count = kpis.percentage || 0;
+        let description = kpis.description || "N/A";
+        let recommendation = kpis.action || "No Action Needed";
+ 
+        tableHtml += `
+<tr style="
+                background-color: ${rowColor};
+                border-bottom: 1px solid #D8E3F8;
+            ">
+<td style="padding: 14px; border-right: 1px solid #A0B8D9; color: #333;
+                    font-family: ${columnFontFamily}; font-weight: bold;
+                ">${kpiName}</td>
+<td style="padding: 14px; border-right: 1px solid #A0B8D9; color: #333; text-align: center;
+                    font-family: ${columnFontFamily}; font-weight: bold;
+                ">${Qcount}</td>
+<td style="padding: 14px; border-right: 1px solid #A0B8D9; color: #333;
+                    font-family: ${columnFontFamily}; font-weight: bold;
+                ">${description}</td>
+<td style="padding: 14px; border-right: 1px solid #A0B8D9; color: #333; text-align: center;
+                    font-family: ${columnFontFamily}; font-weight: bold;
+                ">${count}%</td>
+<td style="padding: 14px; color: #333; text-align: center;
+                    font-family: ${columnFontFamily}; font-weight: bold;
+                ">${recommendation}</td>
+</tr>
+        `;
+    });
+ 
+    tableHtml += `
+</tbody>
+</table>
+</div>
+    `;
+ 
+    return tableHtml;
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-03-10 15:41:56</sys_created_on>
+        <sys_id>66267948c31c6a140ced12f1b40131aa</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>rich_text_4/html</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_66267948c31c6a140ced12f1b40131aa</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

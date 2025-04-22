@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ux_page_property">
+    <sys_ux_page_property action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Tabs</description>
+        <name>chrome_tab</name>
+        <page display_value="SAM Framework">d49453a2837116109a4b66d0deaad329</page>
+        <required_translations>[ ]</required_translations>
+        <route/>
+        <suffix>chrome_tab</suffix>
+        <sys_class_name>sys_ux_page_property</sys_class_name>
+        <sys_created_by>Deva_123</sys_created_by>
+        <sys_created_on>2024-12-12 05:46:30</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>global</sys_domain_path>
+        <sys_id>3fb1e6abc35e56500ced12f1b4013194</sys_id>
+        <sys_mod_count>10</sys_mod_count>
+        <sys_name>chrome_tab</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_page_property_3fb1e6abc35e56500ced12f1b4013194</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:20:50</sys_updated_on>
+        <type>json</type>
+        <unique_name>x_985627_samfram_0.d49453a2837116109a4b66d0deaad329.root.global.chrome_tab</unique_name>
+        <value>{&#13;
+  "maxMainTabLimit": 10,&#13;
+  "maxTotalSubTabLimit": 30&#13;
+}</value>
+    </sys_ux_page_property>
+    <sys_translated_text action="delete_multiple" query="documentkey=3fb1e6abc35e56500ced12f1b4013194"/>
+</record_update>

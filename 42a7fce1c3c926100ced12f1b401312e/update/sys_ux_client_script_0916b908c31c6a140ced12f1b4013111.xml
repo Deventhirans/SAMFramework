@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="plugin">34167908c31c6a140ced12f1b401319d</macroponent>
+        <name>VB1</name>
+        <preset/>
+        <required_translations>[
+    {
+        "message": "Property updated successfully"
+    },
+    {
+        "message": "Failed to update Property"
+    },
+    {
+        "message": "An error occurred while updating the property"
+    }
+]</required_translations>
+        <script><![CDATA[async function handler({ api, event, helpers, imports }) {
+    if (!helpers.snHttp || typeof helpers.snHttp !== "function") {
+        console.error("Error: helpers.snHttp is not properly initialized or callable.");
+        return;
+    }
+
+    try {
+        const response = await helpers.snHttp("/api/985627/value_builder_task1", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({}),
+        });
+
+        console.log("Full Response:", response);
+
+        if (response.status === 200 || response.response.result.status == "success") {
+            const createdTasks = response.response.result.created_tasks?.join(", ") || "No tasks created";
+            const processedProps = response.response.result.processed_properties?.join(", ") || "No properties processed";
+
+            api.emit("NOW_UXF_PAGE#ADD_NOTIFICATIONS", {
+                items: [
+                    {
+                        id: "alert2",
+                        status: "positive",
+                        icon: "info-circle-outline",
+                        content: await helpers.translate("Property updated successfully"),
+                        action: { type: "dismiss" },
+                    },
+                ],
+            });
+        } else {
+            console.error("Failed to update Property:", response);
+
+            api.emit("NOW_UXF_PAGE#ADD_NOTIFICATIONS", {
+                items: [
+                    {
+                        id: "alert2",
+                        status: "critical",
+                        icon: "info-circle-outline",
+                        content: await helpers.translate("Failed to update Property"),
+                        action: { type: "dismiss" },
+                    },
+                ],
+            });
+        }
+    } catch (error) {
+        console.error("API Call Failed:", error.message || error);
+
+        if (error.response) {
+            console.error("Error Response:", error.response);
+        } else if (error.data) {
+            console.error("Error Data:", error.data);
+        }
+
+        api.emit("NOW_UXF_PAGE#ADD_NOTIFICATIONS", {
+            items: [
+                {
+                    id: "alert2",
+                    status: "critical",
+                    icon: "info-circle-outline",
+                    content: await helpers.translate("An error occurred while updating the property"),
+                    action: { type: "dismiss" },
+                },
+            ],
+        });
+    }
+}
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-03-10 15:41:34</sys_created_on>
+        <sys_id>0916b908c31c6a140ced12f1b4013111</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>VB1</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_0916b908c31c6a140ced12f1b4013111</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+</record_update>

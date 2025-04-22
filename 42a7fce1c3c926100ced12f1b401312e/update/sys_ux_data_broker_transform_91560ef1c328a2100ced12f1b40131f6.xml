@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.Catalog integration publishers</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description>Catelog integration publishers</description>
+        <mutates_server_data>false</mutates_server_data>
+        <name>Catalog integration publishers</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var result = []; // Array to store publisher data in the required format
+    var gr = new GlideRecord('cmdb_software_product_model');
+
+    // If input is provided, use it to filter the query (e.g., by sys_id)
+    if (input && input.sys_id) {
+        gr.addQuery('sys_id', input.sys_id);
+    }
+    // Add more conditions based on input if needed, e.g., input.model_name
+    else if (input && input.model_name) {
+        gr.addQuery('name', input.model_name);
+    }
+
+    gr.query(); // Execute the query
+
+    while (gr.next()) {
+        var publisherSysId = gr.getValue('manufacturer'); // Get the sys_id from manufacturer
+        if (publisherSysId) {
+            var companyGr = new GlideRecord('core_company');
+            if (companyGr.get(publisherSysId)) {
+                var publisherName = companyGr.getValue('name'); // Get the publisher name
+                if (publisherName && !result.some(item => item[0].id === publisherName)) { // Avoid duplicates
+                    // Push the publisher name in the required nested structure
+                    result.push([
+                        {
+                            "id": publisherName,
+                            "label": publisherName
+                        }
+                    ]);
+                }
+            }
+        }
+    }
+
+	// gs.log('okokokok',JSON.stringify(result,null,2));
+
+    // Return the formatted array, or a default message if no publishers found
+    return result.length > 0 ? result : [[{"id": "No publishers found", "label": "No publishers found"}]];
+}]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-28 13:38:25</sys_created_on>
+        <sys_id>91560ef1c328a2100ced12f1b40131f6</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>Catalog integration publishers</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_91560ef1c328a2100ced12f1b40131f6</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=91560ef1c328a2100ced12f1b40131f6"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>91560ef1c328a2100ced12f1b40131f6</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-28 13:38:25</sys_created_on>
+        <sys_id>a486ce3dc328a2100ced12f1b401312a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-03-28 13:38:25</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.GetSystemProperties</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>GetSystemProperties</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var GetSystemProperties = Class.create();
+GetSystemProperties.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    
+    getProperties: function() {
+        var propertyName = 'Questionnariepart'; // Replace with actual system property name
+        var gr = new GlideRecord('sys_properties');
+        gr.addQuery('name', propertyName);
+        gr.query();
+
+        if (gr.next()) {
+            var propertyValue = gr.getValue('value'); // Get JSON stored in sys_property
+            gs.info("System Property Retrieved: " + propertyValue); // Logging for confirmation
+            return propertyValue;
+        }
+        gs.error("System Property not found: " + propertyName);
+        return '{}'; // Return empty JSON if not found
+    }
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-15 05:57:31</sys_created_on>
+        <sys_id>780315e0c3b71e900ced12f1b401319f</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>GetSystemProperties</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_780315e0c3b71e900ced12f1b401319f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:38:59</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>780315e0c3b71e900ced12f1b401319f</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-15 05:57:30</sys_created_on>
+        <sys_id>41d31568c3b71e900ced12f1b40131cf</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-02-15 05:57:30</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

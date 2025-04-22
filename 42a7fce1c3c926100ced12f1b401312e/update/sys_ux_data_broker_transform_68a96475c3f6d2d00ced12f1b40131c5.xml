@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.MarkAsComplete</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>MarkAsComplete</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var kpiValues = {
+        'buttonData': []
+    };
+
+    try {
+        // Initialize counters
+        var totalCount = 0;
+        var totalCompletedCount = 0;
+        
+        // Process system property "Mark as complete button property"
+        var sysPropertyValue = gs.getProperty('Mark as complete button property');
+        if (sysPropertyValue) {
+            try {
+                var propData = JSON.parse(sysPropertyValue);
+                
+                // Add property data to our results
+                for (var btnId in propData) {
+                    if (propData.hasOwnProperty(btnId)) {
+                        // Convert property value to boolean
+                        var btnState = propData[btnId] === true || propData[btnId] === 'true';
+                        
+                        totalCount += 1;
+                        if (btnState) {
+                            totalCompletedCount += 1;
+                        }
+                        
+                        kpiValues.buttonData.push({
+                            "buttonId": btnId,
+                            "buttonState": btnState
+                        });
+                    }
+                }
+            } catch (parseErr) {
+                gs.error("Error parsing system property 'Mark as complete button property': " + parseErr.toString());
+            }
+        } else {
+            gs.info("System property 'Mark as complete button property' not found or empty.");
+        }
+
+        // Add summary statistics
+        // kpiValues['summary'] = {
+        //     "total": totalCount,
+        //     "completed": totalCompletedCount,
+        //     "incompleted": totalCount - totalCompletedCount
+        // };
+        
+        // Add dial chart data
+        var completionPercentage = totalCount > 0 ? (totalCompletedCount/totalCount)*100 : 0;
+        kpiValues['dialChart'] = [
+            {
+                "data": [
+                    {
+                        "value": completionPercentage,
+                        "change": 20,
+                        "changePercent": 10
+                    }
+                ],
+                "metadata": {
+                    "eventData": {
+                        "indicatorSysid": "fb007202d7130100b96d45a3ce6103b4"
+                    },
+                    "dataSourceLabel": "Number of open incidents",
+                    "filterQuery": "opened_atONToday@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()^ORopened_at<javascript:gs.beginningOfToday()^resolved_atISEMPTY^ORresolved_at>javascript:gs.endOfToday()^state!=8",
+                    "aggregate": {
+                        "fieldType": "percentage"
+                    },
+                    "format": {
+                        "unitFormat": "{0}%",
+                        "frequency": "daily",
+                        "precision": "0"
+                    }
+                }
+            }
+        ];
+
+        // Log the transformed data for verification
+        // gs.info("Transformed Data: " + JSON.stringify(kpiValues, null, 2));
+
+    } catch (e) {
+        // Handle and log errors
+        gs.error("Error in transform script: " + e.toString());
+        return {
+            'error': e.toString()
+        };
+    }
+
+    // Return the transformed data
+    return kpiValues;
+}
+
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-31 07:03:08</sys_created_on>
+        <sys_id>68a96475c3f6d2d00ced12f1b40131c5</sys_id>
+        <sys_mod_count>28</sys_mod_count>
+        <sys_name>MarkAsComplete</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_68a96475c3f6d2d00ced12f1b40131c5</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=68a96475c3f6d2d00ced12f1b40131c5"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>68a96475c3f6d2d00ced12f1b40131c5</id>
+        <sys_created_by>loga_123</sys_created_by>
+        <sys_created_on>2025-03-29 07:38:46</sys_created_on>
+        <sys_id>86cdf50ec36c22100ced12f1b4013142</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>loga_123</sys_updated_by>
+        <sys_updated_on>2025-03-29 07:38:46</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

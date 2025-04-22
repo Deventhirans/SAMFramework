@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>optional.sam.plugin</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-04-01 13:56:10</sys_created_on>
+        <sys_id>03903ac7c364a2500ced12f1b4013176</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>optional.sam.plugin</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_03903ac7c364a2500ced12f1b4013176</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:19:31</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+    {&#13;
+        "id": "com.snc.file_signature_normalization",&#13;
+        "description": "Software Asset Management - File Signature Normalization."&#13;
+    },&#13;
+    {"id": "com.sn_sam_spend",&#13;
+        "description": "Software Asset Management - Spend Detection"&#13;
+    },&#13;
+    {&#13;
+        "id": "com.sn_sam_ml_normalization",&#13;
+        "description": "Software Asset Management - Machine Learning Normalization (SAM Enterprise ONLY)."&#13;
+    },&#13;
+    {&#13;
+        "id": "sn_sam_sf_crm_intg",&#13;
+        "description": "Software Asset Management Integration with Salesforce CRM."&#13;
+    },&#13;
+    {&#13;
+        "id": "sn_sam_sf_mc_intg",&#13;
+        "description": "Software Asset Management Integration with Salesforce Marketing Cloud."&#13;
+    },  &#13;
+    {&#13;
+        "id": "sn_sam_workday",&#13;
+        "description": "Software Asset Management Integration with Workday."&#13;
+    },&#13;
+    {&#13;
+        "id": "sn_jamf_integrate",&#13;
+        "description": "Service Graph Connector for JAMF."&#13;
+    },    &#13;
+ {&#13;
+        "id": "sn_sg_azure_integ",&#13;
+        "description": "Service Graph Connector for Microsoft Azure."&#13;
+    },&#13;
+{&#13;
+ "id": "sn_intune_integrate",&#13;
+"description": "Service Graph Connector for Microsoft Intune."&#13;
+},&#13;
+{&#13;
+ "id": "sn_sccm_integrate",&#13;
+"description": "Service Graph Connector for Microsoft SCCM."&#13;
+}&#13;
+]&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=03903ac7c364a2500ced12f1b4013176"/>
+</record_update>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="advanced-integration">665c8a91c32b16140ced12f1b40131d0</macroponent>
+        <name>download</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+* @param {params} params
+* @param {api} params.api
+* @param {any} params.event
+* @param {any} params.imports
+* @param {ApiHelpers} params.helpers
+*/
+function handler({ api, event, helpers, imports }) {
+    var sys_id = '318978f6c3d3da100ced12f1b4013122';
+    var url = `https://dev272448.service-now.com/sys_attachment.do?sys_id=${sys_id}`;
+    top.window.open(url, '_blank');
+}
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Harish_123</sys_created_by>
+        <sys_created_on>2025-02-05 10:23:34</sys_created_on>
+        <sys_id>12edda51c36356140ced12f1b40131ec</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>download</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_12edda51c36356140ced12f1b40131ec</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+</record_update>

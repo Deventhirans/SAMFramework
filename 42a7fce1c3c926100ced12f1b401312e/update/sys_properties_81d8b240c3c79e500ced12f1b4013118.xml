@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.foundation.current.location.kpi</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-07 17:20:10</sys_created_on>
+        <sys_id>81d8b240c3c79e500ced12f1b4013118</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>sam.foundation.current.location.kpi</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_81d8b240c3c79e500ced12f1b4013118</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:16:06</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+        {&#13;
+            "kpi": "Location without Name",&#13;
+            "description": "Enable accurate asset management, ensure effective software license allocation, and streamline compliance reporting.",&#13;
+             "recommendation": "Conduct regular audits to prevent incomplete records",&#13;
+            "table": "cmn_location",&#13;
+            "field": "nameISEMPTY"&#13;
+        },&#13;
+{&#13;
+            "kpi": "Duplicate Location",&#13;
+            "description": "Unique records enable proper asset tracking, eliminate redundancy, and ensure accurate software license allocation and compliance.",&#13;
+            "recommendation": "Regularly identify and merge duplicate location records",&#13;
+            "table": "cmn_location",&#13;
+            "field": "name"&#13;
+        },&#13;
+        {&#13;
+            "kpi": "Location Without City",&#13;
+            "description": "Provide granular geographical data for precise software license distribution, regional compliance, and better asset management.",&#13;
+            "recommendation": "Ensure that each location is associated with a valid city.",&#13;
+            "table": "cmn_location",&#13;
+            "field": "cityISEMPTY"&#13;
+        },     &#13;
+        {&#13;
+            "kpi": "Location Without Country",&#13;
+            "description": " Enable precise geographical categorization, facilitate accurate software license allocation, and support global compliance reporting.",&#13;
+            "recommendation": "Assign a valid country to each locationt.",&#13;
+            "table": "cmn_location",&#13;
+            "field": "countryISEMPTY"&#13;
+        }&#13;
+    ]</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=81d8b240c3c79e500ced12f1b4013118"/>
+</record_update>

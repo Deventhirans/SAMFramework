@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.userinaccuratechart</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>userinaccuratechart</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var kpiProperty = "singlescore"; // System property for inaccurate user records
+    var totalUsers = 682; // Total user count in sys_user
+    var totalInaccurateRecords = 0;
+
+    function fetchKPI(propertyName) {
+        var kpis = [];
+        var propertyValue = gs.getProperty(propertyName); // Fetch system property
+
+        if (propertyValue) {
+            try {
+                kpis = JSON.parse(propertyValue);
+            } catch (e) {
+                gs.info("Error parsing " + propertyName + ": " + e.message);
+            }
+        }
+        return kpis;
+    }
+
+    function calculateTotalInaccurateRecords(kpis) {
+        if (Array.isArray(kpis.output)) {
+            kpis.output.forEach(function (kpi) {
+                totalInaccurateRecords += kpi.count || 0;
+            });
+        }
+    }
+
+    var kpiData = fetchKPI(kpiProperty);
+    calculateTotalInaccurateRecords(kpiData);
+
+    var totalPercentage = ((totalInaccurateRecords / totalUsers) * 100).toFixed(2); // Calculate total percentage
+
+    return {
+        "singlecore_output": totalPercentage // Return as a single value
+    };
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-20 21:00:46</sys_created_on>
+        <sys_id>2da11ed2c3fb92900ced12f1b4013148</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>userinaccuratechart</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_2da11ed2c3fb92900ced12f1b4013148</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=2da11ed2c3fb92900ced12f1b4013148"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>2da11ed2c3fb92900ced12f1b4013148</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-20 21:00:46</sys_created_on>
+        <sys_id>c982d2d6c3fb92900ced12f1b40131fe</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-02-20 21:00:46</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

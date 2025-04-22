@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.current.softwaremodel.kpi</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Deva_123</sys_created_by>
+        <sys_created_on>2024-12-16 12:49:11</sys_created_on>
+        <sys_id>101250cdc326d6100ced12f1b40131e2</sys_id>
+        <sys_mod_count>23</sys_mod_count>
+        <sys_name>sam.current.softwaremodel.kpi</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_101250cdc326d6100ced12f1b40131e2</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:05:28</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+  {&#13;
+    "kpi": "Licensable Software Models",&#13;
+    "description": "Identifying licensable software models ensures proper license tracking and management, helping maintain compliance and optimize software usage across the organization.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "field": "sw_product_type=licensable",&#13;
+    "recommendation": "Regularly audit and validate licensable software models to ensure accurate tracking of licenses, and establish clear processes for maintaining compliance with software agreements."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "License Under Management",&#13;
+    "description": "Tracking software models under management helps monitor license usage, optimize renewals, and ensure compliance with contractual terms.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "field": "license_under_management=true",&#13;
+    "recommendation": "Periodically review and update software models under management to optimize license usage and ensure compliance with licensing terms and conditions."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software model without DMAP",&#13;
+    "description": "Associating software models with DMAP ensures accurate tracking of software installations and entitlements, aiding in effective license management.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "field": "discovery_mapISEMPTY",&#13;
+    "recommendation": "Link all software models to DMAP to ensure accurate asset tracking and improve license management by associating software with their corresponding discovery models."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software model without downgrade rights",&#13;
+    "description": "Tracking downgrade rights for software models ensures compliance with software agreements and allows for accurate version control and license management.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "field": "missing_downgrade_rightsISEMPTY",&#13;
+    "recommendation": "Ensure software models with downgrade rights are correctly tracked, and implement a process to update models when downgrade rights are granted or removed to maintain compliance with licensing agreements."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software model without suite component defined",&#13;
+    "description": "Defining suite components for software models ensures accurate tracking and license management for all individual components within a software suite.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "field": "suite_parentISNOTEMPTY^suite_childISEMPTY",&#13;
+    "recommendation": "Define suite components for all relevant software models to improve tracking and license allocation, ensuring each component is accounted for and appropriately licensed."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software model which are suite component which has no inference percentage defined",&#13;
+    "description": "Defining an inference percentage for suite components ensures accurate allocation of licenses and usage tracking for individual components in a suite.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "field": "inferenceISEMPTY",&#13;
+    "recommendation": "Define inference percentages for suite components to enable accurate license allocation and ensure correct tracking of individual component usage within suites."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software model without product lifecycle",&#13;
+    "description": "Associating a product lifecycle with software models ensures proper lifecycle management, aiding in asset tracking, renewals, and compliance with support policies.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "field": "productISEMPTY",&#13;
+    "recommendation": "Assign product lifecycle stages (e.g., active, retired) to all software models to ensure effective lifecycle management, track software usage, and plan for renewals or decommissioning."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Non licensable software models",&#13;
+    "description": "Identifying non-licensable software models helps prevent unnecessary tracking and management of software assets that don't require license monitoring or compliance management.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "field": "license_typeISEMPTY",&#13;
+    "recommendation": "Regularly review non-licensable software models to prevent unnecessary tracking and ensure that only relevant software is monitored for compliance and license management."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software models without matching discovery model",&#13;
+    "description": "Associating software models with corresponding discovery models ensures accurate tracking of software installations and helps maintain proper asset management across the environment.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "field": "",&#13;
+    "recommendation": "Link software models to their respective discovery models to ensure accurate inventory tracking, improve license management, and enable automated updates to software asset data. Regularly audit for unlinked software models and resolve discrepancies promptly."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software model without any subscriptions",&#13;
+    "description": "Ensuring that software models are linked with subscriptions helps track software usage, manage renewals, and maintain compliance with subscription-based licensing.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "field": "subscription_conditionISEMPTY",&#13;
+    "recommendation": "Ensure all software models that require subscription management are correctly linked to subscriptions, and implement a periodic review process to track subscription renewals and updates."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software model without entitlement",&#13;
+    "description": "Associating software models with entitlements ensures proper license allocation and compliance, preventing overuse and underutilization of software assets.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "field": "entitlementsISEMPTY",&#13;
+    "recommendation": "Link software models to relevant entitlements to track licensing rights, prevent overuse, and ensure compliance with software agreements and entitlements."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software model with client access",&#13;
+    "description": "Defining client access for software models helps manage user access and ensures compliance with client-based licensing agreements.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "field": "auto_generate_client_access_for_allocations=true",&#13;
+    "recommendation": "Regularly verify and update client access configurations for software models to ensure accurate tracking of user access, prevent violations of client-based licenses, and ensure compliance."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software model with resource values",&#13;
+    "description": "Defining resource values for software models ensures accurate tracking of resource consumption, helping optimize software usage and aligning with budget planning and license management.",&#13;
+    "table": "cmdb_software_product_model",&#13;
+    "field": "",&#13;
+    "recommendation": "Assign and review resource values for all software models to track resource utilization effectively. Regularly validate these values to ensure accurate forecasting, cost allocation, and optimization of resources related to software assets."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software model with metric attributes",&#13;
+    "description": "Defining metric attributes for software models helps track usage based on specific metrics (e.g., per user, per device), ensuring accurate license management and compliance.",&#13;
+    "table": "samp_license_metric_result",&#13;
+    "field": "software_model!=^license_metric!=",&#13;
+    "recommendation": "Define and review metric attributes for software models to track usage based on specific metrics (e.g., user, device) and ensure compliance with licensing terms related to these metrics."&#13;
+  }&#13;
+]&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=101250cdc326d6100ced12f1b40131e2"/>
+</record_update>

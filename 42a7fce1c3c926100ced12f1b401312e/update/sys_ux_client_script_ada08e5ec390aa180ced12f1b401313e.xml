@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="nsr-automation">6e45f4e2c308aa500ced12f1b40131fc</macroponent>
+        <name>install flow </name>
+        <preset/>
+        <required_translations>[
+    {
+        "message": "Flow activated successfully"
+    }
+]</required_translations>
+        <script><![CDATA[/**
+ * Calls API to activate a flow in the sys_hub_flow table.
+ *
+ * @param {params} params
+ * @param {api} params.api
+ * @param {any} params.event
+ * @param {any} params.imports
+ * @param {ApiHelpers} params.helpers
+ */
+async function handler({ api, event, helpers, imports }) {
+  try {
+    // Use the specific flow name instead of getting it from event context
+    const flowName = "SSR - NSR";
+    
+    console.log("Processing request for flow:", flowName);
+    
+    // Define API URL
+    const apiUrl = "/api/985627/flow_activator/activate_flow";
+    
+    // API Request Payload
+    const requestData = {
+      data: {
+        flowName: flowName
+      }
+    };
+    
+    console.log("Request Data:", JSON.stringify(requestData, null, 2));
+    
+    // Perform API Call
+    const response = await helpers.snHttp(apiUrl, {
+      method: 'PUT',
+      body: requestData,
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    });
+    
+    console.log("API response:", response);
+    
+    if (response && response.response) {
+      const responseData = response.response; // Already parsed JSON
+
+      api.emit("NOW_UXF_PAGE#ADD_NOTIFICATIONS", {
+                items: [
+                    {
+                        id: "alert2",
+                        status: "positive",
+                        icon: "info-circle-outline",
+                        content: await helpers.translate("Flow activated successfully"),
+                        action: { type: "dismiss" },
+                    },
+                ],
+            });
+      // Refresh the component if needed
+      // api.dispatch("REFRESH_DATA");
+    } else {
+      const errorMessage = (response && response.error) ? response.error : 'Failed to activate flow';
+      api.addErrorMessage(`Error: ${errorMessage}`);
+    }
+  } catch (error) {
+    console.error("API Request Failed:", error);
+    api.addErrorMessage(`API Request Failed: ${error.message}`);
+  }
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-17 18:15:20</sys_created_on>
+        <sys_id>ada08e5ec390aa180ced12f1b401313e</sys_id>
+        <sys_mod_count>10</sys_mod_count>
+        <sys_name>install flow </sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_ada08e5ec390aa180ced12f1b401313e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+</record_update>

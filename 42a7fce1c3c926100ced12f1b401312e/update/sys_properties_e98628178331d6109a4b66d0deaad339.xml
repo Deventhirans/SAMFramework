@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.migration.framework</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-11-16 06:27:21</sys_created_on>
+        <sys_id>e98628178331d6109a4b66d0deaad339</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>sam.migration.framework</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_e98628178331d6109a4b66d0deaad339</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 09:57:13</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+  {&#13;
+    datasources: ["SNOW", "Flexnet", servicenow],&#13;
+    servicenow: [&#13;
+      {&#13;
+        table: "alm_license",&#13;
+        reports: [&#13;
+          {&#13;
+            name: "Total Active Licenses",&#13;
+            condition: "install_status=1"&#13;
+          },&#13;
+          {&#13;
+            name: "Active Licenses without PPN",&#13;
+            condition: "install_status=1^publisher_part_number=NULL"&#13;
+          },&#13;
+          {&#13;
+            name: "Active Licenses without Cost",&#13;
+            condition: "install_status=1^cost=javascript:global.getCurrencyFilter('alm_license','cost', 'INR;0')^ORcost=NULL"&#13;
+          },&#13;
+          {&#13;
+            name: "Active Licenses without License Metric",&#13;
+            condition: "install_status=1^license_metric=NULL"&#13;
+          },&#13;
+          {&#13;
+            name: "Active Licenses without Software Model",&#13;
+            condition: "install_status=1^modelISEMPTY"&#13;
+          }&#13;
+        ]&#13;
+      }&#13;
+    ]&#13;
+  }&#13;
+]&#13;
+&#13;
+&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=e98628178331d6109a4b66d0deaad339"/>
+</record_update>

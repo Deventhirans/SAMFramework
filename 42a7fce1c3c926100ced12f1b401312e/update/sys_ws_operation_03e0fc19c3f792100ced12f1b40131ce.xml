@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>procuement_post_request</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+    try {
+        gs.info("]]>📢<![CDATA[ [API] - Processing Incoming Request for procurement.form property...");
+        
+        
+        
+        // For PUT or POST requests - update/create property value
+        if (method === 'PUT' || method === 'POST') {
+            // Safely extract request body data
+            var requestBody;
+            if (request && request.body) {
+                if (typeof request.body === 'string') {
+                    try {
+                        requestBody = JSON.parse(request.body);
+                    } catch (e) {
+                        requestBody = request.body;
+                    }
+                } else if (request.body.data) {
+                    requestBody = request.body.data;
+                } else {
+                    requestBody = request.body;
+                }
+            }
+            
+            gs.info("]]>🔵<![CDATA[ Request Body: " + JSON.stringify(requestBody));
+            
+            // Check if data exists and has required properties
+            if (!requestBody || requestBody.value === undefined) {
+                gs.error("❌ Missing required data: value");
+                response.setStatus(400);
+                response.setBody({ error: "Missing required data: value" });
+                return;
+            }
+            
+            var propertyValue = requestBody.value;
+            gs.info("]]>📝<![CDATA[ Setting property value: " + propertyValue);
+            
+            // Check if property exists for proper response messaging
+            var propertyExists = gs.getProperty('procurement.form') !== null;
+            
+            // Set the system property
+            var result = gs.setProperty('procurement.form', propertyValue);
+            
+            if (result !== null) {
+                if (method === 'POST' && !propertyExists) {
+                    gs.info("✅ System Property Successfully Created");
+                    response.setStatus(201);
+                    response.setBody({
+                        message: "✅ System property 'procurement.form' created successfully!",
+                        property_name: 'procurement.form'
+                    });
+                } else {
+                    gs.info("✅ System Property Successfully Updated");
+                    response.setStatus(200);
+                    response.setBody({
+                        message: "✅ System property 'procurement.form' updated successfully!",
+                        property_name: 'procurement.form'
+                    });
+                }
+            } else {
+                gs.error("❌ System Property Operation Failed");
+                response.setStatus(500);
+                response.setBody({ 
+                    error: method === 'POST' ? "Failed to create system property" : "Failed to update system property" 
+                });
+            }
+            return;
+        }
+        
+        // Handle unsupported methods
+        gs.warn("⚠️ Unsupported Method: " + method);
+        response.setStatus(405);
+        response.setBody({ error: "Method not allowed" });
+        
+    } catch (e) {
+        gs.error("❌ Exception: " + e.message);
+        response.setStatus(500);
+        response.setBody({ error: "Exception occurred: " + e.message });
+    }
+})(request, response);
+
+
+
+
+
+// (function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+//     gs.info("]]>📢<![CDATA[ [POST API] - Processing Incoming Request for System Property...");
+
+//     var requestBody = request.body.data;
+//     gs.info("]]>🔵<![CDATA[ Incoming POST Request Data: " + JSON.stringify(requestBody));
+
+//     // Validate required fields
+//     if (!requestBody || !requestBody.u_instance_url) {
+//         gs.error("❌ [ERROR] Missing required data: value");
+//         response.setStatus(400);
+//         response.setBody({ error: "Missing required data: value" });
+//         return;
+//     }
+
+//     gs.info("✅ [STEP 1] - Valid request received. Proceeding to system property operation...");
+
+//     try {
+//         // Check if the property already exists
+//         var propertyGr = new GlideRecord('sys_properties');
+//         propertyGr.addQuery('name', 'procurement.form');
+//         propertyGr.query();
+
+//         if (propertyGr.next()) {
+//             // Property exists, update it
+//             gs.info("]]>🔄<![CDATA[ [STEP 2] - Property 'procurement.form' exists. Updating value to: " + requestBody.value);
+//             propertyGr.setValue('value', requestBody.value);
+            
+//             // Add optional description update if provided
+//             if (requestBody.description) {
+//                 propertyGr.setValue('description', requestBody.description);
+//             }
+            
+//             var updateResult = propertyGr.update();
+//             if (updateResult) {
+//                 gs.info("✅ [STEP 3] - System Property Successfully Updated");
+//                 response.setStatus(200);
+//                 response.setBody({
+//                     message: "✅ System property 'procurement.form' updated successfully!",
+//                     property_name: 'procurement.form',
+//                     new_value: requestBody.value,
+//                     sys_id: propertyGr.getUniqueValue()
+//                 });
+//             } else {
+//                 gs.error("❌ [ERROR] System Property Update Failed");
+//                 response.setStatus(500);
+//                 response.setBody({ error: "Failed to update system property" });
+//             }
+//         } else {
+//             // Property doesn't exist, create it
+//             gs.info("]]>🆕<![CDATA[ [STEP 2] - Property 'procurement.form' not found. Creating new property...");
+//             propertyGr = new GlideRecord('sys_properties');
+//             propertyGr.initialize();
+//             propertyGr.setValue('name', 'procurement.form');
+//             propertyGr.setValue('value', requestBody.value);
+            
+//             // Set description if provided, otherwise use default
+//             var description = requestBody.description || 'Procurement form configuration';
+//             propertyGr.setValue('description', description);
+            
+//             var sysId = propertyGr.insert();
+//             if (sysId) {
+//                 gs.info("✅ [STEP 3] - System Property Successfully Created with SYS_ID: " + sysId);
+//                 response.setStatus(201);
+//                 response.setBody({
+//                     message: "✅ System property 'procurement.form' created successfully!",
+//                     property_name: 'procurement.form',
+//                     value: requestBody.value,
+//                     sys_id: sysId
+//                 });
+//             } else {
+//                 gs.error("❌ [ERROR] System Property Creation Failed");
+//                 response.setStatus(500);
+//                 response.setBody({ error: "Failed to create system property" });
+//             }
+//         }
+//     } catch (e) {
+//         gs.error("❌ [ERROR] Exception: " + e.message);
+//         response.setStatus(500);
+//         response.setBody({ error: "Exception occurred: " + e.message });
+//     }
+
+//     gs.info("]]>🏁<![CDATA[ [POST API] - Processing Completed.");
+// })(request, response);
+
+
+
+
+
+// (function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+//     gs.info("]]>📢<![CDATA[ [POST API] - Processing Incoming Request...");
+
+//     var requestBody = request.body.data;
+//     gs.info("]]>🔵<![CDATA[ Incoming POST Request Data: " + JSON.stringify(requestBody));
+
+//     // Validate required fields
+//     if (!requestBody || !requestBody.u_instance_url || !requestBody.u_instance_url) {
+//         gs.error("❌ [ERROR] Missing required data: user_id or instance_url");
+//         response.setStatus(400);
+//         response.setBody({ error: "Missing required data: user_id or instance_url" });
+//         return;
+//     }
+
+//     gs.info("✅ [STEP 1] - Valid request received. Proceeding to fetch column mappings...");
+
+//     // ]]>🔹<![CDATA[ Step 1: Fetch Column Names Dynamically
+//     var columnMapping = {};
+//     var columnGr = new GlideRecord("sys_dictionary");
+//     columnGr.addQuery("name", "u_custom_form_data"); // Target Table Name
+//     columnGr.addQuery("active", true);
+//     columnGr.query();
+
+//     gs.info("]]>🔍<![CDATA[ [STEP 2] - Fetching column mappings from sys_dictionary...");
+
+//     while (columnGr.next()) {
+// 		gs.log('ttttttttttttttt');
+//         var columnName = columnGr.element.toString();
+//         var columnLabel = columnGr.column_label.toString().replace(/\s+/g, ''); // Remove spaces
+//         columnMapping[columnLabel] = columnName;
+//     }
+
+//     gs.info("]]>📌<![CDATA[ [STEP 2] - Dynamic Column Mapping: " + JSON.stringify(columnMapping));
+
+//     // ]]>🔹<![CDATA[ Step 2: Insert a New Record
+//     gs.info("]]>🆕<![CDATA[ [STEP 3] - Initializing new record in u_custom_form_data...");
+
+//     var gr = new GlideRecord("u_custom_form_data");
+//     gr.initialize();
+
+//     for (var field in requestBody) {
+//         var tableField = columnMapping[field] || field; // Map field dynamically
+//         gs.info(`]]>📌<![CDATA[ Processing Insert Field: ${field} → ${requestBody[field]}`);
+
+//         if (gr.isValidField(tableField)) {
+//             gs.info(`✅ Inserting Field: ${tableField} → ${requestBody[field]}`);
+//             gr.setValue(tableField, requestBody[field]);
+//         } else {
+//             gs.warn(`⚠️ Skipping Invalid Field: ${tableField}`);
+//         }
+//     }
+
+//     var sysId = gr.insert();
+//     if (sysId) {
+//         gs.info(`✅ [STEP 4] - New Record Inserted Successfully! SYS_ID: ${sysId}`);
+//         response.setStatus(201);
+//         response.setBody({ message: "✅ Data submitted successfully!", record_sys_id: sysId });
+//     } else {
+//         gs.error("❌ [ERROR] Record Insertion Failed!");
+//         response.setStatus(500);
+//         response.setBody({ error: "Failed to insert record" });
+//     }
+
+//     gs.info("]]>🏁<![CDATA[ [POST API] - Processing Completed.");
+// })(request, response);
+]]></operation_script>
+        <operation_uri>/api/985627/procurement_form_api</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-17 11:21:08</sys_created_on>
+        <sys_id>03e0fc19c3f792100ced12f1b40131ce</sys_id>
+        <sys_mod_count>10</sys_mod_count>
+        <sys_name>procuement_post_request</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ws_operation_03e0fc19c3f792100ced12f1b40131ce</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:31:49</sys_updated_on>
+        <web_service_definition display_value="procurement form API">bcfc95cfc3a7d2100ced12f1b40131ab</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>03e0fc19c3f792100ced12f1b40131ce</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-17 11:21:07</sys_created_on>
+        <sys_id>8911b059c3f792100ced12f1b4013124</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-02-17 11:21:07</sys_updated_on>
+        <table>sys_ws_operation</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Persona">bd163d08c31c6a140ced12f1b4013117</macroponent>
+        <name>rich_text_3/html</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[function evaluateProperty({ api, helpers }) {
+    const plugins = api.data.sam_user_1.output.user_groups;
+    console.log("kalai", plugins);
+
+    // Check if there are plugins to process
+    if (!plugins || plugins.length === 0) {
+        return `<p>No properties available to display.</p>`;
+    }
+
+    // Font for Group Name, Description, and other columns (matching the image)
+    const columnFontFamily = "'Arial', sans-serif";
+
+    // Build the table HTML dynamically
+    let tableHtml = `
+        <div style="max-width: 100%; overflow-x: auto;">
+            <table style="
+                width: 100%;
+                border-collapse: collapse;
+                font-variant: normal;
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            ">
+                <thead>
+                    <tr style="
+                        background-color: #B0C4DE;
+                        color: #222;
+                        font-size: 12px;
+                        font-weight: bold;
+                        text-align: left;
+                        border-bottom: 3px solid #A0B8D9;
+                    ">
+                        <th style="padding: 14px; border-right: 1px solid #A0B8D9;">Group Name</th>
+                        <th style="padding: 14px; border-right: 1px solid #A0B8D9;">Description</th>
+                        <th style="padding: 14px; border-right: 1px solid #A0B8D9;">Contains Role</th>
+                        <th style="padding: 14px; text-align: center;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    // Iterate through plugins to create rows
+    plugins.forEach((plugin, index) => {
+        const rowColor = index % 2 === 0 ? "#EAF3FF" : "#F6FAFF"; // Brighter Alternating Colors
+
+        let buttonColor;
+        if (plugin.status === "inactive") {
+            buttonColor = "#577BC1"; // Blue
+        } else if (plugin.status === "update_available") {
+            buttonColor = "#48A6A7"; // Teal
+        } else {
+            buttonColor = "#665ef7"; // orange
+        }
+
+        tableHtml += `
+            <tr style="background-color: ${rowColor}; border-bottom: 1px solid #D8E3F8;">
+                <td style="padding: 14px; border-right: 1px solid #A0B8D9; color: #333; font-family: ${columnFontFamily};">${plugin.group}</td>
+                <td style="padding: 14px; border-right: 1px solid #A0B8D9; color: #333; font-family: ${columnFontFamily};">${plugin.description}</td>
+                <td style="padding: 14px; border-right: 1px solid #A0B8D9; color: #333; font-family: ${columnFontFamily};">${plugin.contains_roles.replaceAll(',', ', ')}</td>
+                <td style="padding: 14px; text-align: center;">
+                    <a href="${plugin.url}" target="_blank" style="text-decoration: none;">
+                        <button style="
+                            padding: 10px 14px;
+                            width: 120px;
+                            background-color: ${buttonColor};
+                            color: #fff;
+                            border: none;
+                            border-radius: 20px;
+                            cursor: pointer;
+                            font-size: 12px;
+                            transition: background-color 0.3s ease-in-out;
+                            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+                        " onmouseover="this.style.backgroundColor='${buttonColor === "#577BC1" ? "#4669A5" : buttonColor === "#48A6A7" ? "#3C8C8D" : "#AAAAAA"}'"
+                        onmouseout="this.style.backgroundColor='${buttonColor}'">
+                            Add SAM ${plugin.key}
+                        </button>
+                    </a>
+                </td>
+            </tr>
+        `;
+    });
+
+    // Close table tags
+    tableHtml += `
+            </tbody>
+        </table>
+    </div>
+    `;
+
+    return tableHtml;
+}
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-03-10 15:41:37</sys_created_on>
+        <sys_id>3d163d08c31c6a140ced12f1b401317a</sys_id>
+        <sys_mod_count>12</sys_mod_count>
+        <sys_name>rich_text_3/html</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_3d163d08c31c6a140ced12f1b401317a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

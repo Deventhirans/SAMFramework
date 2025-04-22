@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.SamCustomLicenseUtil</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>SamCustomLicense metric script</description>
+        <mobile_callable>false</mobile_callable>
+        <name>SamCustomLicenseUtil</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[
+var SamCustomLicenseUtil = Class.create();
+SamCustomLicenseUtil.prototype = {
+    initialize: function() {
+ 
+    },
+    processLicenseMetric: function(LicenseMetric) {
+        var samp_softwaremodel = LicenseMetric.software_model;
+        var samp_softwaremodelResult = LicenseMetric.software_model_result;
+        var rightsUsed = 0;
+        var rightsPurchased = 0;
+        //Query the active Entitlement records related to the Software Model
+        var entitlementGr = new GlideRecord('alm_license');
+        entitlementGr.addQuery('software_model', samp_softwaremodel);
+        entitlementGr.addQuery('install_status', 1);
+        entitlementGr.addQuery('license_metric', LicenseMetric.license_metric);
+        entitlementGr.query();
+        var CurrentUsage = 0;
+        while (entitlementGr.next()) {
+            rightsPurchased = rightsPurchased + parseInt(entitlementGr.getValue('purchased_rights'));
+            // Loop the Entitlements and find out the comments in each entitlement record
+            rightsUsed = parseInt(entitlementGr.u_custom_usage['USAGE']);
+        }
+        if (rightsUsed > rightsPurchased) {
+            LicenseMetric.rights_used = rightsPurchased;
+            LicenseMetric.rights_needed = rightsUsed - rightsPurchased;
+            LicenseMetric.unused_rights = 0;
+			LicenseMetric.update();
+        } else {
+            LicenseMetric.rights_used = rightsUsed;
+            LicenseMetric.unused_rights = rightsPurchased - rightsUsed;
+			LicenseMetric.update();
+        }
+    },
+ 
+    licensePosition: function(LicensePosition) {
+        var samp_productID;
+        var samp_publisherres;
+		var samp_softwareModelRes;
+        var samp_licensemetricsys;
+        var samp_SMEncodedQuery = 'software_model=' + LicensePosition.software_model + '^latest=true';
+        var softwareModelGr = new GlideRecord('samp_software_model_result');
+        softwareModelGr.addEncodedQuery(samp_SMEncodedQuery);
+        softwareModelGr.query();
+        while (softwareModelGr.next()) {
+            samp_productID = softwareModelGr.getValue('product_result');
+            samp_softwareModelRes = softwareModelGr.getValue('sys_id');
+            softwareModelGr.status = LicensePosition.status;
+            softwareModelGr.status = this.getLicenseMetricStatus(samp_softwareModelRes);
+            softwareModelGr.setWorkflow(false);
+            softwareModelGr.update();
+        }
+        var samp_productEncdQuery = 'sys_id=' + samp_productID + '^latest=true';
+        var samp_productQueryGr = new GlideRecord('samp_product_result');
+        samp_productQueryGr.addEncodedQuery(samp_productEncdQuery);
+        samp_productQueryGr.query();
+        while (samp_productQueryGr.next()) {
+            samp_publisherres = samp_productQueryGr.publisher_result;
+            samp_productQueryGr.unlicensed_installs = 0;
+            samp_productQueryGr.status = LicensePosition.status;
+            samp_productQueryGr.status = this.getModelStatus(samp_productID);
+            samp_productQueryGr.setWorkflow(false);
+            samp_productQueryGr.update();
+        }
+        this.setPublisherStatus(samp_publisherres);
+        this.licenseMetricNoncompliant(LicensePosition, samp_softwareModelRes);
+    },
+ 
+    getLicenseMetricStatus: function(SoftwareModelResult) {
+        var agg = new GlideAggregate('samp_license_metric_result');
+        agg.addAggregate('COUNT', 'rights_needed');
+        agg.addQuery('software_model_result', '=', SoftwareModelResult);
+        agg.addQuery('rights_needed', '>', 0);
+        agg.query();
+        agg.next();
+        var noncompCount = agg.getAggregate('COUNT', 'rights_needed');
+        var ModelStatus = 0;
+        if (noncompCount > 0) {
+            ModelStatus = 1;
+        }
+        return ModelStatus;
+    },
+    // Get the status of the Products
+ 
+ 
+    getModelStatus: function(ProductID) {
+        var agg = new GlideAggregate('samp_software_model_result');
+        agg.addAggregate('COUNT', 'status');
+        agg.addQuery('product_result', '=', ProductID);
+        agg.addQuery('status', '=', 1);
+        agg.query();
+        agg.next();
+        var noncompCount = agg.getAggregate('COUNT', 'status');
+        var prodStatus = 0;
+        if (noncompCount != null) {
+            prodStatus = 1;
+        }
+        return prodStatus;
+    },
+ 
+    setPublisherStatus: function(pubRes) {
+        var inGr = new GlideRecord('samp_publisher_result');
+        if (inGr.get(pubRes)) {
+            inGr.setWorkflow(false);
+            inGr.compliant_products = this.getPrductCompliant(pubRes);
+            if (inGr.compliant_products < inGr.total_products) {
+                inGr.status = 1;
+            } else {
+                inGr.status = 0;
+            }
+            inGr.update();
+        }
+    },
+    getPrductCompliant: function(publisherres) {
+        var prodgr = new GlideAggregate('samp_product_result');
+        prodgr.addAggregate('COUNT', 'status');
+        prodgr.addEncodedQuery('publisher_result=' + publisherres + '^latest=true^status=0');
+        prodgr.setLimit(1);
+        prodgr.query();
+        if (prodgr.next()) {
+            return prodgr.getAggregate('COUNT', 'status');
+        } else {
+            return 0;
+        }
+    },
+ 
+    licenseMetricNoncompliant: function(LicensePosition,SoftwareModelResult) {
+        var licenseMetric = new GlideRecord('samp_license_metric_result');
+        licenseMetric.addQuery('software_model_result', '=', SoftwareModelResult);
+        licenseMetric.query();
+        if (licenseMetric.next()) {
+            var rightsNeeded = licenseMetric.rights_needed;
+            if (rightsNeeded > 0) {
+                var rightsOwned = licenseMetric.rights_owned;
+                var rightsConsumed = licenseMetric.rights_consumed;
+                licenseMetric.rights_consumed = rightsNeeded + rightsOwned;
+                licenseMetric.licenses_available = rightsOwned - rightsConsumed;
+                licenseMetric.setWorkflow(false);
+                licenseMetric.update();
+ 
+                var licenseRecord = new GlideRecord('samp_licenses_required');
+                licenseRecord.addEncodedQuery('license_metric_result=' + licenseMetric.sys_id);
+                licenseRecord.query();
+                if (licenseRecord.next()) {
+                    licenseRecord.licenses_required = rightsOwned + rightsNeeded;
+                    licenseRecord.setWorkflow(false);
+                    licenseRecord.update();
+                }
+				LicensePosition.rights_consumed = rightsNeeded + rightsOwned;
+				LicensePosition.licenses_required = rightsNeeded + rightsOwned;
+				LicensePosition.setWorkflow(false);
+				LicensePosition.update();
+            }
+		}},
+    licenseMetricStatus: function(LicenseResult) {
+        if (LicenseResult.rights_needed > 0) {
+            LicenseResult.status = 1;
+        } else {
+            LicenseResult.status = 0;
+        }
+    },
+ 
+    type: 'SamCustomLicenseUtil'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-23 04:57:27</sys_created_on>
+        <sys_id>89d8a20dc3d312100ced12f1b401312f</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>SamCustomLicenseUtil</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_89d8a20dc3d312100ced12f1b401312f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:39:00</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>89d8a20dc3d312100ced12f1b401312f</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-23 04:57:27</sys_created_on>
+        <sys_id>4189aa41c31712100ced12f1b4013110</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-01-23 04:57:27</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

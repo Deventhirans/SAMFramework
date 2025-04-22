@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.dynamicDataBroker</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>dynamicDataBroker</name>
+        <output_schema/>
+        <private>false</private>
+        <props>[&#13;
+{&#13;
+"name" : "tableName",&#13;
+"label":"Enter the Table Name",&#13;
+"description":""&#13;
+}&#13;
+,&#13;
+{&#13;
+"name" : "filter",&#13;
+"label":"Enter the filter for Table",&#13;
+"description":""&#13;
+}&#13;
+&#13;
+]</props>
+        <required_translations>[ {
+  "message" : "Enter the Table Name",
+  "comment" : ""
+}, {
+  "message" : "Enter the filter for Table",
+  "comment" : ""
+} ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+ let tableName = input.tableName;
+ let filter = input.filter;
+
+if(!tableName){
+        gs.log("Error: No table Name specified");
+        return { "error": "An error occurred while fetching data: " };
+    }
+	
+try {
+        var gr = new GlideRecord(tableName);
+		if(filter){
+		gr.addEncodedQuery(filter);
+		}
+        gr.query();
+
+
+        var result = [];
+
+        // Iterate through the records and collect data
+        while (gr.next()) {
+            var recordObj = {};
+            var fields = gr.getFields();
+			recordObj['sys_id'] = gr.getUniqueValue();
+			
+            for (var i = 0; i < fields.size(); i++) {
+                var fieldName = fields.get(i).getName();
+                recordObj[fieldName] = gr.getValue(fieldName);
+            }
+ 
+            result.push(recordObj); // Push the record to the result array
+        }
+
+        gs.log("Result: " + JSON.stringify(result));
+        return result;
+
+    } catch (e) {
+        gs.log("Error: " + e.toString());
+        return { error: "An error occurred while fetching data: " + e.toString() };
+    }
+
+
+
+}]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-13 12:59:58</sys_created_on>
+        <sys_id>5ba3f88ac30796900ced12f1b401310f</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>dynamicDataBroker</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_5ba3f88ac30796900ced12f1b401310f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=5ba3f88ac30796900ced12f1b401310f"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>5ba3f88ac30796900ced12f1b401310f</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-13 12:59:19</sys_created_on>
+        <sys_id>0ee7bc8ac38796900ced12f1b401314c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-01-13 12:59:19</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

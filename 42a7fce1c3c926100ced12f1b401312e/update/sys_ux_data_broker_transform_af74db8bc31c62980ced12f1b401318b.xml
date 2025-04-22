@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.sam implementation automation</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description>Sam  Implementation Automation </description>
+        <mutates_server_data>false</mutates_server_data>
+        <name>sam implementation automation</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    // Initialize the result object
+    var result = {
+        software_requests: []
+    };
+    
+    // System property name that contains your software request data
+    var propertyName = 'sam.implementation.automation';
+    
+    // Function to fetch and parse data from system property
+    function fetchPropertyData(propName) {
+        gs.log("Fetching data from system property: " + propName);
+        
+        var propertyValue = gs.getProperty(propName);
+        
+        if (propertyValue) {
+            gs.log("Successfully retrieved value from property: " + propName);
+            try {
+                return JSON.parse(propertyValue);
+            } catch (e) {
+                gs.log("Error parsing JSON from property " + propName + ": " + e.message);
+                return [];
+            }
+        } else {
+            gs.log("Property not found or empty: " + propName);
+            return [];
+        }
+    }
+    
+    // Get data from system property
+    var softwareRequestData = fetchPropertyData(propertyName);
+    
+    // Assign the data to the result
+    if (softwareRequestData && Array.isArray(softwareRequestData) && softwareRequestData.length > 0) {
+        result.software_requests = softwareRequestData;
+        gs.log("Successfully processed " + softwareRequestData.length + " software request items");
+    } else {
+        gs.log("No valid data found in property: " + propertyName);
+    }
+    
+    gs.log('Final result: ' + JSON.stringify(result, null, 2));
+    return result;
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-20 06:16:47</sys_created_on>
+        <sys_id>af74db8bc31c62980ced12f1b401318b</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>sam implementation automation</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_af74db8bc31c62980ced12f1b401318b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=af74db8bc31c62980ced12f1b401318b"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>af74db8bc31c62980ced12f1b401318b</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-20 06:16:47</sys_created_on>
+        <sys_id>95b4d30fc31c62980ced12f1b401318d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-03-20 06:16:47</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_app_route">
+    <sys_ux_app_route action="INSERT_OR_UPDATE">
+        <app_config display_value="SNOW Migration Framework">d49453a2837116109a4b66d0deaad326</app_config>
+        <description/>
+        <extension_point/>
+        <fields/>
+        <icon/>
+        <name>ELP for Additional publisher</name>
+        <optional_parameters/>
+        <order>5</order>
+        <parent_macroponent display_value="walk">304761fdc3d756100ced12f1b401314c</parent_macroponent>
+        <parent_macroponent_composition_element_id>tabs_1_legacy</parent_macroponent_composition_element_id>
+        <route_type>additional_publisher</route_type>
+        <screen_type display_value="ELP_Page">1bdfaf92c3d352100ced12f1b4013197</screen_type>
+        <sys_class_name>sys_ux_app_route</sys_class_name>
+        <sys_created_by>Harish_123</sys_created_by>
+        <sys_created_on>2025-01-27 07:17:12</sys_created_on>
+        <sys_id>d7dfaf92c3d352100ced12f1b401319a</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>ELP for Additional publisher</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_app_route_d7dfaf92c3d352100ced12f1b401319a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:46:54</sys_updated_on>
+    </sys_ux_app_route>
+    <sys_translated_text action="delete_multiple" query="documentkey=d7dfaf92c3d352100ced12f1b401319a"/>
+</record_update>

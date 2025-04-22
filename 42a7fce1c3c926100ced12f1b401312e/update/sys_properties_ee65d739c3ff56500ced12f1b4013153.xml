@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>validate.property</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-19 12:36:53</sys_created_on>
+        <sys_id>ee65d739c3ff56500ced12f1b4013153</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>validate.property</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_ee65d739c3ff56500ced12f1b4013153</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:20:10</sys_updated_on>
+        <type>string</type>
+        <value>{&#13;
+  "Validate_Software_Model": {&#13;
+    "short_description": "Validate Software Model",&#13;
+    "description": "Ensure software models are correctly validated for compliance, accuracy, and standardization.",&#13;
+    "instruction": "Verify that the software model includes the correct name, publisher, and version. Check its association with entitlements and licensing rules."&#13;
+  }&#13;
+}&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=ee65d739c3ff56500ced12f1b4013153"/>
+</record_update>

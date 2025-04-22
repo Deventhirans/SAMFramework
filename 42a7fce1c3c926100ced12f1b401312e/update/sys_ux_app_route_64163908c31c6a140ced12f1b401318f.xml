@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_app_route">
+    <sys_ux_app_route action="INSERT_OR_UPDATE">
+        <app_config display_value="SNOW Migration Framework">d49453a2837116109a4b66d0deaad326</app_config>
+        <description/>
+        <extension_point/>
+        <fields/>
+        <icon/>
+        <name>Foundation for SAM</name>
+        <optional_parameters/>
+        <order>4</order>
+        <parent_macroponent display_value="crawl kalai">4416b108c31c6a140ced12f1b4013179</parent_macroponent>
+        <parent_macroponent_composition_element_id>tabs_1_legacy</parent_macroponent_composition_element_id>
+        <route_type>foundation-for-sam</route_type>
+        <screen_type display_value="Foundation for SAM">e8163908c31c6a140ced12f1b4013149</screen_type>
+        <sys_class_name>sys_ux_app_route</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-03-10 15:41:32</sys_created_on>
+        <sys_id>64163908c31c6a140ced12f1b401318f</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>Foundation for SAM</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_app_route_64163908c31c6a140ced12f1b401318f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:46:54</sys_updated_on>
+    </sys_ux_app_route>
+    <sys_translated_text action="delete_multiple" query="documentkey=64163908c31c6a140ced12f1b401318f"/>
+</record_update>

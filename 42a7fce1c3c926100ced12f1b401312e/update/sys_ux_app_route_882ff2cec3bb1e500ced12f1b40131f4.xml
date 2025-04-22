@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_app_route">
+    <sys_ux_app_route action="INSERT_OR_UPDATE">
+        <app_config display_value="SNOW Migration Framework">d49453a2837116109a4b66d0deaad326</app_config>
+        <description>Crawl Page</description>
+        <extension_point/>
+        <fields/>
+        <icon/>
+        <name>Crawl</name>
+        <optional_parameters/>
+        <order>0</order>
+        <parent_macroponent display_value="Workspace App Shell">c276387cc331101080d6d3658940ddd2</parent_macroponent>
+        <parent_macroponent_composition_element_id/>
+        <route_type>crawl</route_type>
+        <screen_type display_value="Crawl">442ff2cec3bb1e500ced12f1b40131f1</screen_type>
+        <sys_class_name>sys_ux_app_route</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-20 05:37:11</sys_created_on>
+        <sys_id>882ff2cec3bb1e500ced12f1b40131f4</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>Crawl</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_app_route_882ff2cec3bb1e500ced12f1b40131f4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:46:54</sys_updated_on>
+    </sys_ux_app_route>
+    <sys_translated_text action="delete_multiple" query="documentkey=882ff2cec3bb1e500ced12f1b40131f4"/>
+</record_update>

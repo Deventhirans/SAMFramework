@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>onprem.integration.kpi</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-15 13:05:52</sys_created_on>
+        <sys_id>449372a8c373de900ced12f1b401312a</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>onprem.integration.kpi</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_449372a8c373de900ced12f1b401312a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:19:43</sys_updated_on>
+        <type>string</type>
+        <value>{&#13;
+  "microsoft_server_integration": {&#13;
+    "description": "Ensure active Microsoft Server instance with proper setup and network configuration.",&#13;
+    "recommendation": "Verify administrative access, network connectivity, and proper firewall configuration."&#13;
+  },&#13;
+  "ilmt_integration": {&#13;
+    "description": "Ensure active IBM License Metric Tool (ILMT) instance with proper network connectivity.",&#13;
+    "recommendation": "Verify ILMT settings, ensure network access, and configure firewall and security settings."&#13;
+  },&#13;
+  "jamf_integration": {&#13;
+    "description": "Ensure active JamF Pro instance is set up and has necessary network connectivity.",&#13;
+    "recommendation": "Verify JamF admin access, configure integration settings, and adjust firewall rules."&#13;
+  },&#13;
+  "intune_integration": {&#13;
+    "description": "Ensure active Microsoft Intune instance is properly configured and has network access.",&#13;
+    "recommendation": "Confirm Intune setup, network security settings, and integration with external systems."&#13;
+  }&#13;
+}&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=449372a8c373de900ced12f1b401312a"/>
+</record_update>

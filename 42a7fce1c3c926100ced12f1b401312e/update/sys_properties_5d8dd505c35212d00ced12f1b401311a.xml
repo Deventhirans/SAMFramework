@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.foundation.users.kpi</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-04 06:30:34</sys_created_on>
+        <sys_id>5d8dd505c35212d00ced12f1b401311a</sys_id>
+        <sys_mod_count>12</sys_mod_count>
+        <sys_name>sam.foundation.users.kpi</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_5d8dd505c35212d00ced12f1b401311a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:03:33</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+    {&#13;
+        "kpi": "Total Users",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_total_user_records",&#13;
+"description": "Tracks the total users ."&#13;
+    },&#13;
+ {&#13;
+        "kpi": "Duplicate Users",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_null_user_id_count_users",&#13;
+        "recommendation": "Review and remove the user details.",&#13;
+        "description": "Tracks duplicate users."&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Users Without Name",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_null_full_name_count_users",&#13;
+        "recommendation": "Ensure that all user records are updated with proper names to enhance user identification and reporting accuracy.",&#13;
+        "description": "Tracks users who do not have a name recorded."&#13;
+    },&#13;
+&#13;
+    {&#13;
+        "kpi": "Users Without User ID",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_null_user_id_count_users",&#13;
+        "recommendation": "Assign unique User IDs to all users for proper tracking.",&#13;
+        "description": "Identifies users missing a unique identifier"&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Users Without Email ID",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_null_email_count_users",&#13;
+        "recommendation": "Ensure that every user has a valid email address for communication, notifications, and system access.",&#13;
+        "description": "Highlights users without an email address."&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Users Without Department",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_null_department_count_users",&#13;
+        "recommendation": "Update user records with department details.",&#13;
+        "description": "Monitors users missing department information, which can affect reporting and departmental allocation of resources."&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Users Without Manager",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_null_manager_count_users",&#13;
+        "recommendation": "Assign manager information to users.",&#13;
+        "description": "Tracks users without a manager assigned."&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Users Without Cost Center",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_null_cost_center_count_users",&#13;
+        "recommendation": "Update users with cost center details.",&#13;
+        "description": "Identifies users missing cost center information."&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Users Without Business Unit",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_null_busines_it_count_users",&#13;
+        "recommendation": "Ensure users are assigned to the appropriate business unit.",&#13;
+        "description": "Monitors users missing business unit data."&#13;
+    }&#13;
+]&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=5d8dd505c35212d00ced12f1b401311a"/>
+</record_update>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>validate.softwaremodel</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-20 19:09:48</sys_created_on>
+        <sys_id>020939dec37f52900ced12f1b401317a</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>validate.softwaremodel</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_020939dec37f52900ced12f1b401317a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:19:29</sys_updated_on>
+        <type>string</type>
+        <value> [&#13;
+      {&#13;
+        "id": "1",&#13;
+        "label": "Validate Parent-Child Relationships",&#13;
+        "children": [&#13;
+          {&#13;
+            "id": "c2",&#13;
+            "label": "Ensure that all parent and child configurations reflect the actual hierarchy."&#13;
+          },&#13;
+          {&#13;
+            "id": "c3",&#13;
+            "label": "Use the CMDB Relationship Editor to make corrections."&#13;
+          },&#13;
+          {&#13;
+            "id": "c1",&#13;
+            "label": "Open the Parent-Child Relationships section in the software model record."&#13;
+          }&#13;
+        ]&#13;
+      },&#13;
+      {&#13;
+        "id": "2",&#13;
+        "label": "Access the Software Models List",&#13;
+        "children": [&#13;
+          {&#13;
+            "id": "c2",&#13;
+            "label": "Use the filter to locate uncertified software models."&#13;
+          },&#13;
+          {&#13;
+            "id": "c1",&#13;
+            "label": "Navigate to the Software Models module in the ServiceNow platform."&#13;
+          }&#13;
+        ]&#13;
+      },&#13;
+      {&#13;
+        "id": "3",&#13;
+        "label": "Check License Under Management (LUM)",&#13;
+        "children": [&#13;
+          {&#13;
+            "id": "c2",&#13;
+            "label": "Review the License Management report for any violations."&#13;
+          },&#13;
+          {&#13;
+            "id": "c1",&#13;
+            "label": "Confirm that the software model is compliant with license usage policies."&#13;
+          }&#13;
+        ]&#13;
+      },&#13;
+      {&#13;
+        "id": "4",&#13;
+        "label": "Verify DMAP (Discovery Map)",&#13;
+        "children": [&#13;
+          {&#13;
+            "id": "c2",&#13;
+            "label": "Ensure that all discrepancies are resolved, and mappings are accurate."&#13;
+          },&#13;
+          {&#13;
+            "id": "c1",&#13;
+            "label": "Open the software model record and review the DMAP field."&#13;
+          },&#13;
+          {&#13;
+            "id": "c3",&#13;
+            "label": "Use the Discovery Map Analyzer for troubleshooting if needed."&#13;
+          }&#13;
+        ]&#13;
+      },&#13;
+      {&#13;
+        "id": "5",&#13;
+        "label": "Review Inference Percentage",&#13;
+        "children": [&#13;
+          {&#13;
+            "id": "c3",&#13;
+            "label": "Use the Normalization Suggestions feature to improve accuracy."&#13;
+          },&#13;
+          {&#13;
+            "id": "c2",&#13;
+            "label": "Ensure that it meets the acceptable threshold (e.g., &gt;90%)."&#13;
+          },&#13;
+          {&#13;
+            "id": "c1",&#13;
+            "label": "Check the Inference Percentage for the software model."&#13;
+          }&#13;
+        ]&#13;
+      },&#13;
+      {&#13;
+        "id": "6",&#13;
+        "label": "Certify Downgrade Rights",&#13;
+        "children": [&#13;
+          {&#13;
+            "id": "c2",&#13;
+            "label": "Ensure that the rights comply with the license terms and conditions."&#13;
+          },&#13;
+          {&#13;
+            "id": "c1",&#13;
+            "label": "Verify the downgrade rights for the software product."&#13;
+          }&#13;
+        ]&#13;
+      }&#13;
+    ]</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=020939dec37f52900ced12f1b401317a"/>
+</record_update>

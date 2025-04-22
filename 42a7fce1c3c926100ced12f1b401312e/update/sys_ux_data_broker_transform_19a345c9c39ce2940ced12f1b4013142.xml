@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.sam kpi custom data</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>sam kpi custom data</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var kpiProperties = [
+        'sam.implementation.custom.data.entities'
+    ];
+    
+    var kpiValues = {
+        'data_kpi': []
+    };
+    
+    function fetchKPIs(propertyName) {
+        var kpis = [];
+        var propertyValue = gs.getProperty(propertyName);
+        
+        if (propertyValue) {
+            try {
+                gs.log("Raw property value: " + propertyValue);
+                kpis = JSON.parse(propertyValue);
+                gs.log("Parsed KPIs for " + propertyName + ": " + JSON.stringify(kpis));
+            } catch (e) {
+                gs.log("Error parsing " + propertyName + ": " + e.message);
+            }
+        } else {
+            gs.log("Property " + propertyName + " is not set or is empty.");
+        }
+        return kpis;
+    }
+    
+    function processKPI(kpis, kpiType) {
+        if (Array.isArray(kpis)) {
+            gs.log("Processing KPIs for " + kpiType + ": " + JSON.stringify(kpis));
+            kpis.forEach(function(kpi, index) {
+                // Check for both expected property patterns
+                // The issue is here - you're checking for kpi.query but using kpi.content later
+                if (kpi.table && (kpi.query || kpi.field)) {
+                    var queryString = kpi.query || kpi.field;
+                    var queryCount = getQueryCount(kpi.table, queryString);
+                    var totalCount = getTotalCount(kpi.table);
+                    var percentage = totalCount > 0 ? Math.round((queryCount / totalCount) * 100) : 0;
+                    
+                    // Use either content or kpi field
+                    var kpiName = kpi.content || kpi.kpi;
+                    var useCaseText = kpi.usecase || kpi.description;
+                    var recommendationText = kpi.recommendation || kpi.action;
+                    
+                    kpiValues[kpiType].push({
+                        'kpi': kpiName,
+                        'usecase': useCaseText,
+                        'table': kpi.table,
+                        'query': queryCount,
+                        'total': totalCount,
+                        'percentage': percentage,
+                        'recommendation': recommendationText
+                    });
+                    
+                    gs.log("Processed KPI: " + JSON.stringify(kpiValues[kpiType][kpiValues[kpiType].length - 1]));
+                } else {
+                    gs.log("Skipping KPI missing table or query: " + JSON.stringify(kpi));
+                }
+            });
+        } else {
+            gs.log("Invalid KPI format for " + kpiType + ": " + JSON.stringify(kpis));
+        }
+    }
+    
+    function getQueryCount(tableName, query) {
+        try {
+            var gr = new GlideAggregate(tableName);
+            if (query && query !== "none") {
+                gr.addEncodedQuery(query);
+            }
+            gr.addAggregate('COUNT');
+            gr.query();
+            
+            if (gr.next()) {
+                return parseInt(gr.getAggregate('COUNT'), 10);
+            }
+            return 0;
+        } catch (error) {
+            gs.log("Error querying table " + tableName + ": " + error.message);
+            return 0;
+        }
+    }
+    
+    function getTotalCount(tableName) {
+        try {
+            var gr = new GlideAggregate(tableName);
+            gr.addAggregate('COUNT');
+            gr.query();
+            
+            if (gr.next()) {
+                return parseInt(gr.getAggregate('COUNT'), 10);
+            }
+            return 0;
+        } catch (error) {
+            gs.log("Error querying total count for table " + tableName + ": " + error.message);
+            return 0;
+        }
+    }
+    
+    kpiProperties.forEach(function(property, index) {
+        var kpiType = Object.keys(kpiValues)[index];
+        gs.log("Fetching KPIs for property: " + property + " as type: " + kpiType);
+        var kpis = fetchKPIs(property);
+        processKPI(kpis, kpiType);
+    });
+    
+    gs.log('Final KPI values: ' + JSON.stringify(kpiValues, null, 2));
+    return kpiValues; // Uncommented the return statement
+}]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-13 14:35:59</sys_created_on>
+        <sys_id>19a345c9c39ce2940ced12f1b4013142</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>sam kpi custom data</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_19a345c9c39ce2940ced12f1b4013142</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=19a345c9c39ce2940ced12f1b4013142"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>19a345c9c39ce2940ced12f1b4013142</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-13 14:35:58</sys_created_on>
+        <sys_id>1dd305c9c39ce2940ced12f1b4013197</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-03-13 14:35:58</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

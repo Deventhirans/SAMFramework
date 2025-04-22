@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.implementation.guidedsetup.sysIds</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Deva_123</sys_created_by>
+        <sys_created_on>2025-01-06 12:20:09</sys_created_on>
+        <sys_id>055b683fc3f6d2500ced12f1b40131a7</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>sam.implementation.guidedsetup.sysIds</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_055b683fc3f6d2500ced12f1b40131a7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:16:01</sys_updated_on>
+        <type>string</type>
+        <value>{&#13;
+    "00f27adb077421102723e7430ad3000f": {&#13;
+        "url": "now/adoptionservices/tasks/00f27adb077421102723e7430ad3000f/params/hide-polaris-header/true/control-external-task/true",&#13;
+        "title": "sql",&#13;
+        "productName": "Microsoft SQL Server",&#13;
+        "taskId": "82114d270f4d3110ebd9579ac4767ef7",&#13;
+        "guidedSetupOpenedEvent": "SQL Server Guided Setup Opened"&#13;
+    },&#13;
+    "c38e90430f50f910ebd9579ac4767ee4": {&#13;
+        "url": "now/adoptionservices/tasks/c38e90430f50f910ebd9579ac4767ee4/params/hide-polaris-header/true/control-external-task/true",&#13;
+        "title": "ws",&#13;
+        "productName": "Microsoft Windows Server",&#13;
+        "taskId": "fb744de70f4d3110ebd9579ac4767e77",&#13;
+        "guidedSetupOpenedEvent": "Windows Server Guided Setup Opened"&#13;
+    }&#13;
+}&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=055b683fc3f6d2500ced12f1b40131a7"/>
+</record_update>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>GET</http_method>
+        <name>procurement_get_API</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+    try {
+        var instanceUrl = request.queryParams.instance_url;
+         gs.info("]]>🔍<![CDATA[ testingggggggggeeeeeeeeeeee " + JSON.stringify(instanceUrl));
+
+        if (!instanceUrl || instanceUrl.trim() === "") {
+            gs.error("❌ Missing required parameter: instance_url");
+            response.setStatus(400);
+            response.setBody({ error: "Missing required parameter: instance_url" });
+            return;
+        }
+
+		if (Array.isArray(instanceUrl)) {
+            instanceUrl = instanceUrl[0]; // Convert string to array
+			// gs.log('uuuuuuuuuuushdgfkjjbcd'+instanceUrl);
+        }
+
+        // Normalize input URL (trim whitespace)
+        // instanceUrl = instanceUrl.trim();
+        // gs.info("]]>🔍<![CDATA[ Step 1: Incoming API Request - Instance URL: [" + instanceUrl + "]");
+
+        // ]]>🔹<![CDATA[ Step 2: Fetch System Property (`procurement.form`)
+        var sysPropGr = new GlideRecord("sys_properties");
+        sysPropGr.addQuery("name", "procurement.form");
+        sysPropGr.query();
+
+        if (!sysPropGr.next()) {
+            gs.warn("❌ System Property 'procurement.form' does not exist.");
+            response.setStatus(404);
+            response.setBody({ error: "System property does not exist." });
+            return;
+        }
+
+        gs.info("✅ Step 2: System Property 'procurement.form' Found");
+
+        // ]]>🔹<![CDATA[ Step 3: Read and Trim Stored Data
+        var propertyValue = sysPropGr.value.toString().trim();
+        gs.info("]]>📜<![CDATA[ Step 3: Raw Property Value from System Property: " + propertyValue);
+
+        var storedData = [];
+
+        // ]]>🔹<![CDATA[ Step 4: Validate and Parse JSON Data
+        if (!propertyValue || propertyValue === "null" || propertyValue === "undefined") {
+            gs.warn("⚠️ Step 4: System property 'procurement.form' is empty or invalid.");
+        } else {
+            try {
+                var parsedData = JSON.parse(propertyValue);
+                gs.info("✅ Step 4: Successfully Parsed JSON Data");
+
+                // ]]>🔹<![CDATA[ Convert object to array if needed
+                if (Array.isArray(parsedData)) {
+                    gs.info("]]>🔄<![CDATA[ Step 5: Data is already an array");
+                    storedData = parsedData;
+                } else if (typeof parsedData === "object") {
+                    gs.info("]]>🔄<![CDATA[ Step 5: Converting single object to an array");
+                    storedData = [parsedData]; // Wrap object inside an array
+                } else {
+                    gs.warn("⚠️ Step 5: Invalid data format in 'procurement.form'. Expected object or array.");
+                    storedData = [];
+                }
+            } catch (error) {
+                gs.error("❌ Step 4: Failed to parse system property data: " + error);
+                storedData = [];
+            }
+        }
+
+        // ]]>🔹<![CDATA[ Step 6: Debugging - Log Full Parsed Data
+        gs.info("]]>📦<![CDATA[ Step 6: Parsed Data: " + JSON.stringify(storedData));
+
+        // ]]>🔹<![CDATA[ Step 7: Filter Data by `instance_url`
+        var filteredData = storedData.filter(item => {
+            if (!item || !item.u_instance_url) {
+                gs.warn("⚠️ Skipping record with missing `u_instance_url`: " + JSON.stringify(item));
+                return false;
+            }
+
+            // var recordUrl = item.u_instance_url.trim(); // Normalize record URL
+			
+            var recordUrl = item.u_instance_url;
+
+            // ✅ FIX: Extract string if it's an array
+            if (Array.isArray(recordUrl) && recordUrl.length > 0) {
+                recordUrl = recordUrl[0]; // Take the first URL from the array
+            }
+            var isMatch = recordUrl === instanceUrl; // Exact match check
+			gs.log('tttttrrrrrrrrrrrrr'+JSON.stringify(recordUrl));
+            gs.info("]]>🔍<![CDATA[ Checking Record: [" + recordUrl + "] vs Requested: [" + instanceUrl + "] - Match: " + isMatch);	
+            return isMatch;
+        });
+		gs.log('length of recordd'+filteredData.length);
+        // ]]>🔹<![CDATA[ Step 8: Log Filtering Results
+        if (filteredData.length > 0) {
+            gs.info("]]>🎯<![CDATA[ Step 8: Matched Records Found for instance_url: " + instanceUrl);
+            gs.info("]]>📦<![CDATA[ Step 8: Filtered Response Data: " + JSON.stringify(filteredData));
+            response.setStatus(200);
+            response.setBody({ result: filteredData });
+        } else {
+            gs.warn("❌ Step 8: No matching record found for instance_url: " + instanceUrl);
+            response.setStatus(204);
+            response.setBody({ result: [] });
+        }
+    } catch (err) {
+        gs.error("❌ Step 9: Server error: " + err.message);
+        response.setStatus(500);
+        response.setBody({ error: "❌ Server error: " + err.message });
+    }
+})(request, response);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// (function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+//     try {
+//         var instanceUrl = request.queryParams.instance_url;
+//         // gs.info("]]>🔍<![CDATA[ Incoming request for instance_url: " + JSON.stringify(instanceUrl));
+
+//         if (!instanceUrl || instanceUrl.trim() === "") {
+//             gs.error("❌ Missing required parameter: instance_url");
+//             response.setStatus(400);
+//             response.setBody({ error: "Missing required parameter: instance_url" });
+//             return;
+//         }
+
+//         // gs.info("]]>🔎<![CDATA[ Searching for record with instance_url: " + instanceUrl);
+
+//         var gr = new GlideRecord("u_custom_form_data");
+//         gr.addQuery("u_instance_url", instanceUrl);
+//         gr.query();
+
+//         // gs.info("]]>🔄<![CDATA[ Executed Query: " + gr.getEncodedQuery());
+
+//         if (gr.next()) {
+//             // gs.info("✅ Record Found! Fetching field values...");
+
+//             var resultArray = [];
+
+//             var fieldNames = gr.getFields();
+//             for (var i = 0; i < fieldNames.size(); i++) {
+//                 var fieldName = fieldNames.get(i).getName();
+//                 var fieldValue = gr.getValue(fieldName);
+
+// 				if (fieldName === "u_instance_url") {
+//                     gs.info("]]>🌍<![CDATA[ Retrieved Instance URL: " + fieldValue);
+//                 }
+
+//                 resultArray.push({
+//                     name: fieldName,
+//                     // label: fieldName.replace(/_/g, ' ').toUpperCase(), // Convert "u_client_software" to "CLIENT SOFTWARE"
+//                     // type: "text",
+//                     value: fieldValue || "" // Ensure empty fields are handled properly
+//                 });
+
+//                 gs.info("]]>📝<![CDATA[ Field: " + fieldName + " → Value: " + fieldValue);
+//             }
+
+//             // gs.info("✅ Complete Record Data (Array Format): " + JSON.stringify(resultArray));
+
+//             response.setStatus(200);
+//             response.setBody({ result: resultArray }); // ✅ Return as an array
+//         } else {
+//             gs.warn("❌ No record found for instance_url: " + instanceUrl);
+//             response.setStatus(204); // No Content
+//             response.setBody({ result: [] }); // ✅ Return empty array instead of null
+//         }
+//     } catch (err) {
+//         gs.error("❌ Server error: " + err.message);
+//         response.setStatus(500);
+//         response.setBody({ error: "❌ Server error: " + err.message });
+//     }
+// })(request, response);
+]]></operation_script>
+        <operation_uri>/api/985627/procurement_form_api</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>harish_123</sys_created_by>
+        <sys_created_on>2025-02-10 14:47:40</sys_created_on>
+        <sys_id>8c2ddd03c3e7d2100ced12f1b40131dd</sys_id>
+        <sys_mod_count>40</sys_mod_count>
+        <sys_name>procurement_get_API</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ws_operation_8c2ddd03c3e7d2100ced12f1b40131dd</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:31:49</sys_updated_on>
+        <web_service_definition display_value="procurement form API">bcfc95cfc3a7d2100ced12f1b40131ab</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>8c2ddd03c3e7d2100ced12f1b40131dd</id>
+        <sys_created_by>harish_123</sys_created_by>
+        <sys_created_on>2025-02-10 14:47:39</sys_created_on>
+        <sys_id>9e3dd1cfc3a7d2100ced12f1b40131c5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>harish_123</sys_updated_by>
+        <sys_updated_on>2025-02-10 14:47:39</sys_updated_on>
+        <table>sys_ws_operation</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

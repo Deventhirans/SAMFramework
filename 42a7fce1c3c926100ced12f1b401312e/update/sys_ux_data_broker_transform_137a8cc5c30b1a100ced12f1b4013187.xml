@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.GetValueBuilderTasks</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>GetValueBuilderTasks</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[// function transform(input) { 
+//     // Your existing properties array
+//     var kpiProperties = [
+//         'sam.foundation.current.users.kpi',
+//         // ... other properties
+//     ];
+    
+//     // Your existing fetchKPIs function
+//     function fetchKPIs(propertyName) {
+//         var kpis = [];
+//         var propertyValue = gs.getProperty(propertyName);
+//         if (propertyValue) {
+//             try {
+//                 kpis = JSON.parse(propertyValue);
+//             } catch (e) {
+//                 gs.error("Error parsing " + propertyName + ": " + e.message);
+//             }
+//         }
+//         return kpis;
+//     }
+    
+    // Modified function to return encoded query
+//     function getTasksByProperty(propertyName) {
+//         var queryParts = [];
+//         var kpis = fetchKPIs(propertyName);
+        
+//         for (var j = 0; j < kpis.length; j++) {
+//             var kpi = kpis[j];
+//             if (kpi.description) {
+//                 queryParts.push('description=' + kpi.description + '^short_description=' + kpi.kpi);
+//             }
+//         }
+        
+//         return queryParts.length > 0 ? queryParts.join('^OR') : '';
+//     }
+    
+//     // Return an object that maps property names to query fragments
+//     var result = {};
+//     for (var i = 0; i < kpiProperties.length; i++) {
+//         var propertyName = kpiProperties[i];
+//         result[propertyName] = getTasksByProperty(propertyName);
+//     }
+    
+//     return result;
+// }
+function transform(input) { 
+    var kpiProperties = [
+        'sam.foundation.current.users.kpi',
+        'sam.foundation.current.company.kpi',
+        'sam.foundation.current.location.kpi',
+        'sam.foundation.current.costcenter.kpi',
+        'sam.foundation.current.businessunit.kpi',
+        'sam.foundation.current.department.kpi',
+        'sam.implementation.healthcheck',
+        'sam.implementation.euc',
+        'sam.implementation.servers',
+        'sam.current.installation.kpi',
+        'sam.current.subscription.kpi',
+        'sam.current.entitlement.kpi',
+        'sam.current.contract.kpi',
+        'sam.current.discoverymodel.kpi',
+        'sam.current.softwaremodel.kpi',
+        "sam.properties"
+    ];
+
+    function fetchKPIs(propertyName) {
+        var kpis = [];
+        var propertyValue = gs.getProperty(propertyName);
+        if (propertyValue) {
+            try {
+                kpis = JSON.parse(propertyValue);
+            } catch (e) {
+                gs.error("Error parsing " + propertyName + ": " + e.message);
+            }
+        }
+        return kpis;
+    }
+
+    function getTasksByProperty() {
+        var result = [];
+
+        for (var i = 0; i < kpiProperties.length; i++) {
+            var propertyName = kpiProperties[i];
+            var kpis = fetchKPIs(propertyName);
+            var additionalFields = [];
+            var hasFoundTasks = false;
+
+            for (var j = 0; j < kpis.length; j++) {
+                var kpi = kpis[j];
+
+                if (kpi.description) {
+                    var taskGr = new GlideRecord('samp_sp_vb_task');
+                    taskGr.addEncodedQuery('stateNOT IN-5,3,7');
+                    taskGr.addQuery('description', kpi.description);
+                    taskGr.addQuery('short_description', kpi.kpi);
+                    taskGr.query();
+
+                    while (taskGr.next()) {
+                        hasFoundTasks = true;
+                        additionalFields.push({
+                            sys_id: taskGr.getUniqueValue(),
+                            description: taskGr.getValue("description"),
+                            short_description: taskGr.getValue("short_description"),
+                            task_number: taskGr.getValue("number"),
+                            state: taskGr.getDisplayValue('state'),
+                            assigned_to: taskGr.getDisplayValue('assigned_to')
+                        });
+                    }
+                }
+            }
+
+            // Always add an entry to the result array, regardless of whether tasks were found
+            result.push({
+                additionalFields: additionalFields
+            });
+        }
+        
+        gs.log('tasks available:'+JSON.stringify(result,null,2));
+        return result;
+    }
+
+    return getTasksByProperty();
+}]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-10 07:07:24</sys_created_on>
+        <sys_id>137a8cc5c30b1a100ced12f1b4013187</sys_id>
+        <sys_mod_count>39</sys_mod_count>
+        <sys_name>GetValueBuilderTasks</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_137a8cc5c30b1a100ced12f1b4013187</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=137a8cc5c30b1a100ced12f1b4013187"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>137a8cc5c30b1a100ced12f1b4013187</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-10 07:07:24</sys_created_on>
+        <sys_id>7d9a80c5c30b1a100ced12f1b40131f0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-10 07:07:24</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

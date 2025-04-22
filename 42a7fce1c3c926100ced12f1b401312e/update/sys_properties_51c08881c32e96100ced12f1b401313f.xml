@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.current.contract.kpi</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Deva_123</sys_created_by>
+        <sys_created_on>2024-12-16 11:01:51</sys_created_on>
+        <sys_id>51c08881c32e96100ced12f1b401313f</sys_id>
+        <sys_mod_count>17</sys_mod_count>
+        <sys_name>sam.current.contract.kpi</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_51c08881c32e96100ced12f1b401313f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:05:32</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+  {&#13;
+    "kpi": "Number of Parent contracts",&#13;
+    "description": "Tracking parent contracts helps manage hierarchical agreements, facilitates compliance with overarching terms, and streamlines contract lifecycle management.",&#13;
+    "table": "ast_contract",&#13;
+    "field": "parent_contractLIKE",&#13;
+        "recommendation": "Review contracts periodically to ensure parent-child relationships are well-documented and maintain proper references to avoid misclassification."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Contract without vendor information",&#13;
+    "description": "Associating vendor details ensures effective vendor relationship management, supports payment processing, and enhances compliance tracking.",&#13;
+    "table": "ast_contract",&#13;
+    "field": "vendorISEMPTY",&#13;
+    "recommendation": "Establish a process to capture and verify vendor details during the contract negotiation phase to ensure complete and accurate records."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Contract without contract administrator",&#13;
+    "description": "Assigning a contract administrator ensures accountability, facilitates timely renewals, and supports resolution of contract-related queries.",&#13;
+    "table": "ast_contract",&#13;
+    "field": "contract_administratorISEMPTY",&#13;
+    "recommendation": " Regularly review and assign contract administrators based on organizational roles and responsibilities to ensure accountability."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Contract without agreement type",&#13;
+    "description": "Specifying agreement types clarifies contract terms, supports regulatory compliance, and aids in categorizing agreements for reporting purposes.",&#13;
+    "table": "ast_contract",&#13;
+    "field": "license_typeNOT LIKE",&#13;
+    "recommendation": " Require agreement types for consistent classification and better management."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Contract without business owner",&#13;
+    "description": "Associating contracts with business owners ensures accountability, supports decision-making, and aligns contracts with business objectives.",&#13;
+    "table": "ast_contract",&#13;
+    "field": "business_ownerISEMPTY",&#13;
+    "recommendation": "Assign business owners to ensure accountability and streamlined decision-making."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Contract without PO number",&#13;
+    "description": "Linking PO numbers ensures traceability of payments, supports financial auditing, and enhances procurement processes.",&#13;
+    "table": "ast_contract",&#13;
+    "field": "po_numberISEMPTY",&#13;
+    "recommendation": "Link contracts to Purchase Orders for accurate financial tracking and compliance.."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Contract without payment schedule",&#13;
+    "description": "Including payment schedules ensures timely payments, avoids financial penalties, and facilitates budget management.",&#13;
+    "table": "ast_contract",&#13;
+    "field": "payment_scheduleNOT LIKE",&#13;
+    "recommendation": "Work with finance teams to define and include payment schedules during contract negotiations and maintain clear documentation."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Contract without cost center",&#13;
+    "description": "Associating cost centers supports accurate expense allocation, aids in financial reporting, and enhances budgeting processes.",&#13;
+    "table": "ast_contract",&#13;
+    "field": "cost_centerISEMPTY",&#13;
+    "recommendation": "Link contracts to cost centers for accurate financial tracking."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Contract without renewal date",&#13;
+    "description": "Specifying renewal dates prevents unintentional lapses, supports timely renegotiations, and ensures uninterrupted contract terms.",&#13;
+    "table": "ast_contract",&#13;
+    "field": "renewal_dateISEMPTY",&#13;
+    "recommendation": "Track renewal dates to ensure proactive and timely renewals."&#13;
+  }&#13;
+]&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=51c08881c32e96100ced12f1b401313f"/>
+</record_update>

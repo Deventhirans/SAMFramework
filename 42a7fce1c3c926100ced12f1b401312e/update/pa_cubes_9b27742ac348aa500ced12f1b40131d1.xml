@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="pa_cubes">
+    <pa_cubes action="INSERT_OR_UPDATE">
+        <benchmarking>false</benchmarking>
+        <calendar>standard</calendar>
+        <calendar_freq/>
+        <conditions table="cmdb_sam_sw_install">installed_onISNOTEMPTY^assigned_toISNOTEMPTY^editionISNOTEMPTY^last_scannedONLast 90 days@javascript:gs.beginningOfLast90Days()@javascript:gs.endOfLast90Days()^active=true^ORnorm_productISNOTEMPTY^active=true^ORnormalized_publisherISNOTEMPTY<item endquery="false" field="installed_on" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="false" field="assigned_to" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="false" field="edition" goto="false" newquery="false" operator="ISNOTEMPTY" or="false" value=""/>
+            <item endquery="false" field="last_scanned" goto="false" newquery="false" operator="ON" or="false" value="Last 90 days@javascript:gs.beginningOfLast90Days()@javascript:gs.endOfLast90Days()"/>
+            <item endquery="false" field="active" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item endquery="false" field="norm_product" goto="false" newquery="false" operator="ISNOTEMPTY" or="true" value=""/>
+            <item endquery="false" field="active" goto="false" newquery="false" operator="=" or="false" value="true"/>
+            <item endquery="false" field="normalized_publisher" goto="false" newquery="false" operator="ISNOTEMPTY" or="true" value=""/>
+        </conditions>
+        <description>SAM Implementation Framework.</description>
+        <facts_table>cmdb_sam_sw_install</facts_table>
+        <facts_table_pk/>
+        <facts_table_pktable/>
+        <facts_table_pkview/>
+        <frequency>10</frequency>
+        <max_record_fetch_count>50000</max_record_fetch_count>
+        <name>accurate install </name>
+        <override_record_collection>false</override_record_collection>
+        <report_source/>
+        <report_source_updated_at/>
+        <sys_class_name>pa_cubes</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-05 19:19:05</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>9b27742ac348aa500ced12f1b40131d1</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>accurate install </sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>pa_cubes_9b27742ac348aa500ced12f1b40131d1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 05:30:25</sys_updated_on>
+    </pa_cubes>
+    <sys_translated_text action="delete_multiple" query="documentkey=9b27742ac348aa500ced12f1b40131d1"/>
+</record_update>

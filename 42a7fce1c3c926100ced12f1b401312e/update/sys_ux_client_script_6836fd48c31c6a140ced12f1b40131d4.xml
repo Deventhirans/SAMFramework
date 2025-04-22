@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Normalization Data Services">e436fd48c31c6a140ced12f1b4013158</macroponent>
+        <name>rich_text_4/html</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+ * @param {params} params
+ * @param {api} params.api
+ * @param {TransformApiHelpers} params.helpers
+ */
+function evaluateProperty({ api, helpers }) {
+  // Fetch the stages from the API response
+  const stages = api.data.breadcrumb_1.output || [];
+  console.log('stagesssfdfddddddddd', stages);
+
+  // Make sure stages data is available and not empty
+  if (stages.length === 0) {
+    return `<div>No stages data available.</div>`;
+  }
+
+  // Function to dynamically assign classes
+  const getStepClass = (index, total, stageName) => {
+    if (stageName === "Normalization Data Service") return "persona-stage"; // Apply special class for "Persona"
+    if (index === 0) return "start"; // First step is "start"
+    if (index === total - 1) return "current"; // Last step is "current"
+    return "mid"; // Other steps are "mid"
+  };
+
+  let stepsHtml = "";
+
+  // Iterate over stages using forEach
+  stages.forEach((stage, index) => {
+    const trimmedStage = stage?.name?.trim() || `Unnamed Stage ${index + 1}`;
+    console.log("Trimmed Stage:", trimmedStage);
+    const stepClass = getStepClass(index, stages.length, trimmedStage);
+
+    stepsHtml += `
+      <li class="${stepClass}">
+        <a style="font-weight: bold;">${trimmedStage}</a>
+      </li>
+    `;
+  });
+
+  return `
+    <style>
+      .stepcontainer {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .steps {
+        display: flex;
+        padding: 0;
+        width: 100%;
+        overflow: hidden;
+        color: white !important;
+      }
+
+      .steps li {
+        flex: 1;
+        height: 26px;
+        width: 50px;
+        list-style-type: none;
+        padding: 5px 0;
+        position: relative;
+        box-sizing: border-box;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .steps li:first-child {
+        padding-left: 5px;
+      }
+
+      .steps li:nth-child(n + 2)::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        border-left: 10px solid white;
+        border-top: 15px solid transparent;
+        border-bottom: 16px solid transparent;
+        width: 0;
+        height: 0;
+        content: " ";
+      }
+
+      .steps li::after {
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        right: -9px;
+        display: block;
+        border-left: 10px solid #84e78c;
+        border-top: 15px solid transparent;
+        border-bottom: 14px solid transparent;
+        width: 0;
+        height: 0;
+        content: " ";
+      }
+
+      .steps li.start {
+        background-color: #4F52BD;
+      }
+
+      .steps li.start::after {
+        border-left-color: #4F52BD;
+      }
+
+      .steps li.mid {
+        background-color: #4F52BD;
+        border-left: 3px solid white;
+      }
+
+      .steps li.mid::after {
+        border-left-color: #4F52BD;
+      }
+
+      .steps li.current {
+        background-color: #4F52BD;
+        border-left: 3px solid white;
+      }
+
+      .steps li.current::after {
+        border-left-color: #ebebe0;
+      }
+
+      /* Special styling for Persona stage */
+      .steps li.persona-stage {
+        background-color: #009900 !important;
+        border-left: 3px solid white;
+      }
+
+      .steps li.persona-stage::after {
+        border-left-color: #009900 !important;
+      }
+
+      .steps li a {
+        font-size: 10px;
+        color: inherit;
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        line-height: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    </style>
+
+    <div class="stepcontainer">
+      <ul class="steps">
+         ${stepsHtml}
+      </ul>
+    </div>
+  `;
+}
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-03-10 15:42:05</sys_created_on>
+        <sys_id>6836fd48c31c6a140ced12f1b40131d4</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>rich_text_4/html</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_6836fd48c31c6a140ced12f1b40131d4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.GetRetiredSWModels</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Gets the count of Software Models that are not being used &amp; their sys_ids.</description>
+        <mobile_callable>false</mobile_callable>
+        <name>GetRetiredSWModels</name>
+        <sandbox_callable>true</sandbox_callable>
+        <script><![CDATA[var GetRetiredSWModels = Class.create();
+GetRetiredSWModels.prototype = {
+    initialize: function() {},
+
+    getRetiredModels: function() {
+        var retiredModels = new GlideRecord("cmdb_software_product_model");
+        retiredModels.addEncodedQuery("status=Retired");
+        retiredModels.query();
+
+        var count = 0;
+        var sysIds = [];
+
+        while (retiredModels.next()) {
+            count += 1;
+            sysIds.push(retiredModels.getValue('sys_id'));
+        }
+
+        // Return the count and sys_ids as an object
+        return {
+            count: count,
+            sys_ids: sysIds
+        };
+    },
+
+    type: 'GetRetiredSWModels' // Name of the Script Include
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-01-20 08:05:40</sys_created_on>
+        <sys_id>4727b708c3d3d6900ced12f1b40131b3</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>GetRetiredSWModels</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_4727b708c3d3d6900ced12f1b40131b3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:38:51</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>4727b708c3d3d6900ced12f1b40131b3</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-01-20 08:05:40</sys_created_on>
+        <sys_id>fcd7334cc3d3d6900ced12f1b40131fb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-01-20 08:05:40</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

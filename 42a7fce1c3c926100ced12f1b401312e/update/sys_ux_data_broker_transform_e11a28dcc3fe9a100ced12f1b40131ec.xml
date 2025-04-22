@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.sam user</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>sam user</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[// function transform() {
+//     // System property name containing the JSON array of scripts
+//     var systemProperty = 'sam.implementation.user.groups';
+
+//     // Object to hold the result
+//     var result = {
+//         'user_groups': []
+//     };
+
+//     // Function to fetch the JSON content from the system property
+//     function fetchSystemProperty(propertyName) {
+//         try {
+//             var propertyValue = gs.getProperty(propertyName); // Get the JSON string from the system property
+//             if (propertyValue) {
+//                 return JSON.parse(propertyValue); // Parse the JSON content
+//             }
+//         } catch (e) {
+//             gs.log("Error parsing system property " + propertyName + ": " + e.message, "Transform Script");
+//         }
+//         return []; // Return an empty array if there's an error or no value
+//     }
+
+//     // Fetch the JSON array from the system property
+//     var scriptList = fetchSystemProperty(systemProperty);
+
+//     // Process each item in the array
+//     scriptList.forEach(function(item) {
+//         // Validate and add to the result array
+//         if (item.Group) {
+//             result.user_groups.push({
+//                 'group': item.Group.trim(), // Group name from the Script field
+//                 'description': item.Description ? item.Description.trim() : '', // Description field, if available
+//                 'contains_roles': item.Contains_roles,
+//                 'key': item.key,
+// 				'url': item.url // Contains roles field, if available
+//             });
+//         }
+//     });
+
+//     // Return the structured result
+//     return result;
+// }
+function transform() {
+    // System property name containing the JSON array of scripts
+    var systemProperty = 'sam.implementation.user.groups';
+
+    // Object to hold the result
+    var result = {
+        user_groups: [] // Array to store user group objects
+    };
+
+    // Function to fetch the JSON content from the system property
+    function fetchSystemProperty(propertyName) {
+        try {
+            var propertyValue = gs.getProperty(propertyName); // Get the JSON string from the system property
+            if (propertyValue) {
+                return JSON.parse(propertyValue); // Parse the JSON content
+            }
+        } catch (e) {
+            gs.log("Error parsing system property " + propertyName + ": " + e.message, "Transform Script");
+        }
+        return []; // Return an empty array if there's an error or no value
+    }
+
+    // Fetch the JSON array from the system property
+    var scriptList = fetchSystemProperty(systemProperty);
+
+    // Process each item in the array
+    scriptList.forEach(function(item) {
+        // Validate and add to the result array
+        if (item.Group) {
+            result.user_groups.push({
+                group: item.Group.trim(), // Group name
+                description: item.Description ? item.Description.trim() : '', // Description field, if available
+                contains_roles: item.Contains_roles || false, // Contains roles field, default to false
+                key: item.key || '', // Unique key for the group, if available
+                url: item.url || '' // URL field, if available
+            });
+        }
+    });
+
+    // Return the structured result
+    return result;
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Deva_123</sys_created_by>
+        <sys_created_on>2024-12-26 15:14:00</sys_created_on>
+        <sys_id>e11a28dcc3fe9a100ced12f1b40131ec</sys_id>
+        <sys_mod_count>42</sys_mod_count>
+        <sys_name>sam user</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_e11a28dcc3fe9a100ced12f1b40131ec</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=e11a28dcc3fe9a100ced12f1b40131ec"/>
+</record_update>

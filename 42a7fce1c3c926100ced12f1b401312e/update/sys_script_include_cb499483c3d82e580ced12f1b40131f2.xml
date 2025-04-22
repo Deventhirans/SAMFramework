@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.CreateRunOnboardValueBuilderTask</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>CreateRunOnboardValueBuilderTask</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var CreateRunOnboardValueBuilderTask = Class.create();
+CreateRunOnboardValueBuilderTask.prototype = {
+    initialize: function() {
+        gs.log('Initializing CreateRunOnboardValueBuilderTask', 'CreateRunOnboardValueBuilderTask');
+    },
+
+    createOrUpdateTasks: function(categoryFilter) {
+        gs.log('Starting createOrUpdateTasks method with category filter: ' + categoryFilter, 'CreateRunOnboardValueBuilderTask');
+        var createdTasks = [];
+        var updatedTasks = [];
+        var processedProperties = [];
+
+        gs.log('Fetching property: customrun.properties', 'CreateRunOnboardValueBuilderTask');
+        var propertyName = 'customrun.properties'; // System property
+        var kpiData = gs.getProperty(propertyName);
+
+        if (!kpiData) {
+            gs.error('Property "' + propertyName + '" is empty or not set.', 'CreateRunOnboardValueBuilderTask');
+            return {
+                createdTasks,
+                updatedTasks,
+                processedProperties
+            };
+        }
+
+        processedProperties.push(propertyName); // Record processed property
+        gs.info('Processing Property: ' + propertyName, 'CreateRunOnboardValueBuilderTask');
+
+        try {
+            gs.log('Parsing KPI data from property', 'CreateRunOnboardValueBuilderTask');
+            var kpiCategories = JSON.parse(kpiData);
+
+            // Filter categories based on the categoryFilter parameter if provided
+            if (categoryFilter) {
+                gs.log('Filtering categories by: ' + categoryFilter, 'CreateRunOnboardValueBuilderTask');
+                var filteredCategories = [];
+
+                for (var i = 0; i < kpiCategories.length; i++) {
+                    if (kpiCategories[i].category &&
+                        kpiCategories[i].category.toLowerCase() === categoryFilter.toLowerCase()) {
+                        filteredCategories.push(kpiCategories[i]);
+                        gs.log('Category match found: ' + kpiCategories[i].category, 'CreateRunOnboardValueBuilderTask');
+                    }
+                }
+
+                if (filteredCategories.length === 0) {
+                    gs.warning('No categories matched the filter: ' + categoryFilter, 'CreateRunOnboardValueBuilderTask');
+                }
+
+                kpiCategories = filteredCategories;
+            }
+
+            gs.log('Found ' + kpiCategories.length + ' categories to process', 'CreateRunOnboardValueBuilderTask');
+            var userData = this.transform();
+
+            for (var i = 0; i < kpiCategories.length; i++) {
+                var category = kpiCategories[i];
+                gs.log('Processing category [' + (i + 1) + '/' + kpiCategories.length + ']: ' + category.category, 'CreateRunOnboardValueBuilderTask');
+
+                if (!category.category || !category.actions) {
+                    gs.error('Invalid category format: ' + JSON.stringify(category), 'CreateRunOnboardValueBuilderTask');
+                    continue;
+                }
+
+                gs.log('Category has ' + category.actions.length + ' actions to process', 'CreateRunOnboardValueBuilderTask');
+                for (var j = 0; j < category.actions.length; j++) {
+                    var action = category.actions[j];
+                    gs.log('Processing action [' + (j + 1) + '/' + category.actions.length + ']: ' + action.type, 'CreateRunOnboardValueBuilderTask');
+
+                    if (!action.type || !action.description || !action.short_description || !action.instruction) {
+                        gs.error('Missing required fields for action: ' + JSON.stringify(action), 'CreateRunOnboardValueBuilderTask');
+                        continue;
+                    }
+
+                    var finalInstruction = action.instruction;
+
+                    // If category type is "User Management", handle user-specific actions
+                    if (category.category.toLowerCase() === 'user management') {
+                        gs.log('User Management category detected, processing user action: ' + action.type, 'CreateRunOnboardValueBuilderTask');
+
+                        // Check if this is specifically an activation task
+                        if (action.description.toLowerCase().indexOf('activate') !== -1 ||
+                            action.type.toLowerCase().indexOf('activate') !== -1) {
+                            gs.log('User activation task detected', 'CreateRunOnboardValueBuilderTask');
+                            var activationList = userData.usersToActivate.map(function(p, index) {
+                                return (index + 1) + '. ' + p.id + ' (' + p.description + ')';
+                            }).join('\n');
+                            finalInstruction += '\n\nUsers to Activate:\n' + (activationList || 'None');
+                        }
+                        // Check if this is specifically an upgrade task
+                        else if (action.description.toLowerCase().indexOf('upgrade') !== -1 ||
+                            action.type.toLowerCase().indexOf('upgrade') !== -1) {
+                            gs.log('User upgrade task detected', 'CreateRunOnboardValueBuilderTask');
+                            var upgradeList = userData.usersToUpgrade.map(function(p, index) {
+                                return (index + 1) + '. ' + p.id + ' (' + p.description + ')';
+                            }).join('\n');
+                            finalInstruction += '\n\nUsers to Upgrade:\n' + (upgradeList || 'None');
+                        }
+                        // For general user management tasks, include both lists
+                        else {
+                            gs.log('General user management task detected', 'CreateRunOnboardValueBuilderTask');
+                            var activationList = userData.usersToActivate.map(function(p, index) {
+                                return (index + 1) + '. ' + p.id + ' (' + p.description + ')';
+                            }).join('\n');
+                            var upgradeList = userData.usersToUpgrade.map(function(p, index) {
+                                return (index + 1) + '. ' + p.id + ' (' + p.description + ')';
+                            }).join('\n');
+                            finalInstruction += '\n\nUsers to Activate:\n' + (activationList || 'None') + '\n\nUsers to Upgrade:\n' + (upgradeList || 'None');
+                        }
+
+                        gs.log('Added user details to instruction, length: ' + finalInstruction.length, 'CreateRunOnboardValueBuilderTask');
+                    }
+
+                    // Check if a task with the same description exists
+                    gs.log('Checking for existing task with description: ' + action.description, 'CreateRunOnboardValueBuilderTask');
+                    var existingTask = new GlideRecord('samp_sp_vb_task');
+                    existingTask.addQuery('description', action.description);
+                    existingTask.addEncodedQuery('stateNOT IN2,-5,3,7'); // Active tasks
+                    existingTask.query();
+
+                    if (existingTask.next()) {
+                        gs.log('Found existing task, updating: ' + existingTask.sys_id, 'CreateRunOnboardValueBuilderTask');
+                        // Update existing task
+                        existingTask.setValue('short_description', action.short_description);
+                        existingTask.setValue('instructions', finalInstruction);
+                        existingTask.update();
+                        gs.info('Updated task for action: ' + action.type, 'CreateRunOnboardValueBuilderTask');
+                        updatedTasks.push(action.type);
+                    } else {
+                        gs.log('No existing task found, creating new task', 'CreateRunOnboardValueBuilderTask');
+                        // Create new task
+                        var taskGr = new GlideRecord('samp_sp_vb_task');
+                        taskGr.initialize();
+                        taskGr.setValue('short_description', action.short_description);
+                        taskGr.setValue('description', action.description);
+                        taskGr.setValue('instructions', finalInstruction);
+
+                        gs.log('Inserting new task record', 'CreateRunOnboardValueBuilderTask');
+                        var taskId = taskGr.insert();
+                        if (taskId) {
+                            gs.info('Created task for action: ' + action.type + ' (Task ID: ' + taskId + ')', 'CreateRunOnboardValueBuilderTask');
+                            createdTasks.push(action.type);
+                            gs.log('Queueing event: sam.implementation.value.builder.task', 'CreateRunOnboardValueBuilderTask');
+                            gs.eventQueue('sam.implementation.value.builder.task', taskGr, taskGr.sys_id);
+                        } else {
+                            gs.error('Failed to create task for action: ' + action.type, 'CreateRunOnboardValueBuilderTask');
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+            gs.error('Error processing property "' + propertyName + '": ' + e.message, 'CreateRunOnboardValueBuilderTask');
+            gs.log('Stack trace: ' + e.stack, 'CreateRunOnboardValueBuilderTask');
+        }
+
+        gs.log('Completed createOrUpdateTasks method. Created: ' + createdTasks.length +
+            ', Updated: ' + updatedTasks.length + ', Properties processed: ' +
+            processedProperties.length, 'CreateRunOnboardValueBuilderTask');
+
+        return {
+            createdTasks: createdTasks,
+            updatedTasks: updatedTasks,
+            processedProperties: processedProperties
+        };
+    },
+
+    // transform: function () {
+    //     gs.log('Starting transform method to process users', 'CreateRunOnboardValueBuilderTask');
+    //     var userString = gs.getProperty('sam.plugin');
+    //     if (!userString) {
+    //         gs.error("Property 'sam.plugin' is empty or not set.", 'CreateRunOnboardValueBuilderTask');
+    //         return { allUsers: [], usersToActivate: [], usersToUpgrade: [] };
+    //     }
+
+    //     try {
+    //         gs.log('Parsing user data from sam.plugin property', 'CreateRunOnboardValueBuilderTask');
+    //         var userArray = JSON.parse(userString);
+    //         gs.log('Found ' + userArray.length + ' users to process', 'CreateRunOnboardValueBuilderTask');
+
+    //         var allUsers = [];
+    //         var usersToActivate = [];
+    //         var usersToUpgrade = [];
+
+    //         for (var i = 0; i < userArray.length; i++) {
+    //             var user = userArray[i];
+    //             gs.log('Processing user [' + (i+1) + '/' + userArray.length + ']: ' + user.id, 'CreateRunOnboardValueBuilderTask');
+
+    //             var userInfo = {
+    //                 id: user.id,
+    //                 description: user.description,
+    //                 active: GlidePluginManager.isActive(user.id)
+    //             };
+
+    //             gs.log('User ' + user.id + ' active status: ' + userInfo.active, 'CreateRunOnboardValueBuilderTask');
+
+    //             if (user.id.startsWith('sn_')) {
+    //                 gs.log('Processing ServiceNow user (sn_): ' + user.id, 'CreateRunOnboardValueBuilderTask');
+    //                 var sysStoreApp = new GlideRecord('sys_store_app');
+    //                 sysStoreApp.addQuery('scope', user.id);
+    //                 sysStoreApp.query();
+
+    //                 if (sysStoreApp.next()) {
+    //                     userInfo.update_available = sysStoreApp.getValue('update_available') == "1";
+    //                     userInfo.current_version = sysStoreApp.getValue("version");
+    //                     gs.log('Found user in sys_store_app. Version: ' + userInfo.current_version + 
+    //                           ', Update available: ' + userInfo.update_available, 'CreateRunOnboardValueBuilderTask');
+
+    //                     if (userInfo.update_available) {
+    //                         gs.log('Checking available version for user: ' + user.id, 'CreateRunOnboardValueBuilderTask');
+    //                         var sysAppVersion = new GlideRecord('sys_app_version');
+    //                         sysAppVersion.addQuery('scope', user.id);
+    //                         sysAppVersion.query();
+
+    //                         if (sysAppVersion.next()) {
+    //                             userInfo.available_version = sysAppVersion.getValue('version');
+    //                             gs.log('Found available version: ' + userInfo.available_version, 'CreateRunOnboardValueBuilderTask');
+    //                         } else {
+    //                             gs.log('No version info found in sys_app_version', 'CreateRunOnboardValueBuilderTask');
+    //                         }
+    //                     }
+    //                 } else {
+    //                     gs.log('User not found in sys_store_app: ' + user.id, 'CreateRunOnboardValueBuilderTask');
+    //                 }
+    //             }
+
+    //             if (user.id.startsWith('com.')) {
+    //                 gs.log('Processing community user (com.): ' + user.id, 'CreateRunOnboardValueBuilderTask');
+    //                 var vPlugin = new GlideRecord('v_plugin');
+    //                 vPlugin.addQuery('id', user.id);
+    //                 vPlugin.query();
+
+    //                 if (vPlugin.next()) {
+    //                     userInfo.current_version = vPlugin.getValue('version');
+    //                     userInfo.available_version = vPlugin.getValue('available_version');
+    //                     userInfo.update_available = userInfo.available_version && 
+    //                         userInfo.available_version !== userInfo.current_version;
+
+    //                     gs.log('Found user in v_plugin. Current version: ' + userInfo.current_version + 
+    //                           ', Available version: ' + userInfo.available_version + 
+    //                           ', Update available: ' + userInfo.update_available, 'CreateRunOnboardValueBuilderTask');
+    //                 } else {
+    //                     gs.log('User not found in v_plugin: ' + user.id, 'CreateRunOnboardValueBuilderTask');
+    //                 }
+    //             }
+
+    //             allUsers.push(userInfo);
+    //             if (!userInfo.active) {
+    //                 gs.log('Adding user to activation list: ' + user.id, 'CreateRunOnboardValueBuilderTask');
+    //                 usersToActivate.push(userInfo);
+    //             }
+    //             if (userInfo.active && userInfo.update_available) {
+    //                 gs.log('Adding user to upgrade list: ' + user.id, 'CreateRunOnboardValueBuilderTask');
+    //                 usersToUpgrade.push(userInfo);
+    //             }
+    //         }
+
+    //         gs.log('Transform completed. Total users: ' + allUsers.length + 
+    //               ', Users to activate: ' + usersToActivate.length + 
+    //               ', Users to upgrade: ' + usersToUpgrade.length, 'CreateRunOnboardValueBuilderTask');
+
+    //         return { allUsers, usersToActivate, usersToUpgrade };
+    //     } catch (e) {
+    //         gs.error("Error processing users: " + e.message, 'CreateRunOnboardValueBuilderTask');
+    //         gs.log('Stack trace: ' + e.stack, 'CreateRunOnboardValueBuilderTask');
+    //         return { allUsers: [], usersToActivate: [], usersToUpgrade: [], error: e.message };
+    //     }
+    // },
+
+    type: 'CreateRunOnboardValueBuilderTask'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-19 17:04:33</sys_created_on>
+        <sys_id>cb499483c3d82e580ced12f1b40131f2</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>CreateRunOnboardValueBuilderTask</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_cb499483c3d82e580ced12f1b40131f2</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:39:02</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>cb499483c3d82e580ced12f1b40131f2</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-19 17:04:32</sys_created_on>
+        <sys_id>4c6fd8cfc35c2e580ced12f1b40131b0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-03-19 17:04:32</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

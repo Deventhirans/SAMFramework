@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.IntegrationSetup</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description>Data for the new Integration Setups overview page</description>
+        <mutates_server_data>false</mutates_server_data>
+        <name>IntegrationSetup</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script/>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-06 12:11:34</sys_created_on>
+        <sys_id>6350cd35c3d212100ced12f1b401317b</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>IntegrationSetup</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_6350cd35c3d212100ced12f1b401317b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=6350cd35c3d212100ced12f1b401317b"/>
+</record_update>

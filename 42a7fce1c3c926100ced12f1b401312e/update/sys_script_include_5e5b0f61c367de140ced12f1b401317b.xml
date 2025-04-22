@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.CreateTasksFromSystemProperty</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>CreateTasksFromSystemProperty</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var CreateTasksFromSystemProperty = Class.create();
+CreateTasksFromSystemProperty.prototype = {
+    initialize: function() {
+        // Load the system properties
+        this.bulkProperty = gs.getProperty('custombulk.property');
+        this.walkProperty = gs.getProperty('customwalk.properties');
+        this.runProperty = gs.getProperty('customrun.properties'); // Corrected variable name
+
+        // Parse the properties into JSON objects
+        this.bulkData = this.bulkProperty ? JSON.parse(this.bulkProperty) : {};
+        this.walkData = this.walkProperty ? JSON.parse(this.walkProperty) : {};
+        this.runData = this.runProperty ? JSON.parse(this.runProperty) : {}; // Fixed variable reference
+    },
+
+    createTasks: function() {
+        // Create tasks from custombulk.property
+        this.createTasksFromData(this.bulkData, 'custombulk.property');
+
+        // Create tasks from customwalk.properties
+        this.createTasksFromData(this.walkData, 'customwalk.properties');
+
+        // Create tasks from customrun.properties
+        this.createTasksFromData(this.runData, 'customrun.properties');
+    },
+
+    createTasksFromData: function(propertyData, propertyName) {
+        for (var key in propertyData) {
+            if (propertyData.hasOwnProperty(key)) {
+                var data = propertyData[key];
+
+                // Check if a task with the same short description already exists
+                var existingTask = new GlideRecord('samp_sp_vb_task');
+                existingTask.addQuery('short_description', data.short_description);
+                existingTask.query();
+
+                if (existingTask.next()) {
+                    gs.info('Task with short description "' + data.short_description + '" already exists from ' + propertyName);
+                } else {
+                    // Create a new task record
+                    var taskGR = new GlideRecord('samp_sp_vb_task');
+                    taskGR.initialize();
+                    taskGR.short_description = data.short_description;
+                    taskGR.description = data.description;
+                    taskGR.instruction = data.instruction;
+                    taskGR.insert();  // Insert the task record
+                    gs.info('Task created with short description: ' + data.short_description + ' from ' + propertyName);
+                }
+            }
+        }
+    },
+
+    type: 'CreateTasksFromSystemProperty'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-06 06:59:39</sys_created_on>
+        <sys_id>5e5b0f61c367de140ced12f1b401317b</sys_id>
+        <sys_mod_count>13</sys_mod_count>
+        <sys_name>CreateTasksFromSystemProperty</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_5e5b0f61c367de140ced12f1b401317b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:38:57</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>5e5b0f61c367de140ced12f1b401317b</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-06 06:59:39</sys_created_on>
+        <sys_id>2fbb47a5c367de140ced12f1b401316b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-02-06 06:59:39</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

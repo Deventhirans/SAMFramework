@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.GetValueBuilderTaskforIntegration</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>GetValueBuilderTaskforIntegration</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {  
+    var output = [];  
+    var propertyName = 'sam.integration'; // Update with actual property name  
+    var propertyValue = gs.getProperty(propertyName);  
+
+    if (!propertyValue) {  
+        gs.error('System property "' + propertyName + '" is empty or not set.');  
+        return output;  
+    }  
+
+    try {  
+        var integrationData = JSON.parse(propertyValue);  
+
+        for (var i = 0; i < integrationData.length; i++) {  
+            var title = integrationData[i].title;  
+            var taskArray = [];  
+
+            var taskGr = new GlideRecord('samp_sp_vb_task');  
+            taskGr.addQuery('short_description', 'Integration Task for ' + title);
+			taskGr.addEncodedQuery('stateNOT IN2,-5,3,7');  
+            taskGr.query();  
+
+            while (taskGr.next()) {  
+                taskArray.push({  
+                    sys_id: taskGr.getValue('sys_id'),  
+                    short_description: taskGr.getValue('short_description'),  
+                    description: taskGr.getValue('description'),  
+                    instructions: taskGr.getValue('instructions'),
+					number: taskGr.getValue('number'),
+					state: taskGr.getDisplayValue('state'),
+					assigned_to: taskGr.getDisplayValue('assigned_to')
+                });  
+            }  
+
+            output.push({  
+                title: title,  
+                tasks: taskArray  
+            });  
+        }  
+    } catch (e) {  
+        gs.error('Error processing system property "' + propertyName + '": ' + e.message);  
+    }  
+
+    return output;  
+}  
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-28 10:31:08</sys_created_on>
+        <sys_id>c38e49fcc348e6940ced12f1b401312a</sys_id>
+        <sys_mod_count>10</sys_mod_count>
+        <sys_name>GetValueBuilderTaskforIntegration</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_c38e49fcc348e6940ced12f1b401312a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=c38e49fcc348e6940ced12f1b401312a"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>c38e49fcc348e6940ced12f1b401312a</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-28 10:31:08</sys_created_on>
+        <sys_id>f71f0178c348e6940ced12f1b4013129</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-28 10:31:08</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

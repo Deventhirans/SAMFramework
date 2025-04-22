@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.sam properties</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>sam properties</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform() {
+    // System property name containing the JSON array of properties
+    var additionalProperties = 'sam.properties';
+
+    // Object to hold the result
+    var kpiValues = {
+        'properties': []
+    };
+
+    // Function to fetch the JSON properties from sam.properties
+    function fetchProperties(propertyName) {
+        try {
+            var propertiesString = gs.getProperty(propertyName); // Get the JSON string
+            if (propertiesString) {
+                return JSON.parse(propertiesString); // Parse JSON into an array
+            }
+        } catch (e) {
+            gs.log("Error parsing properties from " + propertyName + ": " + e.message);
+        }
+        return []; // Return empty array in case of error
+    }
+
+    // Function to fetch current value for a system property
+    function getPropertyValue(propertyName) {
+        try {
+            return gs.getProperty(propertyName) || "Not Set"; // Fetch the property value or return "Not Set"
+        } catch (e) {
+            gs.log("Error fetching property value for " + propertyName + ": " + e.message);
+            return "Error"; // Return "Error" in case of an exception
+        }
+    }
+
+    // Fetch the list of properties from the sam.properties JSON
+    var propertyList = fetchProperties(additionalProperties);
+
+    // Process each property, fetch its current value, and include the suggested value
+    propertyList.forEach(function (item) {
+        if (item.property) {
+            var currentValue = getPropertyValue(item.property.trim());
+            var suggestedValue = item.suggested_value || ""; // Use the suggested value from input, or empty string if not provided
+            kpiValues.properties.push({
+                'property': item.property.trim(),
+                'current_value': currentValue,
+                'suggested_value': suggestedValue,
+				'name':item.name
+            });
+        }
+    });
+
+    // Return the final values object
+    return kpiValues;
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-23 11:36:58</sys_created_on>
+        <sys_id>3695d4d3c32e52100ced12f1b4013119</sys_id>
+        <sys_mod_count>18</sys_mod_count>
+        <sys_name>sam properties</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_3695d4d3c32e52100ced12f1b4013119</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=3695d4d3c32e52100ced12f1b4013119"/>
+</record_update>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>commit update set</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+    var requestBody = request.body.data;
+
+    if (!requestBody || !requestBody.update_set_name) {
+        return response.setStatus(400).setBody({ error: "Missing 'update_set_name' parameter in the request body" });
+    }
+
+    var updateSetNames = Array.isArray(requestBody.update_set_name) ? requestBody.update_set_name : [requestBody.update_set_name];
+    var results = [];
+
+    updateSetNames.forEach(function(updateSetName) {
+        var remoteUpdatesetId = "6b2ea2e4838ed2109a4b66d0deaad303";
+
+        var gr = new GlideRecord('sys_remote_update_set');
+        gr.addQuery('name', updateSetName);
+        gr.query();
+
+        if (gr.next()) {
+            gs.log('update set checking');
+            remoteUpdatesetId = gr.getUniqueValue();
+
+            var remoteUpdateset = new GlideRecord('sys_remote_update_set');
+            remoteUpdateset.addQuery('sys_id', remoteUpdatesetId);
+            remoteUpdateset.query();
+
+            if (remoteUpdateset.next()) {
+                var worker = new GlideUpdateSetWorker();
+                var lus = new GlideRecord('sys_update_set');
+                if (!lus.canWrite()) {
+                    results.push({ updateSetName, error: "Permission denied to create update sets" });
+                    return;
+                }
+
+                var lusSysId = worker.remoteUpdateSetCommit(lus, remoteUpdateset, remoteUpdateset.update_source.url);
+                _copyUpdateXML(lusSysId, remoteUpdateset.sys_id);
+                remoteUpdateset.update();
+
+                worker.setUpdateSetSysId(lusSysId);
+                worker.setProgressName(gs.getMessage("Committing update set: {0}", remoteUpdateset.name));
+                worker.setBackground(true);
+                worker.start();
+
+                results.push({
+                    updateSetName,
+                    success: true,
+                    progressId: worker.getProgressID(),
+                    updateSetId: lusSysId,
+                    refreshNav: _shouldRefreshNav(remoteUpdatesetId),
+                    refreshAppsList: _shouldRefreshAppsList(remoteUpdatesetId)
+                });
+            } else {
+                results.push({ updateSetName, error: "Remote update set not found" });
+            }
+        } else {
+            results.push({
+                updateSetName,
+                status: "error",
+                message: "No update set found with the name: " + updateSetName
+            });
+        }
+    });
+
+    response.setBody(results);
+
+    function _copyUpdateXML(lsysid, rsysid) {
+        var xgr = new GlideRecord("sys_update_xml");
+        xgr.addQuery("remote_update_set", rsysid);
+        xgr.query();
+        while (xgr.next()) {
+            var lxgr = new GlideRecord("sys_update_xml");
+            lxgr.initialize();
+            lxgr.name = xgr.name;
+            lxgr.payload = xgr.payload;
+            lxgr.action = xgr.action;
+            lxgr.type = xgr.type;
+            lxgr.target_name = xgr.target_name;
+            lxgr.view = xgr.view;
+            lxgr.update_domain = xgr.update_domain;
+            lxgr.table = xgr.table;
+            lxgr.category = xgr.category;
+            lxgr.application = xgr.application;
+            lxgr.update_set = lsysid;
+            lxgr.insert();
+        }
+    }
+
+    function _shouldRefreshNav(rsysid) {
+        var xgr = new GlideRecord("sys_update_xml");
+        xgr.addQuery("remote_update_set", rsysid);
+        xgr.addQuery("type", ["Module", "Application Menu"]);
+        xgr.query();
+        return xgr.hasNext();
+    }
+
+    function _shouldRefreshAppsList(rsysid) {
+        var xgr = new GlideRecord("sys_update_xml");
+        xgr.addQuery("remote_update_set", rsysid);
+        xgr.addQuery("type", "Application");
+        xgr.query();
+        return xgr.hasNext();
+    }
+})(request, response);
+]]></operation_script>
+        <operation_uri>/api/985627/commit_update_set</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-21 05:46:27</sys_created_on>
+        <sys_id>4730acacc31712100ced12f1b401319e</sys_id>
+        <sys_mod_count>43</sys_mod_count>
+        <sys_name>commit update set</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ws_operation_4730acacc31712100ced12f1b401319e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:31:49</sys_updated_on>
+        <web_service_definition display_value="commit update set">b610e8acc31712100ced12f1b4013100</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>4730acacc31712100ced12f1b401319e</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-21 05:46:26</sys_created_on>
+        <sys_id>8b8160a0c35712100ced12f1b401312d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-01-21 05:46:26</sys_updated_on>
+        <table>sys_ws_operation</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

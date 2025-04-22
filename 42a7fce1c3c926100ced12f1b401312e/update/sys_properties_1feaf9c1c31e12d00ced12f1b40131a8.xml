@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.foundation.businessunit.kpi</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-04 08:35:44</sys_created_on>
+        <sys_id>1feaf9c1c31e12d00ced12f1b40131a8</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>sam.foundation.businessunit.kpi</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_1feaf9c1c31e12d00ced12f1b40131a8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:03:31</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+        {&#13;
+            "kpi": "Total Business Units Records",&#13;
+            "description": "Number of business units that are missing a name.",&#13;
+            "recommendation": "Ensure that all business units have a valid name for identification.",&#13;
+            "table": "u_snow_customisation",&#13;
+            "field": "u_total_records_business_unit"&#13;
+        },&#13;
+ {&#13;
+            "kpi": "Business Units Without Name",&#13;
+            "description": "Number of business units that are missing a name.",&#13;
+            "recommendation": "Ensure that all business units have a valid name for identification.",&#13;
+            "table": "u_snow_customisation",&#13;
+            "field": "u_total_records_business_unit"&#13;
+        },&#13;
+        {&#13;
+            "kpi": "Business Units Without Business Head",&#13;
+            "description": "Number of business units that are missing a business head (leader).",&#13;
+            "recommendation": "Assign a business head to each business unit.",&#13;
+            "table": "u_snow_customisation",&#13;
+            "field": "u_total_records_business_unit"&#13;
+        },&#13;
+        {&#13;
+            "kpi": "Business Units Without Company",&#13;
+            "description": "Business units that are not associated with a company.",&#13;
+            "recommendation": "Link each business unit to a company.",&#13;
+            "table": "u_snow_customisation",&#13;
+            "field": "u_total_records_business_unit"&#13;
+        }&#13;
+    ]</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=1feaf9c1c31e12d00ced12f1b40131a8"/>
+</record_update>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.current.subscription.kpi</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Deva_123</sys_created_by>
+        <sys_created_on>2024-12-16 14:41:22</sys_created_on>
+        <sys_id>eacd740dc3661a100ced12f1b401318b</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>sam.current.subscription.kpi</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_eacd740dc3661a100ced12f1b401318b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:05:34</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+  {&#13;
+    "kpi": "Software subscription with empty publisher",&#13;
+    "description": "Associating a publisher with each subscription enables accurate vendor management, supports compliance tracking, and ensures proper alignment of contracts and entitlements.",&#13;
+    "table": "samp_sw_subscription",&#13;
+    "field": "publisherISEMPTY",&#13;
+    "recommendation": "Ensure that every subscription record is associated with a publisher by standardizing data entry processes and implementing validation rules."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software subscription with empty product",&#13;
+    "description": "Linking subscriptions to products ensures accurate tracking of entitlements, supports license optimization, and enhances reporting for software usage and spend analysis.",&#13;
+"recommendation": "Ensure that user records are accurate and up-to-date to maintain system integrity." , &#13;
+    "table": "samp_sw_subscription",&#13;
+    "field": "productISEMPTY",&#13;
+    "recommendation": "Link subscriptions to specific products by implementing automated product mapping and conducting regular data audits."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software subscription with empty user",&#13;
+    "description": "Assigning users to subscriptions ensures proper utilization, avoids subscription waste, and facilitates compliance with per-user license agreements.",&#13;
+"recommendation": "Ensure that user records are accurate and up-to-date to maintain system integrity." , &#13;
+    "table": "samp_sw_subscription",&#13;
+    "field": "userISEMPTY",&#13;
+    "recommendation": "Assign users to subscriptions by integrating identity management systems and using automated workflows for subscription allocation."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software subscription without matching UPN and email ID user table",&#13;
+    "description": "Matching UPNs and email IDs ensures accurate user mapping, prevents allocation errors, and supports identity-based software compliance reporting.",&#13;
+"recommendation": "Ensure that user records are accurate and up-to-date to maintain system integrity." , &#13;
+    "table": "samp_sw_subscription",&#13;
+    "field": "",&#13;
+    "recommendation": "Verify and sync UPN and email ID mappings using integration with user directory services to ensure data accuracy."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Software subscription with empty software model",&#13;
+    "description": "Associating software models with subscriptions enables effective catalog management, streamlines license tracking, and supports entitlement reconciliation processes.",&#13;
+"recommendation": "Ensure that user records are accurate and up-to-date to maintain system integrity." , &#13;
+    "table": "samp_sw_subscription",&#13;
+    "field": "software_modelISEMPTY",&#13;
+    "recommendation": "Link software models to subscriptions by leveraging discovery tools and creating rules for model assignment during subscription creation."&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Number of unrecognized subscription identifier",&#13;
+    "description": "Identifying unrecognized subscription identifiers ensures proper inventory reconciliation, prevents unused subscriptions, and supports data accuracy for compliance and optimization efforts.",&#13;
+"recommendation": "Ensure that user records are accurate and up-to-date to maintain system integrity." , &#13;
+    "table": "samp_sw_subscription",&#13;
+    "field": "subscription_identifierLIKE",&#13;
+    "recommendation": "Identify and resolve unrecognized subscription identifiers by setting up automated alerts for anomalies and reconciling with vendor records."&#13;
+  }&#13;
+]&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=eacd740dc3661a100ced12f1b401318b"/>
+</record_update>

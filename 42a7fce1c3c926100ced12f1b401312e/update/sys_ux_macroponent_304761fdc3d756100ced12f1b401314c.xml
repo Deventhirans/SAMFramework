@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_macroponent">
+    <sys_ux_macroponent action="INSERT_OR_UPDATE">
+        <associated_types/>
+        <bundles/>
+        <category>page</category>
+        <component_dependencies/>
+        <composition>[
+    {
+        "definition": {
+            "id": "d356d14b6e293a3020a244b63d278d8f",
+            "type": "MACROPONENT"
+        },
+        "elementId": "column_layout_1",
+        "elementLabel": "Column layout 1",
+        "eventMappings": [],
+        "isHidden": {
+            "type": "JSON_LITERAL",
+            "value": null
+        },
+        "overrides": {
+            "composition": [
+                {
+                    "definition": {
+                        "id": "d356d14b6e293a3020a244b63d278d8f",
+                        "type": "MACROPONENT"
+                    },
+                    "elementId": "__cmggeunaaeevaabbyyddffiifflbhgsgdjj__column_1",
+                    "elementLabel": "Column 1",
+                    "eventMappings": [],
+                    "isHidden": {
+                        "type": "JSON_LITERAL",
+                        "value": null
+                    },
+                    "overrides": {
+                        "composition": [
+                            {
+                                "definition": {
+                                    "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "rich_text_1",
+                                "elementLabel": "Rich text 1",
+                                "eventMappings": [],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "html": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": "&lt;h1 data-truncationmouseover=\"true\" data-truncation=\"true\"&gt;Getting Started in walk&lt;/h1&gt;"
+                                        }
+                                    }
+                                },
+                                "slot": null,
+                                "styles": null
+                            },
+                            {
+                                "definition": {
+                                    "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "rich_text_2",
+                                "elementLabel": "Rich text 2",
+                                "eventMappings": [],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "html": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": "&lt;p style=\"text-align: left;\"&gt;&lt;span data-teams=\"true\"&gt;Software Asset Management (SAM) is a critical practice for organizations to efficiently manage and optimize their software assets throughout their lifecycle. Here&amp;rsquo;s a guide to help you get started with SAM.&lt;/span&gt;&lt;/p&gt;"
+                                        }
+                                    }
+                                },
+                                "slot": null,
+                                "styles": null
+                            }
+                        ],
+                        "layout": {
+                            "default": {
+                                "children": null,
+                                "items": [
+                                    {
+                                        "element_id": "rich_text_1",
+                                        "styles": {
+                                            "align-self": "flex-start",
+                                            "color": "white",
+                                            "height": "100%",
+                                            "margin-left": "var(--now-scalable-space--md)",
+                                            "padding-left": "var(--now-scalable-space--sm)",
+                                            "padding-top": "0",
+                                            "width": "60%"
+                                        }
+                                    },
+                                    {
+                                        "element_id": "rich_text_2",
+                                        "styles": {
+                                            "align-self": "flex-start",
+                                            "color": "white",
+                                            "height": "100%",
+                                            "margin-bottom": "var(--now-scalable-space--xl)",
+                                            "margin-left": "var(--now-scalable-space--md)",
+                                            "margin-top": "0",
+                                            "padding-left": "var(--now-scalable-space--sm)",
+                                            "width": "60%"
+                                        }
+                                    }
+                                ],
+                                "root": null,
+                                "rules": {
+                                    "flex-direction": "row"
+                                },
+                                "styles": {
+                                    "align-items": "stretch",
+                                    "box-sizing": "border-box",
+                                    "flex-direction": "column",
+                                    "height": "100%",
+                                    "justify-content": "flex-start",
+                                    "overflow": "auto"
+                                },
+                                "type": "flex"
+                            },
+                            "version": "3.0.0"
+                        }
+                    },
+                    "preset": null,
+                    "propertyValues": {
+                        "hideEmptyStateUi": {
+                            "type": "JSON_LITERAL",
+                            "value": true
+                        },
+                        "slotWrapperBehavior": {
+                            "type": "JSON_LITERAL",
+                            "value": "contents"
+                        }
+                    },
+                    "scratchPad": {
+                        "uib": {
+                            "layout": {
+                                "column": {
+                                    "columnNumber": 0,
+                                    "id": "default",
+                                    "styleConfig": {
+                                        "external": {
+                                            "display": "contents",
+                                            "width": "100%"
+                                        },
+                                        "internal": {
+                                            "align-items": "stretch",
+                                            "box-sizing": "border-box",
+                                            "flex-direction": "column",
+                                            "height": "100%",
+                                            "justify-content": "flex-start",
+                                            "overflow": "auto"
+                                        }
+                                    }
+                                },
+                                "type": "column"
+                            },
+                            "version": "1.0.0"
+                        }
+                    },
+                    "slot": null,
+                    "styles": null
+                }
+            ],
+            "layout": {
+                "default": {
+                    "children": null,
+                    "isInline": null,
+                    "items": [
+                        {
+                            "element_id": "__cmggeunaaeevaabbyyddffiifflbhgsgdjj__column_1",
+                            "styles": {
+                                "display": "contents",
+                                "width": "100%"
+                            }
+                        }
+                    ],
+                    "root": null,
+                    "rules": null,
+                    "styles": {
+                        "background": "rgb(var(--now-color_selection--secondary-3))",
+                        "box-sizing": "border-box",
+                        "grid-template-columns": "100fr",
+                        "grid-template-rows": "1fr",
+                        "width": "auto"
+                    },
+                    "type": "grid"
+                },
+                "queries": [
+                    {
+                        "layout": {
+                            "children": null,
+                            "isInline": null,
+                            "items": [],
+                            "root": null,
+                            "rules": null,
+                            "styles": {
+                                "background": "rgb(var(--now-color_selection--secondary-3))",
+                                "box-sizing": "border-box",
+                                "grid-template-columns": "1fr",
+                                "grid-template-rows": "1fr",
+                                "height": "fit-content",
+                                "max-height": "max-content",
+                                "min-height": "min-content",
+                                "width": "auto"
+                            },
+                            "type": "grid"
+                        },
+                        "query": {
+                            "max-width": 640
+                        }
+                    }
+                ],
+                "version": "3.0.0"
+            }
+        },
+        "preset": null,
+        "propertyValues": {
+            "hideEmptyStateUi": {
+                "type": "JSON_LITERAL",
+                "value": true
+            },
+            "slotWrapperBehavior": {
+                "type": "JSON_LITERAL",
+                "value": "contents"
+            }
+        },
+        "scratchPad": {
+            "uib": {
+                "layout": {
+                    "columnSection": {
+                        "breakpoints": [
+                            {
+                                "behavior": "stack",
+                                "max-width": 640,
+                                "styles": {
+                                    "box-sizing": "border-box",
+                                    "grid-template-columns": "1fr",
+                                    "grid-template-rows": "1fr",
+                                    "height": "fit-content",
+                                    "max-height": "max-content",
+                                    "min-height": "min-content",
+                                    "width": "auto"
+                                }
+                            }
+                        ],
+                        "children": [
+                            {
+                                "columnNumber": 1,
+                                "unit": "%",
+                                "width": 100
+                            }
+                        ],
+                        "id": "UIB_COLUMN_SECTION_SINGLE_COLUMN_SECTION",
+                        "styleConfig": {
+                            "external": {
+                                "display": "contents",
+                                "width": "100%"
+                            },
+                            "internal": {
+                                "background": "rgb(var(--now-color_selection--secondary-3))",
+                                "box-sizing": "border-box",
+                                "grid-template-rows": "1fr",
+                                "width": "auto"
+                            }
+                        }
+                    },
+                    "type": "columnSection"
+                },
+                "version": "1.0.0"
+            }
+        },
+        "slot": null,
+        "styles": null
+    },
+    {
+        "definition": {
+            "id": "e772e788e32ce32b8daa2ac7b092d2c6",
+            "type": "MACROPONENT"
+        },
+        "elementId": "card_base_container_1",
+        "elementLabel": "Card Base Container 1",
+        "eventMappings": [],
+        "isHidden": {
+            "type": "JSON_LITERAL",
+            "value": null
+        },
+        "overrides": {
+            "composition": [
+                {
+                    "definition": {
+                        "id": "b324da974cef96f2db1d484cfeda4e3e",
+                        "type": "MACROPONENT_VIEWPORT"
+                    },
+                    "elementId": "tabs_1_legacy",
+                    "elementLabel": "Tabs 1 Legacy",
+                    "eventMappings": [],
+                    "isHidden": {
+                        "type": "JSON_LITERAL",
+                        "value": null
+                    },
+                    "preset": null,
+                    "propertyValues": {
+                        "activeRoute": {
+                            "icon": "document-blank-outline",
+                            "id": "untitled_tab_1",
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Untitled tab"
+                                }
+                            },
+                            "order": 100,
+                            "type": "local"
+                        },
+                        "ariaLabel": {
+                            "type": "JSON_LITERAL",
+                            "value": ""
+                        },
+                        "defaultRoute": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "dynamicTabData": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "enableCollapsing": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "fixedWidth": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "hideLabel": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "initiallyCollapsed": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "items": {
+                            "type": "JSON_LITERAL",
+                            "value": []
+                        },
+                        "maxWidth": {
+                            "type": "JSON_LITERAL",
+                            "value": 240
+                        },
+                        "position": {
+                            "type": "JSON_LITERAL",
+                            "value": "left"
+                        },
+                        "selectedTab": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "selectedTabIndex": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "showInlinePadding": {
+                            "type": "JSON_LITERAL",
+                            "value": true
+                        },
+                        "size": {
+                            "type": "JSON_LITERAL",
+                            "value": "md"
+                        },
+                        "spaceBetweenItems": {
+                            "type": "JSON_LITERAL",
+                            "value": "none"
+                        },
+                        "tabStyles": {
+                            "type": "JSON_LITERAL",
+                            "value": "/* Container for the Tabset */\n.tabset-container {\n    display: flex;\n    flex-direction: column;\n    gap: 16px;\n    width: 100% !important;\n    border-radius: 16px;\n    transition: all 0.3s ease; /* Smooth hover effect */\n}\n \n/* Individual Tabs */\n.tabset-tabs {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    width:380px;\n    margin-right: 10px;\n    background-color: #ffffff; /* Core white background for light theme */\n min-height: 60vh;\n    border-radius: 12px;\n    border-top-left-radius: 0px;\n    transition: all 0.3s ease, transform 0.2s ease;\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n    border: 1px solid #e0e0e0; /* Subtle border for separation */\n}\n \n/* Hover Effect for Tabs */\n.tabset-tabs:hover {\n    background-color: #ffffff; /* Light blue tint on hover for light theme */\n    box-shadow: 0 6px 15px rgba(0, 128, 255, 0.1); /* Elevated shadow for hover */\n    transform: translateY(-2px);\n}\n \n/* Active Tab */\n.tabset-tabs.active {\n    background-color: #e6f7ff; /* Light highlighted blue for active state */\n    box-shadow: 0 4px 12px rgba(0, 128, 255, 0.2);\n    font-weight: bold;\n    border-radius: 120px;\n    border-left: 12px solid #1890ff;\n}\n \n/* Tab Text Styling */\n.tabset-tabs span {\n    font-size: 12px;\n    color: #333333; /* Dark gray for better contrast */\n    font-weight: 500;\n    transition: color 0.3s ease;\n}\n \n.tabset-tabs:hover span {\n    color: #096dd9; /* Bright blue on hover for text */\n}\n \n/* Icon or Action Button */\n.tabset-tabs .tab-icon {\n    font-size: 20px;\n    color: #8c8c8c; /* Neutral gray for icons */\n    transition: color 0.3s ease, transform 0.3s ease;\n}\n \n.tabset-tabs:hover .tab-icon {\n    color: #1890ff; /* Bright blue for hover */\n}"
+                        },
+                        "viewportConfiguration": {
+                            "type": "JSON_LITERAL",
+                            "value": {
+                                "enableDataDrivenTabs": true,
+                                "validation": {
+                                    "icon": {
+                                        "required": false
+                                    },
+                                    "name": {
+                                        "required": true
+                                    },
+                                    "order": {
+                                        "required": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "slot": null,
+                    "styles": null
+                }
+            ],
+            "layout": {
+                "default": {
+                    "children": null,
+                    "items": [
+                        {
+                            "element_id": "tabs_1_legacy",
+                            "styles": {}
+                        }
+                    ],
+                    "root": null,
+                    "rules": null,
+                    "styles": {
+                        "flex-direction": "column",
+                        "margin-left": "-6px",
+                        "width": "100%"
+                    },
+                    "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                    "type": "flex"
+                },
+                "version": "3.0.0"
+            }
+        },
+        "preset": null,
+        "propertyValues": {
+            "configAria": {
+                "type": "JSON_LITERAL",
+                "value": null
+            },
+            "hideShadow": {
+                "type": "JSON_LITERAL",
+                "value": true
+            },
+            "interaction": {
+                "type": "JSON_LITERAL",
+                "value": "none"
+            },
+            "manageSelected": {
+                "type": "JSON_LITERAL",
+                "value": false
+            },
+            "selected": {
+                "type": "JSON_LITERAL",
+                "value": false
+            },
+            "sidebar": {
+                "type": "JSON_LITERAL",
+                "value": {}
+            },
+            "size": {
+                "type": "JSON_LITERAL",
+                "value": "sm"
+            }
+        },
+        "slot": null,
+        "styles": null
+    }
+]</composition>
+        <da_relay_models/>
+        <data>[
+    {
+        "definition": {
+            "id": "68a96475c3f6d2d00ced12f1b40131c5",
+            "type": "TRANSFORM"
+        },
+        "elementId": "markascomplete_1",
+        "elementLabel": "MarkAsComplete 1",
+        "eventMappings": [],
+        "inputValues": {},
+        "readEvaluationMode": "EAGER"
+    },
+    {
+        "definition": {
+            "id": "c73fd0e6c39b92100ced12f1b40131bb",
+            "type": "TRANSFORM"
+        },
+        "elementId": "mark_walk_btn_1",
+        "elementLabel": "mark_walk_btn 1",
+        "eventMappings": [],
+        "inputValues": {},
+        "readEvaluationMode": "EAGER"
+    },
+    {
+        "definition": {
+            "id": "01eefc29c35bda100ced12f1b40131d1",
+            "type": "TRANSFORM"
+        },
+        "elementId": "dynamic_sys_reader_1",
+        "elementLabel": "Dynamic Sys Reader 1",
+        "eventMappings": [],
+        "inputValues": {
+            "sysPropertyName": {
+                "type": "JSON_LITERAL",
+                "value": "sam.foundation.current.costcenter.kpi"
+            }
+        },
+        "readEvaluationMode": "EAGER"
+    }
+]</data>
+        <description/>
+        <disable_auto_reflow>false</disable_auto_reflow>
+        <dispatched_events/>
+        <ext_controller_dep/>
+        <extends display_value="Page Template">19be392623033300f4b4c50947bf65ba</extends>
+        <extension_point/>
+        <form_factors>{}</form_factors>
+        <handled_events/>
+        <interactions/>
+        <interfaces/>
+        <internal_event_mappings>{}</internal_event_mappings>
+        <layout>{
+    "default": {
+        "children": null,
+        "items": [
+            {
+                "element_id": "column_layout_1",
+                "styles": {
+                    "display": "contents",
+                    "width": "100%"
+                }
+            },
+            {
+                "element_id": "card_base_container_1",
+                "styles": {}
+            }
+        ],
+        "root": null,
+        "rules": null,
+        "styles": {
+            "display": "flex",
+            "flex-direction": "column",
+            "padding": "0",
+            "padding-bottom": "0",
+            "padding-left": "0",
+            "padding-right": "0",
+            "padding-top": "0"
+        },
+        "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+        "type": "flex"
+    },
+    "version": "3.0.0"
+}</layout>
+        <macroponent_dependencies/>
+        <name>walk</name>
+        <output_prop_mapping/>
+        <props>[]</props>
+        <required_translations>[ {
+  "message" : "&lt;h1 data-truncationmouseover=\"true\" data-truncation=\"true\"&gt;Getting Started in walk&lt;/h1&gt;",
+  "comment" : ""
+}, {
+  "message" : "&lt;p style=\"text-align: left;\"&gt;&lt;span data-teams=\"true\"&gt;Software Asset Management (SAM) is a critical practice for organizations to efficiently manage and optimize their software assets throughout their lifecycle. Here&amp;rsquo;s a guide to help you get started with SAM.&lt;/span&gt;&lt;/p&gt;",
+  "comment" : ""
+}, {
+  "message" : "Untitled tab",
+  "comment" : ""
+} ]</required_translations>
+        <root_component/>
+        <root_component_config/>
+        <root_component_definition/>
+        <schema_version>1.0.0</schema_version>
+        <state_persistence_config/>
+        <state_properties/>
+        <sys_class_name>sys_ux_macroponent</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-25 08:03:26</sys_created_on>
+        <sys_id>304761fdc3d756100ced12f1b401314c</sys_id>
+        <sys_mod_count>23</sys_mod_count>
+        <sys_name>walk</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_macroponent_304761fdc3d756100ced12f1b401314c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:14:00</sys_updated_on>
+    </sys_ux_macroponent>
+    <sys_translated_text action="delete_multiple" query="documentkey=304761fdc3d756100ced12f1b401314c"/>
+</record_update>

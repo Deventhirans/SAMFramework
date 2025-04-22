@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.CreateIntegrationValueBuilderTask</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>CreateIntegrationValueBuilderTask</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var CreateIntegrationValueBuilderTask = Class.create();
+CreateIntegrationValueBuilderTask.prototype = {
+    initialize: function() {
+    },
+createTasksFromProperty: function() {
+        var propertyName = 'sam.integration'; // Update with actual property name
+        var propertyValue = gs.getProperty(propertyName);
+        
+        if (!propertyValue) {
+            gs.error('System property "' + propertyName + '" is empty or not set.');
+            return;
+        }
+
+        try {
+            var integrationData = JSON.parse(propertyValue);
+            var createdTasks = [];
+            
+            for (var i = 0; i < integrationData.length; i++) {
+                var integration = integrationData[i];
+                var title = integration.title;
+                var description = integration.description || 'No description available';
+                var shortDescription = 'Integration Task for ' + title;
+                var instructions = this.buildInstructions(integration);
+
+                var existingTask = new GlideRecord('samp_sp_vb_task');
+                existingTask.addQuery('short_description', shortDescription);
+                existingTask.query();
+                
+                if (existingTask.next()) {
+                    existingTask.setValue('description', description);
+                    existingTask.setValue('instructions', instructions);
+                    existingTask.update();
+                    gs.info('Updated existing task for: ' + title);
+                } else {
+                    var newTask = new GlideRecord('samp_sp_vb_task');
+                    newTask.initialize();
+                    newTask.setValue('short_description', shortDescription);
+                    newTask.setValue('description', description);
+                    newTask.setValue('instructions', instructions);
+                    var taskId = newTask.insert();
+
+                    if (taskId) {
+                        gs.info('Created new task for: ' + title);
+                        createdTasks.push(title);
+                    }
+                }
+            }
+            
+            gs.info('Completed processing system property "' + propertyName + '". Created Tasks: ' + createdTasks.join(', '));
+        } catch (e) {
+            gs.error('Error processing system property "' + propertyName + '": ' + e.message);
+        }
+    },
+
+    buildInstructions: function(integration) {
+        var instructions = 'Follow the steps to integrate: ' + integration.title + '\n';
+        
+        if (integration.dataForTree) {
+            for (var j = 0; j < integration.dataForTree.length; j++) {
+                var section = integration.dataForTree[j];
+                instructions += '\n' + section.label + ':\n';
+                
+                if (section.children) {
+                    for (var k = 0; k < section.children.length; k++) {
+                        var item = section.children[k];
+                        instructions += '- ' + item.label + '\n';
+                    }
+                }
+            }
+        }
+        
+        return instructions;
+    },
+
+    type: 'CreateIntegrationValueBuilderTask'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-01 06:15:26</sys_created_on>
+        <sys_id>311e1941c38cae940ced12f1b4013190</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>CreateIntegrationValueBuilderTask</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_311e1941c38cae940ced12f1b4013190</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:38:49</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>311e1941c38cae940ced12f1b4013190</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-03-01 06:15:25</sys_created_on>
+        <sys_id>cc3e510dc34cae940ced12f1b40131ef</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-03-01 06:15:25</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

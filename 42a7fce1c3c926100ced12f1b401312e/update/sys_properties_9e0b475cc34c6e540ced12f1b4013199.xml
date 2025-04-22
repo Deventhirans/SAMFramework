@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.implementation.additional.kpis</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-27 06:16:09</sys_created_on>
+        <sys_id>9e0b475cc34c6e540ced12f1b4013199</sys_id>
+        <sys_mod_count>17</sys_mod_count>
+        <sys_name>sam.implementation.additional.kpis</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_9e0b475cc34c6e540ced12f1b4013199</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:19:59</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+  {&#13;
+    "category": "Plugin Management",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Activate Plugins",&#13;
+        "description": "Enable required functionalities by activating  the necessary plugins .",&#13;
+        "short_description": "Activate the New Plugins",&#13;
+        "instruction": "The following plugins are not activated. Please activate them:",&#13;
+        "plugins": ["plugin1", "plugin2"]&#13;
+      },&#13;
+      {&#13;
+        "type": "Upgrade Plugins",&#13;
+        "description": "Enhance system performance and security by upgrading plugins to the latest versions.",&#13;
+        "short_description": "Upgrade Plugins",&#13;
+        "instruction": "The following plugins have available upgrades. Please upgrade them:",&#13;
+        "plugins": ["plugin1", "plugin2"]&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "Property Management",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Update Property",&#13;
+        "description": "Ensure system properties are set to the correct suggested values.",&#13;
+        "short_description": "Update System Properties",&#13;
+        "instruction": "The suggested values for the following properties need updating:",&#13;
+        "properties": ["property1", "property2"]&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "User Role Management",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Assign Roles and Permissions",&#13;
+        "description": "Assign users to the appropriate roles and groups to ensure proper access.",&#13;
+        "short_description": "Manage User Roles",&#13;
+        "instruction": "The following users need role assignments. If admin access is required, assign them to the 'SAM Implementation Admin' group."&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "Normalization Data Service",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Enable Normalization",&#13;
+        "description": "Ensure data consistency by enabling normalization for core company records.",&#13;
+        "short_description": "Activate Normalization",&#13;
+        "instruction": "Normalization for core company data is not yet enabled. Please complete the guided setup."&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "Top Publisher Selection",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Select Publisher",&#13;
+        "description": "Choose a top publisher for effective license position (ELP) management.",&#13;
+        "short_description": "Select Top Publisher",&#13;
+        "instruction": "Select the publisher for which you want to generate the Effective License Position (ELP)."&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "Manual Data Import",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Import Contract Data",&#13;
+        "description": "Load contract data into the system.",&#13;
+        "short_description": "Import Contracts",&#13;
+        "instruction": "Contract data needs to be imported. Please proceed with the upload."&#13;
+      },&#13;
+      {&#13;
+        "type": "Import Entitlement Data",&#13;
+        "description": "Load entitlement data for software asset management.",&#13;
+        "short_description": "Import Entitlements",&#13;
+        "instruction": "Entitlement data needs to be imported. Please proceed with the upload."&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "Normalization",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Enable Opt-in",&#13;
+        "description": "Enable normalization opt-in to standardize software data.",&#13;
+        "short_description": "Enable Normalization Opt-in",&#13;
+        "instruction": "Please enable the normalization opt-in to proceed."&#13;
+      },&#13;
+      {&#13;
+        "type": "Define Normalization Rules",&#13;
+        "description": "Set up normalization rules to streamline software categorization.",&#13;
+        "short_description": "Configure Normalization Rules",&#13;
+        "instruction": "Define the normalization rules for standardizing software records."&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "Validate Software Model",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Check Parent-Child Relationships",&#13;
+        "description": "Ensure parent-child relationships are correctly configured for software models.",&#13;
+        "short_description": "Validate Parent-Child Links",&#13;
+        "instruction": "Verify that all parent-child relationships are correctly set up."&#13;
+      },&#13;
+      {&#13;
+        "type": "Review License Management",&#13;
+        "description": "Analyze the License Management report for any compliance violations.",&#13;
+        "short_description": "Review License Compliance",&#13;
+        "instruction": "Check the License Management report for any issues."&#13;
+      },&#13;
+      {&#13;
+        "type": "Verify DMAP (Discovery Map)",&#13;
+        "description": "Open the software model record and review the DMAP field.",&#13;
+        "short_description": "Check DMAP Field",&#13;
+        "instruction": "Review the Discovery Map (DMAP) for accuracy."&#13;
+      },&#13;
+      {&#13;
+        "type": "Assess Inference Percentage",&#13;
+        "description": "Check the inference percentage for the software model to ensure accurate classification.",&#13;
+        "short_description": "Validate Inference Percentage",&#13;
+        "instruction": "Assess the inference percentage for this software model."&#13;
+      },&#13;
+      {&#13;
+        "type": "Confirm Downgrade Rights",&#13;
+        "description": "Verify downgrade rights for software products to ensure compliance.",&#13;
+        "short_description": "Check Downgrade Rights",&#13;
+        "instruction": "Confirm that downgrade rights are properly assigned to software products."&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "Custom Scripts",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Install Custom Scripts",&#13;
+        "description": "Deploy tailored scripts essential for software management.",&#13;
+        "short_description": "Deploy Custom Scripts",&#13;
+        "instruction": "Install the required custom scripts to manage software effectively."&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "Effective License Position",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Validate ELP",&#13;
+        "description": "Ensure effective license position (ELP) is accurately reported.",&#13;
+        "short_description": "Verify Effective License Position",&#13;
+        "instruction": "Review and validate the ELP report."&#13;
+      }&#13;
+    ]&#13;
+  },&#13;
+  {&#13;
+    "category": "Documentation",&#13;
+    "actions": [&#13;
+      {&#13;
+        "type": "Review Documentation",&#13;
+        "description": "Study the provided documentation to understand software setup and management.",&#13;
+        "short_description": "Review Software Documentation",&#13;
+        "instruction": "Go through the relevant documents for software setup and usage guidelines."&#13;
+      }&#13;
+    ]&#13;
+  }&#13;
+]&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=9e0b475cc34c6e540ced12f1b4013199"/>
+</record_update>

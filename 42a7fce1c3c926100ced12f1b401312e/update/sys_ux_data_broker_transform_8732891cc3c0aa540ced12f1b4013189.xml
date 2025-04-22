@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.companywrong</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>companywrong</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var sysPropertyName = "sam.foundation.current.company.kpi";
+
+    // Fetch the sys_property containing query conditions
+    var sysPropertyGR = new GlideRecord('sys_properties');
+    sysPropertyGR.addQuery('name', sysPropertyName);
+    sysPropertyGR.query();
+
+    if (!sysPropertyGR.next()) {
+        gs.log("Error: sys_property '" + sysPropertyName + "' not found.");
+        return [[{
+            "data": [{
+                "value": "0",
+                "change": "0",
+                "changePercent": "0"
+            }],
+            "metadata": {
+                "eventData": {
+                    "indicatorSysid": "fb007202d7130100b96d45a3ce6103b4"
+                },
+                "previousScoreDate": "1642809600000",
+                "dataSourceLabel": "Company Data Quality",
+                "changeArrow": "steady",
+                "scoreDate": "1642896000000",
+                "filterQuery": "",
+                "aggregate": {
+                    "fieldType": "decimal"
+                },
+                "format": {
+                    "unitFormat": "{0}",
+                    "frequency": "daily",
+                    "precision": 0
+                }
+            },
+            "sparkline": {
+                "data": [
+                    {
+                        "timestamp": "1637798400000",
+                        "value": "0"
+                    },
+                    {
+                        "timestamp": "1642896000000",
+                        "value": "0"
+                    }
+                ],
+                "metadata": {
+                    "eventData": {
+                        "indicatorSysid": "fb007202d7130100b96d45a3ce6103b4"
+                    },
+                    "dataSourceLabel": "Company Data Quality",
+                    "series": [
+                        {
+                            "label": "Company Data Quality",
+                            "id": "value",
+                            "type": "value"
+                        }
+                    ],
+                    "aggregate": {
+                        "fieldType": "decimal"
+                    },
+                    "format": {
+                        "unitFormat": "{0}",
+                        "frequency": "daily",
+                        "precision": 0
+                    }
+                }
+            }
+        }]];
+    }
+
+    // Parse the JSON value from sys_property
+    var propertyValue = sysPropertyGR.getValue('value');
+    var conditionsArray = JSON.parse(propertyValue); // Convert JSON string to an array
+
+    var totalCompaniesGR = new GlideRecord('core_company');
+    totalCompaniesGR.query();
+    var totalCount = totalCompaniesGR.getRowCount(); // Accurately get the total count
+
+    var inaccurateCompanyIDs = {}; // Object to track unique company IDs
+
+    for (var i = 0; i < conditionsArray.length; i++) {
+        var condition = conditionsArray[i].field; // Extract the field condition
+
+        var inaccurateCompanies = new GlideRecord(conditionsArray[i].table); // Use table dynamically
+        inaccurateCompanies.addEncodedQuery(condition);
+        inaccurateCompanies.query();
+
+        while (inaccurateCompanies.next()) {
+            inaccurateCompanyIDs[inaccurateCompanies.getUniqueValue()] = true; // Store unique companies
+        }
+    }
+
+    var inaccurateCount = Object.keys(inaccurateCompanyIDs).length; // Count unique keys
+    var inaccuracyPercentage = totalCount > 0 ? (inaccurateCount / totalCount) * 100 : 0;
+    
+    // Format the result according to the expected schema
+    return [[{
+        "data": [{
+            "value": inaccuracyPercentage.toFixed(2),
+            "change": "0",
+            "changePercent": "0"
+        }],
+        "metadata": {
+            "eventData": {
+                "indicatorSysid": "fb007202d7130100b96d45a3ce6103b4"
+            },
+            "previousScoreDate": "1642809600000",
+            "dataSourceLabel": "Company Data Quality",
+            "changeArrow": "steady",
+            "scoreDate": "1642896000000",
+            "filterQuery": "",
+            "aggregate": {
+                "fieldType": "decimal"
+            },
+            "format": {
+                "unitFormat": "{0}",
+                "frequency": "daily",
+                "precision": 0
+            }
+        },
+        "sparkline": {
+            "data": [
+                {
+                    "timestamp": "1637798400000",
+                    "value": inaccuracyPercentage.toFixed(2)
+                },
+                {
+                    "timestamp": "1642896000000",
+                    "value": inaccuracyPercentage.toFixed(2)
+                }
+            ],
+            "metadata": {
+                "eventData": {
+                    "indicatorSysid": "fb007202d7130100b96d45a3ce6103b4"
+                },
+                "dataSourceLabel": "Company Data Quality",
+                "series": [
+                    {
+                        "label": "Company Data Quality",
+                        "id": "value",
+                        "type": "value"
+                    }
+                ],
+                "aggregate": {
+                    "fieldType": "decimal"
+                },
+                "format": {
+                    "unitFormat": "{0}",
+                    "frequency": "daily",
+                    "precision": 0
+                }
+            }
+        }
+    }]];
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-26 20:18:13</sys_created_on>
+        <sys_id>8732891cc3c0aa540ced12f1b4013189</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>companywrong</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_8732891cc3c0aa540ced12f1b4013189</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=8732891cc3c0aa540ced12f1b4013189"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>8732891cc3c0aa540ced12f1b4013189</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-26 20:18:13</sys_created_on>
+        <sys_id>1052055cc3c0aa540ced12f1b40131f7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-26 20:18:13</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

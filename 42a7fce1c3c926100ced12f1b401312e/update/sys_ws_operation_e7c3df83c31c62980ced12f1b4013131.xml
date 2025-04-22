@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>value_builder_task21</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+    try {
+        // Get the category parameter from the request body
+        var requestBody = request.body ? request.body.data : {};
+        var categoryFilter = requestBody.category || null;
+        
+        gs.info('REST API received category filter: ' + categoryFilter);
+        
+        // Create task builder and pass the category filter
+        var taskBuilder = new CreateWalkValueBuilder();
+        var result = taskBuilder.createOrUpdateTasks(categoryFilter);
+
+        // Log processed information
+        gs.info('Created Tasks: ' + JSON.stringify(result.createdTasks));
+        gs.info('Updated Tasks: ' + JSON.stringify(result.updatedTasks));
+        gs.info('Processed Properties: ' + JSON.stringify(result.processedProperties));
+
+        response.setStatus(200);
+        response.setBody({
+            status: "success",
+            message: categoryFilter ? 
+                "Tasks for category '" + categoryFilter + "' processed successfully." : 
+                "All tasks processed successfully.",
+            created_tasks: result.createdTasks,
+            updated_tasks: result.updatedTasks,
+            processed_properties: result.processedProperties.length ? 
+                result.processedProperties : ["No properties processed."],
+            category_processed: categoryFilter || "All categories"
+        });
+
+    } catch (error) {
+        gs.error("Error executing CreateWalkValueBuilder: " + error.message);
+        response.setStatus(500);
+        response.setBody({
+            status: "error",
+            message: "An error occurred while processing tasks: " + error.message
+        });
+    }
+})(request, response);]]></operation_script>
+        <operation_uri>/api/985627/value_builder_task21</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-20 06:16:37</sys_created_on>
+        <sys_id>e7c3df83c31c62980ced12f1b4013131</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>value_builder_task21</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ws_operation_e7c3df83c31c62980ced12f1b4013131</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:31:49</sys_updated_on>
+        <web_service_definition display_value="value_builder_task21">a0b35f07c31c62980ced12f1b401316a</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>e7c3df83c31c62980ced12f1b4013131</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-20 06:16:36</sys_created_on>
+        <sys_id>7ea4570bc3d862980ced12f1b4013198</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-03-20 06:16:36</sys_updated_on>
+        <table>sys_ws_operation</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

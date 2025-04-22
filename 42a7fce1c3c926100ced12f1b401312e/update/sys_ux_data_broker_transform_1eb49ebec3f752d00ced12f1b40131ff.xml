@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.Get AllCIs</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>Get AllCIs</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var ciList = [];
+
+    var gr = new GlideRecord('cmdb_ci');
+    gr.addEncodedQuery('nameISNOTEMPTY'); // Ensures only valid CIs are retrieved
+    gr.query();
+
+    while (gr.next()) {
+        ciList.push({
+            "id": gr.getUniqueValue(),
+            "label": gr.getValue('name'),
+            "sublabel": gr.getValue('sys_class_name') // Using CI class as sublabel
+           
+        });
+    }
+
+    return ciList;
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-22 10:27:38</sys_created_on>
+        <sys_id>1eb49ebec3f752d00ced12f1b40131ff</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Get AllCIs</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_1eb49ebec3f752d00ced12f1b40131ff</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=1eb49ebec3f752d00ced12f1b40131ff"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>1eb49ebec3f752d00ced12f1b40131ff</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-22 10:27:37</sys_created_on>
+        <sys_id>06c4de7ec3f752d00ced12f1b4013143</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-22 10:27:37</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

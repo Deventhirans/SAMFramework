@@ -1,0 +1,2949 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_macroponent">
+    <sys_ux_macroponent action="INSERT_OR_UPDATE">
+        <associated_types/>
+        <bundles/>
+        <category>page</category>
+        <component_dependencies/>
+        <composition>[
+    {
+        "definition": {
+            "id": "d356d14b6e293a3020a244b63d278d8f",
+            "type": "MACROPONENT"
+        },
+        "elementId": "column_layout_1",
+        "elementLabel": "Column layout 1",
+        "eventMappings": [],
+        "isHidden": {
+            "type": "JSON_LITERAL",
+            "value": null
+        },
+        "overrides": {
+            "composition": [
+                {
+                    "definition": {
+                        "id": "d356d14b6e293a3020a244b63d278d8f",
+                        "type": "MACROPONENT"
+                    },
+                    "elementId": "__cmffcccchhjjiifaaiidzddffhhwziabqgcr__column_1",
+                    "elementLabel": "__cmffcccchhjjiifaaiidzddffhhwziabqgcr__Column 1",
+                    "eventMappings": [],
+                    "isHidden": {
+                        "type": "JSON_LITERAL",
+                        "value": null
+                    },
+                    "overrides": {
+                        "composition": [
+                            {
+                                "definition": {
+                                    "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "rich_text_1",
+                                "elementLabel": "Rich text 1",
+                                "eventMappings": [],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "html": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": "&lt;h1 data-truncationmouseover=\"true\" data-truncation=\"true\"&gt;As- is Data Analysis&lt;/h1&gt;"
+                                        }
+                                    }
+                                },
+                                "slot": null,
+                                "styles": null
+                            },
+                            {
+                                "definition": {
+                                    "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "rich_text_19",
+                                "elementLabel": "Rich text 19",
+                                "eventMappings": [],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "html": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": "&lt;p style=\"text-align: left;\"&gt;&lt;span style=\"font-size: 11pt; font-family: helvetica;\"&gt;These reports have been extracted from the target instance and provide an overall overview of the foundational and contractual data.&lt;br /&gt;&lt;/span&gt;&lt;span style=\"font-size: 11pt; font-family: helvetica;\"&gt;This data will help in understanding the current state of the system and guide any future decisions or optimizations.&lt;/span&gt;&lt;/p&gt;"
+                                        }
+                                    }
+                                },
+                                "slot": null,
+                                "styles": null
+                            }
+                        ],
+                        "layout": {
+                            "default": {
+                                "children": null,
+                                "items": [
+                                    {
+                                        "element_id": "rich_text_1",
+                                        "styles": {
+                                            "align-self": "flex-start",
+                                            "color": "white",
+                                            "margin-left": "var(--now-scalable-space--lg)",
+                                            "margin-right": "var(--now-scalable-space--xxl)",
+                                            "padding": "0",
+                                            "padding-bottom": "0",
+                                            "padding-left": "var(--now-scalable-space--lg)",
+                                            "padding-right": "0",
+                                            "padding-top": "0"
+                                        }
+                                    },
+                                    {
+                                        "element_id": "rich_text_19",
+                                        "styles": {
+                                            "align-self": "flex-start",
+                                            "color": "white",
+                                            "margin-bottom": "var(--now-scalable-space--3xl)",
+                                            "margin-left": "var(--now-scalable-space--lg)",
+                                            "margin-right": "var(--now-scalable-space--xxl)",
+                                            "padding": "0",
+                                            "padding-bottom": "0",
+                                            "padding-left": "var(--now-scalable-space--lg)",
+                                            "padding-right": "0",
+                                            "padding-top": "0"
+                                        }
+                                    }
+                                ],
+                                "root": null,
+                                "rules": {
+                                    "flex-direction": "row"
+                                },
+                                "styles": {
+                                    "align-items": "center",
+                                    "box-sizing": "border-box",
+                                    "flex-direction": "column",
+                                    "height": "100%",
+                                    "justify-content": "space-around",
+                                    "overflow": "auto"
+                                },
+                                "type": "flex"
+                            },
+                            "version": "3.0.0"
+                        }
+                    },
+                    "preset": null,
+                    "propertyValues": {
+                        "slotWrapperBehavior": {
+                            "type": "JSON_LITERAL",
+                            "value": "contents"
+                        }
+                    },
+                    "scratchPad": {
+                        "uib": {
+                            "layout": {
+                                "column": {
+                                    "styleConfig": {
+                                        "external": {
+                                            "display": "contents",
+                                            "width": "100%"
+                                        },
+                                        "internal": {
+                                            "align-items": "center",
+                                            "box-sizing": "border-box",
+                                            "flex-direction": "column",
+                                            "height": "100%",
+                                            "justify-content": "space-around",
+                                            "overflow": "auto"
+                                        }
+                                    }
+                                },
+                                "type": "column"
+                            },
+                            "version": "1.0.0"
+                        }
+                    },
+                    "slot": null,
+                    "styles": null
+                }
+            ],
+            "layout": {
+                "default": {
+                    "children": null,
+                    "isInline": null,
+                    "items": [
+                        {
+                            "element_id": "__cmffcccchhjjiifaaiidzddffhhwziabqgcr__column_1",
+                            "styles": {
+                                "display": "contents",
+                                "width": "100%"
+                            }
+                        }
+                    ],
+                    "root": null,
+                    "rules": null,
+                    "styles": {
+                        "background": "rgb(var(--now-color--neutral-1))",
+                        "background-image": "url(sn_cmdb_ws.landing_page_banner.svg)",
+                        "box-sizing": "border-box",
+                        "grid-template-columns": "100fr",
+                        "grid-template-rows": "1fr",
+                        "width": "100%"
+                    },
+                    "type": "grid"
+                },
+                "disableAutoReflow": true,
+                "queries": [
+                    {
+                        "layout": {
+                            "children": null,
+                            "isInline": null,
+                            "items": [],
+                            "root": null,
+                            "rules": null,
+                            "styles": {
+                                "background": "rgb(var(--now-color--neutral-1))",
+                                "background-image": "url(sn_cmdb_ws.landing_page_banner.svg)",
+                                "box-sizing": "border-box",
+                                "grid-template-columns": "1fr",
+                                "grid-template-rows": "1fr",
+                                "height": "fit-content",
+                                "max-height": "max-content",
+                                "min-height": "min-content",
+                                "width": "100%"
+                            },
+                            "type": "grid"
+                        },
+                        "query": {
+                            "max-width": 640
+                        }
+                    }
+                ],
+                "version": "3.0.0"
+            }
+        },
+        "preset": null,
+        "propertyValues": {
+            "slotWrapperBehavior": {
+                "type": "JSON_LITERAL",
+                "value": "contents"
+            }
+        },
+        "scratchPad": {
+            "uib": {
+                "layout": {
+                    "columnSection": {
+                        "breakpoints": [
+                            {
+                                "behavior": "stack",
+                                "max-width": 640,
+                                "styles": {
+                                    "box-sizing": "border-box",
+                                    "grid-template-columns": "1fr",
+                                    "grid-template-rows": "1fr",
+                                    "height": "fit-content",
+                                    "max-height": "max-content",
+                                    "min-height": "min-content",
+                                    "width": "100%"
+                                }
+                            }
+                        ],
+                        "children": [
+                            {
+                                "columnNumber": 1,
+                                "unit": "%",
+                                "width": 100
+                            }
+                        ],
+                        "id": "UIB_COLUMN_SECTION_SINGLE_COLUMN_SECTION",
+                        "styleConfig": {
+                            "external": {
+                                "display": "contents",
+                                "width": "100%"
+                            },
+                            "internal": {
+                                "background": "rgb(var(--now-color--neutral-1))",
+                                "background-image": "url(sn_cmdb_ws.landing_page_banner.svg)",
+                                "box-sizing": "border-box",
+                                "grid-template-rows": "1fr",
+                                "width": "100%"
+                            }
+                        }
+                    },
+                    "type": "columnSection"
+                },
+                "version": "1.0.0"
+            }
+        },
+        "slot": null,
+        "styles": null
+    },
+    {
+        "definition": {
+            "id": "1f6e0643eca7a637e36bd7833549ec9e",
+            "type": "MACROPONENT"
+        },
+        "elementId": "heading_2",
+        "elementLabel": "Heading 2",
+        "eventMappings": [],
+        "isHidden": {
+            "type": "JSON_LITERAL",
+            "value": null
+        },
+        "preset": null,
+        "propertyValues": {
+            "hasNoMargin": {
+                "type": "JSON_LITERAL",
+                "value": true
+            },
+            "label": {
+                "type": "TRANSLATION_LITERAL",
+                "value": {
+                    "code": null,
+                    "comment": "",
+                    "message": "Foundational Data Reports"
+                }
+            },
+            "level": {
+                "type": "JSON_LITERAL",
+                "value": "1"
+            },
+            "variant": {
+                "type": "JSON_LITERAL",
+                "value": "header-secondary"
+            },
+            "wontWrap": {
+                "type": "JSON_LITERAL",
+                "value": false
+            }
+        },
+        "slot": null,
+        "styles": null
+    },
+    {
+        "definition": {
+            "id": "16896fa0f6eed87cc23b4c1a4752a35f",
+            "type": "MACROPONENT"
+        },
+        "elementId": "card_base_divider_8",
+        "elementLabel": "Card Base Divider 8",
+        "eventMappings": [],
+        "isHidden": {
+            "type": "JSON_LITERAL",
+            "value": null
+        },
+        "preset": {
+            "controllerElementId": "properties_1",
+            "disabledEventTargetIds": [],
+            "id": "d673a240776f5110960ced43ba5a99d4"
+        },
+        "propertyValues": {},
+        "slot": null,
+        "styles": null
+    },
+    {
+        "definition": {
+            "id": "d356d14b6e293a3020a244b63d278d8f",
+            "type": "MACROPONENT"
+        },
+        "elementId": "container_2",
+        "elementLabel": "Container 2",
+        "eventMappings": [],
+        "isHidden": {
+            "type": "JSON_LITERAL",
+            "value": null
+        },
+        "overrides": {
+            "composition": [
+                {
+                    "definition": {
+                        "id": "b324da974cef96f2db1d484cfeda4e3e",
+                        "type": "MACROPONENT_VIEWPORT"
+                    },
+                    "elementId": "tabs_1",
+                    "elementLabel": "Tabs 1",
+                    "eventMappings": [],
+                    "extensionPoints": [],
+                    "isHidden": {
+                        "type": "JSON_LITERAL",
+                        "value": null
+                    },
+                    "items": [
+                        {
+                            "icon": "",
+                            "id": "cm49nzryg021h3j7u898d64qe",
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "User"
+                                }
+                            },
+                            "order": 0,
+                            "type": "local"
+                        },
+                        {
+                            "icon": null,
+                            "id": "cm49o0ha002213j7uwvzmm7oa",
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Location"
+                                }
+                            },
+                            "order": 100,
+                            "type": "local"
+                        },
+                        {
+                            "icon": null,
+                            "id": "cm49o05os021r3j7u40dfm6b2",
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Company"
+                                }
+                            },
+                            "order": 200,
+                            "type": "local"
+                        },
+                        {
+                            "icon": null,
+                            "id": "cm49o0t8i022b3j7u5g1zoelq",
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Cost Center"
+                                }
+                            },
+                            "order": 300,
+                            "type": "local"
+                        },
+                        {
+                            "icon": null,
+                            "id": "cm49o1bc6022l3j7uk8jc0itx",
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Business Unit"
+                                }
+                            },
+                            "order": 400,
+                            "type": "local"
+                        },
+                        {
+                            "icon": null,
+                            "id": "cm4h1chjl01wg357u7xfnfwqh",
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Department"
+                                }
+                            },
+                            "order": 500,
+                            "type": "local"
+                        }
+                    ],
+                    "overrides": {
+                        "composition": [
+                            {
+                                "definition": {
+                                    "id": "d356d14b6e293a3020a244b63d278d8f",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "cmeejjnzryhaaccbbiddjhhuymenzcaq",
+                                "elementLabel": "User",
+                                "eventMappings": [],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "name": "Untitled Tab",
+                                "overrides": {
+                                    "composition": [
+                                        {
+                                            "definition": {
+                                                "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                                "type": "MACROPONENT"
+                                            },
+                                            "elementId": "rich_text_7",
+                                            "elementLabel": "Rich text 7",
+                                            "eventMappings": [],
+                                            "isHidden": {
+                                                "type": "JSON_LITERAL",
+                                                "value": null
+                                            },
+                                            "preset": null,
+                                            "propertyValues": {
+                                                "html": {
+                                                    "script": {
+                                                        "apiVersion": "2.0.0",
+                                                        "controllerElementId": null,
+                                                        "inlineScript": "function evaluateProperty({ api, helpers }) {\n    const kpi = api.data.sam_kpi_foundation_1.output.users_kpi;\n    const totalCount = kpi.reduce((sum, kpis) =&gt; sum + (kpis.field ? kpis.field_value : 0), 0);\n\n    // ServiceNow-inspired Table Design\n    let tableHtml = `\n        &lt;table id=\"kpi-table\" style=\"width: 100%; border-collapse: collapse; font-family: 'Arial', sans-serif; margin-top: 20px; background-color: #ffffff; border: 1px solid #dcdcdc; border-radius: 4px;\"&gt;\n            &lt;thead&gt;\n                &lt;tr style=\"background-color: #f3f4f6; color: #333333; font-size: 14px; text-align: left; border-bottom: 2px solid #dcdcdc;\"&gt;\n                    &lt;th style=\"padding: 12px; border-right: 1px solid #e0e0e0;\"&gt;KPI&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; border-right: 1px solid #e0e0e0;\"&gt;Description&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; text-align: center; border-right: 1px solid #e0e0e0;\"&gt;Count&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; text-align: center; border-right: 1px solid #e0e0e0;\"&gt;Impact&lt;/th&gt;\n                    &lt;th style=\"padding: 12px;\"&gt;Recommendation&lt;/th&gt;\n                &lt;/tr&gt;\n            &lt;/thead&gt;\n            &lt;tbody&gt;\n    `;\n\n    // Loop through KPI data to populate rows\n    kpi.forEach((kpis, index) =&gt; {\n        let kpiName = kpis.kpi || \"Unknown KPI\";\n        let description = kpis.description || \"No Description\";\n        let count = kpis.field ? kpis.field_value : 0;\n        let recommendation = kpis.recommendation || \"No Action Needed\";\n\n        // Determine Impact Level\n        let impact = \"Low\";\n        let dotColor = \"#28a745\"; // Green for Low Impact\n        \n        if (count &gt;= totalCount / 2) {\n            impact = \"High\";\n            dotColor = \"#ff4d4f\"; // Red for High Impact\n        } else if (count &gt; 2) {\n            impact = \"Medium\";\n            dotColor = \"#ffc107\"; // Yellow for Medium Impact\n        }\n\n        // Row Color Alternating\n        let rowBackground = index % 2 === 0 ? \"#ffffff\" : \"#f8f9fa\";\n\n        // Generate Row\n        tableHtml += `\n            &lt;tr data-impact=\"${impact}\" style=\"background-color: ${rowBackground}; transition: background-color 0.2s ease;\"&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #e0e0e0; font-weight: 500; color: #333333;\"&gt;${kpiName}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #e0e0e0; color: #666666;\"&gt;${description}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; text-align: center; border-bottom: 1px solid #e0e0e0; font-weight: bold; color: #000000;\"&gt;${count}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; text-align: center; border-bottom: 1px solid #e0e0e0;\"&gt;\n                    &lt;span style=\"display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: #000000;\"&gt;\n                        &lt;span style=\"display: inline-block; width: 10px; height: 10px; background-color: ${dotColor}; border-radius: 50%;\"&gt;&lt;/span&gt;\n                        ${impact}\n                    &lt;/span&gt;\n                &lt;/td&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #e0e0e0; color: #0072c6; font-weight: 500;\"&gt;${recommendation}&lt;/td&gt;\n            &lt;/tr&gt;\n        `;\n    });\n\n    // Close the Table\n    tableHtml += `\n            &lt;/tbody&gt;\n        &lt;/table&gt;\n    `;\n\n    // Return the Full HTML (only table content)\n    return tableHtml;\n}\n",
+                                                        "scriptSysId": "eb57050ec31e96100ced12f1b40131c3",
+                                                        "target": null
+                                                    },
+                                                    "type": "CLIENT_TRANSFORM_SCRIPT"
+                                                }
+                                            },
+                                            "slot": null,
+                                            "styles": null
+                                        }
+                                    ],
+                                    "layout": {
+                                        "default": {
+                                            "children": null,
+                                            "items": [
+                                                {
+                                                    "element_id": "rich_text_7",
+                                                    "styles": {
+                                                        "align-self": "stretch",
+                                                        "height": "100%",
+                                                        "margin-left": "var(--now-scalable-space--3xl)",
+                                                        "margin-right": "var(--now-scalable-space--sm)",
+                                                        "width": "100%"
+                                                    }
+                                                }
+                                            ],
+                                            "root": null,
+                                            "rules": null,
+                                            "styles": {
+                                                "align-content": "flex-start",
+                                                "display": "flex",
+                                                "flex-direction": "row",
+                                                "flex-wrap": "nowrap",
+                                                "gap": "0",
+                                                "grid-auto-columns": "1fr",
+                                                "grid-auto-rows": "1fr",
+                                                "grid-template-columns": "1fr 1fr",
+                                                "grid-template-rows": "1fr 1fr",
+                                                "height": "",
+                                                "justify-content": "flex-start",
+                                                "margin": "0",
+                                                "margin-bottom": "0",
+                                                "margin-left": "0",
+                                                "margin-right": "0",
+                                                "margin-top": "0",
+                                                "max-width": "",
+                                                "min-height": "",
+                                                "min-width": "",
+                                                "width": ""
+                                            },
+                                            "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                                            "type": "flex"
+                                        },
+                                        "version": "3.0.0"
+                                    }
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "ariaRegionHeadingLevel": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "1"
+                                    },
+                                    "ariaRegionName": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": ""
+                                        }
+                                    },
+                                    "ariaRole": {
+                                        "type": "JSON_LITERAL",
+                                        "value": ""
+                                    },
+                                    "hideEmptyStateUi": {
+                                        "type": "JSON_LITERAL",
+                                        "value": true
+                                    },
+                                    "includeAriaHeading": {
+                                        "type": "JSON_LITERAL",
+                                        "value": false
+                                    },
+                                    "slotWrapperBehavior": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "fullheight"
+                                    },
+                                    "type": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "section"
+                                    }
+                                },
+                                "slot": "cm49nzryg021h3j7u898d64qe",
+                                "styles": null
+                            },
+                            {
+                                "definition": {
+                                    "id": "d356d14b6e293a3020a244b63d278d8f",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "cmeejjoaahabbaaccccccddjhhuoqcjjjjrch",
+                                "elementLabel": "Location",
+                                "eventMappings": [],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "name": "Location",
+                                "overrides": {
+                                    "composition": [
+                                        {
+                                            "definition": {
+                                                "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                                "type": "MACROPONENT"
+                                            },
+                                            "elementId": "rich_text_13",
+                                            "elementLabel": "Rich text 13",
+                                            "eventMappings": [],
+                                            "isHidden": {
+                                                "type": "JSON_LITERAL",
+                                                "value": null
+                                            },
+                                            "preset": null,
+                                            "propertyValues": {
+                                                "html": {
+                                                    "script": {
+                                                        "apiVersion": "2.0.0",
+                                                        "controllerElementId": null,
+                                                        "inlineScript": "function evaluateProperty({ api, helpers }) {\n    const kpi = api.data.sam_kpi_foundation_1.output.location_kpi;\n    const totalCount = kpi.reduce((sum, kpis) =&gt; sum + (kpis.field ? kpis.field_value : 0), 0);\n\n    console.log(\"kalai\", JSON.stringify(kpi, null, 4));\n\n    // Initialize the HTML table\n    let tableHtml = `\n         &lt;table id=\"kpi-table\" style=\"width: 100%; border-collapse: collapse; font-family: 'Arial', sans-serif; margin-top: 20px; background-color: #ffffff; border: 1px solid #dcdcdc; border-radius: 4px;\"&gt;\n            &lt;thead&gt;\n                &lt;tr style=\"background-color: #f3f4f6; color: #333333; font-size: 14px; text-align: left; border-bottom: 2px solid #dcdcdc;\"&gt;\n                    &lt;th style=\"padding: 12px; border-right: 1px solid #e0e0e0;\"&gt;KPI&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; border-right: 1px solid #e0e0e0;\"&gt;Description&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; text-align: center; border-right: 1px solid #e0e0e0;\"&gt;Count&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; text-align: center; border-right: 1px solid #e0e0e0;\"&gt;Impact&lt;/th&gt;\n                    &lt;th style=\"padding: 12px;\"&gt;Recommendation&lt;/th&gt;\n                &lt;/tr&gt;\n            &lt;/thead&gt;\n            &lt;tbody&gt;\n    `;\n\n    // Loop through KPI data and generate rows\n    kpi.forEach((kpis, index) =&gt; {\n        const kpiName = kpis.kpi || \"Unknown KPI\";\n        const description = kpis.description || \"No Description\";\n        const count = kpis.field ? kpis.field_value : 0;\n        const recommendation = kpis.recommendation || \"No Action Needed\";\n\n        // Determine impact level and colors\n        let impact = \"Low\";\n        let impactColor = \"#52c41a\"; // Green for Low Impact\n        if (count &gt;= totalCount / 2) {\n            impact = \"High\";\n            impactColor = \"#ff4d4f\"; // Red for High Impact\n        } else if (count &gt; 2) {\n            impact = \"Medium\";\n            impactColor = \"#faad14\"; // Orange for Medium Impact\n        }\n\n        // Alternating row colors and hover effects\n        const rowColor = index % 2 === 0 ? \"#f9f9f9\" : \"#ffffff\";\n        const hoverColor = \"#f0f5ff\";\n\n        // Generate rows\n        tableHtml += `\n            &lt;tr style=\"\n                background-color: ${rowColor}; \n                transition: background-color 0.3s ease;\"\n                onmouseover=\"this.style.backgroundColor='${hoverColor}'\" \n                onmouseout=\"this.style.backgroundColor='${rowColor}'\"\n            &gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #e6e6e6;  color: #595959;\"&gt;${kpiName}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #e6e6e6; color: #595959;\"&gt;${description}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; text-align: center; border-bottom: 1px solid #e6e6e6;  color: #262626;\"&gt;${count}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; text-align: center; border-bottom: 1px solid #e6e6e6;\"&gt;\n                    &lt;span style=\"\n                        display: inline-flex; \n                        align-items: center; \n                        gap: 6px; \n                        font-weight: 600;\n                        color: ${impactColor};\n                    \"&gt;\n                        &lt;span style=\"\n                            display: inline-block; \n                            width: 12px; \n                            height: 12px; \n                            background-color: ${impactColor}; \n                            border-radius: 50%;\n                        \"&gt;&lt;/span&gt;\n                        ${impact}\n                    &lt;/span&gt;\n                &lt;/td&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #e6e6e6; font-weight: 500; color: #096dd9;\"&gt;${recommendation}&lt;/td&gt;\n            &lt;/tr&gt;\n        `;\n    });\n\n    // Close the table\n    tableHtml += `\n            &lt;/tbody&gt;\n        &lt;/table&gt;\n    `;\n\n    return tableHtml;\n}\n",
+                                                        "scriptSysId": "351739c6c3121a100ced12f1b4013156",
+                                                        "target": null
+                                                    },
+                                                    "type": "CLIENT_TRANSFORM_SCRIPT"
+                                                }
+                                            },
+                                            "slot": null,
+                                            "styles": null
+                                        }
+                                    ],
+                                    "layout": {
+                                        "default": {
+                                            "children": null,
+                                            "items": [
+                                                {
+                                                    "element_id": "rich_text_13",
+                                                    "styles": {
+                                                        "margin-left": "var(--now-scalable-space--sm)",
+                                                        "margin-right": "var(--now-scalable-space--sm)",
+                                                        "width": "80%"
+                                                    }
+                                                }
+                                            ],
+                                            "root": null,
+                                            "rules": null,
+                                            "styles": {
+                                                "min-height": "300px",
+                                                "width": "100%"
+                                            },
+                                            "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                                            "type": "flex"
+                                        },
+                                        "version": "3.0.0"
+                                    }
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "ariaRegionHeadingLevel": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "1"
+                                    },
+                                    "ariaRegionName": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": ""
+                                        }
+                                    },
+                                    "ariaRole": {
+                                        "type": "JSON_LITERAL",
+                                        "value": ""
+                                    },
+                                    "hideEmptyStateUi": {
+                                        "type": "JSON_LITERAL",
+                                        "value": true
+                                    },
+                                    "includeAriaHeading": {
+                                        "type": "JSON_LITERAL",
+                                        "value": false
+                                    },
+                                    "slotWrapperBehavior": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "fullheight"
+                                    },
+                                    "type": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "section"
+                                    }
+                                },
+                                "slot": "cm49o0ha002213j7uwvzmm7oa",
+                                "styles": null
+                            },
+                            {
+                                "definition": {
+                                    "id": "d356d14b6e293a3020a244b63d278d8f",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "cmeejjoaaffouaaccbbsddjhhukxjwhhjtl",
+                                "elementLabel": "Company",
+                                "eventMappings": [],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "name": "Company",
+                                "overrides": {
+                                    "composition": [
+                                        {
+                                            "definition": {
+                                                "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                                "type": "MACROPONENT"
+                                            },
+                                            "elementId": "rich_text_12",
+                                            "elementLabel": "Rich text 12",
+                                            "eventMappings": [],
+                                            "isHidden": {
+                                                "type": "JSON_LITERAL",
+                                                "value": null
+                                            },
+                                            "preset": null,
+                                            "propertyValues": {
+                                                "html": {
+                                                    "script": {
+                                                        "apiVersion": "2.0.0",
+                                                        "controllerElementId": null,
+                                                        "inlineScript": "function evaluateProperty({ api, helpers }) {\n    const kpi = api.data.sam_kpi_foundation_1.output.company_kpi;\n    const totalCount = kpi.reduce((sum, kpis) =&gt; sum + (kpis.field ? kpis.field_value : 0), 0);\n\n    console.log(\"kalai\", JSON.stringify(kpi, null, 4));\n\n    // Initialize the HTML table\n    let tableHtml = `\n       &lt;table id=\"kpi-table\" style=\"width: 100%; border-collapse: collapse; font-family: 'Arial', sans-serif; margin-top: 20px; background-color: #ffffff; border: 1px solid #dcdcdc; border-radius: 4px;\"&gt;\n            &lt;thead&gt;\n                &lt;tr style=\"background-color: #f3f4f6; color: #333333; font-size: 14px; text-align: left; border-bottom: 2px solid #dcdcdc;\"&gt;\n                    &lt;th style=\"padding: 12px; border-right: 1px solid #e0e0e0;\"&gt;KPI&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; border-right: 1px solid #e0e0e0;\"&gt;Description&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; text-align: center; border-right: 1px solid #e0e0e0;\"&gt;Count&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; text-align: center; border-right: 1px solid #e0e0e0;\"&gt;Impact&lt;/th&gt;\n                    &lt;th style=\"padding: 12px;\"&gt;Recommendation&lt;/th&gt;\n                &lt;/tr&gt;\n            &lt;/thead&gt;\n            &lt;tbody&gt;\n    `;\n\n    // Loop through KPI data to populate rows\n    kpi.forEach((kpis, index) =&gt; {\n        const kpiName = kpis.kpi || \"Unknown KPI\";\n        const description = kpis.description || \"No Description\";\n        const count = kpis.field ? kpis.field_value : 0;\n        const recommendation = kpis.recommendation || \"No Action Needed\";\n\n        // Determine impact and color\n        let impact = \"Low\";\n        let impactColor = \"#52c41a\"; // Default green color for Low impact\n        if (count &gt;= totalCount / 2) {\n            impact = \"High\";\n            impactColor = \"#ff4d4f\"; // Red for High impact\n        } else if (count &gt; 2) {\n            impact = \"Medium\";\n            impactColor = \"#faad14\"; // Orange for Medium impact\n        }\n\n        // Row background and hover effect\n        const rowColor = index % 2 === 0 ? \"#fafafa\" : \"#ffffff\";\n        const hoverColor = \"#f0f5ff\";\n\n        // Generate table rows\n        tableHtml += `\n            &lt;tr style=\"background-color: ${rowColor}; transition: all 0.3s;\" \n                onmouseover=\"this.style.backgroundColor='${hoverColor}'\" \n                onmouseout=\"this.style.backgroundColor='${rowColor}'\"&gt;\n                &lt;td style=\"padding: 16px; border-bottom: 1px solid #e6f7ff;  color: #595959;\"&gt;${kpiName}&lt;/td&gt;\n                &lt;td style=\"padding: 16px; border-bottom: 1px solid #e6f7ff; color: #595959;\"&gt;${description}&lt;/td&gt;\n                &lt;td style=\"padding: 16px; text-align: center; border-bottom: 1px solid #e6f7ff;  color: #262626;\"&gt;${count}&lt;/td&gt;\n                &lt;td style=\"padding: 16px; text-align: center; border-bottom: 1px solid #e6f7ff;\"&gt;\n                    &lt;span style=\"display: inline-flex; align-items: center; gap: 6px; font-weight: 600;\"&gt;\n                        &lt;span style=\"display: inline-block; width: 12px; height: 12px; background-color: ${impactColor}; border-radius: 50%;\"&gt;&lt;/span&gt;\n                        ${impact}\n                    &lt;/span&gt;\n                &lt;/td&gt;\n                &lt;td style=\"padding: 16px; border-bottom: 1px solid #e6f7ff; color: #096dd9; font-weight: 500;\"&gt;${recommendation}&lt;/td&gt;\n            &lt;/tr&gt;\n        `;\n    });\n\n    // Close the table\n    tableHtml += `\n            &lt;/tbody&gt;\n        &lt;/table&gt;\n    `;\n\n    // Return the generated table\n    return tableHtml;\n}\n",
+                                                        "scriptSysId": "f11739c6c3121a100ced12f1b4013156",
+                                                        "target": null
+                                                    },
+                                                    "type": "CLIENT_TRANSFORM_SCRIPT"
+                                                }
+                                            },
+                                            "slot": null,
+                                            "styles": null
+                                        }
+                                    ],
+                                    "layout": {
+                                        "default": {
+                                            "children": null,
+                                            "items": [
+                                                {
+                                                    "element_id": "rich_text_12",
+                                                    "styles": {
+                                                        "margin-left": "var(--now-scalable-space--sm)",
+                                                        "margin-right": "var(--now-scalable-space--sm)",
+                                                        "width": "100%"
+                                                    }
+                                                }
+                                            ],
+                                            "root": null,
+                                            "rules": null,
+                                            "styles": {
+                                                "justify-content": "center",
+                                                "min-height": "300px",
+                                                "width": "100%"
+                                            },
+                                            "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                                            "type": "flex"
+                                        },
+                                        "version": "3.0.0"
+                                    }
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "ariaRegionHeadingLevel": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "1"
+                                    },
+                                    "ariaRegionName": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": ""
+                                        }
+                                    },
+                                    "ariaRole": {
+                                        "type": "JSON_LITERAL",
+                                        "value": ""
+                                    },
+                                    "hideEmptyStateUi": {
+                                        "type": "JSON_LITERAL",
+                                        "value": true
+                                    },
+                                    "includeAriaHeading": {
+                                        "type": "JSON_LITERAL",
+                                        "value": false
+                                    },
+                                    "slotWrapperBehavior": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "fullheight"
+                                    },
+                                    "type": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "section"
+                                    }
+                                },
+                                "slot": "cm49o05os021r3j7u40dfm6b2",
+                                "styles": null
+                            },
+                            {
+                                "definition": {
+                                    "id": "d356d14b6e293a3020a244b63d278d8f",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "cmeejjoaatiikaacccccddjhhuccdqjccote",
+                                "elementLabel": "Cost Center",
+                                "eventMappings": [],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "name": "Cost Center",
+                                "overrides": {
+                                    "composition": [
+                                        {
+                                            "definition": {
+                                                "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                                "type": "MACROPONENT"
+                                            },
+                                            "elementId": "rich_text_14",
+                                            "elementLabel": "Rich text 14",
+                                            "eventMappings": [],
+                                            "isHidden": {
+                                                "type": "JSON_LITERAL",
+                                                "value": null
+                                            },
+                                            "preset": null,
+                                            "propertyValues": {
+                                                "html": {
+                                                    "script": {
+                                                        "apiVersion": "2.0.0",
+                                                        "controllerElementId": null,
+                                                        "inlineScript": "function evaluateProperty({ api, helpers }) {\n    const kpi = api.data.sam_kpi_foundation_1.output.costcenter_kpi;\n    const totalCount = kpi.reduce((sum, kpis) =&gt; sum + (kpis.field ? kpis.field_value : 0), 0);\n\n    console.log(\"kalai\", JSON.stringify(kpi, null, 4));\n\n    // Initialize the table\n    let tableHtml = `\n  &lt;table id=\"kpi-table\" style=\"width: 100%; border-collapse: collapse; font-family: 'Arial', sans-serif; margin-top: 20px; background-color: #ffffff; border: 1px solid #dcdcdc; border-radius: 4px;\"&gt;\n            &lt;thead&gt;\n                &lt;tr style=\"background-color: #f3f4f6; color: #333333; font-size: 14px; text-align: left; border-bottom: 2px solid #dcdcdc;\"&gt;\n                    &lt;th style=\"padding: 12px; border-right: 1px solid #e0e0e0;\"&gt;KPI&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; border-right: 1px solid #e0e0e0;\"&gt;Description&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; text-align: center; border-right: 1px solid #e0e0e0;\"&gt;Count&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; text-align: center; border-right: 1px solid #e0e0e0;\"&gt;Impact&lt;/th&gt;\n                    &lt;th style=\"padding: 12px;\"&gt;Recommendation&lt;/th&gt;\n                &lt;/tr&gt;\n            &lt;/thead&gt;\n            &lt;tbody&gt;\n    `;\n\n    // Loop through KPI data and generate rows\n    kpi.forEach((kpis, index) =&gt; {\n        const kpiName = kpis.kpi || \"Unknown KPI\";\n        const description = kpis.description || \"No Description\";\n        const count = kpis.field ? kpis.field_value : 0;\n        const recommendation = kpis.recommendation || \"No Action Needed\";\n\n        // Determine impact level and color\n        let impact = \"Low\";\n        let circleColor = \"#52c41a\"; // Default Red for Low\n\n        if (count &gt;= totalCount / 2) {\n            impact = \"High\";\n            circleColor = \"#ff4d4f \"; // Green for High\n        } else if (count &gt; 2) {\n            impact = \"Medium\";\n            circleColor = \"#faad14\"; // Orange for Medium\n        }\n\n        // Alternating row colors\n        const rowColor = index % 2 === 0 ? \"#f9f9f9\" : \"#ffffff\";\n        const hoverColor = \"#f0f5ff\";\n\n        // Generate row HTML with circular indicators\n        tableHtml += `\n            &lt;tr style=\"background-color: ${rowColor}; transition: background-color 0.3s;\"\n                onmouseover=\"this.style.backgroundColor='${hoverColor}'\"\n                onmouseout=\"this.style.backgroundColor='${rowColor}'\"&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #e6e6e6;  color: #333;\"&gt;${kpiName}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #e6e6e6; color: #555;\"&gt;${description}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; text-align: center; border-bottom: 1px solid #e6e6e6; \"&gt;${count}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; text-align: center; border-bottom: 1px solid #e6e6e6;\"&gt;\n                    &lt;span style=\"\n                        display: inline-flex;\n                        align-items: center;\n                        gap: 6px;\n                        font-weight: 600;\n                        color: #333;\"&gt;\n                        &lt;span style=\"\n                            display: inline-block; \n                            width: 12px; \n                            height: 12px; \n                            background-color: ${circleColor}; \n                            border-radius: 50%;\"&gt;&lt;/span&gt;\n                        ${impact}\n                    &lt;/span&gt;\n                &lt;/td&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #e6e6e6; font-weight: 500; color: #096dd9;\"&gt;${recommendation}&lt;/td&gt;\n            &lt;/tr&gt;\n        `;\n    });\n\n    // Close the table\n    tableHtml += `\n            &lt;/tbody&gt;\n        &lt;/table&gt;\n    `;\n\n    return tableHtml;\n}\n",
+                                                        "scriptSysId": "751739c6c3121a100ced12f1b4013156",
+                                                        "target": null
+                                                    },
+                                                    "type": "CLIENT_TRANSFORM_SCRIPT"
+                                                }
+                                            },
+                                            "slot": null,
+                                            "styles": null
+                                        }
+                                    ],
+                                    "layout": {
+                                        "default": {
+                                            "children": null,
+                                            "items": [
+                                                {
+                                                    "element_id": "rich_text_14",
+                                                    "styles": {
+                                                        "margin-left": "var(--now-scalable-space--sm)",
+                                                        "margin-right": "var(--now-scalable-space--sm)",
+                                                        "width": "80%"
+                                                    }
+                                                }
+                                            ],
+                                            "root": null,
+                                            "rules": null,
+                                            "styles": {
+                                                "justify-content": "flex-start",
+                                                "min-height": "300px",
+                                                "width": "100%"
+                                            },
+                                            "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                                            "type": "flex"
+                                        },
+                                        "version": "3.0.0"
+                                    }
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "ariaRegionHeadingLevel": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "1"
+                                    },
+                                    "ariaRegionName": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": ""
+                                        }
+                                    },
+                                    "ariaRole": {
+                                        "type": "JSON_LITERAL",
+                                        "value": ""
+                                    },
+                                    "hideEmptyStateUi": {
+                                        "type": "JSON_LITERAL",
+                                        "value": true
+                                    },
+                                    "includeAriaHeading": {
+                                        "type": "JSON_LITERAL",
+                                        "value": false
+                                    },
+                                    "slotWrapperBehavior": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "fullheight"
+                                    },
+                                    "type": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "section"
+                                    }
+                                },
+                                "slot": "cm49o0t8i022b3j7u5g1zoelq",
+                                "styles": null
+                            },
+                            {
+                                "definition": {
+                                    "id": "d356d14b6e293a3020a244b63d278d8f",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "cmeejjobbbchhaaccccmddjhhuiisthzcir",
+                                "elementLabel": "Business Unit",
+                                "eventMappings": [],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "name": "Business Unit",
+                                "overrides": {
+                                    "composition": [
+                                        {
+                                            "definition": {
+                                                "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                                "type": "MACROPONENT"
+                                            },
+                                            "elementId": "rich_text_11",
+                                            "elementLabel": "Rich text 11",
+                                            "eventMappings": [],
+                                            "isHidden": {
+                                                "type": "JSON_LITERAL",
+                                                "value": null
+                                            },
+                                            "preset": null,
+                                            "propertyValues": {
+                                                "html": {
+                                                    "script": {
+                                                        "apiVersion": "2.0.0",
+                                                        "controllerElementId": null,
+                                                        "inlineScript": "function evaluateProperty({ api, helpers }) {\n    const kpi = api.data.sam_kpi_foundation_1.output.businessunit_kpi;\n    const totalCount = kpi.reduce((sum, kpis) =&gt; sum + (kpis.field ? kpis.field_value : 0), 0); // Calculate total count\n\n    console.log(\"kalai\", JSON.stringify(kpi, null, 4));\n\n    // Initialize the table\n    let tableHtml = `\n  &lt;table id=\"kpi-table\" style=\"width: 100%; border-collapse: collapse; font-family: 'Arial', sans-serif; margin-top: 20px; background-color: #ffffff; border: 1px solid #dcdcdc; border-radius: 4px;\"&gt;\n            &lt;thead&gt;\n                &lt;tr style=\"background-color: #f3f4f6; color: #333333; font-size: 14px; text-align: left; border-bottom: 2px solid #dcdcdc;\"&gt;\n                    &lt;th style=\"padding: 12px; border-right: 1px solid #e0e0e0;\"&gt;KPI&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; border-right: 1px solid #e0e0e0;\"&gt;Description&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; text-align: center; border-right: 1px solid #e0e0e0;\"&gt;Count&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; text-align: center; border-right: 1px solid #e0e0e0;\"&gt;Impact&lt;/th&gt;\n                    &lt;th style=\"padding: 12px;\"&gt;Recommendation&lt;/th&gt;\n                &lt;/tr&gt;\n            &lt;/thead&gt;\n            &lt;tbody&gt;\n    `;\n\n    // Loop through KPI data and generate rows\n    kpi.forEach((kpis, index) =&gt; {\n        const kpiName = kpis.kpi || \"Unknown KPI\";\n        const description = kpis.description || \"No Description\";\n        const count = kpis.field ? kpis.field_value : 0;\n        const recommendation = kpis.recommendation || \"No Action Needed\";\n\n        // Determine impact level and color\n        let impact = \"Low\";\n        let circleColor = \"#52c41a \"; // Default Red for Low impact\n        if (count &gt;= totalCount / 2) {\n            impact = \"High\";\n            circleColor = \"#ff4d4f \"; // Green for High impact\n        } else if (count &gt; 2) {\n            impact = \"Medium\";\n            circleColor = \"#faad14\"; // Orange for Medium impact\n        }\n\n        // Alternating row colors and hover effect\n        const rowColor = index % 2 === 0 ? \"#f9f9f9\" : \"#ffffff\";\n        const hoverColor = \"#f0f5ff\";\n\n        // Generate row HTML\n        tableHtml += `\n            &lt;tr style=\"\n                background-color: ${rowColor}; \n                transition: all 0.3s;\"\n                onmouseover=\"this.style.backgroundColor='${hoverColor}'\" \n                onmouseout=\"this.style.backgroundColor='${rowColor}'\"&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #e6e6e6;  color: #333;\"&gt;${kpiName}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #e6e6e6; color: #555;\"&gt;${description}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; text-align: center; border-bottom: 1px solid #e6e6e6; \"&gt;${count}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; text-align: center; border-bottom: 1px solid #e6e6e6;\"&gt;\n                    &lt;span style=\"\n                        display: inline-flex; \n                        align-items: center; \n                        gap: 6px; \n                        font-weight: 600; \n                        color: #333;\"&gt;\n                        &lt;span style=\"\n                            display: inline-block; \n                            width: 12px; \n                            height: 12px; \n                            background-color: ${circleColor}; \n                            border-radius: 50%;\"&gt;&lt;/span&gt;\n                        ${impact}\n                    &lt;/span&gt;\n                &lt;/td&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #e6e6e6; font-weight: 500; color: #096dd9;\"&gt;${recommendation}&lt;/td&gt;\n            &lt;/tr&gt;\n        `;\n    });\n\n    // Close the table\n    tableHtml += `\n            &lt;/tbody&gt;\n        &lt;/table&gt;\n    `;\n\n    return tableHtml;\n}\n",
+                                                        "scriptSysId": "a9253946c3121a100ced12f1b40131a2",
+                                                        "target": null
+                                                    },
+                                                    "type": "CLIENT_TRANSFORM_SCRIPT"
+                                                }
+                                            },
+                                            "slot": null,
+                                            "styles": null
+                                        }
+                                    ],
+                                    "layout": {
+                                        "default": {
+                                            "children": null,
+                                            "items": [
+                                                {
+                                                    "element_id": "rich_text_11",
+                                                    "styles": {
+                                                        "margin-left": "var(--now-scalable-space--sm)",
+                                                        "margin-right": "var(--now-scalable-space--sm)",
+                                                        "width": "80%"
+                                                    }
+                                                }
+                                            ],
+                                            "root": null,
+                                            "rules": null,
+                                            "styles": {
+                                                "min-height": "300px",
+                                                "width": "100%"
+                                            },
+                                            "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                                            "type": "flex"
+                                        },
+                                        "version": "3.0.0"
+                                    }
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "ariaRegionHeadingLevel": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "1"
+                                    },
+                                    "ariaRegionName": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": ""
+                                        }
+                                    },
+                                    "ariaRole": {
+                                        "type": "JSON_LITERAL",
+                                        "value": ""
+                                    },
+                                    "hideEmptyStateUi": {
+                                        "type": "JSON_LITERAL",
+                                        "value": true
+                                    },
+                                    "includeAriaHeading": {
+                                        "type": "JSON_LITERAL",
+                                        "value": false
+                                    },
+                                    "slotWrapperBehavior": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "fullheight"
+                                    },
+                                    "type": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "section"
+                                    }
+                                },
+                                "slot": "cm49o1bc6022l3j7uk8jc0itx",
+                                "styles": null
+                            },
+                            {
+                                "definition": {
+                                    "id": "d356d14b6e293a3020a244b63d278d8f",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "cmeehbbchjoaabbwhddffhhurrteiewe",
+                                "elementLabel": "Department",
+                                "eventMappings": [],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "name": "Department",
+                                "overrides": {
+                                    "composition": [
+                                        {
+                                            "definition": {
+                                                "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                                "type": "MACROPONENT"
+                                            },
+                                            "elementId": "rich_text_15",
+                                            "elementLabel": "Rich text 15",
+                                            "eventMappings": [],
+                                            "isHidden": {
+                                                "type": "JSON_LITERAL",
+                                                "value": null
+                                            },
+                                            "preset": null,
+                                            "propertyValues": {
+                                                "html": {
+                                                    "script": {
+                                                        "apiVersion": "2.0.0",
+                                                        "controllerElementId": null,
+                                                        "inlineScript": "function evaluateProperty({ api, helpers }) {\n    const kpi = api.data.sam_kpi_foundation_1.output.department_kpi;\n    const totalCount = kpi.reduce((sum, kpis) =&gt; sum + (kpis.field ? kpis.field_value : 0), 0); // Calculate total count\n\n    // Initialize the HTML table string\n    let tableHtml = `\n &lt;table id=\"kpi-table\" style=\"width: 100%; border-collapse: collapse; font-family: 'Arial', sans-serif; margin-top: 20px; background-color: #ffffff; border: 1px solid #dcdcdc; border-radius: 4px;\"&gt;\n            &lt;thead&gt;\n                &lt;tr style=\"background-color: #f3f4f6; color: #333333; font-size: 14px; text-align: left; border-bottom: 2px solid #dcdcdc;\"&gt;\n                    &lt;th style=\"padding: 12px; border-right: 1px solid #e0e0e0;\"&gt;KPI&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; border-right: 1px solid #e0e0e0;\"&gt;Description&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; text-align: center; border-right: 1px solid #e0e0e0;\"&gt;Count&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; text-align: center; border-right: 1px solid #e0e0e0;\"&gt;Impact&lt;/th&gt;\n                    &lt;th style=\"padding: 12px;\"&gt;Recommendation&lt;/th&gt;\n                &lt;/tr&gt;\n            &lt;/thead&gt;\n            &lt;tbody&gt;\n    `;\n\n    // Loop through the kpi array and generate table rows\n    kpi.forEach((kpis, index) =&gt; {\n        let kpiName = kpis.kpi || \"Unknown KPI\";\n        let description = kpis.description || \"No Description\";\n        let count = kpis.field ? kpis.field_value : 0;\n        let recommendation = kpis.recommendation || \"No Action Needed\";\n\n        // Determine impact and circle color\n        let impact = \"Low\";\n        let impactColor = \"#52c41a\"; // Green for Low\n        if (count &gt;= totalCount / 2) {\n            impact = \"High\";\n            impactColor = \"#ff4d4f\"; // Red for High\n        } else if (count &gt; 2) {\n            impact = \"Medium\";\n            impactColor = \"#faad14\"; // Orange for Medium\n        }\n\n        // Alternating row background color\n        const rowColor = index % 2 === 0 ? \"#f9f9f9\" : \"#ffffff\";\n        const hoverColor = \"#f0f5ff\";\n\n        tableHtml += `\n            &lt;tr style=\"background-color: ${rowColor}; transition: all 0.3s ease;\"\n                onmouseover=\"this.style.backgroundColor='${hoverColor}'\" \n                onmouseout=\"this.style.backgroundColor='${rowColor}'\"&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #e6e6e6;  color: #333;\"&gt;${kpiName}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #e6e6e6; color: #555;\"&gt;${description}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; text-align: center; border-bottom: 1px solid #e6e6e6; \"&gt;${count}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; text-align: center; border-bottom: 1px solid #e6e6e6;\"&gt;\n                    &lt;span style=\"\n                        display: inline-flex; \n                        align-items: center; \n                        gap: 6px; \n                        font-weight: 600; \n                        color: ${impactColor};\"&gt;\n                        &lt;span style=\"\n                            display: inline-block; \n                            width: 12px; \n                            height: 12px; \n                            background-color: ${impactColor}; \n                            border-radius: 50%;\"&gt;&lt;/span&gt;\n                        ${impact}\n                    &lt;/span&gt;\n                &lt;/td&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #e6e6e6; font-weight: 500; color: #096dd9;\"&gt;${recommendation}&lt;/td&gt;\n            &lt;/tr&gt;\n        `;\n    });\n\n    // Close the table\n    tableHtml += `\n            &lt;/tbody&gt;\n        &lt;/table&gt;\n    `;\n\n    return tableHtml;\n}\n",
+                                                        "scriptSysId": "3d96ecfac3de92500ced12f1b40131eb",
+                                                        "target": null
+                                                    },
+                                                    "type": "CLIENT_TRANSFORM_SCRIPT"
+                                                }
+                                            },
+                                            "slot": null,
+                                            "styles": null
+                                        }
+                                    ],
+                                    "layout": {
+                                        "default": {
+                                            "children": null,
+                                            "items": [
+                                                {
+                                                    "element_id": "rich_text_15",
+                                                    "styles": {
+                                                        "align-self": "stretch",
+                                                        "margin-left": "var(--now-scalable-space--3xl)",
+                                                        "margin-right": "var(--now-scalable-space--sm)",
+                                                        "width": "100%"
+                                                    }
+                                                }
+                                            ],
+                                            "root": null,
+                                            "rules": null,
+                                            "styles": {
+                                                "display": "flex",
+                                                "grid-auto-columns": "1fr",
+                                                "grid-auto-rows": "1fr",
+                                                "grid-template-columns": "1fr 1fr",
+                                                "grid-template-rows": "1fr 1fr",
+                                                "min-height": "300px",
+                                                "width": "100%"
+                                            },
+                                            "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                                            "type": "flex"
+                                        },
+                                        "version": "3.0.0"
+                                    }
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "ariaRegionHeadingLevel": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "1"
+                                    },
+                                    "ariaRegionName": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": ""
+                                        }
+                                    },
+                                    "ariaRole": {
+                                        "type": "JSON_LITERAL",
+                                        "value": ""
+                                    },
+                                    "hideEmptyStateUi": {
+                                        "type": "JSON_LITERAL",
+                                        "value": true
+                                    },
+                                    "includeAriaHeading": {
+                                        "type": "JSON_LITERAL",
+                                        "value": false
+                                    },
+                                    "slotWrapperBehavior": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "fullheight"
+                                    },
+                                    "type": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "section"
+                                    }
+                                },
+                                "slot": "cm4h1chjl01wg357u7xfnfwqh",
+                                "styles": null
+                            }
+                        ],
+                        "layout": null
+                    },
+                    "preset": null,
+                    "propertyValues": {
+                        "activeRoute": {
+                            "icon": null,
+                            "id": "cm4h1chjl01wg357u7xfnfwqh",
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Department"
+                                }
+                            },
+                            "order": 600,
+                            "type": "local"
+                        },
+                        "ariaLabel": {
+                            "type": "JSON_LITERAL",
+                            "value": ""
+                        },
+                        "defaultRoute": {
+                            "type": "JSON_LITERAL",
+                            "value": "cm49o1bc6022l3j7uk8jc0itx"
+                        },
+                        "dynamicTabData": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "enableCollapsing": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "fixedWidth": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "hideLabel": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "initiallyCollapsed": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "items": {
+                            "type": "JSON_LITERAL",
+                            "value": []
+                        },
+                        "maxWidth": {
+                            "type": "JSON_LITERAL",
+                            "value": 240
+                        },
+                        "position": {
+                            "type": "JSON_LITERAL",
+                            "value": "left"
+                        },
+                        "selectedTab": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "selectedTabIndex": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "showInlinePadding": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "size": {
+                            "type": "JSON_LITERAL",
+                            "value": "md"
+                        },
+                        "spaceBetweenItems": {
+                            "type": "JSON_LITERAL",
+                            "value": "none"
+                        },
+                        "tabStyles": {
+                            "type": "JSON_LITERAL",
+                            "value": "/* Container for the Tabset */\n.tabset-container {\n    display: flex;\n    flex-direction: column;\n    gap: 16px;\n    padding: 24px;\n    border-radius: 16px;\n    box-shadow: 0 4px 10px #ffffff; /* Soft, subtle shadow */\n    transition: all 0.3s ease; /* Smooth hover effect */\n}\n\n/* Individual Tabs */\n.tabset-tabs {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    width: 250px;\n    background-color: #ffffff; /* Core white background for light theme */\n    padding: 16px 20px;\n    border-radius: 12px;\n    border-top-left-radius: 0px;\n    transition: all 0.3s ease, transform 0.2s ease;\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n    border: 1px solid #e0e0e0; /* Subtle border for separation */\n}\n\n/* Hover Effect for Tabs */\n.tabset-tabs:hover {\n    background-color: #ffffff; /* Light blue tint on hover for light theme */\n    transform: translateY(-2px);\n}\n\n/* Active Tab */\n.tabset-tabs.active {\n    background-color: #e6f7ff; /* Light highlighted blue for active state */\n    box-shadow: 0 4px 12px rgba(0, 128, 255, 0.2);\n    font-weight: bold;\n    border-radius: 120px;\n    border-left: 12px solid #1890ff;\n}\n\n/* Tab Text Styling */\n.tabset-tabs span {\n    font-size: 16px;\n    color: #333333; /* Dark gray for better contrast */\n    font-weight: 500;\n    transition: color 0.3s ease;\n}\n\n.tabset-tabs:hover span {\n    color: #096dd9; /* Bright blue on hover for text */\n}\n\n/* Icon or Action Button */\n.tabset-tabs .tab-icon {\n    font-size: 20px;\n    color: #8c8c8c; /* Neutral gray for icons */\n    transition: color 0.3s ease, transform 0.3s ease;\n}\n\n.tabset-tabs:hover .tab-icon {\n    color: #1890ff; /* Bright blue for hover */\n}\n\n/* Responsive Styling */\n@media (max-width: 768px) {\n    .tabset-tabs {\n        width: 100%;\n        padding: 14px 16px;\n    }\n\n    .tabset-container {\n        gap: 12px;\n        padding: 16px;\n    }\n}\n"
+                        },
+                        "viewportConfiguration": {
+                            "type": "JSON_LITERAL",
+                            "value": {
+                                "enableDataDrivenTabs": true,
+                                "validation": {
+                                    "icon": {
+                                        "required": false
+                                    },
+                                    "name": {
+                                        "required": true
+                                    },
+                                    "order": {
+                                        "required": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "slot": null,
+                    "styles": null
+                }
+            ],
+            "layout": {
+                "default": {
+                    "children": null,
+                    "items": [
+                        {
+                            "element_id": "tabs_1",
+                            "styles": {
+                                "align-self": "stretch",
+                                "background": "rgb(var(--now-color_background--primary))",
+                                "margin-top": "var(--now-scalable-space--xs)",
+                                "width": ""
+                            }
+                        }
+                    ],
+                    "root": null,
+                    "rules": null,
+                    "styles": {
+                        "align-items": "stretch",
+                        "display": "flex",
+                        "flex-direction": "row",
+                        "grid-auto-columns": "1fr",
+                        "grid-auto-flow": "column",
+                        "grid-auto-rows": "1fr",
+                        "grid-template-columns": "1fr 1fr",
+                        "grid-template-rows": "1fr 1fr",
+                        "margin-left": "0",
+                        "margin-top": "1px",
+                        "width": "100%"
+                    },
+                    "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                    "type": "flex"
+                },
+                "version": "3.0.0"
+            }
+        },
+        "preset": null,
+        "propertyValues": {
+            "ariaRegionHeadingLevel": {
+                "type": "JSON_LITERAL",
+                "value": "1"
+            },
+            "ariaRegionName": {
+                "type": "JSON_LITERAL",
+                "value": ""
+            },
+            "ariaRole": {
+                "type": "JSON_LITERAL",
+                "value": ""
+            },
+            "hideEmptyStateUi": {
+                "type": "JSON_LITERAL",
+                "value": true
+            },
+            "includeAriaHeading": {
+                "type": "JSON_LITERAL",
+                "value": false
+            },
+            "slotWrapperBehavior": {
+                "type": "JSON_LITERAL",
+                "value": "fullheight"
+            },
+            "type": {
+                "type": "JSON_LITERAL",
+                "value": "section"
+            }
+        },
+        "slot": null,
+        "styles": null
+    },
+    {
+        "definition": {
+            "id": "16896fa0f6eed87cc23b4c1a4752a35f",
+            "type": "MACROPONENT"
+        },
+        "elementId": "card_base_divider_9",
+        "elementLabel": "Card Base Divider 9",
+        "eventMappings": [],
+        "isHidden": {
+            "type": "JSON_LITERAL",
+            "value": null
+        },
+        "preset": {
+            "controllerElementId": "properties_1",
+            "disabledEventTargetIds": [],
+            "id": "d673a240776f5110960ced43ba5a99d4"
+        },
+        "propertyValues": {
+            "blockSpacing": {
+                "type": "JSON_LITERAL",
+                "value": "lg"
+            }
+        },
+        "slot": null,
+        "styles": null
+    },
+    {
+        "definition": {
+            "id": "1f6e0643eca7a637e36bd7833549ec9e",
+            "type": "MACROPONENT"
+        },
+        "elementId": "heading_3",
+        "elementLabel": "Heading 3",
+        "eventMappings": [],
+        "isHidden": {
+            "type": "JSON_LITERAL",
+            "value": null
+        },
+        "preset": null,
+        "propertyValues": {
+            "hasNoMargin": {
+                "type": "JSON_LITERAL",
+                "value": true
+            },
+            "label": {
+                "type": "TRANSLATION_LITERAL",
+                "value": {
+                    "code": null,
+                    "comment": "",
+                    "message": "Contractual Data Reports"
+                }
+            },
+            "level": {
+                "type": "JSON_LITERAL",
+                "value": "1"
+            },
+            "variant": {
+                "type": "JSON_LITERAL",
+                "value": "header-secondary"
+            },
+            "wontWrap": {
+                "type": "JSON_LITERAL",
+                "value": false
+            }
+        },
+        "slot": null,
+        "styles": null
+    },
+    {
+        "definition": {
+            "id": "16896fa0f6eed87cc23b4c1a4752a35f",
+            "type": "MACROPONENT"
+        },
+        "elementId": "card_base_divider_1",
+        "elementLabel": "Card Base Divider 1",
+        "eventMappings": [],
+        "isHidden": {
+            "type": "JSON_LITERAL",
+            "value": null
+        },
+        "preset": {
+            "controllerElementId": "properties_1",
+            "disabledEventTargetIds": [],
+            "id": "d673a240776f5110960ced43ba5a99d4"
+        },
+        "propertyValues": {},
+        "slot": null,
+        "styles": null
+    },
+    {
+        "definition": {
+            "id": "d356d14b6e293a3020a244b63d278d8f",
+            "type": "MACROPONENT"
+        },
+        "elementId": "container_3",
+        "elementLabel": "Container 3",
+        "eventMappings": [],
+        "isHidden": {
+            "type": "JSON_LITERAL",
+            "value": null
+        },
+        "overrides": {
+            "composition": [
+                {
+                    "definition": {
+                        "id": "b324da974cef96f2db1d484cfeda4e3e",
+                        "type": "MACROPONENT_VIEWPORT"
+                    },
+                    "elementId": "tabs_2",
+                    "elementLabel": "Tabs 2",
+                    "eventMappings": [],
+                    "extensionPoints": [],
+                    "isHidden": {
+                        "type": "JSON_LITERAL",
+                        "value": null
+                    },
+                    "items": [
+                        {
+                            "icon": "",
+                            "id": "cm49o4o5i025l3j7u7e5wd1tn",
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Contract"
+                                }
+                            },
+                            "order": 100,
+                            "type": "local"
+                        },
+                        {
+                            "icon": null,
+                            "id": "cm49o5q9w02633j7u7ep6td5y",
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Entitlement"
+                                }
+                            },
+                            "order": 200,
+                            "type": "local"
+                        },
+                        {
+                            "icon": null,
+                            "id": "cm49o6567026d3j7uj62bui7t",
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Allocation"
+                                }
+                            },
+                            "order": 300,
+                            "type": "local"
+                        }
+                    ],
+                    "overrides": {
+                        "composition": [
+                            {
+                                "definition": {
+                                    "id": "d356d14b6e293a3020a244b63d278d8f",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "cmeejjoeeoffjaaccffmddjhhukbklojjmbb",
+                                "elementLabel": "Contract",
+                                "eventMappings": [],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "name": "Untitled Tab",
+                                "overrides": {
+                                    "composition": [
+                                        {
+                                            "definition": {
+                                                "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                                "type": "MACROPONENT"
+                                            },
+                                            "elementId": "rich_text_8",
+                                            "elementLabel": "Rich text 8",
+                                            "eventMappings": [],
+                                            "isHidden": {
+                                                "type": "JSON_LITERAL",
+                                                "value": null
+                                            },
+                                            "preset": null,
+                                            "propertyValues": {
+                                                "html": {
+                                                    "script": {
+                                                        "apiVersion": "2.0.0",
+                                                        "controllerElementId": null,
+                                                        "inlineScript": "function evaluateProperty({\n    api,\n    helpers\n}) {\n    const kpi = api.data.sam_kpi_license_1.output.contract_kpi;\n    const totalCount = kpi.reduce((sum, kpis) =&gt; sum + (kpis.field ? kpis.field_value : 0), 0);\n\n    console.log(\"kalai\", JSON.stringify(kpi, null, 4));\n\n    // Initialize the HTML table string\n    let tableHtml = `\n        &lt;table style=\"\n            width: 100%; \n            border-collapse: separate; \n            border-spacing: 1; \n            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; \n            margin-top: 20px; \n            border-radius: 8px; \n            box-shadow: 0 4px 12px rgba(0,0,0,0.1); \n            overflow: hidden;\n        \"&gt;\n            &lt;thead&gt;\n                &lt;tr style=\"background-color: #F1F5F9; color: #000000; font-size: 16px; text-align: left;\"&gt;\n                    &lt;th style=\"padding: 16px; \"&gt;KPI&lt;/th&gt;\n                    &lt;th style=\"padding: 16px; \"&gt;Description&lt;/th&gt;\n                    &lt;th style=\"padding: 16px; text-align: center; \"&gt;Count&lt;/th&gt;\n                    &lt;th style=\"padding: 16px; text-align: center; \"&gt;Impact&lt;/th&gt;\n                    &lt;th style=\"padding: 16px;\"&gt;Recommendation&lt;/th&gt;\n                &lt;/tr&gt;\n            &lt;/thead&gt;\n            &lt;tbody&gt;\n    `;\n\n    // Loop through KPI data and generate rows\n    kpi.forEach((kpis, index) =&gt; {\n        let kpiName = kpis.kpi || \"Unknown KPI\";\n        let description = kpis.description || \"No Description\";\n        let count = kpis.field ? kpis.field_value : 0;\n        let recommendation = kpis.recommendation || \"No Action Needed\";\n\n        // Determine impact and its color\n        let impact = \"Low\";\n        let dotColor = \"#52c41a\"; // Green for Low Impact\n        if (count &gt;= totalCount / 2) {\n            impact = \"High\";\n            dotColor = \"#ff4d4f\"; // Red for High Impact\n        } else if (count &gt; 2) {\n            impact = \"Medium\";\n            dotColor = \"#faad14\"; // Orange for Medium Impact\n        }\n\n        // Alternate row background color\n        let rowColor = index % 2 === 0 ? \"#fafafa\" : \"#ffffff\";\n        let rowHoverColor = \"#f0f5ff\";\n\n        // Add row\n        tableHtml += `\n            &lt;tr style=\"transition: all 0.3s;\" \n                onmouseover=\"this.style.backgroundColor='${rowHoverColor}'\" \n                onmouseout=\"this.style.backgroundColor='${rowColor}'\"&gt;\n                &lt;td style=\"padding: 16px; border-bottom: 1px solid #e6f7ff; font-weight: 600; color: #595959;\"&gt;${kpiName}&lt;/td&gt;\n                &lt;td style=\"padding: 16px; border-bottom: 1px solid #e6f7ff; color: #595959;\"&gt;${description}&lt;/td&gt;\n                &lt;td style=\"padding: 16px; text-align: center; border-bottom: 1px solid #e6f7ff; color: #262626;\"&gt;${count}&lt;/td&gt;\n                &lt;td style=\"padding: 16px; text-align: center; border-bottom: 1px solid #e6f7ff;\"&gt;\n                    &lt;span style=\"display: inline-flex; align-items: center; gap: 6px; font-weight: 600;\"&gt;\n                        &lt;span style=\"display: inline-block; width: 12px; height: 12px; background-color: ${dotColor}; border-radius: 50%;\"&gt;&lt;/span&gt;\n                        ${impact}\n                    &lt;/span&gt;\n                &lt;/td&gt;\n                &lt;td style=\"padding: 16px; border-bottom: 1px solid #e6f7ff; color: #096dd9; font-weight: 500;\"&gt;${recommendation}&lt;/td&gt;\n            &lt;/tr&gt;\n        `;\n    });\n\n    // Close the table\n    tableHtml += `\n            &lt;/tbody&gt;\n        &lt;/table&gt;\n    `;\n\n    // Return the table\n    return tableHtml;\n}",
+                                                        "scriptSysId": "82998186c39e96100ced12f1b40131bb",
+                                                        "target": null
+                                                    },
+                                                    "type": "CLIENT_TRANSFORM_SCRIPT"
+                                                }
+                                            },
+                                            "slot": null,
+                                            "styles": null
+                                        }
+                                    ],
+                                    "layout": {
+                                        "default": {
+                                            "children": null,
+                                            "items": [
+                                                {
+                                                    "element_id": "rich_text_8",
+                                                    "styles": {
+                                                        "margin-left": "var(--now-scalable-space--sm)",
+                                                        "margin-right": "var(--now-scalable-space--sm)",
+                                                        "min-width": "",
+                                                        "width": "90%"
+                                                    }
+                                                }
+                                            ],
+                                            "root": null,
+                                            "rules": null,
+                                            "styles": {
+                                                "align-items": "stretch",
+                                                "flex-direction": "row",
+                                                "justify-content": "flex-start",
+                                                "min-height": "300px",
+                                                "width": "100%"
+                                            },
+                                            "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                                            "type": "flex"
+                                        },
+                                        "version": "3.0.0"
+                                    }
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "ariaRegionHeadingLevel": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "1"
+                                    },
+                                    "ariaRegionName": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": ""
+                                        }
+                                    },
+                                    "ariaRole": {
+                                        "type": "JSON_LITERAL",
+                                        "value": ""
+                                    },
+                                    "hideEmptyStateUi": {
+                                        "type": "JSON_LITERAL",
+                                        "value": true
+                                    },
+                                    "includeAriaHeading": {
+                                        "type": "JSON_LITERAL",
+                                        "value": false
+                                    },
+                                    "slotWrapperBehavior": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "fullheight"
+                                    },
+                                    "type": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "section"
+                                    }
+                                },
+                                "slot": "cm49o4o5i025l3j7u7e5wd1tn",
+                                "styles": null
+                            },
+                            {
+                                "definition": {
+                                    "id": "d356d14b6e293a3020a244b63d278d8f",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "cmeejjoffqjjyaaccggeeddjhhudduphybqff",
+                                "elementLabel": "Entitlement",
+                                "eventMappings": [],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "name": "Entitlement",
+                                "overrides": {
+                                    "composition": [
+                                        {
+                                            "definition": {
+                                                "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                                "type": "MACROPONENT"
+                                            },
+                                            "elementId": "rich_text_9",
+                                            "elementLabel": "Rich text 9",
+                                            "eventMappings": [],
+                                            "isHidden": {
+                                                "type": "JSON_LITERAL",
+                                                "value": null
+                                            },
+                                            "preset": null,
+                                            "propertyValues": {
+                                                "html": {
+                                                    "script": {
+                                                        "apiVersion": "2.0.0",
+                                                        "controllerElementId": null,
+                                                        "inlineScript": "function evaluateProperty({ api, helpers }) {\n    const kpi = api.data.sam_kpi_license_1.output.entitlement_kpi;\n    const totalCount = kpi.reduce((sum, kpis) =&gt; sum + (kpis.field ? kpis.field_value : 0), 0);\n\n    // Initialize the HTML table string with clean, modern styles\n    let tableHtml = `\n        &lt;table style=\"\n            width: 100%; \n            border-collapse: separate; \n            border-spacing: 0; \n            margin-top: 20px; \n            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n            background-color: #ffffff; \n            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\n            border-radius: 8px;\n            overflow: hidden;\"&gt;\n            &lt;thead&gt;\n                &lt;tr style=\"background-color: #F1F5F9; color: black; text-align: left; font-size: 16px;\"&gt;\n                    &lt;th style=\"padding: 12px; \"&gt;KPI&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; \"&gt;Description&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; text-align: center; \"&gt;Count&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; text-align: center; \"&gt;Impact&lt;/th&gt;\n                    &lt;th style=\"padding: 12px;\"&gt;Recommendation&lt;/th&gt;\n                &lt;/tr&gt;\n            &lt;/thead&gt;\n            &lt;tbody&gt;\n    `;\n\n    // Loop through KPI data to generate table rows\n    kpi.forEach((kpis, index) =&gt; {\n        let kpiName = kpis.kpi || \"Unknown KPI\";\n        let description = kpis.description || \"No Description\";\n        let count = kpis.field ? kpis.field_value : 0;\n        let recommendation = kpis.recommendation || \"No Action Needed\";\n\n        // Determine impact and circular indicator color\n        let impact = \"Low\";\n        let circleColor = \"#ff4d4f\"; // Default: Red for Low\n\n        if (count &gt;= totalCount / 2) {\n            impact = \"High\";\n            circleColor = \"#52c41a\"; // Green for High impact\n        } else if (count &gt; 2) {\n            impact = \"Medium\";\n            circleColor = \"#faad14\"; // Orange for Medium impact\n        }\n\n        // Alternate row background colors\n        const rowColor = index % 2 === 0 ? \"#f9f9f9\" : \"#ffffff\";\n        const hoverColor = \"#f0f5ff\";\n\n        // Generate each row\n        tableHtml += `\n            &lt;tr style=\"background-color: ${rowColor}; transition: all 0.3s ease;\"\n                onmouseover=\"this.style.backgroundColor='${hoverColor}'\" \n                onmouseout=\"this.style.backgroundColor='${rowColor}'\"&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #ddd; color: #333;\"&gt;${kpiName}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #ddd; color: #555;\"&gt;${description}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; text-align: center; border-bottom: 1px solid #ddd; color: #262626;\"&gt;${count}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; text-align: center; border-bottom: 1px solid #ddd;\"&gt;\n                    &lt;span style=\"\n                        display: inline-flex; \n                        align-items: center; \n                        gap: 6px; \n                        font-weight: 600; \n                        color: #333;\"&gt;\n                        &lt;span style=\"\n                            display: inline-block; \n                            width: 12px; \n                            height: 12px; \n                            background-color: ${circleColor}; \n                            border-radius: 50%;\"&gt;&lt;/span&gt;\n                        ${impact}\n                    &lt;/span&gt;\n                &lt;/td&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #ddd; font-weight: 500; color: #096dd9;\"&gt;${recommendation}&lt;/td&gt;\n            &lt;/tr&gt;\n        `;\n    });\n\n    // Close the table\n    tableHtml += `\n            &lt;/tbody&gt;\n        &lt;/table&gt;\n    `;\n\n    return tableHtml;\n}\n",
+                                                        "scriptSysId": "b30acd4ac39e96100ced12f1b40131da",
+                                                        "target": null
+                                                    },
+                                                    "type": "CLIENT_TRANSFORM_SCRIPT"
+                                                }
+                                            },
+                                            "slot": null,
+                                            "styles": null
+                                        }
+                                    ],
+                                    "layout": {
+                                        "default": {
+                                            "children": null,
+                                            "items": [
+                                                {
+                                                    "element_id": "rich_text_9",
+                                                    "styles": {
+                                                        "margin-left": "var(--now-scalable-space--sm)",
+                                                        "margin-right": "var(--now-scalable-space--sm)",
+                                                        "width": "100%"
+                                                    }
+                                                }
+                                            ],
+                                            "root": null,
+                                            "rules": null,
+                                            "styles": {
+                                                "min-height": "300px",
+                                                "width": "100%"
+                                            },
+                                            "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                                            "type": "flex"
+                                        },
+                                        "version": "3.0.0"
+                                    }
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "ariaRegionHeadingLevel": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "1"
+                                    },
+                                    "ariaRegionName": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": ""
+                                        }
+                                    },
+                                    "ariaRole": {
+                                        "type": "JSON_LITERAL",
+                                        "value": ""
+                                    },
+                                    "hideEmptyStateUi": {
+                                        "type": "JSON_LITERAL",
+                                        "value": true
+                                    },
+                                    "includeAriaHeading": {
+                                        "type": "JSON_LITERAL",
+                                        "value": false
+                                    },
+                                    "slotWrapperBehavior": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "fullheight"
+                                    },
+                                    "type": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "section"
+                                    }
+                                },
+                                "slot": "cm49o5q9w02633j7u7ep6td5y",
+                                "styles": null
+                            },
+                            {
+                                "definition": {
+                                    "id": "d356d14b6e293a3020a244b63d278d8f",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "cmeejjoggffggiiaaccggeddjhhuwdohlhhmn",
+                                "elementLabel": "Allocation",
+                                "eventMappings": [],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "name": "Allocation",
+                                "overrides": {
+                                    "composition": [
+                                        {
+                                            "definition": {
+                                                "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                                "type": "MACROPONENT"
+                                            },
+                                            "elementId": "rich_text_10",
+                                            "elementLabel": "Rich text 10",
+                                            "eventMappings": [],
+                                            "isHidden": {
+                                                "type": "JSON_LITERAL",
+                                                "value": null
+                                            },
+                                            "preset": null,
+                                            "propertyValues": {
+                                                "html": {
+                                                    "script": {
+                                                        "apiVersion": "2.0.0",
+                                                        "controllerElementId": null,
+                                                        "inlineScript": "function evaluateProperty({ api, helpers }) {\n    const kpi = api.data.sam_kpi_license_1.output.allocation_kpi;\n    const totalCount = kpi.reduce((sum, kpis) =&gt; sum + (kpis.field ? kpis.field_value : 0), 0);\n\n    // Initialize the HTML table string\n    let tableHtml = `\n        &lt;table style=\"\n            width: 100%; \n            border-collapse: separate; \n            border-spacing: 0; \n            margin-top: 20px; \n            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; \n            background-color: #ffffff; \n            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\n            border-radius: 8px;\n            overflow: hidden;\"&gt;\n            &lt;thead&gt;\n                &lt;tr style=\"background-color: #F1F5F9; color: black; text-align: left; font-size: 16px;\"&gt;\n                    &lt;th style=\"padding: 12px; \"&gt;KPI&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; \"&gt;Description&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; text-align: center; \"&gt;Count&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; text-align: center; \"&gt;Impact&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; \"&gt;Recommendation&lt;/th&gt;\n                &lt;/tr&gt;\n            &lt;/thead&gt;\n            &lt;tbody&gt;\n    `;\n\n    // Loop through KPI data and generate table rows\n    kpi.forEach((kpis, index) =&gt; {\n        let kpiName = kpis.kpi || \"Unknown KPI\";\n        let description = kpis.description || \"No Description\";\n        let count = kpis.field ? kpis.field_value : 0;\n        let recommendation = kpis.recommendation || \"No Action Needed\";\n\n        // Determine impact level and color\n        let impact = \"Low\";\n        let circleColor = \"#52c41a\"; // Default Red for Low impact\n        if (count &gt;= totalCount / 2) {\n            impact = \"High\";\n            circleColor = \"#ff4d4f\"; // Green for High impact\n        } else if (count &gt; 2) {\n            impact = \"Medium\";\n            circleColor = \"#faad14\"; // Orange for Medium impact\n        }\n\n        // Alternating row colors and hover effects\n        const rowColor = index % 2 === 0 ? \"#f9f9f9\" : \"#ffffff\";\n        const hoverColor = \"#f0f5ff\";\n\n        // Add rows to the table\n        tableHtml += `\n            &lt;tr style=\"background-color: ${rowColor}; transition: all 0.3s;\"\n                onmouseover=\"this.style.backgroundColor='${hoverColor}'\" \n                onmouseout=\"this.style.backgroundColor='${rowColor}'\"&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #ddd; color: #333;\"&gt;${kpiName}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #ddd; color: #555;\"&gt;${description}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; text-align: center; border-bottom: 1px solid #ddd; font-weight: bold;\"&gt;${count}&lt;/td&gt;\n                &lt;td style=\"padding: 12px; text-align: center; border-bottom: 1px solid #ddd;\"&gt;\n                    &lt;span style=\"\n                        display: inline-flex; \n                        align-items: center; \n                        gap: 6px; \n                        font-weight: 600; \n                        color: ${circleColor};\"&gt;\n                        &lt;span style=\"\n                            display: inline-block; \n                            width: 12px; \n                            height: 12px; \n                            background-color: ${circleColor}; \n                            border-radius: 50%;\"&gt;&lt;/span&gt;\n                        ${impact}\n                    &lt;/span&gt;\n                &lt;/td&gt;\n                &lt;td style=\"padding: 12px; border-bottom: 1px solid #ddd; font-weight: 500; color: #096dd9;\"&gt;${recommendation}&lt;/td&gt;\n            &lt;/tr&gt;\n        `;\n    });\n\n    // Close the table\n    tableHtml += `\n            &lt;/tbody&gt;\n        &lt;/table&gt;\n    `;\n\n    // Return the generated HTML table\n    return tableHtml;\n}\n",
+                                                        "scriptSysId": "a5a4f546c3121a100ced12f1b40131a6",
+                                                        "target": null
+                                                    },
+                                                    "type": "CLIENT_TRANSFORM_SCRIPT"
+                                                }
+                                            },
+                                            "slot": null,
+                                            "styles": null
+                                        }
+                                    ],
+                                    "layout": {
+                                        "default": {
+                                            "children": null,
+                                            "items": [
+                                                {
+                                                    "element_id": "rich_text_10",
+                                                    "styles": {
+                                                        "margin-left": "var(--now-scalable-space--sm)",
+                                                        "margin-right": "var(--now-scalable-space--sm)",
+                                                        "width": "80%"
+                                                    }
+                                                }
+                                            ],
+                                            "root": null,
+                                            "rules": null,
+                                            "styles": {
+                                                "min-height": "300px",
+                                                "width": "100%"
+                                            },
+                                            "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                                            "type": "flex"
+                                        },
+                                        "version": "3.0.0"
+                                    }
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "ariaRegionHeadingLevel": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "1"
+                                    },
+                                    "ariaRegionName": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": ""
+                                        }
+                                    },
+                                    "ariaRole": {
+                                        "type": "JSON_LITERAL",
+                                        "value": ""
+                                    },
+                                    "hideEmptyStateUi": {
+                                        "type": "JSON_LITERAL",
+                                        "value": true
+                                    },
+                                    "includeAriaHeading": {
+                                        "type": "JSON_LITERAL",
+                                        "value": false
+                                    },
+                                    "slotWrapperBehavior": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "fullheight"
+                                    },
+                                    "type": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "section"
+                                    }
+                                },
+                                "slot": "cm49o6567026d3j7uj62bui7t",
+                                "styles": null
+                            }
+                        ],
+                        "layout": null
+                    },
+                    "preset": null,
+                    "propertyValues": {
+                        "activeRoute": {
+                            "icon": null,
+                            "id": "cm49o7cqa02773j7ukgdfhyry",
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Software Models"
+                                }
+                            },
+                            "order": 600,
+                            "type": "local"
+                        },
+                        "ariaLabel": {
+                            "type": "JSON_LITERAL",
+                            "value": ""
+                        },
+                        "defaultRoute": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "dynamicTabData": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "enableCollapsing": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "fixedWidth": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "hideLabel": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "initiallyCollapsed": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "items": {
+                            "type": "JSON_LITERAL",
+                            "value": []
+                        },
+                        "maxWidth": {
+                            "type": "JSON_LITERAL",
+                            "value": 240
+                        },
+                        "position": {
+                            "type": "JSON_LITERAL",
+                            "value": "left"
+                        },
+                        "selectedTab": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "selectedTabIndex": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "showInlinePadding": {
+                            "type": "JSON_LITERAL",
+                            "value": true
+                        },
+                        "size": {
+                            "type": "JSON_LITERAL",
+                            "value": "md"
+                        },
+                        "spaceBetweenItems": {
+                            "type": "JSON_LITERAL",
+                            "value": "none"
+                        },
+                        "tabStyles": {
+                            "type": "JSON_LITERAL",
+                            "value": "/* Container for the Tabset */\n.tabset-container {\n    display: flex;\n    flex-direction: column;\n    gap: 16px;\n    padding: 24px;\n    border-radius: 16px;\n    box-shadow: 0 4px 10px #ffffff; /* Soft, subtle shadow */\n    transition: all 0.3s ease; /* Smooth hover effect */\n}\n\n/* Individual Tabs */\n.tabset-tabs {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    max-width: 280px;\n    background-color: #ffffff; /* Core white background for light theme */\n    padding: 16px 20px;\n    border-radius: 12px;\n    border-top-left-radius: 0px;\n    transition: all 0.3s ease, transform 0.2s ease;\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n    border: 1px solid #e0e0e0; /* Subtle border for separation */\n}\n\n/* Hover Effect for Tabs */\n.tabset-tabs:hover {\n    background-color: #ffffff; /* Light blue tint on hover for light theme */\n    box-shadow: 0 6px 15px rgba(0, 128, 255, 0.1); /* Elevated shadow for hover */\n    transform: translateY(-2px);\n}\n\n/* Active Tab */\n.tabset-tabs.active {\n    background-color: #e6f7ff; /* Light highlighted blue for active state */\n    box-shadow: 0 4px 12px rgba(0, 128, 255, 0.2);\n    font-weight: bold;\n    border-radius: 120px;\n    border-left: 12px solid #1890ff;\n}\n\n/* Tab Text Styling */\n.tabset-tabs span {\n    font-size: 16px;\n    color: #333333; /* Dark gray for better contrast */\n    font-weight: 500;\n    transition: color 0.3s ease;\n}\n\n.tabset-tabs:hover span {\n    color: #096dd9; /* Bright blue on hover for text */\n}\n\n/* Icon or Action Button */\n.tabset-tabs .tab-icon {\n    font-size: 20px;\n    color: #8c8c8c; /* Neutral gray for icons */\n    transition: color 0.3s ease, transform 0.3s ease;\n}\n\n.tabset-tabs:hover .tab-icon {\n    color: #1890ff; /* Bright blue for hover */\n}\n\n/* Responsive Styling */\n@media (max-width: 768px) {\n    .tabset-tabs {\n        width: 100%;\n        padding: 14px 16px;\n    }\n\n    .tabset-container {\n        gap: 12px;\n        padding: 16px;\n    }\n}\n"
+                        },
+                        "viewportConfiguration": {
+                            "type": "JSON_LITERAL",
+                            "value": {
+                                "enableDataDrivenTabs": true,
+                                "validation": {
+                                    "icon": {
+                                        "required": false
+                                    },
+                                    "name": {
+                                        "required": true
+                                    },
+                                    "order": {
+                                        "required": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "slot": null,
+                    "styles": null
+                }
+            ],
+            "layout": {
+                "default": {
+                    "children": null,
+                    "items": [
+                        {
+                            "element_id": "tabs_2",
+                            "styles": {
+                                "margin-bottom": "var(--now-scalable-space--xl)"
+                            }
+                        }
+                    ],
+                    "root": null,
+                    "rules": null,
+                    "styles": {
+                        "display": "flex",
+                        "flex-direction": "row",
+                        "margin-left": "0",
+                        "margin-right": "var(--now-scalable-space--lg)",
+                        "margin-top": "var(--now-scalable-space--sm)",
+                        "width": "100%"
+                    },
+                    "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                    "type": "flex"
+                },
+                "version": "3.0.0"
+            }
+        },
+        "preset": null,
+        "propertyValues": {
+            "ariaRegionHeadingLevel": {
+                "type": "JSON_LITERAL",
+                "value": "1"
+            },
+            "ariaRegionName": {
+                "type": "TRANSLATION_LITERAL",
+                "value": {
+                    "code": null,
+                    "comment": "",
+                    "message": ""
+                }
+            },
+            "ariaRole": {
+                "type": "JSON_LITERAL",
+                "value": ""
+            },
+            "hideEmptyStateUi": {
+                "type": "JSON_LITERAL",
+                "value": true
+            },
+            "includeAriaHeading": {
+                "type": "JSON_LITERAL",
+                "value": false
+            },
+            "slotWrapperBehavior": {
+                "type": "JSON_LITERAL",
+                "value": "fullheight"
+            },
+            "type": {
+                "type": "JSON_LITERAL",
+                "value": "section"
+            }
+        },
+        "slot": null,
+        "styles": null
+    },
+    {
+        "definition": {
+            "id": "16896fa0f6eed87cc23b4c1a4752a35f",
+            "type": "MACROPONENT"
+        },
+        "elementId": "card_base_divider_7",
+        "elementLabel": "Card Base Divider 7",
+        "eventMappings": [],
+        "isHidden": {
+            "type": "JSON_LITERAL",
+            "value": null
+        },
+        "preset": {
+            "controllerElementId": "properties_1",
+            "disabledEventTargetIds": [],
+            "id": "d673a240776f5110960ced43ba5a99d4"
+        },
+        "propertyValues": {
+            "blockSpacing": {
+                "type": "JSON_LITERAL",
+                "value": "lg"
+            }
+        },
+        "slot": null,
+        "styles": null
+    },
+    {
+        "definition": {
+            "id": "1f6e0643eca7a637e36bd7833549ec9e",
+            "type": "MACROPONENT"
+        },
+        "elementId": "heading_5",
+        "elementLabel": "Heading 5",
+        "eventMappings": [],
+        "isHidden": {
+            "type": "JSON_LITERAL",
+            "value": null
+        },
+        "preset": null,
+        "propertyValues": {
+            "hasNoMargin": {
+                "type": "JSON_LITERAL",
+                "value": true
+            },
+            "label": {
+                "type": "TRANSLATION_LITERAL",
+                "value": {
+                    "code": null,
+                    "comment": "",
+                    "message": "Usage Data Reports"
+                }
+            },
+            "level": {
+                "type": "JSON_LITERAL",
+                "value": "1"
+            },
+            "variant": {
+                "type": "JSON_LITERAL",
+                "value": "header-secondary"
+            },
+            "wontWrap": {
+                "type": "JSON_LITERAL",
+                "value": false
+            }
+        },
+        "slot": null,
+        "styles": null
+    },
+    {
+        "definition": {
+            "id": "16896fa0f6eed87cc23b4c1a4752a35f",
+            "type": "MACROPONENT"
+        },
+        "elementId": "card_base_divider_3",
+        "elementLabel": "Card Base Divider 3",
+        "eventMappings": [],
+        "isHidden": {
+            "type": "JSON_LITERAL",
+            "value": null
+        },
+        "preset": {
+            "controllerElementId": "properties_1",
+            "disabledEventTargetIds": [],
+            "id": "d673a240776f5110960ced43ba5a99d4"
+        },
+        "propertyValues": {},
+        "slot": null,
+        "styles": null
+    },
+    {
+        "definition": {
+            "id": "d356d14b6e293a3020a244b63d278d8f",
+            "type": "MACROPONENT"
+        },
+        "elementId": "container_4",
+        "elementLabel": "Container 4",
+        "eventMappings": [],
+        "isHidden": {
+            "type": "JSON_LITERAL",
+            "value": null
+        },
+        "overrides": {
+            "composition": [
+                {
+                    "definition": {
+                        "id": "b324da974cef96f2db1d484cfeda4e3e",
+                        "type": "MACROPONENT_VIEWPORT"
+                    },
+                    "elementId": "tabs_3",
+                    "elementLabel": "Tabs 3",
+                    "eventMappings": [],
+                    "extensionPoints": [],
+                    "isHidden": {
+                        "type": "JSON_LITERAL",
+                        "value": null
+                    },
+                    "items": [
+                        {
+                            "icon": null,
+                            "id": "cmeehbbhavsaabbwyddffhhuqaaiicyhjff",
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Installation"
+                                }
+                            },
+                            "order": 400,
+                            "type": "local"
+                        },
+                        {
+                            "icon": null,
+                            "id": "cmeehbbhavtaabbxaaddffhhujjpxdccmxl",
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Discovery Models"
+                                }
+                            },
+                            "order": 500,
+                            "type": "local"
+                        },
+                        {
+                            "icon": null,
+                            "id": "cmeehbbhavuaabbxccddffhhuvjhhpehuii",
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Software Models"
+                                }
+                            },
+                            "order": 600,
+                            "type": "local"
+                        }
+                    ],
+                    "overrides": {
+                        "composition": [
+                            {
+                                "definition": {
+                                    "id": "d356d14b6e293a3020a244b63d278d8f",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "cmeehbbhavsaabbwzddffhhujjhkzuqtz",
+                                "elementLabel": "Installation",
+                                "eventMappings": [],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "name": "Installation",
+                                "overrides": {
+                                    "composition": [
+                                        {
+                                            "definition": {
+                                                "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                                "type": "MACROPONENT"
+                                            },
+                                            "elementId": "rich_text_16",
+                                            "elementLabel": "Rich text 16",
+                                            "eventMappings": [],
+                                            "isHidden": {
+                                                "type": "JSON_LITERAL",
+                                                "value": null
+                                            },
+                                            "preset": null,
+                                            "propertyValues": {
+                                                "html": {
+                                                    "script": {
+                                                        "apiVersion": "2.0.0",
+                                                        "controllerElementId": null,
+                                                        "inlineScript": "function evaluateProperty({ api, helpers }) {\n    const kpi = api.data.sam_kpi_usage_1.output.usage_installation;\n    const totalCount = kpi.reduce((sum, kpis) =&gt; sum + (kpis.field ? kpis.field_value : 0), 0);\n\n    // Ant Design-inspired table\n    let tableHtml = `\n        &lt;table style=\"\n            width: 100%; \n            border-collapse: separate; \n            border-spacing: 0; \n            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; \n            margin-top: 20px; \n            background-color: #ffffff; \n            border-radius: 8px; \n            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); \n            overflow: hidden;\n        \"&gt;\n            &lt;thead&gt;\n                &lt;tr style=\"background-color: #F1F5F9; color: black; text-align: left; font-size: 16px;\"&gt;\n                    &lt;th style=\"padding: 16px; border-right: 1px solid #e6f7ff;\"&gt;KPI&lt;/th&gt;\n                    &lt;th style=\"padding: 16px; border-right: 1px solid #e6f7ff;\"&gt;Description&lt;/th&gt;\n                    &lt;th style=\"padding: 16px; text-align: center; border-right: 1px solid #e6f7ff;\"&gt;Count&lt;/th&gt;\n                    &lt;th style=\"padding: 16px; text-align: center; border-right: 1px solid #e6f7ff;\"&gt;Impact&lt;/th&gt;\n                    &lt;th style=\"padding: 16px;\"&gt;Recommendation&lt;/th&gt;\n                &lt;/tr&gt;\n            &lt;/thead&gt;\n            &lt;tbody&gt;\n    `;\n\n    // Loop through KPI data to populate rows\n    kpi.forEach((kpis, index) =&gt; {\n        const kpiName = kpis.kpi || \"Unknown KPI\";\n        const description = kpis.description || \"No Description\";\n        const count = kpis.field ? kpis.field_value : 0;\n        const recommendation = kpis.recommendation || \"No Action Needed\";\n\n        // Determine impact and color\n        let impact = \"Low\";\n        let impactColor = \"#52c41a\"; // Green for Low\n        if (count &gt;= totalCount / 2) {\n            impact = \"High\";\n            impactColor = \"#ff4d4f\"; // Red for High\n        } else if (count &gt; 2) {\n            impact = \"Medium\";\n            impactColor = \"#faad14\"; // Orange for Medium\n        }\n\n        // Alternating row color\n        const rowColor = index % 2 === 0 ? \"#fafafa\" : \"#ffffff\";\n        const rowHoverColor = \"#f0f5ff\";\n\n        // Generate table row\n        tableHtml += `\n            &lt;tr style=\"background-color: ${rowColor}; transition: background-color 0.3s;\" \n                onmouseover=\"this.style.backgroundColor='${rowHoverColor}'\" \n                onmouseout=\"this.style.backgroundColor='${rowColor}'\"&gt;\n                &lt;td style=\"padding: 16px; border-bottom: 1px solid #e6f7ff; font-weight: 600; color: #595959;\"&gt;${kpiName}&lt;/td&gt;\n                &lt;td style=\"padding: 16px; border-bottom: 1px solid #e6f7ff; color: #595959;\"&gt;${description}&lt;/td&gt;\n                &lt;td style=\"padding: 16px; text-align: center; border-bottom: 1px solid #e6f7ff;  color: #262626;\"&gt;${count}&lt;/td&gt;\n                &lt;td style=\"padding: 16px; text-align: center; border-bottom: 1px solid #e6f7ff;\"&gt;\n                    &lt;span style=\"display: inline-flex; align-items: center; gap: 6px; font-weight: 600;\"&gt;\n                        &lt;span style=\"display: inline-block; width: 12px; height: 12px; background-color: ${impactColor}; border-radius: 50%;\"&gt;&lt;/span&gt;\n                        ${impact}\n                    &lt;/span&gt;\n                &lt;/td&gt;\n                &lt;td style=\"padding: 16px; border-bottom: 1px solid #e6f7ff; color: #096dd9; font-weight: 500;\"&gt;${recommendation}&lt;/td&gt;\n            &lt;/tr&gt;\n        `;\n    });\n\n    // Close the table\n    tableHtml += `\n            &lt;/tbody&gt;\n        &lt;/table&gt;\n    `;\n\n    // Return the table\n    return tableHtml;\n}\n",
+                                                        "scriptSysId": "59334481c36e96100ced12f1b401310e",
+                                                        "target": null
+                                                    },
+                                                    "type": "CLIENT_TRANSFORM_SCRIPT"
+                                                }
+                                            },
+                                            "slot": null,
+                                            "styles": null
+                                        }
+                                    ],
+                                    "layout": {
+                                        "default": {
+                                            "children": null,
+                                            "items": [
+                                                {
+                                                    "element_id": "rich_text_16",
+                                                    "styles": {
+                                                        "margin-left": "var(--now-scalable-space--sm)",
+                                                        "margin-right": "var(--now-scalable-space--sm)",
+                                                        "width": "90%"
+                                                    }
+                                                }
+                                            ],
+                                            "root": null,
+                                            "rules": null,
+                                            "styles": {
+                                                "justify-content": "flex-start",
+                                                "min-height": "300px",
+                                                "width": "100%"
+                                            },
+                                            "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                                            "type": "flex"
+                                        },
+                                        "version": "3.0.0"
+                                    }
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "ariaRegionHeadingLevel": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "1"
+                                    },
+                                    "ariaRegionName": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": ""
+                                        }
+                                    },
+                                    "ariaRole": {
+                                        "type": "JSON_LITERAL",
+                                        "value": ""
+                                    },
+                                    "hideEmptyStateUi": {
+                                        "type": "JSON_LITERAL",
+                                        "value": true
+                                    },
+                                    "includeAriaHeading": {
+                                        "type": "JSON_LITERAL",
+                                        "value": false
+                                    },
+                                    "slotWrapperBehavior": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "fullheight"
+                                    },
+                                    "type": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "section"
+                                    }
+                                },
+                                "slot": "cmeehbbhavsaabbwyddffhhuqaaiicyhjff"
+                            },
+                            {
+                                "definition": {
+                                    "id": "d356d14b6e293a3020a244b63d278d8f",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "cmeehbbhavtaabbxbbddffhhujjwhhrbbddgbb",
+                                "elementLabel": "Discovery Models",
+                                "eventMappings": [],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "name": "Discovery Models",
+                                "overrides": {
+                                    "composition": [
+                                        {
+                                            "definition": {
+                                                "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                                "type": "MACROPONENT"
+                                            },
+                                            "elementId": "rich_text_17",
+                                            "elementLabel": "Rich text 17",
+                                            "eventMappings": [],
+                                            "isHidden": {
+                                                "type": "JSON_LITERAL",
+                                                "value": null
+                                            },
+                                            "preset": null,
+                                            "propertyValues": {
+                                                "html": {
+                                                    "script": {
+                                                        "apiVersion": "2.0.0",
+                                                        "controllerElementId": null,
+                                                        "inlineScript": "function evaluateProperty({ api, helpers }) { \n    const kpi = api.data.sam_kpi_usage_1.output.usage_discovery_models;\n    const totalCount = kpi.reduce((sum, kpis) =&gt; sum + (kpis.field ? kpis.field_value : 0), 0);\n\n    // Start table\n    let tableHtml = `\n        &lt;table style=\"width: 100%; border-collapse: collapse; margin-top: 20px; font-family: 'Arial', sans-serif; background-color: #f9f9f9;\"&gt;\n            &lt;thead&gt;\n                &lt;tr style=\"background-color: #F1F5F9; color: black; text-align: left; font-size: 16px;\"&gt;\n                    &lt;th style=\"padding: 12px; border: 1px solid #ddd;\"&gt;KPI&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; border: 1px solid #ddd;\"&gt;Description&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; border: 1px solid #ddd;\"&gt;Count&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; border: 1px solid #ddd;\"&gt;Impact&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; border: 1px solid #ddd;\"&gt;Recommendation&lt;/th&gt;\n                &lt;/tr&gt;\n            &lt;/thead&gt;\n            &lt;tbody&gt;\n    `;\n\n    // Generate table rows\n    kpi.forEach(kpis =&gt; {\n        let kpiName = kpis.kpi || \"Unknown KPI\";\n        let description = kpis.description || \"No Description\";\n        let count = kpis.field ? kpis.field_value : 0;\n        let recommendation = kpis.recommendation || \"No Action Needed\";\n\n        // Determine impact and associated colors\n        let impact = \"Low\";\n        let dotColor = \"green\";\n        let rowColor = \"#ffffff\"; // Default row color\n        let rowHoverColor = \"#e6f7ff\";\n\n        if (count &gt;= totalCount / 2) {\n            impact = \"High\";\n            dotColor = \"red\";\n        } else if (count &gt; 2) {\n            impact = \"Medium\";\n            dotColor = \"orange\";\n        }\n\n        tableHtml += `\n            &lt;tr style=\"background-color: ${rowColor}; transition: all 0.3s;\" \n                onmouseover=\"this.style.backgroundColor='${rowHoverColor}'\" \n                onmouseout=\"this.style.backgroundColor='${rowColor}'\"&gt;\n                &lt;td style=\"padding: 16px; border-bottom: 1px solid #e6f7ff; font-weight: 600; color: #595959;\"&gt;${kpiName}&lt;/td&gt;\n                &lt;td style=\"padding: 16px; border-bottom: 1px solid #e6f7ff; color: #595959;\"&gt;${description}&lt;/td&gt;\n                &lt;td style=\"padding: 16px; text-align: center; border-bottom: 1px solid #e6f7ff;  color: #262626;\"&gt;${count}&lt;/td&gt;\n                &lt;td style=\"padding: 16px; text-align: center; border-bottom: 1px solid #e6f7ff;\"&gt;\n                    &lt;span style=\"display: inline-flex; align-items: center; gap: 6px; font-weight: 600;\"&gt;\n                        &lt;span style=\"display: inline-block; width: 12px; height: 12px; background-color: ${dotColor}; border-radius: 50%;\"&gt;&lt;/span&gt;\n                        ${impact}\n                    &lt;/span&gt;\n                &lt;/td&gt;\n                &lt;td style=\"padding: 16px; border-bottom: 1px solid #e6f7ff; color: #096dd9; font-weight: 500;\"&gt;${recommendation}&lt;/td&gt;\n            &lt;/tr&gt;\n        `;\n    });\n\n    // Close table\n    tableHtml += `\n            &lt;/tbody&gt;\n        &lt;/table&gt;\n    `;\n\n    // Return the final table HTML\n    return tableHtml;\n}\n",
+                                                        "scriptSysId": "99334481c36e96100ced12f1b401310e",
+                                                        "target": null
+                                                    },
+                                                    "type": "CLIENT_TRANSFORM_SCRIPT"
+                                                }
+                                            },
+                                            "slot": null,
+                                            "styles": null
+                                        }
+                                    ],
+                                    "layout": {
+                                        "default": {
+                                            "children": null,
+                                            "items": [
+                                                {
+                                                    "element_id": "rich_text_17",
+                                                    "styles": {
+                                                        "margin-left": "var(--now-scalable-space--sm)",
+                                                        "margin-right": "var(--now-scalable-space--sm)",
+                                                        "width": "90%"
+                                                    }
+                                                }
+                                            ],
+                                            "root": null,
+                                            "rules": null,
+                                            "styles": {
+                                                "min-height": "300px",
+                                                "width": "100%"
+                                            },
+                                            "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                                            "type": "flex"
+                                        },
+                                        "version": "3.0.0"
+                                    }
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "ariaRegionHeadingLevel": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "1"
+                                    },
+                                    "ariaRegionName": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": ""
+                                        }
+                                    },
+                                    "ariaRole": {
+                                        "type": "JSON_LITERAL",
+                                        "value": ""
+                                    },
+                                    "hideEmptyStateUi": {
+                                        "type": "JSON_LITERAL",
+                                        "value": true
+                                    },
+                                    "includeAriaHeading": {
+                                        "type": "JSON_LITERAL",
+                                        "value": false
+                                    },
+                                    "slotWrapperBehavior": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "fullheight"
+                                    },
+                                    "type": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "section"
+                                    }
+                                },
+                                "slot": "cmeehbbhavtaabbxaaddffhhujjpxdccmxl"
+                            },
+                            {
+                                "definition": {
+                                    "id": "d356d14b6e293a3020a244b63d278d8f",
+                                    "type": "MACROPONENT"
+                                },
+                                "elementId": "cmeehbbhavuaabbxddddffhhurfoawhag",
+                                "elementLabel": "Software Models",
+                                "eventMappings": [],
+                                "isHidden": {
+                                    "type": "JSON_LITERAL",
+                                    "value": null
+                                },
+                                "name": "Software Models",
+                                "overrides": {
+                                    "composition": [
+                                        {
+                                            "definition": {
+                                                "id": "2d56f06d55f46bbd4e79b5e624beb940",
+                                                "type": "MACROPONENT"
+                                            },
+                                            "elementId": "rich_text_18",
+                                            "elementLabel": "Rich text 18",
+                                            "eventMappings": [],
+                                            "isHidden": {
+                                                "type": "JSON_LITERAL",
+                                                "value": null
+                                            },
+                                            "preset": null,
+                                            "propertyValues": {
+                                                "html": {
+                                                    "script": {
+                                                        "apiVersion": "2.0.0",
+                                                        "controllerElementId": null,
+                                                        "inlineScript": "function evaluateProperty({ api, helpers }) {\n    const kpi = api.data.sam_kpi_usage_1.output.usage_software_models;\n    const totalCount = kpi.reduce((sum, kpis) =&gt; sum + (kpis.field ? kpis.field_value : 0), 0); // Calculate total count\n\n    // Initialize the HTML table string\n    let tableHtml = `\n        &lt;table style=\"width: 100%; border-collapse: collapse; margin-top: 20px; font-family: 'Arial', sans-serif; background-color: #f9f9f9;border-radius: 8px; \"&gt;\n            &lt;thead&gt;\n                &lt;tr style=\"background-color:#F1F5F9; color: black; text-align: left; font-size: 16px;\"&gt;\n                    &lt;th style=\"padding: 12px; \"&gt;KPI&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; \"&gt;Description&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; \"&gt;Count&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; \"&gt;Impact&lt;/th&gt;\n                    &lt;th style=\"padding: 12px; \"&gt;Recommendation&lt;/th&gt;\n                &lt;/tr&gt;\n            &lt;/thead&gt;\n            &lt;tbody&gt;\n    `;\n\n    // Loop through the kpi array and generate table rows\n    kpi.forEach(kpis =&gt; {\n        let kpiName = kpis.kpi || \"Unknown KPI\"; // Assuming the KPI is the kpis ID\n        let description = kpis.description || \"No Description\";\n        let count = kpis.field ? kpis.field_value : 0; // Count is 1 if active, 0 if inactive\n        let recommendation = kpis.recommendation ? kpis.recommendation : 'No Action Needed'; // Recommendation based on active state\n\n        // Determine impact based on count and totalCount\n        let impact = \"Low\";\n        let impactColor = \"green\"; \n        let dotColor = \"green\"; // Default dot color\n        let rowColor = \"#ffffff\"; \n        let rowHoverColor = \"#e6f7ff\";\n\n        if (count &gt;= totalCount / 2) {\n            impact = \"High\";\n            impactColor = \"red\";\n            dotColor = \"red\";\n        } else if (count &gt; 2) {\n            impact = \"Medium\";\n            impactColor = \"orange\";\n            dotColor = \"orange\";\n        }\n\n        tableHtml += `\n            &lt;tr style=\"background-color: ${rowColor}; transition: all 0.3s;\" \n                onmouseover=\"this.style.backgroundColor='${rowHoverColor}'\" \n                onmouseout=\"this.style.backgroundColor='${rowColor}'\"&gt;\n                &lt;td style=\"padding: 10px; border-bottom: 1px solid #e6f7ff;  color: #595959;\"&gt;${kpiName}&lt;/td&gt;\n                &lt;td style=\"padding: 10px; border-bottom: 1px solid #e6f7ff; color: #595959;\"&gt;${description}&lt;/td&gt;\n                &lt;td style=\"padding: 10px; text-align: center; border-bottom: 1px solid #e6f7ff; fcolor: #262626;\"&gt;${count}&lt;/td&gt;\n                &lt;td style=\"padding: 10px; text-align: center; border-bottom: 1px solid #e6f7ff;\"&gt;\n                    &lt;span style=\"display: inline-flex; align-items: center; gap: 6px; font-weight: 600;\"&gt;\n                        &lt;span style=\"display: inline-block; width: 12px; height: 12px; background-color: ${dotColor}; border-radius: 50%;\"&gt;&lt;/span&gt;\n                        ${impact}\n                    &lt;/span&gt;\n                &lt;/td&gt;\n                &lt;td style=\"padding: 10px; border-bottom: 1px solid #e6f7ff; color: #096dd9; font-weight: 500;\"&gt;${recommendation}&lt;/td&gt;\n            &lt;/tr&gt;\n        `;\n    });\n\n    // Close the table body and table tag\n    tableHtml += '&lt;/tbody&gt;&lt;/table&gt;';\n\n    // Return the generated HTML table\n    return tableHtml;\n}\n",
+                                                        "scriptSysId": "d9334481c36e96100ced12f1b401310e",
+                                                        "target": null
+                                                    },
+                                                    "type": "CLIENT_TRANSFORM_SCRIPT"
+                                                }
+                                            },
+                                            "slot": null,
+                                            "styles": null
+                                        }
+                                    ],
+                                    "layout": {
+                                        "default": {
+                                            "children": null,
+                                            "items": [
+                                                {
+                                                    "element_id": "rich_text_18",
+                                                    "styles": {
+                                                        "margin-left": "var(--now-scalable-space--sm)",
+                                                        "margin-right": "var(--now-scalable-space--sm)",
+                                                        "width": "90%"
+                                                    }
+                                                }
+                                            ],
+                                            "root": null,
+                                            "rules": null,
+                                            "styles": {
+                                                "min-height": "300px",
+                                                "width": "100%"
+                                            },
+                                            "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                                            "type": "flex"
+                                        },
+                                        "version": "3.0.0"
+                                    }
+                                },
+                                "preset": null,
+                                "propertyValues": {
+                                    "ariaRegionHeadingLevel": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "1"
+                                    },
+                                    "ariaRegionName": {
+                                        "type": "TRANSLATION_LITERAL",
+                                        "value": {
+                                            "code": null,
+                                            "comment": "",
+                                            "message": ""
+                                        }
+                                    },
+                                    "ariaRole": {
+                                        "type": "JSON_LITERAL",
+                                        "value": ""
+                                    },
+                                    "hideEmptyStateUi": {
+                                        "type": "JSON_LITERAL",
+                                        "value": true
+                                    },
+                                    "includeAriaHeading": {
+                                        "type": "JSON_LITERAL",
+                                        "value": false
+                                    },
+                                    "slotWrapperBehavior": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "fullheight"
+                                    },
+                                    "type": {
+                                        "type": "JSON_LITERAL",
+                                        "value": "section"
+                                    }
+                                },
+                                "slot": "cmeehbbhavuaabbxccddffhhuvjhhpehuii"
+                            }
+                        ]
+                    },
+                    "preset": null,
+                    "propertyValues": {
+                        "activeRoute": {
+                            "icon": null,
+                            "id": "cm49o7cqa02773j7ukgdfhyry",
+                            "label": {
+                                "type": "TRANSLATION_LITERAL",
+                                "value": {
+                                    "code": null,
+                                    "comment": "",
+                                    "message": "Software Models"
+                                }
+                            },
+                            "order": 600,
+                            "type": "local"
+                        },
+                        "ariaLabel": {
+                            "type": "JSON_LITERAL",
+                            "value": ""
+                        },
+                        "defaultRoute": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "dynamicTabData": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "enableCollapsing": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "fixedWidth": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "hideLabel": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "initiallyCollapsed": {
+                            "type": "JSON_LITERAL",
+                            "value": false
+                        },
+                        "items": {
+                            "type": "JSON_LITERAL",
+                            "value": []
+                        },
+                        "maxWidth": {
+                            "type": "JSON_LITERAL",
+                            "value": 240
+                        },
+                        "position": {
+                            "type": "JSON_LITERAL",
+                            "value": "left"
+                        },
+                        "selectedTab": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "selectedTabIndex": {
+                            "type": "JSON_LITERAL",
+                            "value": null
+                        },
+                        "showInlinePadding": {
+                            "type": "JSON_LITERAL",
+                            "value": true
+                        },
+                        "size": {
+                            "type": "JSON_LITERAL",
+                            "value": "md"
+                        },
+                        "spaceBetweenItems": {
+                            "type": "JSON_LITERAL",
+                            "value": "none"
+                        },
+                        "tabStyles": {
+                            "type": "JSON_LITERAL",
+                            "value": "/* Container for the Tabset */\n.tabset-container {\n    display: flex;\n    flex-direction: column;\n    gap: 16px;\n    padding: 24px;\n    border-radius: 16px;\n    box-shadow: 0 4px 10px #ffffff; /* Soft, subtle shadow */\n    transition: all 0.3s ease; /* Smooth hover effect */\n}\n\n/* Individual Tabs */\n.tabset-tabs {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    max-width: 280px;\n    background-color: #ffffff; /* Core white background for light theme */\n    padding: 16px 20px;\n    border-radius: 12px;\n    border-top-left-radius: 0px;\n    transition: all 0.3s ease, transform 0.2s ease;\n    cursor: pointer;\n    position: relative;\n    overflow: hidden;\n    border: 1px solid #e0e0e0; /* Subtle border for separation */\n}\n\n/* Hover Effect for Tabs */\n.tabset-tabs:hover {\n    background-color: #ffffff; /* Light blue tint on hover for light theme */\n    box-shadow: 0 6px 15px rgba(0, 128, 255, 0.1); /* Elevated shadow for hover */\n    transform: translateY(-2px);\n}\n\n/* Active Tab */\n.tabset-tabs.active {\n    background-color: #e6f7ff; /* Light highlighted blue for active state */\n    box-shadow: 0 4px 12px rgba(0, 128, 255, 0.2);\n    font-weight: bold;\n    border-radius: 120px;\n    border-left: 12px solid #1890ff;\n}\n\n/* Tab Text Styling */\n.tabset-tabs span {\n    font-size: 16px;\n    color: #333333; /* Dark gray for better contrast */\n    font-weight: 500;\n    transition: color 0.3s ease;\n}\n\n.tabset-tabs:hover span {\n    color: #096dd9; /* Bright blue on hover for text */\n}\n\n/* Icon or Action Button */\n.tabset-tabs .tab-icon {\n    font-size: 20px;\n    color: #8c8c8c; /* Neutral gray for icons */\n    transition: color 0.3s ease, transform 0.3s ease;\n}\n\n.tabset-tabs:hover .tab-icon {\n    color: #1890ff; /* Bright blue for hover */\n}\n\n/* Responsive Styling */\n@media (max-width: 768px) {\n    .tabset-tabs {\n        width: 100%;\n        padding: 14px 16px;\n    }\n\n    .tabset-container {\n        gap: 12px;\n        padding: 16px;\n    }\n}\n"
+                        },
+                        "viewportConfiguration": {
+                            "type": "JSON_LITERAL",
+                            "value": {
+                                "enableDataDrivenTabs": true,
+                                "validation": {
+                                    "icon": {
+                                        "required": false
+                                    },
+                                    "name": {
+                                        "required": true
+                                    },
+                                    "order": {
+                                        "required": false
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "slot": null,
+                    "styles": null
+                }
+            ],
+            "layout": {
+                "default": {
+                    "children": null,
+                    "items": [
+                        {
+                            "element_id": "tabs_3",
+                            "styles": {
+                                "align-self": "stretch",
+                                "margin-bottom": "var(--now-scalable-space--xl)"
+                            }
+                        }
+                    ],
+                    "root": null,
+                    "rules": null,
+                    "styles": {
+                        "flex-direction": "column",
+                        "margin-left": "0",
+                        "margin-top": "var(--now-scalable-space--sm)",
+                        "width": "100%"
+                    },
+                    "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+                    "type": "flex"
+                },
+                "version": "3.0.0"
+            }
+        },
+        "preset": null,
+        "propertyValues": {
+            "ariaRegionHeadingLevel": {
+                "type": "JSON_LITERAL",
+                "value": "1"
+            },
+            "ariaRegionName": {
+                "type": "TRANSLATION_LITERAL",
+                "value": {
+                    "code": null,
+                    "comment": "",
+                    "message": ""
+                }
+            },
+            "ariaRole": {
+                "type": "JSON_LITERAL",
+                "value": ""
+            },
+            "hideEmptyStateUi": {
+                "type": "JSON_LITERAL",
+                "value": true
+            },
+            "includeAriaHeading": {
+                "type": "JSON_LITERAL",
+                "value": false
+            },
+            "slotWrapperBehavior": {
+                "type": "JSON_LITERAL",
+                "value": "fullheight"
+            },
+            "type": {
+                "type": "JSON_LITERAL",
+                "value": "section"
+            }
+        },
+        "slot": null,
+        "styles": null
+    },
+    {
+        "definition": {
+            "id": "1f6e0643eca7a637e36bd7833549ec9e",
+            "type": "MACROPONENT"
+        },
+        "elementId": "heading_4",
+        "elementLabel": "Heading 4",
+        "eventMappings": [],
+        "isHidden": {
+            "type": "JSON_LITERAL",
+            "value": null
+        },
+        "preset": null,
+        "propertyValues": {
+            "hasNoMargin": {
+                "type": "JSON_LITERAL",
+                "value": false
+            },
+            "label": {
+                "type": "TRANSLATION_LITERAL",
+                "value": {
+                    "code": null,
+                    "comment": "",
+                    "message": "  "
+                }
+            },
+            "level": {
+                "type": "JSON_LITERAL",
+                "value": "1"
+            },
+            "variant": {
+                "type": "JSON_LITERAL",
+                "value": "header-primary"
+            },
+            "wontWrap": {
+                "type": "JSON_LITERAL",
+                "value": false
+            }
+        },
+        "slot": null,
+        "styles": null
+    }
+]</composition>
+        <da_relay_models/>
+        <data>[
+    {
+        "definition": {
+            "id": "04dd3d81c31252d00ced12f1b4013178",
+            "type": "TRANSFORM"
+        },
+        "dependencies": {},
+        "elementId": "sam_kpi_foundation_1",
+        "elementLabel": "SAM KPI Foundation 1",
+        "eventMappings": [],
+        "inputValues": {},
+        "readEvaluationMode": "EAGER"
+    },
+    {
+        "definition": {
+            "id": "dfa2bc02c35696100ced12f1b4013181",
+            "type": "TRANSFORM"
+        },
+        "dependencies": {},
+        "elementId": "sam_kpi_license_1",
+        "elementLabel": "SAM KPI License 1",
+        "eventMappings": [],
+        "inputValues": {},
+        "readEvaluationMode": "EAGER"
+    },
+    {
+        "definition": {
+            "id": "33ceb330c32e96100ced12f1b40131f0",
+            "type": "TRANSFORM"
+        },
+        "dependencies": {},
+        "elementId": "sam_kpi_usage_1",
+        "elementLabel": "SAM KPI USAGE 1",
+        "eventMappings": [],
+        "inputValues": {},
+        "readEvaluationMode": "EAGER"
+    },
+    {
+        "definition": {
+            "id": "fdcde28377221110960ced43ba5a99e7",
+            "type": "CONTROLLER"
+        },
+        "dependencies": {
+            "getMapDataController": "get_map_data_1"
+        },
+        "elementId": "properties_1",
+        "elementLabel": "Properties 1",
+        "eventMappings": [],
+        "inputValues": {
+            "ciClass": {
+                "type": "JSON_LITERAL",
+                "value": null
+            },
+            "ciSysid": {
+                "type": "JSON_LITERAL",
+                "value": null
+            },
+            "connectionId": {
+                "type": "JSON_LITERAL",
+                "value": null
+            }
+        },
+        "readEvaluationMode": "EAGER"
+    },
+    {
+        "definition": {
+            "id": "7cb6eb2e77321510960ced43ba5a9904",
+            "type": "CONTROLLER"
+        },
+        "dependencies": {},
+        "elementId": "get_map_data_1",
+        "elementLabel": "Get Map Data 1",
+        "eventMappings": [],
+        "inputValues": {
+            "ciSysid": {
+                "binding": {
+                    "address": [
+                        "rootNode"
+                    ],
+                    "category": "props"
+                },
+                "type": "CONTEXT_BINDING"
+            },
+            "levels": {
+                "binding": {
+                    "address": [
+                        "levels"
+                    ],
+                    "category": "props"
+                },
+                "type": "CONTEXT_BINDING"
+            }
+        },
+        "readEvaluationMode": "EAGER"
+    }
+]</data>
+        <description/>
+        <disable_auto_reflow>false</disable_auto_reflow>
+        <dispatched_events/>
+        <ext_controller_dep/>
+        <extends display_value="Page Template">19be392623033300f4b4c50947bf65ba</extends>
+        <extension_point/>
+        <form_factors>{}</form_factors>
+        <handled_events/>
+        <interactions/>
+        <interfaces/>
+        <internal_event_mappings>{}</internal_event_mappings>
+        <layout>{
+    "default": {
+        "children": null,
+        "items": [
+            {
+                "element_id": "column_layout_1",
+                "styles": {
+                    "display": "contents",
+                    "width": "100%"
+                }
+            },
+            {
+                "element_id": "heading_2",
+                "styles": {
+                    "align-self": "flex-start",
+                    "padding-left": "var(--now-scalable-space--xl)",
+                    "padding-top": "var(--now-scalable-space--xl)"
+                }
+            },
+            {
+                "element_id": "card_base_divider_8",
+                "styles": {
+                    "align-self": "stretch",
+                    "background": "rgb(var(--now-color_background--primary))",
+                    "width": "250px"
+                }
+            },
+            {
+                "element_id": "container_2",
+                "styles": {
+                    "box-sizing": "border-box",
+                    "margin": "0",
+                    "padding": "0"
+                }
+            },
+            {
+                "element_id": "card_base_divider_9",
+                "styles": {
+                    "align-self": "stretch",
+                    "background": "rgb(var(--now-color_background--primary))",
+                    "width": "100%"
+                }
+            },
+            {
+                "element_id": "heading_3",
+                "styles": {
+                    "align-self": "flex-start",
+                    "margin-left": "var(--now-scalable-space--md)",
+                    "margin-top": "var(--now-scalable-space--xxl)"
+                }
+            },
+            {
+                "element_id": "card_base_divider_1",
+                "styles": {
+                    "align-self": "stretch",
+                    "background": "rgb(var(--now-color_background--primary))",
+                    "width": "250px"
+                }
+            },
+            {
+                "element_id": "container_3",
+                "styles": {
+                    "background": "rgb(var(--now-color_background--primary))"
+                }
+            },
+            {
+                "element_id": "card_base_divider_7",
+                "styles": {
+                    "align-self": "stretch",
+                    "background": "rgb(var(--now-color_background--primary))",
+                    "width": "100%"
+                }
+            },
+            {
+                "element_id": "heading_5",
+                "styles": {
+                    "align-self": "flex-start",
+                    "margin-left": "var(--now-scalable-space--md)",
+                    "margin-top": "var(--now-scalable-space--xxl)"
+                }
+            },
+            {
+                "element_id": "card_base_divider_3",
+                "styles": {
+                    "align-self": "stretch",
+                    "background": "rgb(var(--now-color_background--primary))",
+                    "width": "250px"
+                }
+            },
+            {
+                "element_id": "container_4",
+                "styles": {}
+            },
+            {
+                "element_id": "heading_4",
+                "styles": {}
+            }
+        ],
+        "root": null,
+        "rules": null,
+        "styles": {
+            "flex-direction": "column"
+        },
+        "templateId": "5832fd4d53c31010e6bcddeeff7b12db",
+        "type": "flex"
+    },
+    "version": "3.0.0"
+}</layout>
+        <macroponent_dependencies/>
+        <name>As is Report</name>
+        <output_prop_mapping/>
+        <props>[]</props>
+        <required_translations>[ {
+  "message" : "&lt;h1 data-truncationmouseover=\"true\" data-truncation=\"true\"&gt;As- is Data Analysis&lt;/h1&gt;",
+  "comment" : ""
+}, {
+  "message" : "&lt;p style=\"text-align: left;\"&gt;&lt;span style=\"font-size: 11pt; font-family: helvetica;\"&gt;These reports have been extracted from the target instance and provide an overall overview of the foundational and contractual data.&lt;br /&gt;&lt;/span&gt;&lt;span style=\"font-size: 11pt; font-family: helvetica;\"&gt;This data will help in understanding the current state of the system and guide any future decisions or optimizations.&lt;/span&gt;&lt;/p&gt;",
+  "comment" : ""
+}, {
+  "message" : "Allocation",
+  "comment" : ""
+}, {
+  "message" : "Business Unit",
+  "comment" : ""
+}, {
+  "message" : "Company",
+  "comment" : ""
+}, {
+  "message" : "Contract",
+  "comment" : ""
+}, {
+  "message" : "Contractual Data Reports",
+  "comment" : ""
+}, {
+  "message" : "Cost Center",
+  "comment" : ""
+}, {
+  "message" : "Department",
+  "comment" : ""
+}, {
+  "message" : "Discovery Models",
+  "comment" : ""
+}, {
+  "message" : "Entitlement",
+  "comment" : ""
+}, {
+  "message" : "Foundational Data Reports",
+  "comment" : ""
+}, {
+  "message" : "Installation",
+  "comment" : ""
+}, {
+  "message" : "Location",
+  "comment" : ""
+}, {
+  "message" : "Software Models",
+  "comment" : ""
+}, {
+  "message" : "Usage Data Reports",
+  "comment" : ""
+}, {
+  "message" : "User",
+  "comment" : ""
+} ]</required_translations>
+        <root_component/>
+        <root_component_config/>
+        <root_component_definition/>
+        <schema_version>1.0.0</schema_version>
+        <state_persistence_config/>
+        <state_properties/>
+        <sys_class_name>sys_ux_macroponent</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-04 09:01:43</sys_created_on>
+        <sys_id>2fe14e05c39252d00ced12f1b401312c</sys_id>
+        <sys_mod_count>227</sys_mod_count>
+        <sys_name>As is Report</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_macroponent_2fe14e05c39252d00ced12f1b401312c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:14:00</sys_updated_on>
+    </sys_ux_macroponent>
+    <sys_translated_text action="delete_multiple" query="documentkey=2fe14e05c39252d00ced12f1b401312c"/>
+</record_update>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.foundation.department.kpi</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-12-09 12:46:37</sys_created_on>
+        <sys_id>753224f6c35e92500ced12f1b40131b0</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>sam.foundation.department.kpi</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_753224f6c35e92500ced12f1b40131b0</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:03:35</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+    {&#13;
+        "kpi": "Total Number of Departments",&#13;
+        "description": "Number of departments.",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_total_depart_s_records_dept"&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Number of Duplicate Department Records",&#13;
+        "description": "Number of departments with duplicate records in the system.",&#13;
+        "recommendation": "Identify and merge duplicate department records to ensure data consistency.",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_null_department_count_dept"&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Departments Without Business Unit",&#13;
+        "description": "Number of departments that are missing a business unit.",&#13;
+        "recommendation": "Ensure each department is assigned to a valid business unit.",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_null_bu_count_dept"&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Departments Without Cost Center",&#13;
+        "description": "Number of departments that are missing a cost center.",&#13;
+        "recommendation": "Assign a valid cost center to each department.",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_null_costcenter_count_dept"&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Departments Without Department Head",&#13;
+        "description": "Number of departments that are missing a department head.",&#13;
+        "recommendation": "Ensure that every department has a valid department head assigned.",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_null_department_head_count"&#13;
+    },&#13;
+    {&#13;
+        "kpi": "Departments Without Company",&#13;
+        "description": "Number of departments that are not associated with a company.",&#13;
+        "recommendation": "Assign each department to a valid company.",&#13;
+        "table": "u_snow_customisation",&#13;
+        "field": "u_null_company_count"&#13;
+    }&#13;
+]&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=753224f6c35e92500ced12f1b40131b0"/>
+</record_update>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Integration">9516b908c31c6a140ced12f1b401315e</macroponent>
+        <name>list_1/fixedQuery</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+* @param {Object} params
+* @param {Object} params.api
+* @param {Object} params.helpers
+* @returns {string} A comma-separated list of short descriptions containing the keyword.
+*/
+function evaluateProperty({ api, helpers }) {
+    console.log("]]>🔍<![CDATA[ Fetching SaaS Integration Data...");
+
+    // Retrieve sys property data from Dynamic Sys Reader
+    const saasData = api.data.dynamic_sys_reader_2.output;
+
+    if (!saasData || typeof saasData !== "object") {
+        console.warn("⚠️ No valid SaaS integration data found.");
+        return "descriptionSTARTSWITHNo Data Available";
+    }
+
+    console.log("✅ Retrieved Data:", saasData);
+
+    // Extract only the 'description' values from each integration
+    const output = Object.keys(saasData).map(key => saasData[key].description);
+
+    console.log("]]>🔹<![CDATA[ Extracted Descriptions:", output);
+
+    if (output.length > 0) {
+        // Create query string for filtering
+        const query = output.map(value => `descriptionSTARTSWITH${value.split(" ").slice(0, 3).join(" ")}`).join('^OR');
+
+        console.log("]]>🛠<![CDATA[️ Generated Query:", query);
+        return query;
+    }
+
+    return "descriptionSTARTSWITHNo Matching Data";
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-13 15:03:26</sys_created_on>
+        <sys_id>a46160c1c3d0e2940ced12f1b40131fb</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>list_1/fixedQuery</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_a46160c1c3d0e2940ced12f1b40131fb</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

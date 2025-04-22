@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Company ">72367588c31c6a140ced12f1b401313d</macroponent>
+        <name>rich_text_2/html</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+ * @param {params} params
+ * @param {api} params.api
+ * @param {TransformApiHelpers} params.helpers
+ */
+function evaluateProperty({ api, helpers }) { 
+    const kpi = api.data.sam_foundation_current_kpis_1.output.company_kpi;
+
+    // Font for columns (matching the first example)
+    const columnFontFamily = "'Arial', sans-serif";
+
+    // Initialize the HTML table string with styling similar to the reference
+    let tableHtml = `
+    <div style="max-width: 100%; overflow-x: auto;">
+    <table style="
+                width: 100%;
+                border-collapse: collapse;
+                font-variant: normal;
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            ">
+    <thead>
+    <tr style="
+                        background-color: #B0C4DE;
+                        color: #222;
+                        font-size: 12px;
+                        font-weight: bold;
+                        text-align: left;
+                        border-bottom: 3px solid #A0B8D9;
+                    ">
+    <th style="padding: 14px; border-right: 1px solid #A0B8D9;">KPI</th>
+    <th style="padding: 14px; border-right: 1px solid #A0B8D9;">Count</th>
+    <th style="padding: 14px; border-right: 1px solid #A0B8D9;">Use Case</th>
+    <th style="padding: 14px; text-align: center; border-right: 1px solid #A0B8D9;">Impact</th>
+    <th style="padding: 14px; text-align: left;">Recommendation</th>
+    </tr>
+    </thead>
+    <tbody>
+    `;
+
+    // Loop through KPI data to populate rows
+    kpi.forEach((kpis, index) => {
+        let kpiName = kpis.kpi || "Unknown KPI";
+        let description = kpis.usecase || "No Description";
+        let count = kpis.query;
+        let recommendation = kpis.action || "No Action Needed";
+        let totalCount = kpis.totalCount;
+
+        // Determine Impact Level
+        let impact = "Low";
+        let dotColor = "#28a745"; // Green for Low Impact
+        
+        if (count > totalCount * 0.5) {
+            impact = "High";
+            dotColor = "#ff4d4f"; // Red for High Impact
+        } else if (count > totalCount * 0.25) {
+            impact = "Medium";
+            dotColor = "#ffc107"; // Yellow for Medium Impact
+        }
+
+        // Row Color Alternating
+        let rowBackground = index % 2 === 0 ? "#EAF3FF" : "#F6FAFF"; // Brighter Alternating Colors
+
+        // Generate Row with impact indicator and all-side borders
+        tableHtml += `
+            <tr data-impact="${impact}" style="background-color: ${rowBackground}; border-bottom: 1px solid #D8E3F8; transition: background-color 0.2s ease;">
+                <td style="padding: 14px; border-right: 1px solid #A0B8D9; color: #333; font-family: ${columnFontFamily}; font-weight: bold;">${kpiName}</td>
+                <td style="padding: 14px; border-right: 1px solid #A0B8D9; color: #333; text-align: center; font-family: ${columnFontFamily}; font-weight: bold;">${count}</td>
+                <td style="padding: 14px; border-right: 1px solid #A0B8D9; color: #333; font-family: ${columnFontFamily}; font-weight: bold;">${description}</td>
+                <td style="padding: 14px; text-align: center; border-right: 1px solid #A0B8D9;">
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: ${dotColor}; margin-right: 6px;"></span>
+                        <span style="font-weight: bold; color: #000000;">${impact}</span>
+                    </div>
+                </td>
+                <td style="padding: 14px; color: #333; font-family: ${columnFontFamily}; font-weight: bold;">${recommendation}</td>
+            </tr>
+        `;
+    });
+
+    // Close the Table
+    tableHtml += `
+    </tbody>
+    </table>
+    </div>
+    `;
+
+    // Return the Full HTML (only table content)
+    return tableHtml;
+}
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>system</sys_created_by>
+        <sys_created_on>2025-03-10 15:42:15</sys_created_on>
+        <sys_id>0f367588c31c6a140ced12f1b40131d9</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>rich_text_2/html</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_0f367588c31c6a140ced12f1b40131d9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

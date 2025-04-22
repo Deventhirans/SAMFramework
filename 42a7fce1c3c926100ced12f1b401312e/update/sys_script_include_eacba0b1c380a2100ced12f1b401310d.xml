@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.ProcurementFormProcessor</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>ProcurementFormProcessor</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var ProcurementFormProcessor = Class.create();
+ProcurementFormProcessor.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    processFormSubmission: function() {
+        try {
+            var formDataString = this.getParameter('sysparm_form_data');
+            var formData = JSON.parse(formDataString);
+            
+            // Extract instance URL
+            var instanceUrl = formData.u_instance_url;
+            
+            if (!instanceUrl || instanceUrl.trim() === '') {
+                return JSON.stringify({
+                    success: false,
+                    message: "Missing instance URL"
+                });
+            }
+            
+            // Save to table
+            var gr = new GlideRecord('x_985627_proc_form_procurement_form');
+            gr.addQuery('u_instance_url', instanceUrl);
+            gr.query();
+            
+            var recordExists = gr.next();
+            var tableOperation = recordExists ? "updated" : "created";
+            
+            if (!recordExists) {
+                gr.initialize();
+            }
+            
+            // Set all form fields
+            for (var field in formData) {
+                if (gr.isValidField(field)) {
+                    gr.setValue(field, formData[field]);
+                }
+            }
+            
+            var tableResult = recordExists ? gr.update() : gr.insert();
+            
+            return JSON.stringify({
+                success: true,
+                message: "Form data " + tableOperation + " successfully."
+            });
+        } catch(e) {
+            gs.log("Error in processFormSubmission: " + e, "ProcurementForm");
+            return JSON.stringify({
+                success: false,
+                message: "Server error: " + e.message
+            });
+        }
+    },
+    
+    type: 'ProcurementFormProcessor'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-03 10:31:09</sys_created_on>
+        <sys_id>eacba0b1c380a2100ced12f1b401310d</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>ProcurementFormProcessor</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_eacba0b1c380a2100ced12f1b401310d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:39:03</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>eacba0b1c380a2100ced12f1b401310d</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-03 10:31:08</sys_created_on>
+        <sys_id>25ebecf9c340a2100ced12f1b40131cf</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-03-03 10:31:08</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.implementation.euc</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-02 06:38:47</sys_created_on>
+        <sys_id>d6586ad2c3b616140ced12f1b40131aa</sys_id>
+        <sys_mod_count>25</sys_mod_count>
+        <sys_name>sam.implementation.euc</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_d6586ad2c3b616140ced12f1b40131aa</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:05:34</sys_updated_on>
+        <type>string</type>
+        <value>[&#13;
+  {&#13;
+    "kpi": "Installed EUCs with Empty Assigned To",&#13;
+    "description": "Assigning EUCs to users ensures accountability, streamlines asset tracking, and supports efficient IT resource management.",&#13;
+    "recommendation": "Regularly audit and update the 'Assigned To' field in EUC records to ensure accountability and accurate asset tracking, and implement workflows to prompt for assignee details during provisioning.",&#13;
+    "table": "cmdb_ci_computer",&#13;
+    "field": "install_status=1^assigned_toISEMPTY"&#13;
+  },&#13;
+  {&#13;
+    "kpi": "EUCs Assigned to Inactive Users",&#13;
+    "description": "Reallocating EUCs from inactive users prevents resource wastage, improves utilization, and enhances operational efficiency.",&#13;
+    "recommendation": "Develop a process to identify and reallocate EUCs assigned to inactive users, leveraging integrations with user status data to automatically flag and manage these assets.",&#13;
+    "table": "cmdb_ci_computer",&#13;
+    "field": "install_status=1^assigned_to.active=false"&#13;
+  },&#13;
+  {&#13;
+    "kpi": "EUCs with Missing Cost Center or Department with Installed Status",&#13;
+    "description": "Associating EUCs with cost centers or departments enables precise cost allocation, enhances financial reporting, and supports compliance.",&#13;
+    "recommendation": "Ensure that EUC records are linked to cost centers or departments during asset creation or updates by enforcing mandatory fields and periodic validation checks.",&#13;
+    "table": "cmdb_ci_computer",&#13;
+    "field": "cost_center=^ORdepartment=^install_statusIN3,1,5"&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Unutilized EUCs Assigned to Users",&#13;
+    "description": "Identifying unutilized EUCs allows for resource optimization, reduces costs, and supports equitable distribution of IT assets.",&#13;
+    "recommendation": "Monitor usage data to identify unutilized EUCs and establish a review process to reclaim and redistribute these assets based on business needs.",&#13;
+    "table": "cmdb_ci_computer",&#13;
+    "field": "assigned_to.last_login_time&lt;javascript:gs.beginningOfLast3Months()"&#13;
+  },&#13;
+  {&#13;
+    "kpi": "EUCs without CPU Count",&#13;
+    "description": "Recording CPU count supports capacity planning, ensures hardware compatibility, and improves performance analysis.",&#13;
+    "recommendation": "Integrate asset discovery tools to automatically populate CPU count data during asset discovery, ensuring the completeness of hardware inventory details.",&#13;
+    "table": "cmdb_ci_computer",&#13;
+    "field": "cpu_countISEMPTY^install_status=1"&#13;
+  },&#13;
+  {&#13;
+    "kpi": "EUCs without CPU Core Count",&#13;
+    "description": "Including CPU core count facilitates workload distribution, enhances performance optimization, and supports accurate asset inventory.",&#13;
+    "recommendation": "Use automated discovery or manual updates to populate CPU core count fields, enhancing the accuracy of resource planning and performance evaluation.",&#13;
+    "table": "cmdb_ci_computer",&#13;
+    "field": "cpu_core_countISEMPTY^install_status=1"&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Duplicate Records in i-EUC",&#13;
+    "description": "Duplicate records can lead to data inconsistencies, impact reporting accuracy, and increase processing time, affecting overall data integrity.",&#13;
+    "recommendation": "Implement automated deduplication processes, enforce unique constraints, and regularly audit the dataset to identify and merge duplicate records.",&#13;
+    "table": "cmdb_ci_computer",&#13;
+    "field": ["serial_number", "ip_address", "model_id"]&#13;
+  },&#13;
+  {&#13;
+    "kpi": "Systems with No Discovery Before 90 Days",&#13;
+    "description": "Tracking systems not discovered in the last 90 days ensures up-to-date asset inventory, identifies stale records, and supports compliance and security monitoring.",&#13;
+    "recommendation": "Use automated discovery tools to refresh system data or manually validate records to ensure discovery occurs within the last 90 days, improving inventory accuracy and resource management.",&#13;
+    "table": "cmdb_ci_computer",&#13;
+    "field": "last_discovered&lt;javascript:gs.beginningOfLast3Months()"&#13;
+}&#13;
+]&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=d6586ad2c3b616140ced12f1b40131aa"/>
+</record_update>

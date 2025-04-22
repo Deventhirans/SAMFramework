@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>custombulk.property</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-06 06:57:01</sys_created_on>
+        <sys_id>77668329c363de140ced12f1b4013146</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>custombulk.property</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_77668329c363de140ced12f1b4013146</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:19:55</sys_updated_on>
+        <type>string</type>
+        <value>{&#13;
+  "Normalization": {&#13;
+    "short_description": "Normalization",&#13;
+    "description": "Description of software normalization process.",&#13;
+    "instruction": "Steps to normalize the software."&#13;
+  },&#13;
+  "Normalization_Data_Service": {&#13;
+    "short_description": "Normalization Data Service",&#13;
+    "description": "Manage and maintain standardized software data.",&#13;
+    "instruction": "Ensure software data normalization is applied consistently for accurate asset tracking."&#13;
+  },&#13;
+  "Validate_Software_Model": {&#13;
+    "short_description": "Validate Software Model",&#13;
+    "description": "Ensure software models are correctly validated.",&#13;
+    "instruction": "Instruction to validate models."&#13;
+  },&#13;
+  "Integration": {&#13;
+    "short_description": "Integration",&#13;
+    "description": "Integrate the system with other services.",&#13;
+    "instruction": "Steps for integration."&#13;
+  },&#13;
+  "Custom_Scripts": {&#13;
+    "short_description": "Custom Scripts",&#13;
+    "description": "Scripts for custom functionality.",&#13;
+    "instruction": "Provide necessary scripts for execution."&#13;
+  },&#13;
+  "ELP": {&#13;
+    "short_description": "ELP",&#13;
+    "description": "End of Life Products tracking.",&#13;
+    "instruction": "Track and manage ELP for selected top publishers."&#13;
+  },&#13;
+  "Load_Entitlements": {&#13;
+    "short_description": "Load Entitlements",&#13;
+    "description": "Record software entitlements, associate them with license types, and allocate usage rights appropriately.",&#13;
+    "instruction": "Document all entitlements and ensure they are mapped correctly to purchased software licenses."&#13;
+  },&#13;
+  "Load_Contracts": {&#13;
+    "short_description": "Load Contracts",&#13;
+    "description": "Input and maintain vendor contracts, track licensing agreements, renewal dates, and compliance terms.",&#13;
+    "instruction": "Upload contract documents, record key terms, and assign responsible owners for contract reviews."&#13;
+  }&#13;
+}&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=77668329c363de140ced12f1b4013146"/>
+</record_update>

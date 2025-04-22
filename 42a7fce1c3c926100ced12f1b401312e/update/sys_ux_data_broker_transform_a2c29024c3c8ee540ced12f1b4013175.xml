@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.samimplementationcostcenter inaccurate</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>samimplementationcostcenter inaccurate</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var sysPropertyName = "sam.foundation.current.costcenter.kpi";
+
+    // Fetch the sys_property containing query conditions
+    var sysPropertyGR = new GlideRecord('sys_properties');
+    sysPropertyGR.addQuery('name', sysPropertyName);
+    sysPropertyGR.query();
+
+    if (!sysPropertyGR.next()) {
+        gs.log("Error: sys_property '" + sysPropertyName + "' not found.");
+        return [[{
+            "data": [{
+                "value": "0",
+                "change": "0",
+                "changePercent": "0"
+            }],
+            "metadata": {
+                "eventData": {
+                    "indicatorSysid": "fb007202d7130100b96d45a3ce6103b4"
+                },
+                "previousScoreDate": "1642809600000",
+                "dataSourceLabel": "Cost Center Data Quality",
+                "changeArrow": "steady",
+                "scoreDate": "1642896000000",
+                "filterQuery": "",
+                "aggregate": {
+                    "fieldType": "decimal"
+                },
+                "format": {
+                    "unitFormat": "{0}",
+                    "frequency": "daily",
+                    "precision": 0
+                }
+            },
+            "sparkline": {
+                "data": [
+                    {
+                        "timestamp": "1637798400000",
+                        "value": "0"
+                    },
+                    {
+                        "timestamp": "1642896000000",
+                        "value": "0"
+                    }
+                ],
+                "metadata": {
+                    "eventData": {
+                        "indicatorSysid": "fb007202d7130100b96d45a3ce6103b4"
+                    },
+                    "dataSourceLabel": "Cost Center Data Quality",
+                    "series": [
+                        {
+                            "label": "Cost Center Data Quality",
+                            "id": "value",
+                            "type": "value"
+                        }
+                    ],
+                    "aggregate": {
+                        "fieldType": "decimal"
+                    },
+                    "format": {
+                        "unitFormat": "{0}",
+                        "frequency": "daily",
+                        "precision": 0
+                    }
+                }
+            }
+        }]];
+    }
+
+    // Parse the JSON value from sys_property
+    var propertyValue = sysPropertyGR.getValue('value');
+    var conditionsArray = JSON.parse(propertyValue); // Convert JSON string to an array
+
+    var totalUsersGR = new GlideRecord('sys_user');
+    totalUsersGR.addQuery('active', 'true'); // Ensuring only active users are counted
+    totalUsersGR.query();
+    var totalCount = totalUsersGR.getRowCount(); // Accurately get the total count
+
+    var inaccurateUserIDs = {}; // Object to track unique user IDs
+
+    for (var i = 0; i < conditionsArray.length; i++) {
+        var condition = conditionsArray[i].field; // Extract the field condition
+
+        var inaccurateUsers = new GlideRecord(conditionsArray[i].table); // Use table dynamically
+        inaccurateUsers.addEncodedQuery(condition);
+        inaccurateUsers.query();
+
+        while (inaccurateUsers.next()) {
+            inaccurateUserIDs[inaccurateUsers.getUniqueValue()] = true; // Store unique users
+        }
+    }
+
+    var inaccurateCount = Object.keys(inaccurateUserIDs).length; // Count unique keys
+    var inaccuracyPercentage = totalCount > 0 ? (inaccurateCount / totalCount) * 100 : 0;
+    
+    // Format the result according to the expected schema
+    return [[{
+        "data": [{
+            "value": inaccuracyPercentage.toFixed(2),
+            "change": "0",
+            "changePercent": "0"
+        }],
+        "metadata": {
+            "eventData": {
+                "indicatorSysid": "fb007202d7130100b96d45a3ce6103b4"
+            },
+            "previousScoreDate": "1642809600000",
+            "dataSourceLabel": "Cost Center Data Quality",
+            "changeArrow": "steady",
+            "scoreDate": "1642896000000",
+            "filterQuery": "",
+            "aggregate": {
+                "fieldType": "decimal"
+            },
+            "format": {
+                "unitFormat": "{0}",
+                "frequency": "daily",
+                "precision": 0
+            }
+        },
+        "sparkline": {
+            "data": [
+                {
+                    "timestamp": "1637798400000",
+                    "value": inaccuracyPercentage.toFixed(2)
+                },
+                {
+                    "timestamp": "1642896000000",
+                    "value": inaccuracyPercentage.toFixed(2)
+                }
+            ],
+            "metadata": {
+                "eventData": {
+                    "indicatorSysid": "fb007202d7130100b96d45a3ce6103b4"
+                },
+                "dataSourceLabel": "Cost Center Data Quality",
+                "series": [
+                    {
+                        "label": "Cost Center Data Quality",
+                        "id": "value",
+                        "type": "value"
+                    }
+                ],
+                "aggregate": {
+                    "fieldType": "decimal"
+                },
+                "format": {
+                    "unitFormat": "{0}",
+                    "frequency": "daily",
+                    "precision": 0
+                }
+            }
+        }
+    }]];
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-27 11:32:00</sys_created_on>
+        <sys_id>a2c29024c3c8ee540ced12f1b4013175</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>samimplementationcostcenter inaccurate</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_a2c29024c3c8ee540ced12f1b4013175</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=a2c29024c3c8ee540ced12f1b4013175"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>a2c29024c3c8ee540ced12f1b4013175</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-27 11:31:59</sys_created_on>
+        <sys_id>ed735c28c3c8ee540ced12f1b4013181</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-27 11:31:59</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

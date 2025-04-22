@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>PUT</http_method>
+        <name>Update Sys Property</name>
+        <operation_script><![CDATA[(function processRequest(request, response) {
+    // Handle different request body structures
+    var requestBody = request.body;
+    if (requestBody.data && requestBody.data.data) {
+        requestBody = requestBody.data.data;
+    } else if (requestBody.data) {
+        requestBody = requestBody.data;
+    }
+    
+    gs.info("\ud83d\udd35 Incoming API Request to toggle complex property: " + JSON.stringify(requestBody));
+    
+    if (!requestBody || !requestBody.title) {
+        gs.error("\u274c Missing required data: title");
+        response.setStatus(400);
+        response.setBody({ error: "Missing required data: title" });
+        return;
+    }
+    
+    var integrationTitle = requestBody.title;
+    gs.info("\ud83d\udd39 Processing request for integration: " + integrationTitle);
+    
+    // Find System Property to Update
+    var gr = new GlideRecord('sys_properties');
+    gr.addQuery('name', 'sam.integration');
+    gr.query();
+    
+    if (gr.next()) {
+        // Get the current value
+        var currentValue = gr.getValue('value');
+        gs.info("\u2705 System Property Found: Current Value: " + currentValue);
+        
+        var integrationsArr;
+        try {
+            integrationsArr = JSON.parse(currentValue || '[]');
+        } catch (e) {
+            integrationsArr = [];
+            gs.error("⚠️ Error parsing property value: " + e);
+        }
+        
+        // Find the integration object by title
+        var integrationObj = integrationsArr.find(obj => obj.title === integrationTitle);
+        
+        if (!integrationObj) {
+            gs.error("❌ Integration not found: " + integrationTitle);
+            response.setStatus(404);
+            response.setBody({ error: "Integration not found: " + integrationTitle });
+            return;
+        }
+        
+        // Toggle the complex value
+        integrationObj.complex = !integrationObj.complex;
+        
+        // Update the system property
+        gr.setValue('value', JSON.stringify(integrationsArr));
+        var updateResult = gr.update();
+        
+        if (updateResult) {
+            gs.info("✅ Integration Successfully Updated! Title: " + integrationTitle + ", New Complex Value: " + integrationObj.complex);
+            response.setStatus(200);
+            response.setBody({ 
+                success: true, 
+                message: 'Updated successfully', 
+                title: integrationTitle, 
+                complex: integrationObj.complex 
+            });
+        } else {
+            gs.error("❌ Update Failed for System Property");
+            response.setStatus(500);
+            response.setBody({ error: "Update failed for system property" });
+        }
+    } else {
+        gs.warn("❌ System Property 'sam.integration' not found");
+        response.setStatus(404);
+        response.setBody({ error: "System property not found" });
+    }
+})(request, response);
+
+
+]]></operation_script>
+        <operation_uri>/api/985627/sys_property_api/update-complex</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/update-complex</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-12 16:57:54</sys_created_on>
+        <sys_id>1be8107cc3942e540ced12f1b4013170</sys_id>
+        <sys_mod_count>21</sys_mod_count>
+        <sys_name>Update Sys Property</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ws_operation_1be8107cc3942e540ced12f1b4013170</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:31:49</sys_updated_on>
+        <web_service_definition display_value="Sys Property API">5188dcf8c3942e540ced12f1b40131bc</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>1be8107cc3942e540ced12f1b4013170</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-12 16:57:53</sys_created_on>
+        <sys_id>6ebadc30c3d42e540ced12f1b4013155</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-03-12 16:57:53</sys_updated_on>
+        <table>sys_ws_operation</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

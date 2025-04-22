@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="advanced-integration">665c8a91c32b16140ced12f1b40131d0</macroponent>
+        <name>Selected Integration</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+ * @param {params} params
+ * @param {api} params.api
+ * @param {any} params.event
+ * @param {any} params.imports
+ * @param {ApiHelpers} params.helpers
+ */
+function handler({ api, event, helpers, imports }) {
+    // Log the entire event object for debugging
+    const selectedTab = event.payload.selectedTab;
+
+    // Extract and log the value after `=` for any key-value pair like `set=api`
+    if (selectedTab && typeof selectedTab === "string") {
+        const keyValuePair = selectedTab.split("=");
+        if (keyValuePair.length === 2) {
+            const key = keyValuePair[0].trim(); // Extract the key (e.g., "set")
+            const value = keyValuePair[1].trim(); // Extract the value (e.g., "api")
+
+            console.log("Key:", key);
+            console.log("Value:", value);
+            api.setState('selectedIntegration',value)
+            console.log(api.state.selectedIntegration);
+
+        } else {
+            console.log("Invalid key-value pair format:", selectedTab);
+        }
+    } else {
+        console.log("Invalid selectedTab format:", selectedTab);
+    }
+}
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Harish_123</sys_created_by>
+        <sys_created_on>2025-02-05 10:23:35</sys_created_on>
+        <sys_id>5eedda51c36356140ced12f1b40131ec</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>Selected Integration</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_5eedda51c36356140ced12f1b40131ec</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:07</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+</record_update>

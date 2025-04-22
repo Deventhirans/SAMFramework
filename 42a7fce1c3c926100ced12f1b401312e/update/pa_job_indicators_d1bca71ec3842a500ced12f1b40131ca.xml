@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="pa_job_indicators">
+    <pa_job_indicators action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <collect>1</collect>
+        <collect_indicator>true</collect_indicator>
+        <display>SAMImp- Data Collection - accurate user records</display>
+        <indicator display_value="accurate user records">4c6b2f5ec3442a500ced12f1b40131bd</indicator>
+        <job display_value="SAMImp- Data Collection">74453fa5c30822100ced12f1b401316a</job>
+        <sys_class_name>pa_job_indicators</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-05 13:50:30</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>d1bca71ec3842a500ced12f1b40131ca</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>accurate user records.SAMImp- Data Collection</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>pa_job_indicators_d1bca71ec3842a500ced12f1b40131ca</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 11:38:49</sys_updated_on>
+    </pa_job_indicators>
+</record_update>

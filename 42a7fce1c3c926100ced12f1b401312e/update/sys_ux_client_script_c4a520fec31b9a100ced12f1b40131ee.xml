@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Automate Standard Software Request">ba5cd07ac3939a100ced12f1b40131cd</macroponent>
+        <name>repeater_5/repeatWith</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+ * @param {params} params
+ * @param {api} params.api
+ * @param {TransformApiHelpers} params.helpers
+ */
+function evaluateProperty({ api, helpers }) {
+    // Get the initial data
+    var data = api.data.top_pro_from_top_pub_1.output.top_products;
+    var selectedPublishers = api.data.get_filter_publisher_1.output;
+    var searchTerm = api.state.searchInput;
+
+    // Debug logs
+    console.log("Initial data length:", data.length);
+    console.log("searchTerm", searchTerm);
+    console.log("selectedPublisers", selectedPublishers);
+
+    // Only take the first half of the data to remove duplicates
+    data = data.slice(0, data.length/2);
+
+    // Extract publisher IDs and labels
+    var selectedPublisherIds = selectedPublishers.flat().map(publisher => publisher.id);
+    var selectedPublisherLabels = selectedPublishers.flat().map(publisher => publisher.label);
+
+    // Filter by publishers
+    var filteredData = data;
+    if (selectedPublishers && selectedPublishers.length > 0) {
+        filteredData = data.filter(item => {
+            return selectedPublisherIds.includes(item.publisher) || 
+                   selectedPublisherLabels.includes(item.publisher);
+        });
+    }
+
+    // Apply search filter if exists
+    if (searchTerm && searchTerm.trim()) {
+        filteredData = filteredData.filter(item => {
+            return Object.values(item).some(value =>
+                String(value).toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        });
+    }
+
+    // Get pagination details
+    var currentPage = api.state.currentPage || 1;
+    var recordsPerPage = api.state.recordsPerPage || 10;
+    var startIndex = (currentPage - 1) * recordsPerPage;
+    var endIndex = startIndex + recordsPerPage;
+
+    // Store pagination info in state
+    api.state.totalRecords = filteredData.length;
+    api.state.totalPages = Math.ceil(filteredData.length / recordsPerPage);
+
+    // Get the final paginated data
+    var paginatedData = filteredData.slice(startIndex, endIndex);
+
+    // Return only the paginated data
+    return paginatedData;
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Harish_123</sys_created_by>
+        <sys_created_on>2025-01-28 06:18:00</sys_created_on>
+        <sys_id>c4a520fec31b9a100ced12f1b40131ee</sys_id>
+        <sys_mod_count>14</sys_mod_count>
+        <sys_name>repeater_5/repeatWith</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_c4a520fec31b9a100ced12f1b40131ee</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

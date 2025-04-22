@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.ServiceRelationshipKPI</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>ServiceRelationshipKPI</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var ServiceRelationshipKPI = Class.create();
+ServiceRelationshipKPI.prototype = {
+    initialize: function () {
+        this.qualityFactors = {
+            completeness: 0.3,
+            accuracy: 0.3,
+            consistency: 0.2,
+            validation: 0.2
+        };
+    },
+
+    calculate: function () {
+        var assocGr = new GlideRecord("cmdb_rel_ci"); // Relationship table
+        assocGr.query();
+
+        var metrics = {
+            overall_quality: 0,
+            relationships_analyzed: 0,
+            quality_scores: [],
+            issues: []
+        };
+
+        while (assocGr.next()) {
+            var qualityScore = this._analyzeRelationshipQuality(assocGr);
+            metrics.quality_scores.push(qualityScore);
+            metrics.overall_quality += qualityScore.score;
+            metrics.relationships_analyzed++;
+            if (qualityScore.issues.length > 0) {
+                metrics.issues = metrics.issues.concat(qualityScore.issues);
+            }
+        }
+
+        metrics.overall_quality /= metrics.relationships_analyzed || 1; // Prevent division by zero
+        return metrics;
+    },
+
+    _analyzeRelationshipQuality: function (relationship) {
+        var analysis = {
+            parent_ci: relationship.parent.toString(),  // Parent CI reference
+            child_ci: relationship.child.toString(),   // Child CI reference
+            service_id: relationship.service_id ? relationship.serviceId.toString() : "N/A", // If applicableservice_id=
+            relationship_type: relationship.getDisplayValue("type"), // Relationship type
+            score: 100,
+            issues: []
+        };
+
+        // Validate relationship type
+        if (!this._isValidRelationshipType(relationship.type)) {
+            analysis.score -= 20;
+            analysis.issues.push({
+                type: "invalid_relationship",
+                description: "Relationship type is invalid or missing.",
+                severity: "high"
+            });
+        }
+
+        // Validate parent and child CIs exist
+        if (!this._ciExists(relationship.parent)) {
+            analysis.score -= 25;
+            analysis.issues.push({
+                type: "missing_parent",
+                description: "Parent CI does not exist in CMDB.",
+                severity: "high"
+            });
+        }
+        if (!this._ciExists(relationship.child)) {
+            analysis.score -= 25;
+            analysis.issues.push({
+                type: "missing_child",
+                description: "Child CI does not exist in CMDB.",
+                severity: "high"
+            });
+        }
+
+        // Check if the relationship has a reverse mapping
+        if (!this._hasReverseRelationship(relationship)) {
+            analysis.score -= 15;
+            analysis.issues.push({
+                type: "missing_reverse",
+                description: "Reverse relationship is missing.",
+                severity: "medium"
+            });
+        }
+
+        return analysis;
+    },
+
+    _isValidRelationshipType: function (relationshipTypeSysId) {
+        var relType = new GlideRecord("cmdb_rel_type");
+        relType.addQuery("sys_id", relationshipTypeSysId);
+        relType.query();
+        return relType.hasNext(); // Returns true if the relationship type exists
+    },
+
+    _ciExists: function (ciSysId) {
+        var ciGr = new GlideRecord("cmdb_ci");
+        ciGr.addQuery("sys_id", ciSysId);
+        ciGr.query();
+        return ciGr.hasNext(); // Returns true if the CI exists
+    },
+
+    _hasReverseRelationship: function (relationship) {
+        var reverseRel = new GlideRecord("cmdb_rel_ci");
+        reverseRel.addQuery("parent", relationship.child); // Swap parent-child
+        reverseRel.addQuery("child", relationship.parent);
+        reverseRel.query();
+        return reverseRel.hasNext(); // Returns true if a reverse relationship exists
+    }
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-22 21:44:11</sys_created_on>
+        <sys_id>f48fac43c3bb56d00ced12f1b401319a</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>ServiceRelationshipKPI</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_f48fac43c3bb56d00ced12f1b401319a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:39:03</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>f48fac43c3bb56d00ced12f1b401319a</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-22 21:44:11</sys_created_on>
+        <sys_id>acaf28c3c3bb56d00ced12f1b401319a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-22 21:44:11</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

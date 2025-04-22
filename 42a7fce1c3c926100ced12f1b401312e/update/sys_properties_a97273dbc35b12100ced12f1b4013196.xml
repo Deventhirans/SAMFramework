@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>false</ignore_cache>
+        <is_private>false</is_private>
+        <name>com.glide.event_handler.awa_agent_capacity</name>
+        <read_roles/>
+        <suffix>global</suffix>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-30 10:02:29</sys_created_on>
+        <sys_id>a97273dbc35b12100ced12f1b4013196</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>com.glide.event_handler.awa_agent_capacity</sys_name>
+        <sys_package display_value="Advanced Work Assignment" source="com.glide.awa">51713753c31b12100ced12f1b40131f8</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_a97273dbc35b12100ced12f1b4013196</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:20:03</sys_updated_on>
+        <type>string</type>
+        <value>com.snc.awa.platform.AgentCapacityEventHandler</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=a97273dbc35b12100ced12f1b4013196"/>
+</record_update>

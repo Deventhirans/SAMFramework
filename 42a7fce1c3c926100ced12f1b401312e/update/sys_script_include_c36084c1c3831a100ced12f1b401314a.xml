@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.CreateSamValueBuildertask</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>CreateSamValueBuildertask</name>
+        <sandbox_callable>true</sandbox_callable>
+        <script><![CDATA[var CreateSamValueBuildertask = Class.create();
+CreateSamValueBuildertask.prototype = {
+    initialize: function() {},
+
+    createTasks: function() {
+        var createdTasks = [];
+        var updatedTasks = []; // Track updated tasks
+        var processedProperties = []; // Track processed properties
+
+        var kpiProperties = [
+            'sam.foundation.current.users.kpi',
+            'sam.foundation.current.company.kpi',
+            'sam.foundation.current.location.kpi',
+            'sam.foundation.current.costcenter.kpi',
+            'sam.foundation.current.businessunit.kpi',
+            'sam.foundation.current.department.kpi',
+            'sam.current.softwaremodel.kpi',
+            'sam.implementation.euc',
+            'sam.implementation.servers',
+            'sam.current.installation.kpi',
+            'sam.current.subscription.kpi',
+            'sam.current.entitlement.kpi',
+            'sam.current.contract.kpi',
+            'sam.current.discoverymodel.kpi',
+			
+        ];
+
+        for (var i = 0; i < kpiProperties.length; i++) {
+            var propertyName = kpiProperties[i];
+            var kpiData = gs.getProperty(propertyName);
+
+            if (!kpiData) {
+                gs.error('Property "' + propertyName + '" is empty or not set.');
+                continue;
+            }
+
+            processedProperties.push(propertyName); // Record property processed
+            gs.info('Processing Property: ' + propertyName);
+
+            try {
+                var kpis = JSON.parse(kpiData);
+                for (var j = 0; j < kpis.length; j++) {
+                    var kpi = kpis[j];
+
+                    if (!kpi.kpi || !kpi.table || !kpi.field || !kpi.description || !kpi.recommendation) {
+                        gs.error('Missing required fields for KPI: ' + JSON.stringify(kpi));
+                        continue;
+                    }
+
+                    var gscheck = new GlideRecord(kpi.table);
+                    gscheck.addEncodedQuery(kpi.field);
+                    gscheck.query();
+                    if (!gscheck.next()) {
+                        gs.error('No data for query: ' + kpi.field + ' on table: ' + kpi.table);
+                        continue;
+                    }
+
+                    // Check if task with this KPI already exists
+                    var existingTask = new GlideRecord('samp_sp_vb_task');
+                    existingTask.addQuery('short_description', kpi.kpi);
+                    existingTask.addEncodedQuery('stateNOT IN2,-5,3,7');
+                    existingTask.query();
+                    
+                    if (existingTask.next()) {
+                        // Task exists - update it
+                        this.updateTask(existingTask, kpi);
+                        updatedTasks.push(kpi.kpi);
+                    } else {
+                        // Task doesn't exist - create new one
+                        var taskId = this.insertTask(kpi);
+                        if (taskId) {
+                            createdTasks.push(kpi.kpi);
+                        }
+                    }
+                }
+            } catch (e) {
+                gs.error('Error processing property "' + propertyName + '": ' + e.message);
+            }
+        }
+
+        // Return created tasks, updated tasks, and processed properties
+        return {
+            createdTasks: createdTasks,
+            updatedTasks: updatedTasks,
+            processedProperties: processedProperties
+        };
+    },
+
+    // Function to update existing task
+    updateTask: function(taskGr, kpi) {
+        taskGr.setValue('short_description', kpi.kpi); // Set KPI as short description
+        taskGr.setValue('description', kpi.description);
+        taskGr.setValue('instructions', kpi.recommendation);
+        
+        var success = taskGr.update();
+        if (success) {
+            gs.info('Updated task for KPI: ' + kpi.kpi + ' (Task ID: ' + taskGr.sys_id + ')');
+            gs.eventQueue('sam.implementation.value.builder.task.updated', taskGr, taskGr.sys_id);
+        } else {
+            gs.error('Failed to update task for KPI: ' + kpi.kpi);
+        }
+        return success;
+    },
+
+    // Function to insert new task
+    insertTask: function(kpi) {
+        var taskGr = new GlideRecord('samp_sp_vb_task');
+        taskGr.initialize();
+        taskGr.setValue('short_description', kpi.kpi); // Set KPI as short description
+        taskGr.setValue('description', kpi.description);
+        taskGr.setValue('instructions', kpi.recommendation);
+
+        var taskId = taskGr.insert();
+        if (taskId) {
+            gs.info('Created task for KPI: ' + kpi.kpi + ' (Task ID: ' + taskId + ')');
+            gs.eventQueue('sam.implementation.value.builder.task', taskGr, taskGr.sys_id);
+        } else {
+            gs.error('Failed to create task for KPI: ' + kpi.kpi);
+        }
+        return taskId;
+    },
+
+    type: 'CreateSamValueBuildertask'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-10 06:23:16</sys_created_on>
+        <sys_id>c36084c1c3831a100ced12f1b401314a</sys_id>
+        <sys_mod_count>38</sys_mod_count>
+        <sys_name>CreateSamValueBuildertask</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_c36084c1c3831a100ced12f1b401314a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:39:02</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>c36084c1c3831a100ced12f1b401314a</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-01-10 06:23:15</sys_created_on>
+        <sys_id>d770c4c1c3831a100ced12f1b40131f4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-01-10 06:23:15</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.saas_property</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>saas_property</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    var propertyName = 'sam.saas.record';
+    var kpiProperties = ['sam.saas.record'];
+    var tableName = 'gsw_content';
+    var kpiResult = {
+        "result": []
+    };
+
+    function fetchKPIs() {
+        var kpis = [];
+        var propertyValue = gs.getProperty(propertyName);
+
+        if (propertyValue) {
+            try {
+                kpis = JSON.parse(propertyValue);
+                gs.log('KPIs fetched: ' + JSON.stringify(kpis));
+            } catch (e) {
+                gs.log("Error parsing property '" + propertyName + "': " + e.message);
+            }
+        } else {
+            gs.log("Property '" + propertyName + "' is not set or is empty.");
+        }
+
+        return kpis;
+    }
+
+    function getQueryCount(tableNames, queries, field, staticValue, type) {
+        if (!tableNames || !queries || !staticValue) {
+            gs.error("Invalid parameters. Tables: " + tableNames + ", Queries: " + queries);
+            return "N/A";
+        }
+
+        try {
+            var tableList = tableNames.split(",");
+            var queryList = queries.split(",");
+
+            if (tableList.length !== queryList.length) {
+                gs.error("Mismatch between the number of tables and queries.");
+                return "N/A";
+            }
+
+            var resultSet = [staticValue];
+
+            for (var i = 0; i < tableList.length; i++) {
+                var tableName = tableList[i];
+                var query = queryList[i];
+                var tempResultSet = [];
+
+                for (var j = 0; j < resultSet.length; j++) {
+                    var replacedQuery = query.replace("--sys_id--", resultSet[j]);
+                    gs.log("Executing query on table " + tableName + ": " + replacedQuery);
+
+                    var gr = new GlideRecord(tableName);
+                    gr.addEncodedQuery(replacedQuery);
+                    gr.query();
+
+                    while (gr.next()) {
+                        if (type === "field") {
+                            if (field === "none") {
+                                return null;
+                            }
+                            return gr.getDisplayValue(field);
+                        }
+
+                        if (field === "none") {
+                            tempResultSet.push(gr.getUniqueValue());
+                        } else {
+                            var fieldValue = gr.getDisplayValue(field);
+                            if (fieldValue) {
+                                tempResultSet.push(fieldValue);
+                            }
+                        }
+                    }
+                }
+
+                if (tempResultSet.length === 0) {
+                    gs.log("No results found for table " + tableName + " with query: " + query);
+                    break;
+                }
+
+                resultSet = tempResultSet;
+            }
+
+            if (type === "nested-count" || type === "count") {
+                return resultSet.length;
+            } else if (type === "nested-contain" || type === "contain") {
+                return resultSet.length > 0 ? "Yes" : "No";
+            } else if (type === "nested-field") {
+                return resultSet.join(",");
+            } else {
+                gs.error("Invalid type: " + type);
+                return "N/A";
+            }
+
+        } catch (e) {
+            gs.error("Error executing nested query. Error: " + e);
+            return "N/A";
+        }
+    }
+
+    function processKPI(kpis, productSysId) {
+        var results = {};
+
+        if (Array.isArray(kpis)) {
+            kpis.forEach(function (kpi) {
+                if (kpi.table && kpi.query && kpi.field) {
+                    var type = kpi.type || null;
+                    var queryResult = getQueryCount(kpi.table, kpi.query, kpi.field, productSysId, type);
+                    var defaultValue = kpi.defaultValue || "N/A";
+                    results[kpi.kpi] = queryResult == null || queryResult === "N/A" ? defaultValue : queryResult;
+                } else {
+                    gs.log("KPI missing table, query, or field: " + JSON.stringify(kpi));
+                }
+            });
+        } else {
+            gs.log("KPI data is not in the expected format.");
+        }
+        return results;
+    }
+
+    function getStepStatus(stepsCompleted, totalSteps) {
+        if (stepsCompleted === totalSteps && totalSteps > 0) {
+            return "Completed";
+        } else if (stepsCompleted === 0) {
+            return "Not Started";
+        } else {
+            return "In Progress";
+        }
+    }
+
+    var properties = fetchKPIs();
+    var sys_id = properties.saas_sys_ids;
+
+    try {
+        var grProduct = new GlideRecord(tableName);
+        grProduct.addQuery('sys_id', 'IN', sys_id.join(','));
+        grProduct.query();
+
+        var result = [];
+
+        while (grProduct.next()) {
+            var recordObj = {};
+            recordObj['sys_id'] = grProduct.getUniqueValue();
+
+            var fields = grProduct.getFields();
+            for (var i = 0; i < fields.size(); i++) {
+                var fieldName = fields.get(i).getName();
+                recordObj[fieldName] = grProduct.getValue(fieldName);
+            }
+
+            kpiProperties.forEach(function (property) {
+                var kpis = fetchKPIs(property);
+                var tempResults = processKPI(kpis.kpis, recordObj.sys_id);
+                Object.assign(recordObj, tempResults);
+            });
+
+            // Adding step completion details
+            var totalSteps = recordObj.total_steps || 0;
+            var stepsCompleted = recordObj.steps_completed || 0;
+            recordObj.step_status = getStepStatus(stepsCompleted, totalSteps);
+
+            result.push(recordObj);
+        }
+
+        gs.log("Result: " + JSON.stringify(result));
+        kpiResult["result"] = result;
+        return kpiResult;
+
+    } catch (e) {
+        gs.log("Error: " + e.toString());
+        return { error: "An error occurred while fetching data: " + e.toString() };
+    }
+}
+]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-13 05:39:18</sys_created_on>
+        <sys_id>84e2d3f1c34bd2900ced12f1b401316f</sys_id>
+        <sys_mod_count>35</sys_mod_count>
+        <sys_name>saas_property</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_84e2d3f1c34bd2900ced12f1b401316f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:26</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=84e2d3f1c34bd2900ced12f1b401316f"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>84e2d3f1c34bd2900ced12f1b401316f</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-01-13 05:39:17</sys_created_on>
+        <sys_id>90331bf1c34bd2900ced12f1b40131c6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-01-13 05:39:17</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

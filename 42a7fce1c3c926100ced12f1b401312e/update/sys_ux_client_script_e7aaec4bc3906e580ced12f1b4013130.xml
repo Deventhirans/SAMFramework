@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="onboard and offboard automation">358e6955c37716100ced12f1b401317f</macroponent>
+        <name>vb 20</name>
+        <preset/>
+        <required_translations>[
+    {
+        "message": "Processing tasks for ${category}..."
+    },
+    {
+        "message": "otificatio"
+    },
+    {
+        "message": "Failed to process tasks"
+    },
+    {
+        "message": "An error occurred while processing tasks"
+    }
+]</required_translations>
+        <script><![CDATA[async function handler({ api, event, helpers, imports, state }) {
+    console.log("Handler function started.");
+    console.log("State parameter:", state);
+    
+    if (!helpers.snHttp || typeof helpers.snHttp !== "function") {
+        console.error("Error: helpers.snHttp is not properly initialized or callable.");
+        return;
+    }
+    
+    // console.log("snHttp helper is available.");
+    
+    // Get the current page information
+    // console.log("Fetching current page details from state.");
+    // const currentPage = state.page || {};
+    // const pageId = currentPage.id || '';
+    const pageId = 'f58e6955c37716100ced12f1b401317c';
+    api.context.session.user.sys_id
+    // console.log(`Current page ID: ` , api.context.session.user.sys_id);
+    // Map page IDs to categories
+    const pageCategoryMap = {
+        'f58e6955c37716100ced12f1b401317c': 'User Management',
+        
+    };
+    
+    // Get the category based on the current page
+    const category = pageCategoryMap[pageId] || null;
+    // console.log(`Resolved category: ${category}`);
+
+    if (!category) {
+        console.error("No valid category found. Aborting request.");
+        return;
+    }
+    
+    try {
+        // console.log("Emitting loading notification.");
+        // api.emit("NOW_UXF_PAGE#ADD_NOTIFICATIONS", {
+        //     items: [
+        //         {
+        //             id: "processing",
+        //             status: "info",
+        //             icon: "loading",
+        //             content: await helpers.translate(`Processing tasks for ${category}...`),
+        //             action: { type: "dismiss" },
+        //             duration : 3000
+        //         }
+        //     ]
+        // });
+
+        // Constructing the API request payload
+        const requestBody = JSON.stringify({ category });
+        // console.log("Sending API request with payload:", requestBody);
+
+        // console.log("Sending API request...");
+        const response = await helpers.snHttp("/api/985627/value_builder_task20", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: requestBody,
+        });
+
+        // console.log("API response received:", response);
+        
+        // console.log("Removing loading notification.");
+        api.emit("NOW_UXF_PAGE#REMOVE_NOTIFICATIONS", {
+            items: ["processing"]
+        });
+
+        if (response.status === 200 || (response.response && response.response.result && response.response.result.status === "success")) {
+            console.log("API response indicates success.");
+            const result = response.response.result;
+            
+            // console.log("Parsed API response result:", result);
+            
+            const createdTasks = result.created_tasks?.length ? result.created_tasks.join(", ") : "No tasks created";
+            const updatedTasks = result.updated_tasks?.length ? result.updated_tasks.join(", ") : "No tasks updated";
+            const categoryProcessed = result.category_processed || category;
+            
+            // console.log(`Created Tasks: ${createdTasks}`);
+            // console.log(`Updated Tasks: ${updatedTasks}`);
+            // console.log(`Category Processed: ${categoryProcessed}`);
+            
+            let notificationContent = `Value builder task updated successfully`;
+            
+            // console.log("Emitting success notification.");
+            api.emit("NOW_UXF_PAGE#ADD_NOTIFICATIONS", {
+                items: [
+                    {
+                        id: "success_notification",
+                        status: "positive",
+                        icon: "info-circle-outline",
+                        content: await helpers.translate(notificationContent),
+                        action: { type: "dismiss" },
+                        duration: 3000,
+
+                    },
+                ],
+            });
+        } else {
+            console.error("API response indicates failure:", response);
+            
+            console.log("Emitting error notification.");
+            api.emit("NOW_UXF_PAGE#ADD_NOTIFICATIONS", {
+                items: [
+                    {
+                        id: "error_notification",
+                        status: "critical",
+                        icon: "info-circle-outline",
+                        content: await helpers.translate("Failed to process tasks"),
+                        action: { type: "dismiss" },
+                    },
+                ],
+            });
+        }
+    } catch (error) {
+        console.error("API Call Failed:", error.message || error);
+        
+        if (error.response) {
+            console.error("Error Response Data:", error.response);
+        } else if (error.data) {
+            console.error("Error Data:", error.data);
+        }
+
+        console.log("Emitting error notification for unexpected failure.");
+        api.emit("NOW_UXF_PAGE#ADD_NOTIFICATIONS", {
+            items: [
+                {
+                    id: "error_notification",
+                    status: "critical",
+                    icon: "info-circle-outline",
+                    content: await helpers.translate("An error occurred while processing tasks"),
+                    action: { type: "dismiss" },
+                },
+            ],
+        });
+    }
+
+    console.log("Handler function execution completed.");
+}]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-19 17:55:59</sys_created_on>
+        <sys_id>e7aaec4bc3906e580ced12f1b4013130</sys_id>
+        <sys_mod_count>10</sys_mod_count>
+        <sys_name>vb 20</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_e7aaec4bc3906e580ced12f1b4013130</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>default</type>
+    </sys_ux_client_script>
+</record_update>

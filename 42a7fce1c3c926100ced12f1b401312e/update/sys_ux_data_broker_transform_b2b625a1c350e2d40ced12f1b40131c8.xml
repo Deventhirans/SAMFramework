@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_data_broker_transform">
+    <sys_ux_data_broker_transform action="INSERT_OR_UPDATE">
+        <acl_failure_result/>
+        <api_name>global.sam  duplicate EUC</api_name>
+        <batch_exclude>false</batch_exclude>
+        <description/>
+        <mutates_server_data>false</mutates_server_data>
+        <name>sam  duplicate EUC</name>
+        <output_schema/>
+        <private>false</private>
+        <props/>
+        <required_translations>[ ]</required_translations>
+        <schema_version>1.0.0</schema_version>
+        <script><![CDATA[function transform(input) {
+    // Define the parameters
+    var tableName = 'cmdb_ci_computer';
+    var field1 = 'model_id';
+    var field2 = 'serial_number';
+    var field3 = 'ip_address';
+    
+    // declare an array
+    var dupRecords = [];
+    var duplicateCount = 0;
+    
+    gs.log("Starting duplicate check for table: " + tableName + " on fields: " + field1 + ", " + field2 + ", and " + field3);
+    
+    var duplicateCheck = new GlideAggregate(tableName);
+    duplicateCheck.addNotNullQuery(field1);
+    duplicateCheck.addNotNullQuery(field2);
+    // IP address can be null, but we'll still include it in results
+    duplicateCheck.groupBy(field1);
+    duplicateCheck.groupBy(field2);
+    duplicateCheck.addHaving('COUNT', '>', 1); // addHaving func won't work in scope app
+    duplicateCheck.query();
+    
+    gs.log("Running query to find duplicate combinations");
+    
+    while(duplicateCheck.next()) {
+        var jsonObj = {}; // declare a json object
+        jsonObj[field1] = duplicateCheck[field1].toString();
+        jsonObj[field2] = duplicateCheck[field2].toString();
+        dupRecords.push(jsonObj);
+    }
+    
+    var jsonString = JSON.stringify(dupRecords); // convert json object to string
+    gs.log("Found " + dupRecords.length + " duplicate combinations");
+    
+    var parser = new JSONParser();
+    var parsedData = parser.parse(jsonString);
+    var length = parsedData.length;
+    
+    var result = {
+        totalDuplicateCombinations: length,
+        totalDuplicateRecords: 0,
+        duplicateDetails: []
+    };
+    
+    for(var i=0; i<length; i++){
+        var encodedQuery = field1 + '=' + parsedData[i][field1] + '^' + field2 + '=' + parsedData[i][field2];
+        
+        var tableRec = new GlideRecord(tableName);
+        tableRec.addEncodedQuery(encodedQuery);
+        tableRec.query();
+        
+        var count = tableRec.getRowCount();
+        var duplicateCount = count - 1; // One is the original, the rest are duplicates
+        result.totalDuplicateRecords += duplicateCount;
+        
+        var recordDetails = {
+            field1Value: parsedData[i][field1],
+            field1Display: '',
+            field2Value: parsedData[i][field2],
+            field2Display: '',
+            totalRecords: count,
+            duplicateCount: duplicateCount,
+            records: []
+        };
+        
+        // Get display values and record details
+        while(tableRec.next()){
+            if (recordDetails.field1Display === '') {
+                recordDetails.field1Display = tableRec.getDisplayValue(field1);
+                recordDetails.field2Display = tableRec.getDisplayValue(field2);
+            }
+            
+            recordDetails.records.push({
+                sys_id: tableRec.getUniqueValue(),
+                name: tableRec.getDisplayValue('name'),
+                ip_address: tableRec.getValue(field3) || 'No IP Address',
+                created: tableRec.getValue('sys_created_on')
+            });
+            
+            gs.info('Duplicate record found: ' + field1 + ' -> ' + tableRec.getDisplayValue(field1) + 
+                    ', ' + field2 + ' -> ' + tableRec.getDisplayValue(field2) + 
+                    ', IP Address -> ' + (tableRec.getValue(field3) || 'No IP Address') +
+                    ', Name -> ' + tableRec.getDisplayValue('name'));
+        }
+        
+        result.duplicateDetails.push(recordDetails);
+    }
+    
+    gs.log("Total duplicate combinations: " + result.totalDuplicateCombinations);
+    gs.log("Total duplicate records: " + result.totalDuplicateRecords);
+    
+    // Create the return object following the structure from example 2
+    return [
+        {
+            "data": [
+                {
+                    "value": result.totalDuplicateRecords.toString(),
+                    "change": "0",
+                    "changePercent": "0"
+                }
+            ],
+            "metadata": {
+                "eventData": {
+                    "indicatorSysid": "duplicate_computer_records_indicator"
+                },
+                "previousScoreDate": new Date(new Date().getTime() - 86400000).getTime().toString(), // Yesterday
+                "dataSourceLabel": "Number of duplicate computer records",
+                "changeArrow": "steady",
+                "scoreDate": new Date().getTime().toString(),
+                "filterQuery": field1 + "ISNOTEMPTY^" + field2 + "ISNOTEMPTY",
+                "aggregate": {
+                    "fieldType": "decimal"
+                },
+                "format": {
+                    "unitFormat": "{0}",
+                    "frequency": "daily",
+                    "precision": 0
+                },
+                "entityType": "computer",
+                "duplicateRecords": result.duplicateDetails
+            },
+            "sparkline": {
+                "data": [
+                    {
+                        "timestamp": new Date().getTime().toString(),
+                        "value": result.totalDuplicateRecords.toString()
+                    }
+                ],
+                "metadata": {
+                    "eventData": {
+                        "indicatorSysid": "duplicate_computer_records_indicator"
+                    },
+                    "dataSourceLabel": "Number of duplicate computer records",
+                    "series": [
+                        {
+                            "label": "Duplicate computers",
+                            "id": "value",
+                            "type": "value"
+                        }
+                    ],
+                    "aggregate": {
+                        "fieldType": "decimal"
+                    },
+                    "format": {
+                        "unitFormat": "{0}",
+                        "frequency": "daily",
+                        "precision": 0
+                    }
+                }
+            }
+        }
+    ];
+}]]></script>
+        <sys_class_name>sys_ux_data_broker_transform</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-15 06:28:49</sys_created_on>
+        <sys_id>b2b625a1c350e2d40ced12f1b40131c8</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>sam  duplicate EUC</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_data_broker_transform_b2b625a1c350e2d40ced12f1b40131c8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 14:00:27</sys_updated_on>
+    </sys_ux_data_broker_transform>
+    <sys_translated_text action="delete_multiple" query="documentkey=b2b625a1c350e2d40ced12f1b40131c8"/>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>b2b625a1c350e2d40ced12f1b40131c8</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-15 06:28:48</sys_created_on>
+        <sys_id>70876d69c390e2d40ced12f1b4013129</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-03-15 06:28:48</sys_updated_on>
+        <table>sys_ux_data_broker_transform</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

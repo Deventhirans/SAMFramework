@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.PropertyUpdateScriptInclude</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>PropertyUpdateScriptInclude</name>
+        <sandbox_callable>true</sandbox_callable>
+        <script><![CDATA[var PropertyUpdateScriptInclude = Class.create();
+PropertyUpdateScriptInclude.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+
+	   updateProperty: function(propertyName, suggestedValue) {
+        var gr = new GlideRecord('sys_properties');
+        if (gr.get('name', propertyName)) {
+            gr.setValue('value', suggestedValue); // Update property value
+            gr.update();
+            return { status: 'success', message: `Property ${propertyName} updated successfully.` };
+        } else {
+            return { status: 'error', message: `Property ${propertyName} not found.` };
+        }
+    },
+	 createGroup: function(groupName, description) {
+        var gr = new GlideRecord('sys_user_group');
+        
+        // Check if the group already exists
+        gr.addQuery('name', groupName);
+        gr.query();
+        if (gr.next()) {
+            return { status: 'error', message: `Group '${groupName}' already exists.` };
+        }
+
+        // Create a new group
+        var newGroup = new GlideRecord('sys_user_group');
+        newGroup.initialize();
+        newGroup.name = groupName;
+        newGroup.description = description || 'Created via Script Include';
+        var groupID = newGroup.insert();
+
+        if (groupID) {
+            return { status: 'success', message: `Group '${groupName}' created successfully.`, sys_id: groupID };
+        } else {
+            return { status: 'error', message: `Failed to create group '${groupName}'.` };
+        }
+    },
+
+    type: 'PropertyUpdateScriptInclude'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2024-12-30 05:35:34</sys_created_on>
+        <sys_id>4bfb831dc3369a900ced12f1b40131c6</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>PropertyUpdateScriptInclude</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_4bfb831dc3369a900ced12f1b40131c6</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:38:53</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>4bfb831dc3369a900ced12f1b40131c6</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-02-26 11:16:31</sys_created_on>
+        <sys_id>d9560348c308a6540ced12f1b401317d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-02-26 11:16:31</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>false</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="Implementation-approach">cc06fd97c3169e100ced12f1b40131ee</macroponent>
+        <name>rich_text_21/html</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+ * @param {params} params
+ * @param {api} params.api
+ * @param {TransformApiHelpers} params.helpers
+ */
+function evaluateProperty({ api, helpers }) {
+  // Fetch the stages from the API response
+  const stages = api.data.sam_imp_home_1.output || [];
+  console.log(stages);
+
+  // Make sure stages data is available and not empty
+  if (stages.length === 0) {
+    return `<div>No stages data available.</div>`;
+  }
+
+  // Function to dynamically assign classes
+  const getStepClass = (index, total) => {
+    if (index === 0) return 'start'; // First step is "start"
+    if (index === total - 1) return 'current'; // Last step is "current"
+    return 'mid'; // Other steps are "mid"
+  };
+
+  // Function to generate the step content dynamically
+  const generateStep = (stage, index, total) => {
+    const stepClass = getStepClass(index, total);
+    return `
+      <li class="${stepClass}">
+        <a style="font-weight: bold;" href="/now/sam-Implementation/${stage.url || '#'}">${stage.stage}</a>
+      </li>
+    `;
+  };
+
+  return `
+    <style>
+      .stepcontainer {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .steps {
+        display: flex;
+        padding: 0;
+        width: 100%;
+        overflow: hidden;
+        color: white !important;
+      }
+
+      .steps li {
+        flex: 1;
+        height: 70px;
+        list-style-type: none;
+        padding: 5px 0;
+        position: relative;
+        box-sizing: border-box;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .steps li:first-child {
+        padding-left: 5px;
+      }
+
+      .steps li:nth-child(n + 2)::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        border-left: 24px solid white;
+        border-top: 40px solid transparent;
+        border-bottom: 40px solid transparent;
+        width: 0;
+        height: 0;
+        content: " ";
+      }
+
+      .steps li::after {
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        right: -24px;
+        display: block;
+        border-left: 25px solid #84e78c;
+        border-top: 40px solid transparent;
+        border-bottom: 40px solid transparent;
+        width: 0;
+        height: 0;
+        content: " ";
+      }
+
+      .steps li.start {
+        background-color: #4F52BD;
+      }
+
+      .steps li.start::after {
+        border-left-color: #4F52BD;
+      }
+
+      .steps li.mid {
+        background-color: #3A3D88;
+        border-left: 3px solid white;
+      }
+
+      .steps li.mid::after {
+        border-left-color: #3A3D88;
+      }
+
+      .steps li.current {
+        background-color: #0F121B;
+        border-left: 3px solid white;
+      }
+
+      .steps li.current::after {
+        border-left-color: #0F121B;
+      }
+
+      .steps li a {
+        color: inherit;
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        line-height: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+
+    <div class="stepcontainer">
+      <ul class="steps">
+        ${stages.map((stage, index) => generateStep(stage, index, stages.length)).join('')}
+      </ul>
+    </div>
+  `;
+}
+]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-01-06 17:20:19</sys_created_on>
+        <sys_id>edfdd1bfc37e16500ced12f1b401319b</sys_id>
+        <sys_mod_count>120</sys_mod_count>
+        <sys_name>rich_text_21/html</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_edfdd1bfc37e16500ced12f1b401319b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

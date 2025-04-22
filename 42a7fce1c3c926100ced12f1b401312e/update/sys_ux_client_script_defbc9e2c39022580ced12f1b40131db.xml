@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="automated software uninstallation">d57865d5c3b316100ced12f1b4013132</macroponent>
+        <name>rich_text_3/html</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+ * @param {params} params
+ * @param {api} params.api
+ * @param {TransformApiHelpers} params.helpers
+ */
+function evaluateProperty({ api, helpers }) {
+  let html = `
+    <style>
+      .main-text {
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+        line-height: 1.7;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        background-color: #FFF3CD; /* Light yellow background */
+        padding: 8px 12px;
+        border-radius: 4px;
+        border-left: 4px solid #FFC107; /* Yellow border on the left */
+      }
+      .icon {
+        color: #856404; /* This won't affect the emoji color but matches the design */
+        font-size: 20px;
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+    </style>
+    <p class="main-text">
+      <span class="icon">⚠️</span> Required flow for Automated Software Uninstallation is not installed. Please install before proceeding.
+    </p>
+  `;
+ 
+  return html;
+}
+ ]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-18 07:26:15</sys_created_on>
+        <sys_id>defbc9e2c39022580ced12f1b40131db</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>rich_text_3/html</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_defbc9e2c39022580ced12f1b40131db</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:05</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>

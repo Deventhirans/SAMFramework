@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.discoveryPatternKPI</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>discoveryPatternKPI</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var discoveryPatternKPI = Class.create();
+discoveryPatternKPI.prototype = {
+    initialize: function() {
+        this.patternMetrics = {
+            execution_time: true,
+            success_rate: true,
+            ci_creation_rate: true,
+            error_rate: true
+        };
+    },
+
+    calculate: function() {
+		return {
+  "Linux Discovery Pattern": {
+    "execution_metrics": {
+      "avg_execution_time": 12.5,
+      "max_execution_time": 20.3,
+      "min_execution_time": 8.1,
+      "total_executions": 4,
+      "total_execution_time": 50
+    },
+    "success_metrics": {
+      "success_rate": 75.0
+    },
+    "error_analysis": {
+      "total_errors": 1,
+      "error_distribution": {
+        "Connection Timeout": 1
+      }
+    },
+    "trend_analysis": {
+      "execution_trend": [
+        {
+          "date": "2025-02-01 12:30:00",
+          "execution_time": 15.2,
+          "status": "Success"
+        },
+        {
+          "date": "2025-02-05 14:00:00",
+          "execution_time": 8.1,
+          "status": "Error"
+        },
+        {
+          "date": "2025-02-10 09:45:00",
+          "execution_time": 20.3,
+          "status": "Success"
+        },
+        {
+          "date": "2025-02-15 18:20:00",
+          "execution_time": 6.4,
+          "status": "Success"
+        }
+      ]
+    }
+  },
+  "Windows Discovery Pattern": {
+    "execution_metrics": {
+      "avg_execution_time": 18.7,
+      "max_execution_time": 22.5,
+      "min_execution_time": 15.3,
+      "total_executions": 3,
+      "total_execution_time": 56.1
+    },
+    "success_metrics": {
+      "success_rate": 66.67
+    },
+    "error_analysis": {
+      "total_errors": 2,
+      "error_distribution": {
+        "Authentication Failed": 1,
+        "Unknown Error": 1
+      }
+    },
+    "trend_analysis": {
+      "execution_trend": [
+        {
+          "date": "2025-02-02 10:20:00",
+          "execution_time": 22.5,
+          "status": "Success"
+        },
+        {
+          "date": "2025-02-07 13:50:00",
+          "execution_time": 15.3,
+          "status": "Error"
+        },
+        {
+          "date": "2025-02-12 16:10:00",
+          "execution_time": 18.3,
+          "status": "Success"
+        }
+      ]
+    }
+  }
+}
+;
+        var patterns = this._getActivePatterns();
+        var metrics = {};
+        var self = this;
+        patterns.forEach(function(pattern) {
+            metrics[pattern.name] = self._analyzePatternPerformance(pattern);
+        });
+        return metrics;
+    },
+
+    _getActivePatterns: function() {
+        var patterns = [];
+        var gr = new GlideRecord('sa_pattern'); // Corrected Table Name
+        gr.addQuery('active', true);
+        gr.query();
+        while (gr.next()) {
+            patterns.push({
+                sys_id: gr.getValue('sys_id'),
+                name: gr.getValue('name')
+            });
+        }
+        return patterns;
+    },
+
+    _analyzePatternPerformance: function(pattern) {
+        return {
+            execution_metrics: this._getExecutionMetrics(pattern),
+            success_metrics: this._getSuccessMetrics(pattern),
+            error_analysis: this._analyzeErrors(pattern),
+            trend_analysis: this._analyzeTrends(pattern)
+        };
+    },
+
+    _getExecutionMetrics: function(pattern) {
+        var execGr = new GlideRecord('sa_pattern'); // Corrected Table Name
+        // execGr.addQuery('pattern', pattern.sys_id);
+        // execGr.addQuery('sys_created_on', '>', gs.daysAgo(30));
+        execGr.query();
+
+        var metrics = {
+            avg_execution_time: 0,
+            max_execution_time: 0,
+            min_execution_time: Number.MAX_VALUE,
+            total_executions: 0,
+            total_execution_time: 0
+        };
+
+        while (execGr.next()) {
+            var execTime = parseFloat(execGr.getValue('execution_time')) || 0;
+            metrics.total_executions += 1;
+            metrics.total_execution_time += execTime;
+            metrics.max_execution_time = Math.max(metrics.max_execution_time, execTime);
+            metrics.min_execution_time = Math.min(metrics.min_execution_time, execTime);
+        }
+
+        if (metrics.total_executions > 0) {
+            metrics.avg_execution_time = metrics.total_execution_time / metrics.total_executions;
+        }
+
+        return metrics;
+    },
+
+    _getSuccessMetrics: function(pattern) {
+        var gr = new GlideRecord('sa_pattern'); // Corrected Table Name
+        // gr.addQuery('pattern', pattern.sys_id);
+        // gr.addQuery('sys_created_on', '>', gs.daysAgo(30));
+		// sys_class_name=sa_pattern
+        gr.query();
+
+        var successCount = 0;
+        var totalExecutions = 0;
+
+        while (gr.next()) {
+            totalExecutions += 1;
+            if (gr.getValue('sys_class_name') === 'Discovery Patterns') { // Status should be "Success" based on ServiceNow logs
+                successCount += 1;
+            }
+        }
+
+        return {
+            success_rate: totalExecutions > 0 ? (successCount / totalExecutions) * 100 : 0
+        };
+    },
+
+    _analyzeErrors: function(pattern) {
+        var gr = new GlideRecord('sa_pattern'); // Corrected Table Name
+        // gr.addQuery('pattern', pattern.sys_id);
+        // gr.addQuery('sys_created_on', '>', gs.daysAgo(30));
+        // gr.addQuery('status', 'Error'); // Check status for "Error"
+        gr.query();
+
+        var errorTypes = {};
+        var totalErrors = 0;
+
+        while (gr.next()) {
+            totalErrors += 1;
+            var errorMsg = gr.getValue('error_message') || 'Unknown Error';
+            errorTypes[errorMsg] = (errorTypes[errorMsg] || 0) + 1;
+        }
+
+        return {
+            total_errors: totalErrors,
+            error_distribution: errorTypes
+        };
+    },
+
+    _analyzeTrends: function(pattern) {
+        var gr = new GlideRecord('sa_pattern'); // Corrected Table Name
+        // gr.addQuery('pattern', pattern.sys_id);
+        // gr.addQuery('sys_created_on', '>', gs.daysAgo(30));
+        gr.orderBy('sys_created_on');
+        gr.query();
+
+        var trendData = [];
+        while (gr.next()) {
+            trendData.push({
+                date: gr.getValue('sys_created_on'),
+                execution_time: parseFloat(gr.getValue('execution_time')) || 0,
+                status: gr.getValue('status')
+            });
+        }
+
+        return {
+            execution_trend: trendData
+        };
+    }
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-22 18:54:38</sys_created_on>
+        <sys_id>185804cbc3bb16d00ced12f1b4013140</sys_id>
+        <sys_mod_count>16</sys_mod_count>
+        <sys_name>discoveryPatternKPI</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_185804cbc3bb16d00ced12f1b4013140</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:38:45</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>185804cbc3bb16d00ced12f1b4013140</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-22 18:54:38</sys_created_on>
+        <sys_id>f4d84c0fc3bb16d00ced12f1b4013153</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-02-22 18:54:38</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>sam.saas.record</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-01-10 06:26:10</sys_created_on>
+        <sys_id>ec6ef3bcc3431a100ced12f1b4013150</sys_id>
+        <sys_mod_count>11</sys_mod_count>
+        <sys_name>sam.saas.record</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_ec6ef3bcc3431a100ced12f1b4013150</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:20:10</sys_updated_on>
+        <type>string</type>
+        <value>{&#13;
+    "saas_sys_ids": [&#13;
+        &#13;
+            "102e7fddc35e9ad00ced12f1b40131d1" ,"01c6e55c25513200964f48ca4b89e87a"&#13;
+&#13;
+  ]&#13;
+,&#13;
+&#13;
+"kpis" : [&#13;
+&#13;
+ {&#13;
+    "kpi": "Title",&#13;
+    "description": "The software installation with active CI usage is mapped to a user account that is marked as inactive.",&#13;
+    "table": "gsw_content",&#13;
+    "query": "sys_id=--sys_id--",&#13;
+"field":"title",&#13;
+"type" : "field",&#13;
+"defaultValue" : "No"&#13;
+  }&#13;
+&#13;
+&#13;
+]&#13;
+}&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=ec6ef3bcc3431a100ced12f1b4013150"/>
+</record_update>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.ToggleComplexProperty</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>ToggleComplexProperty</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var ToggleComplexProperty = Class.create();
+ToggleComplexProperty.prototype = {
+    initialize: function() {},
+
+    toggleProperty: function() {
+        var apiUrl = "/api/985627/sys_property_api/update-complex";
+        var sysPropertyName = "sam.integration"; // Property name to update
+
+        // Create REST Message
+        var request = new sn_ws.RESTMessageV2();
+        request.setEndpoint(apiUrl);
+        request.setHttpMethod("POST");
+        request.setRequestHeader("Content-Type", "application/json");
+        request.setRequestBody(JSON.stringify({
+            data: { name: sysPropertyName }
+        }));
+
+        // Execute API call
+        var response = request.execute();
+        var responseBody = response.getBody();
+        var parsedResponse = JSON.parse(responseBody);
+
+        return parsedResponse;
+    }
+};
+;]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-12 17:14:34</sys_created_on>
+        <sys_id>fa1e9478c3d42e540ced12f1b4013126</sys_id>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_name>ToggleComplexProperty</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_fa1e9478c3d42e540ced12f1b4013126</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:39:04</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>fa1e9478c3d42e540ced12f1b4013126</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-12 17:14:34</sys_created_on>
+        <sys_id>3e8e1c78c3d42e540ced12f1b4013194</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-03-12 17:14:34</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

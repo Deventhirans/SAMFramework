@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_985627_samfram_0.CreateValidateSoftwareModelTask</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>CreateValidateSoftwareModelTask</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var CreateValidateSoftwareModelTask = Class.create();
+CreateValidateSoftwareModelTask.prototype = {
+    initialize: function () {},
+
+    createTask: function () {
+        // Fetch sys_property value
+        var sysPropValue = gs.getProperty("validate.property");
+        if (!sysPropValue) {
+            gs.info("❌ System Property 'validate.property' not found.");
+            return "System Property not found.";
+        }
+
+        var taskDetails;
+        try {
+            taskDetails = JSON.parse(sysPropValue);
+        } catch (e) {
+            gs.error("❌ Error parsing JSON from sys_property: " + e);
+            return "Error parsing system property.";
+        }
+
+        if (!taskDetails.Validate_Software_Model) {
+            gs.info("❌ 'Validate_Software_Model' entry missing in sys_property.");
+            return "No task details found.";
+        }
+
+        // Create task in samp_sp_vb_task
+        var task = new GlideRecord('samp_sp_vb_task');
+        task.initialize();
+        task.short_description = taskDetails.Validate_Software_Model.short_description;
+        task.description = taskDetails.Validate_Software_Model.description;
+        task.work_notes = taskDetails.Validate_Software_Model.instruction;
+        task.state = "1"; // Open
+        task.insert();
+
+        gs.info("✅ Task created in samp_sp_vb_task for Validate Software Model.");
+        return "Task created successfully.";
+    },
+
+    type: 'CreateValidateSoftwareModelTask'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-19 12:40:16</sys_created_on>
+        <sys_id>fe36d73dc3ff56500ced12f1b401316d</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>CreateValidateSoftwareModelTask</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_include_fe36d73dc3ff56500ced12f1b401316d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 13:39:04</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="INSERT_OR_UPDATE">
+        <id>fe36d73dc3ff56500ced12f1b401316d</id>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-19 12:40:15</sys_created_on>
+        <sys_id>af56d33dc3ff56500ced12f1b40131ca</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Arul_123</sys_updated_by>
+        <sys_updated_on>2025-02-19 12:40:15</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+</record_update>

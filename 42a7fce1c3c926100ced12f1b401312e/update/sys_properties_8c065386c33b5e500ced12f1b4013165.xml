@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties">
+    <sys_properties action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>SAM Implementation Framework</description>
+        <ignore_cache>true</ignore_cache>
+        <is_private>false</is_private>
+        <name>entitlement.dashboard</name>
+        <read_roles/>
+        <suffix/>
+        <sys_class_name>sys_properties</sys_class_name>
+        <sys_created_by>Arul_123</sys_created_by>
+        <sys_created_on>2025-02-20 07:17:32</sys_created_on>
+        <sys_id>8c065386c33b5e500ced12f1b4013165</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>entitlement.dashboard</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_properties_8c065386c33b5e500ced12f1b4013165</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-22 10:19:59</sys_updated_on>
+        <type>string</type>
+        <value>{&#13;
+  "output": [&#13;
+    { "kpi": "Active Entitlement Without Publisher Part Number (PPN)", "count": 156 },&#13;
+    { "kpi": "Unit Cost Greater Than 0.01", "count": 169 },&#13;
+    { "kpi": "Has Software Model", "count": 0 },&#13;
+    { "kpi": "Active Custom PPN with CDMAP/DMAP and Content Service Not Excluded", "count": 180 },&#13;
+    { "kpi": "Entitlement Import Errors (Needs Review)", "count": 180 }&#13;
+  ]&#13;
+}&#13;
+</value>
+        <write_roles/>
+    </sys_properties>
+    <sys_translated_text action="delete_multiple" query="documentkey=8c065386c33b5e500ced12f1b4013165"/>
+</record_update>

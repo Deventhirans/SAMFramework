@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_client_script">
+    <sys_ux_client_script action="INSERT_OR_UPDATE">
+        <controller_preset/>
+        <includes/>
+        <macroponent display_value="automated software deployment">433321d1c3ffd2100ced12f1b4013108</macroponent>
+        <name>rich_text_4/html</name>
+        <preset/>
+        <required_translations>[]</required_translations>
+        <script><![CDATA[/**
+  * @param {params} params
+  * @param {api} params.api
+  * @param {TransformApiHelpers} params.helpers
+  */
+function evaluateProperty({api, helpers}) {
+	return `
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatic Software Deployment Flow</title>
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e6f0fa 0%, #ffffff 100%);
+            color: #34495e;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 10px auto;
+            padding: 10px;
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 25px;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #16a085;
+            font-size: 17px;
+            margin: 10px 0 10px;
+            position: relative;
+            padding-left: 20px;
+            border-left: 4px solid #adbdf0;
+        }
+        .flow-section {
+            background: rgba(230, 240, 250, 0.5);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            position: relative;
+            animation: fadeIn 0.6s ease-out;
+        }
+        .flow-section::after {
+            content: '↓';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5em;
+            color: #16a085;
+            opacity: 0.7;
+        }
+        .flow-section:last-child::after {
+            content: '';
+        }
+        .highlight {
+            color: #080561;
+        }
+        p {
+            margin: 10px 0;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        ul li {
+            margin: 3px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        ul li::before {
+            content: '➔';
+            color: #0a0a0a;
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+        }
+        .question {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Automatic Software Deployment Flow (Detailed)</h1>
+
+        <div class="flow-section">
+            <h2>Trigger - Onboarding Initiation</h2>
+            <ul>
+                <li>The process begins when a new user is added to the system as part of the <span class="highlight">onboarding workflow</span>.</li>
+                <li>This could be triggered by an <span class="highlight">HR system update</span> (e.g., a new employee record) or a manual onboarding request submitted in ServiceNow.</li>
+                <li>The system recognizes the onboarding event as the starting point for software deployment needs.</li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>Action - Flow Activation</h2>
+            <ul>
+                <li>Once the onboarding event is detected, the <span class="highlight">automated software deployment flow</span> is activated.</li>
+                <li>The flow is pre-configured in ServiceNow to respond to onboarding triggers, ensuring consistency for all new users.</li>
+                <li>At this point, the system checks basic conditions (e.g., user role or department) to confirm the deployment process should proceed.</li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>Task Creation - Core Step</h2>
+            <ul>
+                <li>The flow executes its primary (and currently only) action: creating a task in ServiceNow.</li>
+                <li><span class="highlight">Task Details:</span></li>
+                <ul>
+                    <li>Assigned to: An IT team member, administrator, or a predefined support group responsible for software provisioning.</li>
+                    <li>Description: Includes user details (e.g., name, ID, role) and a note about required software setup.</li>
+                    <li>Purpose: Acts as a manual checkpoint to ensure the onboarding process is tracked and followed up.</li>
+                </ul>
+                <li>The task is logged in the ServiceNow workspace, providing visibility to relevant stakeholders.</li>
+                <li>No additional automation (e.g., software installation, license assignment, or configuration) occurs at this stage.</li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>End - Flow Completion</h2>
+            <ul>
+                <li>After the task is successfully created, the flow terminates.</li>
+                <li>The process does not proceed to automate software deployment further (e.g., no direct integration with deployment tools or scripts yet).</li>
+                <li>The responsibility shifts to the assigned team member to review the task and take manual actions, such as installing software or updating the user’s profile.</li>
+            </ul>
+        </div>
+
+        <div class="flow-section">
+            <h2>Future Potential (Not Active)</h2>
+            <ul>
+                <li>While not currently implemented, the flow could be expanded later to include steps like:</li>
+                <ul>
+                    <li>Automatically provisioning software based on user role.</li>
+                    <li>Sending confirmation notifications to the user or manager.</li>
+                    <li>Updating asset management records in ServiceNow.</li>
+                </ul>
+                <li>For now, it remains a simple, task-driven process to initiate onboarding software setup.</li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>
+    `;
+}
+  ]]></script>
+        <script_api_version>2.0.0</script_api_version>
+        <sys_class_name>sys_ux_client_script</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-03-28 15:35:39</sys_created_on>
+        <sys_id>d8b026b5c360e2100ced12f1b40131a0</sys_id>
+        <sys_mod_count>8</sys_mod_count>
+        <sys_name>rich_text_4/html</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_ux_client_script_d8b026b5c360e2100ced12f1b40131a0</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 12:37:06</sys_updated_on>
+        <target>macroponent</target>
+        <type>transform</type>
+    </sys_ux_client_script>
+</record_update>
