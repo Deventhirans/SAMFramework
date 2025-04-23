@@ -23,12 +23,11 @@ let commitInProgress = false;
     const updateSetId = "6b2ea2e4838ed2109a4b66d0deaad303";
 
     if (!updateSetId) {
-        gs.log("Log from Commit Update Set"+"Update Set ID is missing.");
+        gs.info("Log from Commit Update Set"+"Update Set ID is missing.");
         return;
     }
 
     commitInProgress = true;
-    gs.log("Log from Commit Update Set"+"Starting commit for Update Set:"+ updateSetId);
 
     const ajaxHelper = new GlideAjax('com.glide.update.UpdateSetCommitAjaxProcessor');
     ajaxHelper.addParam('sysparm_type', 'commitRemoteUpdateSet');
@@ -41,10 +40,10 @@ let commitInProgress = false;
             return;
         }
 
-        gs.log("Log from Commit Update Set"+"Commit response:"+ response);
+        gs.info("Log from Commit Update Set"+"Commit response:"+ response);
 
         // Optional: Show success message or handle post-commit actions
-        gs.log("Log from Commit Update Set"+"Update Set committed successfully!");
+        gs.info("Log from Commit Update Set"+"Update Set committed successfully!");
     });
 
 
@@ -59,14 +58,14 @@ let commitInProgress = false;
         <sys_created_by>Loga_123</sys_created_by>
         <sys_created_on>2025-01-20 05:47:23</sys_created_on>
         <sys_id>454697c8c39396900ced12f1b4013115</sys_id>
-        <sys_mod_count>4</sys_mod_count>
+        <sys_mod_count>5</sys_mod_count>
         <sys_name>commit_update_set</sys_name>
         <sys_package display_value="Global" source="global">global</sys_package>
         <sys_policy/>
         <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
         <sys_update_name>sys_script_include_454697c8c39396900ced12f1b4013115</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-04-21 13:38:50</sys_updated_on>
+        <sys_updated_on>2025-04-23 11:21:29</sys_updated_on>
     </sys_script_include>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>454697c8c39396900ced12f1b4013115</id>

@@ -23,7 +23,6 @@ function getInstanceURL(callback) {
             callback(null);
         } else {
             let instanceUrl = response.trim();
-            console.log("]]>🌍<![CDATA[ Final Instance URL:", instanceUrl);
             callback(instanceUrl);
         }
     });
@@ -330,14 +329,14 @@ function sendRequest(method, url, data) {
         <sys_created_by>harish_123</sys_created_by>
         <sys_created_on>2025-02-10 11:40:32</sys_created_on>
         <sys_id>4210fc8fc36792100ced12f1b401313a</sys_id>
-        <sys_mod_count>156</sys_mod_count>
+        <sys_mod_count>157</sys_mod_count>
         <sys_name>Procurement_form</sys_name>
         <sys_package display_value="Global" source="global">global</sys_package>
         <sys_policy/>
         <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
         <sys_update_name>sys_ui_page_4210fc8fc36792100ced12f1b401313a</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-04-21 12:55:17</sys_updated_on>
+        <sys_updated_on>2025-04-23 11:19:39</sys_updated_on>
     </sys_ui_page>
     <sys_es_latest_script action="INSERT_OR_UPDATE">
         <id>4210fc8fc36792100ced12f1b401313a</id>

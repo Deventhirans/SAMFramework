@@ -1,0 +1,848 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="DELETE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>global.discoveryEffectivenessKPI</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>discoveryEffectivenessKPI</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var discoveryEffectivenessKPI = Class.create();
+discoveryEffectivenessKPI.prototype = {
+    initialize: function() {
+        this.measurementPeriod = {
+            short_term: '24h',
+            medium_term: '7d',
+            long_term: '30d'
+        };
+        // Enable debug logging
+        this.debug = true;
+        this.log = [];
+    },
+
+    // Helper to check if a table exists
+    _isValidTable: function(tableName) {
+        try {
+            // If GlideTableDescriptor is available, use it
+            if (typeof GlideTableDescriptor !== 'undefined') {
+                return (GlideTableDescriptor.get(tableName) != null);
+            } else {
+                // Fallback: try creating a GlideRecord. If it fails, catch the error.
+                var gr = new GlideRecord(tableName);
+                return true;
+            }
+        } catch (e) {
+            return false;
+        }
+    },
+
+    // Debug logging helper
+    _logDebug: function(message, data) {
+        if (this.debug) {
+            var logEntry = {
+                timestamp: new GlideDateTime().getDisplayValue(),
+                message: message,
+                data: data || 'No data'
+            };
+            this.log.push(logEntry);
+            gs.debug('DiscoveryKPI: ' + message + ' | ' + JSON.stringify(data));
+        }
+    },
+
+    calculate: function() {
+        this._logDebug('Starting KPI calculation');
+        var results = {
+            coverage_metrics: this._calculateCoverageMetrics(),
+            efficiency_metrics: this._calculateEfficiencyMetrics(),
+            quality_metrics: this._calculateQualityMetrics()
+        };
+        this._logDebug('Calculation complete', results);
+        return results;
+    },
+
+    _calculateCoverageMetrics: function() {
+        this._logDebug('Calculating coverage metrics');
+        var metrics = {};
+        
+        try {
+            var totalSubnets = this._getTotalConfiguredSubnets();
+            var discoveredSubnets = this._getDiscoveredSubnets();
+            metrics.subnet_coverage = totalSubnets > 0 ? (discoveredSubnets / totalSubnets) * 100 : null;
+            
+            metrics.ci_type_coverage = this._calculateCITypeCoverage();
+            metrics.pattern_coverage = this._calculatePatternCoverage();
+            
+            this._logDebug('Coverage metrics calculated', metrics);
+        } catch (e) {
+            this._logDebug('Error in coverage metrics calculation', e);
+            gs.error('Error calculating coverage metrics: ' + e);
+        }
+        
+        return metrics;
+    },
+
+    _calculateEfficiencyMetrics: function() {
+        this._logDebug('Calculating efficiency metrics');
+        var metrics = {};
+        
+        try {
+            metrics.success_rate = this._calculateSuccessRate();
+            metrics.avg_discovery_time = this._calculateAverageDiscoveryTime();
+            metrics.resource_utilization = this._calculateResourceUtilization();
+            
+            this._logDebug('Efficiency metrics calculated', metrics);
+        } catch (e) {
+            this._logDebug('Error in efficiency metrics calculation', e);
+            gs.error('Error calculating efficiency metrics: ' + e);
+        }
+        
+        return metrics;
+    },
+
+    _calculateQualityMetrics: function() {
+        this._logDebug('Calculating quality metrics');
+        var metrics = {};
+        
+        try {
+            metrics.data_accuracy = this._calculateDataAccuracy();
+            metrics.completeness = this._calculateCompleteness ? this._calculateCompleteness() : null;
+            metrics.duplicate_rate = this._calculateDuplicateRate();
+            
+            this._logDebug('Quality metrics calculated', metrics);
+        } catch (e) {
+            this._logDebug('Error in quality metrics calculation', e);
+            gs.error('Error calculating quality metrics: ' + e);
+        }
+        
+        return metrics;
+    },
+
+    _getTotalConfiguredSubnets: function() {
+        this._logDebug('Getting total configured subnets');
+        var subnets = new GlideRecord('cmdb_ci_ip_network_subnet');
+        subnets.addQuery('install_status', '!=', 7); // Exclude retired subnets
+        subnets.query();
+        var count = subnets.getRowCount();
+        this._logDebug('Total configured subnets', count);
+        return count;
+    },
+
+    _getDiscoveredSubnets: function() {
+        this._logDebug('Getting discovered subnets');
+        var subnets = new GlideRecord('cmdb_ci_ip_network_subnet');
+        
+        // Use 'active' if available; otherwise, use install_status
+        if (subnets.isValidField('active')) {
+            subnets.addQuery('active', true);
+        } else if (subnets.isValidField('install_status')) {
+            subnets.addQuery('install_status', '!=', 7);
+        }
+        
+        // Only add this query if the field exists
+        if (subnets.isValidField('discovery_last_run')) {
+            subnets.addQuery('discovery_last_run', '!=', '');
+        }
+        subnets.query();
+        var count = subnets.getRowCount();
+        this._logDebug('Discovered subnets', count);
+        return count;
+    },
+
+    _calculatePatternCoverage: function() {
+        this._logDebug('Calculating pattern coverage');
+        var patterns = new GlideRecord('sa_pattern');
+        if (patterns.isValidField('active')) {
+            patterns.addQuery('active', true);
+        }
+        patterns.query();
+        var totalPatterns = patterns.getRowCount();
+        
+        if (patterns.isValidField('last_matched')) {
+            patterns.addQuery('last_matched', '!=', '');
+        }
+        patterns.query();
+        var usedPatterns = patterns.getRowCount();
+        
+        var coverage = totalPatterns > 0 ? (usedPatterns / totalPatterns) * 100 : 0;
+        this._logDebug('Pattern coverage calculated', {
+            total: totalPatterns,
+            used: usedPatterns,
+            coverage: coverage
+        });
+        return coverage;
+    },
+
+    _calculateSuccessRate: function() {
+        this._logDebug('Calculating success rate');
+        var status = new GlideRecord('discovery_status');
+        status.addQuery('state', 'Completed');
+        status.addEncodedQuery('sys_created_on>javascript:gs.beginningOfLast' + this.measurementPeriod.medium_term);
+        status.query();
+        var successful = status.getRowCount();
+        
+        var failedStatus = new GlideRecord('discovery_status');
+        failedStatus.addQuery('state', 'Failed');
+        failedStatus.addEncodedQuery('sys_created_on>javascript:gs.beginningOfLast' + this.measurementPeriod.medium_term);
+        failedStatus.query();
+        var failed = failedStatus.getRowCount();
+        
+        var total = successful + failed;
+        var rate = total > 0 ? (successful / total) * 100 : 0;
+        
+        this._logDebug('Success rate calculated', {
+            successful: successful,
+            failed: failed,
+            total: total,
+            rate: rate
+        });
+        return rate;
+    },
+
+    _calculateAverageDiscoveryTime: function() {
+        this._logDebug('Calculating average discovery time');
+        var status = new GlideRecord('discovery_status');
+        status.addQuery('state', 'Completed');
+        status.addEncodedQuery('sys_created_on>javascript:gs.beginningOfLast' + this.measurementPeriod.medium_term);
+        status.query();
+        
+        var totalTime = 0;
+        var count = 0;
+        
+        while (status.next()) {
+            var startTime = new GlideDateTime(status.sys_created_on);
+            var endTime = new GlideDateTime(status.completed_at);
+            var diff = gs.dateDiff(startTime.getDisplayValue(), endTime.getDisplayValue(), true);
+            totalTime += diff;
+            count++;
+        }
+        
+        var avgTime = count > 0 ? totalTime / count : 0;
+        this._logDebug('Average discovery time calculated', {
+            totalTime: totalTime,
+            count: count,
+            averageTime: avgTime
+        });
+        return avgTime;
+    },
+
+    _calculateResourceUtilization: function() {
+        this._logDebug('Calculating resource utilization');
+        var util = new GlideRecord('ecc_agent_status');
+        util.addEncodedQuery('sys_created_on>javascript:gs.beginningOfLast' + this.measurementPeriod.short_term);
+        util.query();
+        
+        var totalCPU = 0;
+        var totalMemory = 0;
+        var count = 0;
+        
+        while (util.next()) {
+            totalCPU += parseFloat(util.cpu_percentage) || 0;
+            totalMemory += parseFloat(util.memory_percentage) || 0;
+            count++;
+        }
+        
+        var result = {
+            avg_cpu: count > 0 ? totalCPU / count : 0,
+            avg_memory: count > 0 ? totalMemory / count : 0
+        };
+        
+        this._logDebug('Resource utilization calculated', result);
+        return result;
+    },
+
+    _calculateCITypeCoverage: function() {
+        this._logDebug('Calculating CI type coverage');
+        var coverage = {};
+        var ciTypes = ['cmdb_ci_server', 'cmdb_ci_network_adapter', 'cmdb_ci_database', 'cmdb_ci_middleware'];
+        
+        for (var i = 0; i < ciTypes.length; i++) {
+            var type = ciTypes[i];
+            if (!this._isValidTable(type)) {
+                this._logDebug('Table ' + type + ' does not exist, skipping', null);
+                continue;
+            }
+            var total = this._getTotalCIs(type);
+            var discovered = this._getDiscoveredCIs(type);
+            coverage[type] = total > 0 ? (discovered / total) * 100 : 0;
+        }
+        
+        this._logDebug('CI type coverage calculated', coverage);
+        return coverage;
+    },
+
+    _getTotalCIs: function(type) {
+        if (!this._isValidTable(type)) {
+            this._logDebug('Table ' + type + ' does not exist, skipping', null);
+            return 0;
+        }
+        var ci = new GlideRecord(type);
+        if (ci.isValidField('active')) {
+            ci.addQuery('active', true);
+        } else if (ci.isValidField('install_status')) {
+            ci.addQuery('install_status', '!=', 7);
+        }
+        ci.query();
+        var count = ci.getRowCount();
+        this._logDebug('Total CIs for type: ' + type, count);
+        return count;
+    },
+
+    _getDiscoveredCIs: function(type) {
+        if (!this._isValidTable(type)) {
+            this._logDebug('Table ' + type + ' does not exist, skipping', null);
+            return 0;
+        }
+        var ci = new GlideRecord(type);
+        if (ci.isValidField('active')) {
+            ci.addQuery('active', true);
+        } else if (ci.isValidField('install_status')) {
+            ci.addQuery('install_status', '!=', 7);
+        }
+        if (ci.isValidField('discovery_source')) {
+            ci.addQuery('discovery_source', '!=', '');
+        }
+        ci.query();
+        var count = ci.getRowCount();
+        this._logDebug('Discovered CIs for type: ' + type, count);
+        return count;
+    },
+
+    _calculateDataAccuracy: function() {
+        this._logDebug('Calculating data accuracy');
+        var ciTypes = ['cmdb_ci_server', 'cmdb_ci_network_adapter', 'cmdb_ci_database', 'cmdb_ci_middleware'];
+        var validCITables = [];
+        for (var i = 0; i < ciTypes.length; i++) {
+            if (this._isValidTable(ciTypes[i])) {
+                validCITables.push(ciTypes[i]);
+            } else {
+                this._logDebug('Table ' + ciTypes[i] + ' does not exist, skipping audit for it', null);
+            }
+        }
+        
+        if (validCITables.length === 0) {
+            this._logDebug('No valid CI tables for data accuracy calculation', null);
+            return 0;
+        }
+        
+        var audit = new GlideRecord('sys_audit');
+        audit.addEncodedQuery('sys_created_on>javascript:gs.beginningOfLast' + this.measurementPeriod.medium_term);
+        audit.addQuery('tablename', 'IN', validCITables.join(','));
+        audit.query();
+        
+        var totalFields = 0;
+        var accurateFields = 0;
+        
+        while (audit.next()) {
+            totalFields++;
+            if (audit.newvalue == audit.oldvalue) {
+                accurateFields++;
+            }
+        }
+        
+        var accuracy = totalFields > 0 ? (accurateFields / totalFields) * 100 : 0;
+        this._logDebug('Data accuracy calculated', {
+            totalFields: totalFields,
+            accurateFields: accurateFields,
+            accuracy: accuracy
+        });
+        return accuracy;
+    },
+
+    _calculateDuplicateRate: function() {
+        this._logDebug('Calculating duplicate rate');
+        var ciTypes = ['cmdb_ci_server', 'cmdb_ci_network_adapter', 'cmdb_ci_database', 'cmdb_ci_middleware'];
+        var validCITables = [];
+        for (var i = 0; i < ciTypes.length; i++) {
+            if (this._isValidTable(ciTypes[i])) {
+                validCITables.push(ciTypes[i]);
+            } else {
+                this._logDebug('Table ' + ciTypes[i] + ' does not exist, skipping duplicate rate calculation for it', null);
+            }
+        }
+        if (validCITables.length === 0) {
+            this._logDebug('No valid CI tables for duplicate rate calculation', null);
+            return 0;
+        }
+        
+        var duplicates = new GlideRecord('duplicate_audit_result');
+        duplicates.addEncodedQuery('sys_created_on>javascript:gs.beginningOfLast' + this.measurementPeriod.medium_term);
+        duplicates.addQuery('table', 'IN', validCITables.join(','));
+        duplicates.query();
+        var duplicateCount = duplicates.getRowCount();
+        
+        var totalCIs = 0;
+        for (var j = 0; j < validCITables.length; j++) {
+            totalCIs += this._getTotalCIs(validCITables[j]);
+        }
+        
+        var rate = totalCIs > 0 ? (duplicateCount / totalCIs) * 100 : 0;
+        this._logDebug('Duplicate rate calculated', {
+            duplicateCount: duplicateCount,
+            totalCIs: totalCIs,
+            rate: rate
+        });
+        return rate;
+    },
+
+    getDebugLog: function() {
+        return this.log;
+    },
+
+    type: 'discoveryEffectivenessKPI'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-22 15:03:18</sys_created_on>
+        <sys_id>bab31f3ec3b3d2d00ced12f1b4013142</sys_id>
+        <sys_mod_count>12</sys_mod_count>
+        <sys_name>discoveryEffectivenessKPI</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Global">global</sys_scope>
+        <sys_update_name>sys_script_include_bab31f3ec3b3d2d00ced12f1b4013142</sys_update_name>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-04-02 11:55:44</sys_updated_on>
+    </sys_script_include>
+    <sys_es_latest_script action="DELETE">
+        <id>bab31f3ec3b3d2d00ced12f1b4013142</id>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-02-22 15:03:17</sys_created_on>
+        <sys_id>00e31b7ac3b3d2d00ced12f1b40131c8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-02-22 15:03:17</sys_updated_on>
+        <table>sys_script_include</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Global">global</application>
+        <file_path/>
+        <instance_id>801f73f1db9a065037d72a59139619c3</instance_id>
+        <instance_name>dev272448</instance_name>
+        <name>sys_script_include_bab31f3ec3b3d2d00ced12f1b4013142</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_script_include"&gt;&lt;sys_script_include action="INSERT_OR_UPDATE"&gt;&lt;access&gt;package_private&lt;/access&gt;&lt;active&gt;true&lt;/active&gt;&lt;api_name&gt;global.discoveryEffectivenessKPI&lt;/api_name&gt;&lt;caller_access/&gt;&lt;client_callable&gt;false&lt;/client_callable&gt;&lt;description/&gt;&lt;mobile_callable&gt;false&lt;/mobile_callable&gt;&lt;name&gt;discoveryEffectivenessKPI&lt;/name&gt;&lt;sandbox_callable&gt;false&lt;/sandbox_callable&gt;&lt;script&gt;&lt;![CDATA[var discoveryEffectivenessKPI = Class.create();
+discoveryEffectivenessKPI.prototype = {
+    initialize: function() {
+        this.measurementPeriod = {
+            short_term: '24h',
+            medium_term: '7d',
+            long_term: '30d'
+        };
+        // Enable debug logging
+        this.debug = true;
+        this.log = [];
+    },
+
+    // Helper to check if a table exists
+    _isValidTable: function(tableName) {
+        try {
+            // If GlideTableDescriptor is available, use it
+            if (typeof GlideTableDescriptor !== 'undefined') {
+                return (GlideTableDescriptor.get(tableName) != null);
+            } else {
+                // Fallback: try creating a GlideRecord. If it fails, catch the error.
+                var gr = new GlideRecord(tableName);
+                return true;
+            }
+        } catch (e) {
+            return false;
+        }
+    },
+
+    // Debug logging helper
+    _logDebug: function(message, data) {
+        if (this.debug) {
+            var logEntry = {
+                timestamp: new GlideDateTime().getDisplayValue(),
+                message: message,
+                data: data || 'No data'
+            };
+            this.log.push(logEntry);
+            gs.debug('DiscoveryKPI: ' + message + ' | ' + JSON.stringify(data));
+        }
+    },
+
+    calculate: function() {
+        this._logDebug('Starting KPI calculation');
+        var results = {
+            coverage_metrics: this._calculateCoverageMetrics(),
+            efficiency_metrics: this._calculateEfficiencyMetrics(),
+            quality_metrics: this._calculateQualityMetrics()
+        };
+        this._logDebug('Calculation complete', results);
+        return results;
+    },
+
+    _calculateCoverageMetrics: function() {
+        this._logDebug('Calculating coverage metrics');
+        var metrics = {};
+        
+        try {
+            var totalSubnets = this._getTotalConfiguredSubnets();
+            var discoveredSubnets = this._getDiscoveredSubnets();
+            metrics.subnet_coverage = totalSubnets &gt; 0 ? (discoveredSubnets / totalSubnets) * 100 : null;
+            
+            metrics.ci_type_coverage = this._calculateCITypeCoverage();
+            metrics.pattern_coverage = this._calculatePatternCoverage();
+            
+            this._logDebug('Coverage metrics calculated', metrics);
+        } catch (e) {
+            this._logDebug('Error in coverage metrics calculation', e);
+            gs.error('Error calculating coverage metrics: ' + e);
+        }
+        
+        return metrics;
+    },
+
+    _calculateEfficiencyMetrics: function() {
+        this._logDebug('Calculating efficiency metrics');
+        var metrics = {};
+        
+        try {
+            metrics.success_rate = this._calculateSuccessRate();
+            metrics.avg_discovery_time = this._calculateAverageDiscoveryTime();
+            metrics.resource_utilization = this._calculateResourceUtilization();
+            
+            this._logDebug('Efficiency metrics calculated', metrics);
+        } catch (e) {
+            this._logDebug('Error in efficiency metrics calculation', e);
+            gs.error('Error calculating efficiency metrics: ' + e);
+        }
+        
+        return metrics;
+    },
+
+    _calculateQualityMetrics: function() {
+        this._logDebug('Calculating quality metrics');
+        var metrics = {};
+        
+        try {
+            metrics.data_accuracy = this._calculateDataAccuracy();
+            metrics.completeness = this._calculateCompleteness ? this._calculateCompleteness() : null;
+            metrics.duplicate_rate = this._calculateDuplicateRate();
+            
+            this._logDebug('Quality metrics calculated', metrics);
+        } catch (e) {
+            this._logDebug('Error in quality metrics calculation', e);
+            gs.error('Error calculating quality metrics: ' + e);
+        }
+        
+        return metrics;
+    },
+
+    _getTotalConfiguredSubnets: function() {
+        this._logDebug('Getting total configured subnets');
+        var subnets = new GlideRecord('cmdb_ci_ip_network_subnet');
+        subnets.addQuery('install_status', '!=', 7); // Exclude retired subnets
+        subnets.query();
+        var count = subnets.getRowCount();
+        this._logDebug('Total configured subnets', count);
+        return count;
+    },
+
+    _getDiscoveredSubnets: function() {
+        this._logDebug('Getting discovered subnets');
+        var subnets = new GlideRecord('cmdb_ci_ip_network_subnet');
+        
+        // Use 'active' if available; otherwise, use install_status
+        if (subnets.isValidField('active')) {
+            subnets.addQuery('active', true);
+        } else if (subnets.isValidField('install_status')) {
+            subnets.addQuery('install_status', '!=', 7);
+        }
+        
+        // Only add this query if the field exists
+        if (subnets.isValidField('discovery_last_run')) {
+            subnets.addQuery('discovery_last_run', '!=', '');
+        }
+        subnets.query();
+        var count = subnets.getRowCount();
+        this._logDebug('Discovered subnets', count);
+        return count;
+    },
+
+    _calculatePatternCoverage: function() {
+        this._logDebug('Calculating pattern coverage');
+        var patterns = new GlideRecord('sa_pattern');
+        if (patterns.isValidField('active')) {
+            patterns.addQuery('active', true);
+        }
+        patterns.query();
+        var totalPatterns = patterns.getRowCount();
+        
+        if (patterns.isValidField('last_matched')) {
+            patterns.addQuery('last_matched', '!=', '');
+        }
+        patterns.query();
+        var usedPatterns = patterns.getRowCount();
+        
+        var coverage = totalPatterns &gt; 0 ? (usedPatterns / totalPatterns) * 100 : 0;
+        this._logDebug('Pattern coverage calculated', {
+            total: totalPatterns,
+            used: usedPatterns,
+            coverage: coverage
+        });
+        return coverage;
+    },
+
+    _calculateSuccessRate: function() {
+        this._logDebug('Calculating success rate');
+        var status = new GlideRecord('discovery_status');
+        status.addQuery('state', 'Completed');
+        status.addEncodedQuery('sys_created_on&gt;javascript:gs.beginningOfLast' + this.measurementPeriod.medium_term);
+        status.query();
+        var successful = status.getRowCount();
+        
+        var failedStatus = new GlideRecord('discovery_status');
+        failedStatus.addQuery('state', 'Failed');
+        failedStatus.addEncodedQuery('sys_created_on&gt;javascript:gs.beginningOfLast' + this.measurementPeriod.medium_term);
+        failedStatus.query();
+        var failed = failedStatus.getRowCount();
+        
+        var total = successful + failed;
+        var rate = total &gt; 0 ? (successful / total) * 100 : 0;
+        
+        this._logDebug('Success rate calculated', {
+            successful: successful,
+            failed: failed,
+            total: total,
+            rate: rate
+        });
+        return rate;
+    },
+
+    _calculateAverageDiscoveryTime: function() {
+        this._logDebug('Calculating average discovery time');
+        var status = new GlideRecord('discovery_status');
+        status.addQuery('state', 'Completed');
+        status.addEncodedQuery('sys_created_on&gt;javascript:gs.beginningOfLast' + this.measurementPeriod.medium_term);
+        status.query();
+        
+        var totalTime = 0;
+        var count = 0;
+        
+        while (status.next()) {
+            var startTime = new GlideDateTime(status.sys_created_on);
+            var endTime = new GlideDateTime(status.completed_at);
+            var diff = gs.dateDiff(startTime.getDisplayValue(), endTime.getDisplayValue(), true);
+            totalTime += diff;
+            count++;
+        }
+        
+        var avgTime = count &gt; 0 ? totalTime / count : 0;
+        this._logDebug('Average discovery time calculated', {
+            totalTime: totalTime,
+            count: count,
+            averageTime: avgTime
+        });
+        return avgTime;
+    },
+
+    _calculateResourceUtilization: function() {
+        this._logDebug('Calculating resource utilization');
+        var util = new GlideRecord('ecc_agent_status');
+        util.addEncodedQuery('sys_created_on&gt;javascript:gs.beginningOfLast' + this.measurementPeriod.short_term);
+        util.query();
+        
+        var totalCPU = 0;
+        var totalMemory = 0;
+        var count = 0;
+        
+        while (util.next()) {
+            totalCPU += parseFloat(util.cpu_percentage) || 0;
+            totalMemory += parseFloat(util.memory_percentage) || 0;
+            count++;
+        }
+        
+        var result = {
+            avg_cpu: count &gt; 0 ? totalCPU / count : 0,
+            avg_memory: count &gt; 0 ? totalMemory / count : 0
+        };
+        
+        this._logDebug('Resource utilization calculated', result);
+        return result;
+    },
+
+    _calculateCITypeCoverage: function() {
+        this._logDebug('Calculating CI type coverage');
+        var coverage = {};
+        var ciTypes = ['cmdb_ci_server', 'cmdb_ci_network_adapter', 'cmdb_ci_database', 'cmdb_ci_middleware'];
+        
+        for (var i = 0; i &lt; ciTypes.length; i++) {
+            var type = ciTypes[i];
+            if (!this._isValidTable(type)) {
+                this._logDebug('Table ' + type + ' does not exist, skipping', null);
+                continue;
+            }
+            var total = this._getTotalCIs(type);
+            var discovered = this._getDiscoveredCIs(type);
+            coverage[type] = total &gt; 0 ? (discovered / total) * 100 : 0;
+        }
+        
+        this._logDebug('CI type coverage calculated', coverage);
+        return coverage;
+    },
+
+    _getTotalCIs: function(type) {
+        if (!this._isValidTable(type)) {
+            this._logDebug('Table ' + type + ' does not exist, skipping', null);
+            return 0;
+        }
+        var ci = new GlideRecord(type);
+        if (ci.isValidField('active')) {
+            ci.addQuery('active', true);
+        } else if (ci.isValidField('install_status')) {
+            ci.addQuery('install_status', '!=', 7);
+        }
+        ci.query();
+        var count = ci.getRowCount();
+        this._logDebug('Total CIs for type: ' + type, count);
+        return count;
+    },
+
+    _getDiscoveredCIs: function(type) {
+        if (!this._isValidTable(type)) {
+            this._logDebug('Table ' + type + ' does not exist, skipping', null);
+            return 0;
+        }
+        var ci = new GlideRecord(type);
+        if (ci.isValidField('active')) {
+            ci.addQuery('active', true);
+        } else if (ci.isValidField('install_status')) {
+            ci.addQuery('install_status', '!=', 7);
+        }
+        if (ci.isValidField('discovery_source')) {
+            ci.addQuery('discovery_source', '!=', '');
+        }
+        ci.query();
+        var count = ci.getRowCount();
+        this._logDebug('Discovered CIs for type: ' + type, count);
+        return count;
+    },
+
+    _calculateDataAccuracy: function() {
+        this._logDebug('Calculating data accuracy');
+        var ciTypes = ['cmdb_ci_server', 'cmdb_ci_network_adapter', 'cmdb_ci_database', 'cmdb_ci_middleware'];
+        var validCITables = [];
+        for (var i = 0; i &lt; ciTypes.length; i++) {
+            if (this._isValidTable(ciTypes[i])) {
+                validCITables.push(ciTypes[i]);
+            } else {
+                this._logDebug('Table ' + ciTypes[i] + ' does not exist, skipping audit for it', null);
+            }
+        }
+        
+        if (validCITables.length === 0) {
+            this._logDebug('No valid CI tables for data accuracy calculation', null);
+            return 0;
+        }
+        
+        var audit = new GlideRecord('sys_audit');
+        audit.addEncodedQuery('sys_created_on&gt;javascript:gs.beginningOfLast' + this.measurementPeriod.medium_term);
+        audit.addQuery('tablename', 'IN', validCITables.join(','));
+        audit.query();
+        
+        var totalFields = 0;
+        var accurateFields = 0;
+        
+        while (audit.next()) {
+            totalFields++;
+            if (audit.newvalue == audit.oldvalue) {
+                accurateFields++;
+            }
+        }
+        
+        var accuracy = totalFields &gt; 0 ? (accurateFields / totalFields) * 100 : 0;
+        this._logDebug('Data accuracy calculated', {
+            totalFields: totalFields,
+            accurateFields: accurateFields,
+            accuracy: accuracy
+        });
+        return accuracy;
+    },
+
+    _calculateDuplicateRate: function() {
+        this._logDebug('Calculating duplicate rate');
+        var ciTypes = ['cmdb_ci_server', 'cmdb_ci_network_adapter', 'cmdb_ci_database', 'cmdb_ci_middleware'];
+        var validCITables = [];
+        for (var i = 0; i &lt; ciTypes.length; i++) {
+            if (this._isValidTable(ciTypes[i])) {
+                validCITables.push(ciTypes[i]);
+            } else {
+                this._logDebug('Table ' + ciTypes[i] + ' does not exist, skipping duplicate rate calculation for it', null);
+            }
+        }
+        if (validCITables.length === 0) {
+            this._logDebug('No valid CI tables for duplicate rate calculation', null);
+            return 0;
+        }
+        
+        var duplicates = new GlideRecord('duplicate_audit_result');
+        duplicates.addEncodedQuery('sys_created_on&gt;javascript:gs.beginningOfLast' + this.measurementPeriod.medium_term);
+        duplicates.addQuery('table', 'IN', validCITables.join(','));
+        duplicates.query();
+        var duplicateCount = duplicates.getRowCount();
+        
+        var totalCIs = 0;
+        for (var j = 0; j &lt; validCITables.length; j++) {
+            totalCIs += this._getTotalCIs(validCITables[j]);
+        }
+        
+        var rate = totalCIs &gt; 0 ? (duplicateCount / totalCIs) * 100 : 0;
+        this._logDebug('Duplicate rate calculated', {
+            duplicateCount: duplicateCount,
+            totalCIs: totalCIs,
+            rate: rate
+        });
+        return rate;
+    },
+
+    getDebugLog: function() {
+        return this.log;
+    },
+
+    type: 'discoveryEffectivenessKPI'
+};
+]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_include&lt;/sys_class_name&gt;&lt;sys_created_by&gt;Loga_123&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-02-22 15:03:18&lt;/sys_created_on&gt;&lt;sys_id&gt;bab31f3ec3b3d2d00ced12f1b4013142&lt;/sys_id&gt;&lt;sys_mod_count&gt;12&lt;/sys_mod_count&gt;&lt;sys_name&gt;discoveryEffectivenessKPI&lt;/sys_name&gt;&lt;sys_package display_value="Global" source="global"&gt;global&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_include_bab31f3ec3b3d2d00ced12f1b4013142&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;Loga_123&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-04-02 11:55:44&lt;/sys_updated_on&gt;&lt;/sys_script_include&gt;&lt;sys_es_latest_script action="INSERT_OR_UPDATE"&gt;&lt;id&gt;bab31f3ec3b3d2d00ced12f1b4013142&lt;/id&gt;&lt;sys_created_by&gt;Loga_123&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-02-22 15:03:17&lt;/sys_created_on&gt;&lt;sys_id&gt;00e31b7ac3b3d2d00ced12f1b40131c8&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_updated_by&gt;Loga_123&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-02-22 15:03:17&lt;/sys_updated_on&gt;&lt;table&gt;sys_script_include&lt;/table&gt;&lt;use_es_latest&gt;true&lt;/use_es_latest&gt;&lt;/sys_es_latest_script&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-839174170</payload_hash>
+        <record_name>discoveryEffectivenessKPI</record_name>
+        <reverted_from/>
+        <source>79bff5cfc3a062500ced12f1b40131de</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>Loga_123</sys_created_by>
+        <sys_created_on>2025-04-02 11:55:44</sys_created_on>
+        <sys_id>85fe9b17c32caa500ced12f1b4013131</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>195f65b77260000001</sys_recorded_at>
+        <sys_updated_by>Loga_123</sys_updated_by>
+        <sys_updated_on>2025-04-02 11:55:44</sys_updated_on>
+        <type>Script Include</type>
+        <update_guid>c9fe9b17e52caa5010cdfe0c91d53630</update_guid>
+        <update_guid_history>c9fe9b17e52caa5010cdfe0c91d53630:-839174170,1d9edf13422caa50c9fafbffa0becb7b:-1662987465,87c9948316b356d00f1e4d4ea3298aea:-839174170,978754c30e7356d0147cace2f99fb13b:-1410627755,bb865c0f223356d0ea0a226367b9d685:187750837,d1835003f9ff16d01ef08a81552f554f:-1677544479,a981508f8f7f16d0755db7665dea4595:-693724254,303d880b6ffb16d0feced862346a8405:1164338347,d4ab48830afb16d0b5ee52f429ddc05a:1864943607,c207844bb7bb16d0b5d79052bc6b3fbe:916643446,9f4604c76cbb16d03c0e7e78d9fd4d34:932896228,c7f508872dbb16d0fbcabcd75ac0bab0:-1908646432,a0e3dffaa5b3d2d0e2818ef9a61b2f98:1287075082</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-23 11:30:08</sys_created_on>
+        <sys_db_object display_value="" name="sys_script_include">sys_script_include</sys_db_object>
+        <sys_id>16adca7a2ddc4c2a99a2e23219becd21</sys_id>
+        <sys_metadata>bab31f3ec3b3d2d00ced12f1b4013142</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>discoveryEffectivenessKPI</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_scope_delete display_value="">03f33e17888f458492ec92bdd9452cc9</sys_scope_delete>
+        <sys_update_name>sys_script_include_bab31f3ec3b3d2d00ced12f1b4013142</sys_update_name>
+        <sys_update_version display_value="sys_script_include_bab31f3ec3b3d2d00ced12f1b4013142">85fe9b17c32caa500ced12f1b4013131</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-23 11:30:08</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
