@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="DELETE">
+        <before>false</before>
+        <description/>
+        <name>ConvertScope</name>
+        <record_for_rollback>true</record_for_rollback>
+        <script/>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-21 09:53:18</sys_created_on>
+        <sys_id>b9f874edc3c926100ced12f1b4013181</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ConvertScope</sys_name>
+        <sys_package display_value="SAMFramework" source="x_985627_samfram_0">42a7fce1c3c926100ced12f1b401312e</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_update_name>sys_script_fix_b9f874edc3c926100ced12f1b4013181</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 09:53:18</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+    <sys_es_latest_script action="DELETE">
+        <id>b9f874edc3c926100ced12f1b4013181</id>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-21 09:53:18</sys_created_on>
+        <sys_id>28297c69c3c926100ced12f1b40131e1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 09:53:18</sys_updated_on>
+        <table>sys_script_fix</table>
+        <use_es_latest>true</use_es_latest>
+    </sys_es_latest_script>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</application>
+        <file_path/>
+        <instance_id>801f73f1db9a065037d72a59139619c3</instance_id>
+        <instance_name>dev272448</instance_name>
+        <name>sys_script_fix_b9f874edc3c926100ced12f1b4013181</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix"><sys_script_fix action="INSERT_OR_UPDATE"><before>false</before><description/><name>ConvertScope</name><record_for_rollback>true</record_for_rollback><script/><sys_class_name>sys_script_fix</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-04-21 09:53:18</sys_created_on><sys_id>b9f874edc3c926100ced12f1b4013181</sys_id><sys_mod_count>0</sys_mod_count><sys_name>ConvertScope</sys_name><sys_package display_value="SAMFramework" source="x_985627_samfram_0">42a7fce1c3c926100ced12f1b401312e</sys_package><sys_policy/><sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope><sys_update_name>sys_script_fix_b9f874edc3c926100ced12f1b4013181</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-04-21 09:53:18</sys_updated_on><unloadable>false</unloadable></sys_script_fix><sys_es_latest_script action="INSERT_OR_UPDATE"><id>b9f874edc3c926100ced12f1b4013181</id><sys_created_by>admin</sys_created_by><sys_created_on>2025-04-21 09:53:18</sys_created_on><sys_id>28297c69c3c926100ced12f1b40131e1</sys_id><sys_mod_count>0</sys_mod_count><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-04-21 09:53:18</sys_updated_on><table>sys_script_fix</table><use_es_latest>true</use_es_latest></sys_es_latest_script></record_update>]]></payload>
+        <payload_hash>1010944407</payload_hash>
+        <record_name>ConvertScope</record_name>
+        <reverted_from/>
+        <source>06a7fce1c3c926100ced12f1b4013135</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-21 09:53:18</sys_created_on>
+        <sys_id>bc29b4adc3c926100ced12f1b401319d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19657c434f90000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 09:53:18</sys_updated_on>
+        <type>Fix Script</type>
+        <update_guid>7029b4ade5c926105ad8972f6b53579d</update_guid>
+        <update_guid_history>7029b4ade5c926105ad8972f6b53579d:1010944407</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-04-21 11:39:53</sys_created_on>
+        <sys_db_object display_value="" name="sys_script_fix">sys_script_fix</sys_db_object>
+        <sys_id>045b34c44c9f4840801cbc663f4e1900</sys_id>
+        <sys_metadata>b9f874edc3c926100ced12f1b4013181</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ConvertScope</sys_name>
+        <sys_package display_value="SAMFramework" source="x_985627_samfram_0">42a7fce1c3c926100ced12f1b401312e</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="SAMFramework">42a7fce1c3c926100ced12f1b401312e</sys_scope>
+        <sys_scope_delete display_value="">03f33e17888f458492ec92bdd9452cc9</sys_scope_delete>
+        <sys_update_name>sys_script_fix_b9f874edc3c926100ced12f1b4013181</sys_update_name>
+        <sys_update_version display_value="sys_script_fix_b9f874edc3c926100ced12f1b4013181">bc29b4adc3c926100ced12f1b401319d</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-04-21 11:39:53</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
